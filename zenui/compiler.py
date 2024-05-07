@@ -1,4 +1,4 @@
-from zenui.tags import Element, Child, Attribute
+from zenui.tags import Element, Attribute
 from typing import List
 import io
 
@@ -11,26 +11,9 @@ class ZenuiCompiler:
             tag = elm.name
             if elm.name == "text":
                  return str(elm.children[0])
-            children, attributes = self.split_children_attributes(elm)
-            attributes = self.process_attributes(attributes)
-            children = self.compile_children(children)
+            attributes = self.process_attributes(elm.attributes)
+            children = self.compile_children(elm.children)
             return f"<{tag}{attributes}>{children if children else ''}</{tag}>"
-
-    def split_children_attributes(self, elm : Element):
-        """
-            gets Element as input return children and attributes split
-        """
-        children = []
-        attributes = []
-        for i in elm.children:
-              match str(i):
-                    case "Element":
-                        children.append(i)
-                    case "Attribute":
-                        attributes.append(i)
-                    case _:
-                        print("not matched")
-        return [children, attributes]
 
                     
     def process_attributes(self, attrs : List[Attribute]) -> str:

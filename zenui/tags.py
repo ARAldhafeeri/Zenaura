@@ -1,10 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Optional
+
+from enum import Enum
 
 @dataclass
 class Child:
     name: str
     children : any
+    attributes: any
     def __repr__(self) -> str:
         return 'Child'
     
@@ -18,8 +21,12 @@ class Attribute:
 
 @dataclass
 class Element:
-    name: str
-    children : Optional[List[Child |Attribute]] = None
+    name: str = field(default="div")
+    children : List[Child] = field(default_factory= lambda : [])
+    attributes : List[Attribute] = field(default_factory= lambda : [])
 
     def __repr__(self) -> str:
         return 'Element'
+
+class Tags(Enum):
+    BODY = "body"

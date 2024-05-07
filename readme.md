@@ -55,19 +55,20 @@ class Counter(ZenUIComponent):
 		self.state.count -= 1
 
 	def create_button(label_text, onclick_handler, styles):
-		return Element(name="button", children=[
-			Attribute(key=onclick, value=onclick_handler),
-			Attribute(key="styles", value=styles),
-			Element(name="label", children=[label_text])
-
-		]) 
+		btn = Element(name="button")
+		btn.attributes.append(Attribute(key=onclick, value=onclick_handler))
+		btn.attributes.append(Attribute(key="styles", value=styles))	
+		btn..children.append(Element(name="label", children=[label_text]))
+			 
 
 	def element(self):
-		header =  Element(name="h1", children=[
-			Attribute(key=styles, value=self.styles.h1),
-			Element(text("Counter: " + self.state.count)),
-		])
-            
+		# header
+		header =  Element(name="h1")
+		header.attributes.append(Attribute(key=styles, value=self.styles.h1))
+		header.children.append(Element(text("Counter: " + self.state.count)))
+
+		#  btn controls
+  
 		incBtn = create_button(
 			"Increase", 
 			emitter.emit("inc_count"), 
@@ -80,20 +81,21 @@ class Counter(ZenUIComponent):
 			self.styles
 		)
 
-            
-		controls = 	Element(name="div", children=[
-			Attribute(key="styles", value=self.styles.controls),
-			Child(decBtn),
-			Child(incBtn),
-	 	])
-            
-      return self.render(
-		Element(name="div", children=[
-			Attribute(key="styles", value="container"),
-			Child(header),
-			Child(controls)
-	  	])
-	  )
-	     
+		# controls div
+		controls = 	Element(name="div")
+		controls.attributes.append(
+			Attribute(key="styles", value=self.styles.controls)
+		)
+		controls.children.append(decBtn)
+		controls.children.append(incBtn)
 
+		# component
+		comp = Element(name="div")
+
+		comp.attr.append(Attribute(key="styles", value="container"))
+		comp.children.append(header)
+		comp.children.append(controls)
+		
+		return self.render(comp, [self.dependencies])
+	    
 ```

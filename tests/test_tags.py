@@ -10,10 +10,12 @@ class DataclassTests(unittest.TestCase):
         self.assertEqual(str(attribute), "Attribute")
 
     def test_element_creation(self):
-        child = Element(name="test", children=[])
-        attribute = Attribute(key="test", value="test")
-        element = Element(name="test_element", children=[child, attribute])
-        self.assertEqual(element.name, "test_element")
-        self.assertEqual(len(element.children), 2)
+        child = Element(name="test")
+        element = Element(name="div")
+        element.children.append(child)
+        element.attributes.append(Attribute(key="test", value="test"))
+        self.assertEqual(child.name, "test")
+        self.assertEqual(len(element.children), 1)
+        self.assertEqual(len(element.attributes), 1)
         self.assertEqual(str(element.children[0]), "Element")
-        self.assertEqual(str(element.children[1]), "Attribute")
+        self.assertEqual(str(element.attributes[0]), "Attribute")
