@@ -1,5 +1,7 @@
 from zenui.tags import Element, Child, Attribute
 from typing import List
+import io
+
 class ZenuiCompiler:
     def __init__(self):
         self.attrKeyWords= {
@@ -35,17 +37,20 @@ class ZenuiCompiler:
         """
             return formated tags of element
         """
-        s = ""
+        s = io.StringIO()
+
         n = len(attrs) - 1
         for i, attr in enumerate(attrs):
             attrKey = attr.key
             if attrKey in self.attrKeyWords.keys():
                 attrKey = self.attrKeyWords[attrKey]
             if i == 0 or i == n:
-                s+= f' {attrKey}="{attr.value}"'
+                s.write(f' {attrKey}="{attr.value}"')
             else:
-                 s+= f'{attrKey}="{attr.value}" ' 
-        return s
+                s.write(f'{attrKey}="{attr.value}" ')
+        res = s.getvalue()
+        s.close()
+        return res
 
 
     def compile_children(self, children):
@@ -54,7 +59,9 @@ class ZenuiCompiler:
         """
         if not children:
              return
-        children_html = ""
+        s = io.StringIO()
         for child in children:
-            children_html += self.compile(child)
-        return children_html
+            s.write(self.compile(child))
+        res = s.getvalue()
+        s.close()
+        return res
