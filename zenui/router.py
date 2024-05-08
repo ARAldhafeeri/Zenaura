@@ -3,7 +3,15 @@ from typing import List
 from zenui.zenui_dom import zenui_dom
 from zenui.tags import Element
 from pyscript import document, window
-notFound = Element("div", children=["page not found"])
+
+class NotFound(ZenUIComponent):
+
+    def element(self):
+        em = Element("div")
+        em.children.append(Element(name="text", children=["page not found"]))
+        return em
+    
+notFound = NotFound()
 
 
 class Route:
@@ -17,21 +25,22 @@ class Route:
 class Router:
     def __init__(self):
         # key -> path , value -> [comp, document.title]
-        self.routes : List[Route] =  []
+        self.routes = {}
         self.paths = []
         window.onpopstate = self.handlelocation()
 
     def addRoute(self, route : Route) -> None:
-        self.routes.append(route)
+        self.routes[route.path] = [route.comp, route.title]
         self.paths.append(route.path)
 
     def handlelocation(self) -> None:
         path = window.location.pathname
+        print("path",path)
+        print("paths",self.paths)
         if path in self.paths:
-            comp = self.routes[path]
+            [comp, title] = self.routes[path]
             zenui_dom.render(comp)
             return
         zenui_dom.render(notFound)
-
 
 

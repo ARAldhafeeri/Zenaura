@@ -4,9 +4,11 @@ from typing import Optional
 from zenui.tags import Element, Attribute
 from zenui.router import Router, Route
 
+from pyscript import document, display
+from js import console
 
 class SimpleUi(ZenUIComponent):
-    def element():
+    def element(self):
         div = Element(name="div")
         div.attributes = [Attribute(key="test", value="test")]
         div.children.append(Element(name="text", children=["test"]))
@@ -24,6 +26,8 @@ router.addRoute(
     )
 )
 
-print("routes", f"{router.routes[0]}")
+router.handlelocation()
+
+console.log("routes", f"{router.paths}", )
 
 app = ZenUIApp(router)
