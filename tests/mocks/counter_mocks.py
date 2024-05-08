@@ -1,10 +1,3 @@
-# ZenUI 
-
-ZenUI is python framework that brings python zen into the UI world. Build scalable, stateful component-based, interactive SPA with nothing but TailwindCSS and pure Python, no HTML, no CSS, no JS. 
-
-## Quick Example : 
-
-```Python
 from zenui.tags import Attribute, Element
 from zenui.component import ZenUIComponent
 from dataclasses import dataclass
@@ -85,5 +78,4 @@ class Counter(ZenUIComponent):
 		comp.children.append(header)
 		comp.children.append(controls)
 
-		return comp	    
-```
+		return comp
