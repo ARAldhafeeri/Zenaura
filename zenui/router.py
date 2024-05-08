@@ -29,9 +29,9 @@ class Router:
         path = window.location.pathname
         if path in self.paths:
             comp = self.routes[path]
-            zenui_dom.mount(comp)
+            zenui_dom.render(comp)
             return
-        zenui_dom.mount(notFound)
+        zenui_dom.render(notFound)
 
 
 

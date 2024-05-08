@@ -3,6 +3,7 @@
 from typing import List, Optional
 import random
 import time
+import io 
 
 def generate_simple_uuid():
     random_part = hex(random.getrandbits(128))[2:]  # 128-bit random number
@@ -40,13 +41,11 @@ class Element:
 
 class ZenuiCompiler:
     def __init__(self):
-        # A dictionary to map ZenUI-specific attribute names to standard HTML
-        # attribute names (e.g., convert "styles" attribute to "class"). 
-        self.attrKeyWords = {
-            "styles": "class"
+        self.attrKeyWords= {
+             "styles" : "class"
         }
 
-    def compile(self, elm: Element, parent=True, componentName=None, componentId=None):
+    def compile(self, elm: Element, componentName=None):
         """Compiles a Zenui Element into its corresponding HTML representation.
 
         Args:
@@ -73,12 +72,9 @@ class ZenuiCompiler:
 
         attributes = self.process_attributes(elm.attributes, componentName) 
         children = self.compile_children(elm.children)
-        
-        zen_ui_id = ""
-        if parent:
-           zen_ui_id = f' data-zenui-id="{componentId}"'
+
         # Construct the HTML tag including attributes and children
-        return f"<{tag}{attributes}{zen_ui_id}>{children if children else ''}</{tag}>" 
+        return f"<{tag}{attributes}>{children if children else ''}</{tag}>" 
 
     def process_attributes(self, attrs: List[Attribute], componentName=None) -> str:
         """Processes a list of Attributes, converting them to HTML-formatted attributes.
@@ -90,7 +86,7 @@ class ZenuiCompiler:
             A string containing the HTML-formatted attributes, ready to be included in a tag.
         """
 
-        attr_parts = []  # Create a string buffer for building the output
+        s = io.StringIO()  # Create a string buffer for building the output
 
         for i, attr in enumerate(attrs):
             attrKey = attr.key
@@ -108,30 +104,29 @@ class ZenuiCompiler:
 
             # Add space only if it's not the first or last attribute
             if i == 0 or i == len(attrs) - 1:
-                attr_parts.append(f' {attrKey}="{attrValue}"')
+                s.write(f' {attrKey}="{attrValue}"')
             else:
-                attr_parts.append(f'{attrKey}="{attrValue}" ')
+                s.write(f'{attrKey}="{attrValue}" ')
 
-        return "".join(attr_parts)
+        res = s.getvalue()
+        s.close()
+        return res
+
 
     def compile_children(self, children):
-        """Recursively compiles a list of children elements.
-
-        Args:
-            children: A list of Zenui Element objects.
-
-        Returns:
-            A combined string of the compiled HTML for all the children.
         """
-
+            compiles children recuresivly
+        """
         if not children:
             return
 
-        parts = []
+        s = io.StringIO()
         for child in children:
-            parts.append(self.compile(child, parent=False))  # Recursively compile each child
+            s.write(self.compile(child))  # Recursively compile each child
 
-        return "".join(parts)
+        res = s.getvalue()
+        s.close()
+        return res
 
 # dom 
     

@@ -7,7 +7,7 @@ class ZenuiCompiler:
              "styles" : "class"
         }
 
-    def compile(self, elm: Element, parent=True, componentName=None, componentId=None):
+    def compile(self, elm: Element, componentName=None):
         """Compiles a Zenui Element into its corresponding HTML representation.
 
         Args:
@@ -34,12 +34,9 @@ class ZenuiCompiler:
 
         attributes = self.process_attributes(elm.attributes, componentName) 
         children = self.compile_children(elm.children)
-        
-        zen_ui_id = ""
-        if parent:
-           zen_ui_id = f' data-zenui-id="{componentId}"'
+
         # Construct the HTML tag including attributes and children
-        return f"<{tag}{attributes}{zen_ui_id}>{children if children else ''}</{tag}>" 
+        return f"<{tag}{attributes}>{children if children else ''}</{tag}>" 
 
     def process_attributes(self, attrs: List[Attribute], componentName=None) -> str:
         """Processes a list of Attributes, converting them to HTML-formatted attributes.
@@ -55,6 +52,7 @@ class ZenuiCompiler:
 
         for i, attr in enumerate(attrs):
             attrKey = attr.key
+            attrValue = attr.value
             if attrKey in self.attrKeyWords.keys():
                 attrKey = self.attrKeyWords[attrKey]  # Apply keyword mapping
 
@@ -86,7 +84,7 @@ class ZenuiCompiler:
 
         s = io.StringIO()
         for child in children:
-            s.write(self.compile(child, parent=False))  # Recursively compile each child
+            s.write(self.compile(child))  # Recursively compile each child
 
         res = s.getvalue()
         s.close()
