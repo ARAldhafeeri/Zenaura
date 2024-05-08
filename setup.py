@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='zenui',
-    version='1.0.0',
+    version='1.0.1',
     description="ZenUI is python framework that brings python zen into the UI world. Build scalable, stateful component-based, interactive SPA with nothing but TailwindCSS and pure Python, no HTML, no CSS, no JS. ",
     author="Ahmed Rakan",
     author_email="ar.aldhafeeri11@gmail.com",

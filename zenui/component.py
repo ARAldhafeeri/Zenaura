@@ -9,7 +9,6 @@ class ZenUIComponent:
     def __init_subclass__(cls):
         super().__init_subclass__()
         cls.componentId = uuid.uuid4().hex
-    # Make the global EventEmitter accessible within the component class 
     global_state = {}
 
     
