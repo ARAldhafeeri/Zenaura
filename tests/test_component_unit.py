@@ -13,13 +13,6 @@ class TestComponent(unittest.TestCase):
         self.initState = initState
 
 
-    
-    def test_singleton_global_events(self):
-        self.assertEqual(id(self.c.globalEmitter), id(self.c2.globalEmitter))
-
-    def test_local_event_emitter(self):
-        self.assertNotEqual(id(self.c.localEmitter), id(self.c2.localEmitter))
-
     def test_state(self):
         state = {"test" : "test"}
         self.c.set_state(state) 

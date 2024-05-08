@@ -1,8 +1,7 @@
 from zenui.component import ZenUIComponent
-from .router import Router
 
 class ZenUIApp(ZenUIComponent):
-    def __init__(self, router: Router):
+    def __init__(self, router):
         super().__init__()
         self.router = router
 

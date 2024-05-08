@@ -1,7 +1,5 @@
 from zenui.tags import Element, Attribute
-from typing import List
-import io
-
+from typing import List 
 class ZenuiCompiler:
     def __init__(self):
         # A dictionary to map ZenUI-specific attribute names to standard HTML
@@ -54,7 +52,7 @@ class ZenuiCompiler:
             A string containing the HTML-formatted attributes, ready to be included in a tag.
         """
 
-        s = io.StringIO()  # Create a string buffer for building the output
+        attr_parts = []  # Create a string buffer for building the output
 
         for i, attr in enumerate(attrs):
             attrKey = attr.key
@@ -72,13 +70,11 @@ class ZenuiCompiler:
 
             # Add space only if it's not the first or last attribute
             if i == 0 or i == len(attrs) - 1:
-                s.write(f' {attrKey}="{attrValue}"')
+                attr_parts.append(f' {attrKey}="{attrValue}"')
             else:
-                s.write(f'{attrKey}="{attrValue}" ')
+                attr_parts.append(f'{attrKey}="{attrValue}" ')
 
-        res = s.getvalue()
-        s.close()
-        return res
+        return "".join(attr_parts)
 
     def compile_children(self, children):
         """Recursively compiles a list of children elements.
@@ -93,10 +89,8 @@ class ZenuiCompiler:
         if not children:
             return
 
-        s = io.StringIO()
+        parts = []
         for child in children:
-            s.write(self.compile(child, parent=False))  # Recursively compile each child
+            parts.append(self.compile(child, parent=False))  # Recursively compile each child
 
-        res = s.getvalue()
-        s.close()
-        return res
+        return "".join(parts)

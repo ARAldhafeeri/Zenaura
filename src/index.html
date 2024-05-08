@@ -13,7 +13,10 @@
     <title>ZenUI Python</title>
   </head>
   <body>
-    <script type="module">import * as main from './__target__/main.js'; window.main = main;</script>
+    <script type="module">
+        import { app } from './__target__/main.js'; 
+        window.app = app 
+    </script>
     <div id="root"></div>
   </body>
 </html>

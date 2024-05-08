@@ -1,7 +1,4 @@
-from zenui.component import ZenUIComponent
 from zenui.compiler import ZenuiCompiler
-from dataclasses import dataclass
-from typing import Optional
 # compile zenui html dataclasses to html text
 
 compiler = ZenuiCompiler()
@@ -12,7 +9,7 @@ class ZenUIDom:
         self.curr_mounted_element = None
 
 
-    def render(self, comp: ZenUIComponent ) -> None:
+    def render(self, comp ):
         """
             recieve instance of ZenUIComponent child, rerender it.
         """
@@ -29,7 +26,7 @@ class ZenUIDom:
         self.dom_comp_update(comp)
 
     
-    def mount(self, comp: ZenUIComponent) -> None:
+    def mount(self, comp):
         comp_element_handler = comp.element 
         comp_tree = comp.element()
         compiled_comp = compiler.compile(

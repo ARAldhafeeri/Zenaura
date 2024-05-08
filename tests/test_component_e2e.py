@@ -39,7 +39,7 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(state.count, -1)
 
 	def test_element_structure(self):
-		rendered_element = self.counter.element(self.counter.get_state())
+		rendered_element = self.counter.element()
 		# Check for top-level container and attributes 
 		self.assertEqual(rendered_element.name, 'div')
 		self.assertIn(Attribute(key="styles", value=BTN_STYLES.container), rendered_element.attributes)

@@ -1,23 +1,23 @@
 # ZenUI 
 
-ZenUI is python framework that brings python zen into the UI world. Build scalable, stateful component-based, interactive SPA with nothing but TailwindCSS and pure Python, no HTML, no CSS, no JS. 
+ZenUI is mini, light weight, super fast python framework that brings python zen into the UI world. Build scalable, stateful component-based, interactive SPA with nothing but TailwindCSS and pure Python, no HTML, no CSS, no JS, but you could use js, css, html if you want !
 
 ## Quick Example : 
 
 ```Python
 from zenui.tags import Attribute, Element
 from zenui.component import ZenUIComponent
-from dataclasses import dataclass
 
-@dataclass
 class CounterState:
-	count: int
-@dataclass
+	def __init__(self,count):
+		self.count = count
+
 class CounterStyles:
-	btn: str
-	container: str
-	h1: str
-	controls: str
+	def __init__(self, btn, container, h1, controls):
+	self.btn= str
+	self.container = container
+	self.h1 = h1
+	self.controls = controls
 
 
 BTN_STYLES = CounterStyles(
@@ -38,13 +38,13 @@ class Counter(ZenUIComponent):
 		# dependencies
 		self.dependencies = dependencies
 
-	def increment(self) -> None:
+	def increment(self):
 		self.set_state(CounterState(count=self.get_state().count + 1))
 
-	def decrease(self) -> None:
+	def decrease(self):
 		self.set_state(CounterState(count=self.get_state().count - 1))
 
-	def create_button(self, label_text : str, onclick_handler : str) -> Element:
+	def create_button(self, label_text, onclick_handler):
 		btn = Element(name="button")
 		btn.attributes.append(Attribute(key="onclick", value=onclick_handler))
 		btn.attributes.append(Attribute(key="styles", value=BTN_STYLES.btn))	
@@ -52,7 +52,7 @@ class Counter(ZenUIComponent):
 		return btn
 			 
 
-	def element(self) -> Element:
+	def element(self):
 		# header
 		header =  Element(name="h1")
 		header.attributes.append(Attribute(key="styles", value=BTN_STYLES.h1))

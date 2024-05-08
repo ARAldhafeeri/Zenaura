@@ -1,16 +1,18 @@
 from dataclasses import dataclass
-from zenui.component import ZenUIComponent
 from typing import List
 from zenui_dom import zenui_dom
 from zenui.tags import Element
 
 notFound = Element("div", children=["page not found"])
-@dataclass
-class Route:
-    title : str
-    path : str
-    comp : ZenUIComponent
 
+
+class Route:
+    def __init__(self, title, path, comp):
+        self.title = title
+        self.path = path
+        self.comp = comp
+
+# router 
 
 class Router:
     def __init__(self):
@@ -30,8 +32,6 @@ class Router:
             zenui_dom.mount(comp)
             return
         zenui_dom.mount(notFound)
-
-        
 
 
 
