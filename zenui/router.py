@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import List
-from zenui_dom import zenui_dom
+from zenui.zenui_dom import zenui_dom
 from zenui.tags import Element
-
+from pyscript import document, window
 notFound = Element("div", children=["page not found"])
 
 

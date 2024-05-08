@@ -1,18 +1,29 @@
 from zenui.component import ZenUIComponent
 from dataclasses import dataclass
 from typing import Optional
-from zenui.tags import Element, Child
-
-@dataclass
-class CounterStyles:
-	btn: str
-	container: Optional[str] = None
-	h1:  Optional[str] = None
-	controls:  Optional[str] = None
+from zenui.tags import Element, Attribute
+from zenui.router import Router, Route
 
 
-a = CounterStyles(
-	btn="test", 
+class SimpleUi(ZenUIComponent):
+    def element():
+        div = Element(name="div")
+        div.attributes = [Attribute(key="test", value="test")]
+        div.children.append(Element(name="text", children=["test"]))
+        return div
+
+simpleUi = SimpleUi()
+
+router = Router()
+
+router.addRoute(
+    Route(
+        title="test",
+        path="/",
+        comp=simpleUi
     )
-x = Element("test")
-print(str(x))
+)
+
+print("routes", f"{router.routes[0]}")
+
+app = ZenUIApp(router)
