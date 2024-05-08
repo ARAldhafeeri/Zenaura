@@ -16,7 +16,7 @@ class ZenUIComponent:
     _state = {}  
         
     @property
-    def state(self): 
+    def state(self):
         return self.get_state()
 
     @state.setter
@@ -29,6 +29,7 @@ class ZenUIComponent:
         return self._state
 
     def set_state(self, state):
+        zenui_dom.zen_dom_table[self.componentId] = "works"
         self._state = state  # Update the internal state
     
     @abstractmethod

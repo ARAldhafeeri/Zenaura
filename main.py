@@ -28,6 +28,12 @@ router.addRoute(
 
 router.handlelocation()
 
-console.log("routes", f"{router.paths}", )
+print(simpleUi.componentId)
+simpleUi.set_state("koko")
+print(simpleUi.get_state())
+print(zenui_dom.zen_dom_table)
+print(simpleUi.set_state("koko2"))
+print(zenui_dom.zen_dom_table)
 
 app = ZenUIApp(router)
+

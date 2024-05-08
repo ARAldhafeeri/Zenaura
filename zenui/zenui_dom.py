@@ -7,7 +7,7 @@ compiler = ZenuiCompiler()
 class ZenUIDom:
 
     def __init__(self):
-        self.curr_mounted_element = None
+        self.zen_dom_table = {}
 
 
     def render(self, comp ):
