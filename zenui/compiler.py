@@ -1,11 +1,10 @@
 from zenui.tags import Element, Attribute
 from typing import List 
+import io 
 class ZenuiCompiler:
     def __init__(self):
-        # A dictionary to map ZenUI-specific attribute names to standard HTML
-        # attribute names (e.g., convert "styles" attribute to "class"). 
-        self.attrKeyWords = {
-            "styles": "class"
+        self.attrKeyWords= {
+             "styles" : "class"
         }
 
     def compile(self, elm: Element, parent=True, componentName=None, componentId=None):
@@ -52,11 +51,10 @@ class ZenuiCompiler:
             A string containing the HTML-formatted attributes, ready to be included in a tag.
         """
 
-        attr_parts = []  # Create a string buffer for building the output
+        s = io.StringIO()  # Create a string buffer for building the output
 
         for i, attr in enumerate(attrs):
             attrKey = attr.key
-            attrValue = attr.value
             if attrKey in self.attrKeyWords.keys():
                 attrKey = self.attrKeyWords[attrKey]  # Apply keyword mapping
 
@@ -70,27 +68,26 @@ class ZenuiCompiler:
 
             # Add space only if it's not the first or last attribute
             if i == 0 or i == len(attrs) - 1:
-                attr_parts.append(f' {attrKey}="{attrValue}"')
+                s.write(f' {attrKey}="{attrValue}"')
             else:
-                attr_parts.append(f'{attrKey}="{attrValue}" ')
+                s.write(f'{attrKey}="{attrValue}" ')
 
-        return "".join(attr_parts)
+        res = s.getvalue()
+        s.close()
+        return res
+
 
     def compile_children(self, children):
-        """Recursively compiles a list of children elements.
-
-        Args:
-            children: A list of Zenui Element objects.
-
-        Returns:
-            A combined string of the compiled HTML for all the children.
         """
-
+            compiles children recuresivly
+        """
         if not children:
             return
 
-        parts = []
+        s = io.StringIO()
         for child in children:
-            parts.append(self.compile(child, parent=False))  # Recursively compile each child
+            s.write(self.compile(child, parent=False))  # Recursively compile each child
 
-        return "".join(parts)
+        res = s.getvalue()
+        s.close()
+        return res

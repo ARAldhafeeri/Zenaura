@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
+import uuid
+from EventEmitterPy.emitter import EventEmitter
+from abc import abstractmethod
 from zenui.zenui_dom import zenui_dom
-import random
-import time
 
-def generate_simple_uuid():
-    random_part = hex(random.getrandbits(128))[2:]  # 128-bit random number
-    timestamp_part = hex(int(time.time()))[2:]
-    return f'{timestamp_part}-{random_part}' 
 
+# global event emitter accessible by all component classes
+globalEmitter = EventEmitter() 
 
 class ZenUIComponent:
     def __init_subclass__(cls):
         super().__init_subclass__()
-        cls.componentId = generate_simple_uuid()
+        cls.componentId = uuid.uuid4().hex
+    # Make the global EventEmitter accessible within the component class 
+    globalEmitter = globalEmitter  
     global_state = {}
 
     
@@ -34,7 +35,12 @@ class ZenUIComponent:
 
     def set_state(self, state):
         self._state = state  # Update the internal state
+
+    def get_local_emiter(self):
+        # create local event emitter
+        return EventEmitter()
     
+    @abstractmethod
     def element():
         pass
 
