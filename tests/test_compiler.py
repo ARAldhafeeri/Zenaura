@@ -34,15 +34,6 @@ class ZenuiCompilerTests(unittest.TestCase):
         result = compiler.compile(elm)
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
-    def test_compile_with_children(self):
-        div = Element("div")
-        span = Element("span", [])
-        span.children.append(Element(name="text",children=["Hello"]))
-        div.children.append(span)
-        compiler = ZenuiCompiler()
-        result = compiler.compile(div)
-        self.assertEqual(result, "<div><span>Hello</span></div>")
-
     def test_process_attributes(self):
         attrs = [Attribute("id", "my-element"), Attribute("styles", "important")]
         compiler = ZenuiCompiler()
@@ -50,4 +41,14 @@ class ZenuiCompilerTests(unittest.TestCase):
         #  note here space is important <div id=....
         self.assertEqual(result, ' id="my-element" class="important"')
 
+    def test_compile_with_children(self):
+        div = Element("div")
+        span = Element("span")
+        span.children = [
+            Element(name="text",children=["Hello"]), 
+        ]
+        div.children.append(span)
+        compiler = ZenuiCompiler()
+        result = compiler.compile(div)
+        self.assertEqual(result, "<div><span>Hello</span></div>")
     

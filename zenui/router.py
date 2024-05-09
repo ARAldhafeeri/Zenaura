@@ -35,8 +35,6 @@ class Router:
 
     def handlelocation(self) -> None:
         path = window.location.pathname
-        print("path",path)
-        print("paths",self.paths)
         if path in self.paths:
             [comp, title] = self.routes[path]
             zenui_dom.render(comp)

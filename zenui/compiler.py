@@ -1,13 +1,48 @@
 from zenui.tags import Element, Attribute
 from typing import List 
 import io 
+import html
+import re
+import bleach
+
 class ZenuiCompiler:
     def __init__(self):
         self.attrKeyWords= {
              "styles" : "class"
         }
 
-    def compile(self, elm: Element, componentName=None):
+
+    def sanitize(self, user_input, allowed_tags=None, allowed_attributes=None):
+        """
+        Sanitizes user input to prevent various injection attacks.
+
+        Args:
+            user_input (str): The raw user input to sanitize.
+            allowed_tags (list): A list of allowed HTML tags (e.g., ['p', 'br', 'strong']).
+            allowed_attributes (dict): A dictionary mapping allowed tags to their allowed 
+                                    attributes (e.g., {'img': ['src', 'alt']}).  
+
+        Returns:
+            str: The sanitized input.
+        """
+
+        # # 1. Input Validation (using regular expressions for flexibility)
+        # safe_chars = re.compile(r"[^\w\s\.,\-+=@#$%^&*()]")  # Customize this allowed character list
+
+        # if not safe_chars.sub("", user_input) == user_input:  
+        #     raise ValueError("Invalid characters detected in input")
+
+        # 2. HTML Sanitization (if necessary)
+        user_input = str(user_input)
+        if allowed_tags:
+            safe_html = html.escape(user_input)  # Escape all HTML special characters initially
+            safe_html = bleach.clean(safe_html, tags=allowed_tags, attributes=allowed_attributes) 
+        else:
+            safe_html = html.escape(user_input)
+
+        return safe_html 
+    
+    def compile(self, elm: Element, componentName=None, zenui_dom_mode=False):
         """Compiles a Zenui Element into its corresponding HTML representation.
 
         Args:
@@ -21,22 +56,33 @@ class ZenuiCompiler:
             this must be the output for every event handler
             otherwise the component event handler will not work.
             passed optionally as None for testing purposes.
+            zenui_dom_mode : adds unique attribute for virtual dom 
+            data-zenui-id=uuid4
 
         Returns:
             A string containing the compiled HTML.
         """
-
+        if not elm:
+            return 
+        
+        if not isinstance(elm, Element):
+            return self.sanitize(elm)
+        
+        if elm.name == "text":
+            return self.sanitize(elm.children[0])
+        
         tag = elm.name 
 
-        if elm.name == "text":
-            # Special handling for text elements - directly return the text content
-            return str(elm.children[0]) 
-
-        attributes = self.process_attributes(elm.attributes, componentName) 
+        attributes = self.process_attributes(elm.attributes, componentName)
         children = self.compile_children(elm.children)
 
+        zenui_id = ""
+
+        if isinstance(elm, Element) and zenui_dom_mode:
+            zenui_id = f'data-zenui-id="{elm.elementId}"'
+
         # Construct the HTML tag including attributes and children
-        return f"<{tag}{attributes}>{children if children else ''}</{tag}>" 
+        return f"<{tag}{zenui_id}{attributes}>{children if children else ''}</{tag}>" 
 
     def process_attributes(self, attrs: List[Attribute], componentName=None) -> str:
         """Processes a list of Attributes, converting them to HTML-formatted attributes.

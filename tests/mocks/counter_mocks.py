@@ -48,34 +48,38 @@ class Counter(ZenUIComponent):
 	def element(self) -> Element:
 		# header
 		header =  Element(name="h1")
-		header.attributes.append(Attribute(key="styles", value=BTN_STYLES.h1))
-		header.children.append(Element(name="text", children=[f"Counter: {self.get_state()}"]))
+		header.attributes = [
+			Attribute(key="styles", value=BTN_STYLES.h1)
+		]
+		header.children = [
+			Element(name="text", children=[f"Counter: {self.get_state()}"])
+		]
 
 		#  btn controls
 
-		incBtn = self.create_button(
-			"Increase", 
-			self.increment, 
-		)
+		incBtn = self.create_button( "Increase",  self.increment )
 
-		decBtn = self.create_button(
-			"Decrease", 
-			self.decrease, 
-		)
+		decBtn = self.create_button( "Decrease", self.decrease )
 
 		# controls div
 		controls = 	Element(name="div")
-		controls.attributes.append(
+		controls.attributes = [
 			Attribute(key="styles", value=BTN_STYLES.controls)
-		)
-		controls.children.append(decBtn)
-		controls.children.append(incBtn)
+		]
+		controls.children = [
+			decBtn,
+			incBtn
+		]
 
 		# component
 		comp = Element(name="div")
 
-		comp.attributes.append(Attribute(key="styles", value=BTN_STYLES.container))
-		comp.children.append(header)
-		comp.children.append(controls)
+		comp.attributes = [
+			Attribute(key="styles", value=BTN_STYLES.container)
+		]
+		comp.children = [
+			header, 
+			controls
+		]
 
 		return comp

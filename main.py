@@ -4,9 +4,6 @@ from typing import Optional
 from zenui.tags import Element, Attribute
 from zenui.router import Router, Route
 
-from pyscript import document, display
-from js import console
-
 class SimpleUi(ZenUIComponent):
     def element(self):
         div = Element(name="div")
