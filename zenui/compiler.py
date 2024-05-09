@@ -82,7 +82,7 @@ class ZenuiCompiler:
             zenui_id = f'data-zenui-id="{elm.elementId}"'
 
         # Construct the HTML tag including attributes and children
-        return f"<{tag}{zenui_id}{attributes}>{children if children else ''}</{tag}>" 
+        return f"<{tag} {zenui_id}{attributes}>{children if children else ''}</{tag}>" 
 
     def process_attributes(self, attrs: List[Attribute], componentName=None) -> str:
         """Processes a list of Attributes, converting them to HTML-formatted attributes.
@@ -101,14 +101,6 @@ class ZenuiCompiler:
             attrValue = attr.value
             if attrKey in self.attrKeyWords.keys():
                 attrKey = self.attrKeyWords[attrKey]  # Apply keyword mapping
-
-            #format event handlers
-            if componentName and ("on" in attrKey):
-                # transcrypt expect the following main.className.eventHandlerName()
-                # lower first letter of component name
-                # add the rest
-                componentName = componentName[0].lower() + componentName[1:]
-                attrValue = f"main.{componentName}.{attrValue.__name__}()"
 
             # Add space only if it's not the first or last attribute
             if i == 0 or i == len(attrs) - 1:

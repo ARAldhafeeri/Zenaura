@@ -3,6 +3,7 @@ from typing import List
 from zenui.zenui_dom import zenui_dom
 from zenui.tags import Element
 from pyscript import document, window
+from zenui.component import ZenUIComponent
 
 class NotFound(ZenUIComponent):
 
@@ -27,18 +28,27 @@ class Router:
         # key -> path , value -> [comp, document.title]
         self.routes = {}
         self.paths = []
-        window.onpopstate = self.handlelocation()
+        # Call handlelocation once to handle the initial route
+        window.onpopstate = self.handlelocation
+        self.handlelocation() 
 
-    def addRoute(self, route : Route) -> None:
-        self.routes[route.path] = [route.comp, route.title]
-        self.paths.append(route.path)
+    def navigate(self, path) -> None:
+        if path in self.paths:
+            [comp, title] = self.routes[path]
+            zenui_dom.mount(comp)  # Mount the component
+            document.title = title  # Update the title
+            window.history.pushState(path, title, path) # Update browser history 
+        else:
+            print("Invalid Path")  # Handle invalid path (optional)
 
     def handlelocation(self) -> None:
         path = window.location.pathname
         if path in self.paths:
             [comp, title] = self.routes[path]
-            zenui_dom.render(comp)
-            return
-        zenui_dom.render(notFound)
-
-
+            zenui_dom.mount(comp)
+            document.title = title
+        else:
+            zenui_dom.mount(notFound)
+    def addRoute(self, route : Route) -> None:
+        self.routes[route.path] = [route.comp, route.title]
+        self.paths.append(route.path)

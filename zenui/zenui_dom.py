@@ -5,10 +5,12 @@ from zenui.tags import Element
 from collections import defaultdict
 compiler = ZenuiCompiler()
 
+compiler = ZenuiCompiler()
+
 class ZenUIDom:
 
     def __init__(self):
-        self.zen_dom_table = defaultdict(None)
+        self.zen_dom_table = defaultdict(str)
 
 
     def render(self, comp ) -> None:
@@ -39,7 +41,8 @@ class ZenUIDom:
         comp_tree = comp.element()
         compiled_comp = compiler.compile(
             comp_tree, 
-            componentName=comp.__class__.__name__, 
+            componentName=comp.__class__.__name__,
+            zenui_dom_mode=True
         )
         dom_element = document.getElementById("root") 
         dom_element.innerHTML = compiled_comp
