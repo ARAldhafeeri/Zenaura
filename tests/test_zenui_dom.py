@@ -1,7 +1,7 @@
 import sys
 import unittest
 from unittest.mock import patch, MagicMock
-from zenui.tags import Attribute, Element
+from zenui.tags import Attribute, Node
 from tests.mocks.browser_mocks import MockDocument, MockWindow
 
 sys.modules["pyscript"] = MagicMock()
@@ -26,17 +26,17 @@ class TestComponent(unittest.TestCase):
         prev = self.zenui_dom.zen_dom_table[self.counter.componentId]
         self.assertTrue(prev)
         # mount is called on root div
-        exists = self.document.getElementById("root")
+        exists = self.document.getNodeById("root")
         self.assertTrue(exists)
 	
     def test_search(self):
-        prevTree = self.counter.element()
+        prevTree = self.counter.node()
         # simulate search table mount manually for testing
         self.zenui_dom.zen_dom_table[self.counter.componentId] = prevTree
         self.counter.set_state("test")
-        newTree = self.counter.element()
+        newTree = self.counter.node()
         diff = self.zenui_dom.search(prevTree, newTree)
         print(diff)
         # hader location on tree, effected by change
-        changedNodeId = prevTree.elementId
+        changedNodeId = prevTree.nodeId
         self.assertEqual(changedNodeId, diff[0][0])

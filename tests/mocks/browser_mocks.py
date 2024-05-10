@@ -1,30 +1,30 @@
 import unittest.mock
 from collections import defaultdict
-from zenui.tags import Element
+from zenui.tags import Node
 
 
-class MockElement:
+class MockNode:
     def __init__(self, tagName=None, innerHTML=None):
         self.tagName = tagName
         self.innerHTML = None
 
-root = MockElement()
+root = MockNode()
 
 class MockDocument:
     def __init__(self):
-        self.elements = defaultdict(lambda: MockElement)
-        self.elements["root"] = root
-    def getElementById(self, element_id):
-        return self.elements.get(element_id)
+        self.nodes = defaultdict(lambda: MockNode)
+        self.nodes["root"] = root
+    def getNodeById(self, node_id):
+        return self.nodes.get(node_id)
 
-    def createElement(self, tag_name):
-        element = MockElement()
-        return element
+    def createNode(self, tag_name):
+        node = MockNode()
+        return node
     
     def querySelector(self, query:str):
         query = query.replace("[", "").replace("]", "").replace('"', "").split("=")
         id = query[-1]
-        return self.elements[id]
+        return self.nodes[id]
 
 class MockWindow:
     def __init__(self):

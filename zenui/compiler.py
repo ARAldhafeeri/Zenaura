@@ -1,4 +1,4 @@
-from zenui.tags import Element, Attribute
+from zenui.tags import Node, Attribute
 from typing import List 
 import io 
 import html
@@ -42,11 +42,11 @@ class ZenuiCompiler:
 
         return safe_html 
     
-    def compile(self, elm: Element, componentName=None, zenui_dom_mode=False):
-        """Compiles a Zenui Element into its corresponding HTML representation.
+    def compile(self, elm: Node, componentName=None, zenui_dom_mode=False):
+        """Compiles a Zenui Node into its corresponding HTML representation.
 
         Args:
-            elm: The Zenui Element object to compile.
+            elm: The Zenui Node object to compile.
             parent: true by default, zenui set data-zenui-id to every parent component
             the data-zenui-id will be used in zenui-dom functionality
             in tests, if not testing zenui-dom, set this to false.
@@ -62,7 +62,7 @@ class ZenuiCompiler:
         Returns:
             A string containing the compiled HTML.
         """
-        if not isinstance(elm, Element):
+        if not isinstance(elm, Node):
             return elm[0]
 
         tag = elm.name 
@@ -70,10 +70,10 @@ class ZenuiCompiler:
         zenui_id = ""
 
         #  assign unique id for zenui dom
-        if isinstance(elm, Element) and zenui_dom_mode:
-            zenui_id = f'data-zenui-id="{elm.elementId}"'
+        if isinstance(elm, Node) and zenui_dom_mode:
+            zenui_id = f'data-zenui-id="{elm.nodeId}"'
 
-        # get element attributes
+        # get node attributes
         attributes = self.process_attributes(elm.attributes, componentName)
 
         # start tag
@@ -81,7 +81,7 @@ class ZenuiCompiler:
 
         # get children
         for child in elm.children:
-            if  isinstance(child, Element):
+            if  isinstance(child, Node):
                 html += self.compile(child, zenui_dom_mode=zenui_dom_mode)
             else:
                 if isinstance(child, list):

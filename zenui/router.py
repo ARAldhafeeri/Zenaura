@@ -1,15 +1,15 @@
 from dataclasses import dataclass
 from typing import List
 from zenui.zenui_dom import zenui_dom
-from zenui.tags import Element
+from zenui.tags import Node
 from pyscript import document, window
 from zenui.component import ZenUIComponent
 
 class NotFound(ZenUIComponent):
 
-    def element(self):
-        em = Element("div")
-        em.children.append(Element(name="text", children=["page not found"]))
+    def node(self):
+        em = Node("div")
+        em.children.append(Node(name="text", children=["page not found"]))
         return em
     
 notFound = NotFound()

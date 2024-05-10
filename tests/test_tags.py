@@ -1,4 +1,4 @@
-from zenui.tags import Element, Attribute
+from zenui.tags import Node, Attribute, Blueprint
 import unittest
 
 class DataclassTests(unittest.TestCase):
@@ -9,21 +9,33 @@ class DataclassTests(unittest.TestCase):
         self.assertEqual(attribute.key, "test")
         self.assertTrue(isinstance(attribute, Attribute))
 
-    def test_element_creation(self):
-        child = Element(name="test")
-        element = Element(name="div")
-        element.children.append(child)
-        print(element)
-        element.attributes.append(Attribute(key="test", value="test"))
+    def test_node_creation(self):
+        child = Node(name="test")
+        node = Node(name="div")
+        node.children.append(child)
+        print(node)
+        node.attributes.append(Attribute(key="test", value="test"))
         self.assertEqual(child.name, "test")
-        self.assertEqual(len(element.children), 1)
-        self.assertEqual(len(element.attributes), 1)
-        self.assertTrue(isinstance(element.children[0], Element ))
-        self.assertTrue(isinstance(element.attributes[0], Attribute))
+        self.assertEqual(len(node.children), 1)
+        self.assertEqual(len(node.attributes), 1)
+        self.assertTrue(isinstance(node.children[0], Node ))
+        self.assertTrue(isinstance(node.attributes[0], Attribute))
 
-    def test_element_has_elementId(self):
-        child = Element(name="test")
-        parent = Element(name="div")
+    def test_node_has_nodeId(self):
+        child = Node(name="test")
+        parent = Node(name="div")
         parent.children.append(child)
-        self.assertTrue(child.elementId)
-        self.assertTrue(parent.elementId)
+        self.assertTrue(child.nodeId)
+        self.assertTrue(parent.nodeId)
+
+    def test_node_builder(self):
+        node = Blueprint.div \
+            .with_attribute("test", "test") \
+            .with_child(
+                Node(name="test")
+            ).build()
+        
+        self.assertEqual(len(node.children), 1)
+        self.assertEqual(len(node.attributes), 1)
+        self.assertTrue(isinstance(node.children[0], Node ))
+        self.assertTrue(isinstance(node.attributes[0], Attribute))

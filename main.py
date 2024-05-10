@@ -1,14 +1,14 @@
 from zenui.component import ZenUIComponent
 from dataclasses import dataclass
 from typing import Optional
-from zenui.tags import Element, Attribute
+from zenui.tags import Node, Attribute
 from zenui.router import Router, Route
 
 class SimpleUi(ZenUIComponent):
-    def element(self):
-        div = Element(name="div")
+    def node(self):
+        div = Node(name="div")
         div.attributes = [Attribute(key="test", value="test")]
-        div.children.append(Element(name="text", children=["test"]))
+        div.children.append(Node(name="text", children=["test"]))
         return div
 
 simpleUi = SimpleUi()

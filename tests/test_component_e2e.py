@@ -1,7 +1,7 @@
 import sys
 import unittest
 from unittest.mock import patch, MagicMock
-from zenui.tags import Attribute, Element
+from zenui.tags import Attribute, Node
 from tests.mocks.browser_mocks import MockDocument, MockWindow
 
 sys.modules["pyscript"] = MagicMock()
@@ -46,29 +46,29 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(state.count, -1)
 	
 
-	def test_element_structure(self):
-		rendered_element = self.counter.element()
+	def test_node_structure(self):
+		rendered_node = self.counter.node()
 		# Check for top-level container and attributes 
-		self.assertEqual(rendered_element.name, 'div')
+		self.assertEqual(rendered_node.name, 'div')
 		# Ensure h1 header is present
-		header = rendered_element.children[0]
+		header = rendered_node.children[0]
 		self.assertEqual(header.name, 'h1')
 
 		# Check controls div
-		controls = rendered_element.children[1]
+		controls = rendered_node.children[1]
 		self.assertEqual(controls.name, 'div')
-		self.assertEqual(self.btnstyles.controls, rendered_element.children[1].attributes[0].value)
+		self.assertEqual(self.btnstyles.controls, rendered_node.children[1].attributes[0].value)
 
-		# check parent element and elements have unique element Id
-		curr = [rendered_element]
+		# check parent node and nodes have unique node Id
+		curr = [rendered_node]
 		ids = []
 		while curr:
 			node = curr.pop()
-			self.assertTrue(node.elementId)
-			self.assertNotIn(node.elementId, ids)
-			ids.append(node.elementId)
+			self.assertTrue(node.nodeId)
+			self.assertNotIn(node.nodeId, ids)
+			ids.append(node.nodeId)
 			for i in node.children:
-				if isinstance(i, Element):
+				if isinstance(i, Node):
 					curr.append(i)
 
 

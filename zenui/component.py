@@ -22,8 +22,8 @@ class ZenUIComponent:
     @state.setter
     def value(self, value):
         self.set_state(value)
-        #  re-render call Comp.element(self, self.get_state)
-        zenui_dom.render(zenui_dom.curr_mounted_element)
+        #  re-render call Comp.node(self, self.get_state)
+        zenui_dom.render(zenui_dom.curr_mounted_node)
 
     def get_state(self):
         return self._state
@@ -32,6 +32,6 @@ class ZenUIComponent:
         self._state = state  # Update the internal state
     
     @abstractmethod
-    def element():
+    def node():
         pass
 

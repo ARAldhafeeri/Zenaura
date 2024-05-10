@@ -1,16 +1,16 @@
-from zenui.tags import Element, Child, Attribute
+from zenui.tags import Node, Child, Attribute
 from zenui.compiler import ZenuiCompiler
 import unittest
 
 class ZenuiCompilerTests(unittest.TestCase):
-    def test_compile_simple_element(self):
-        elm = Element("div")
+    def test_compile_simple_node(self):
+        elm = Node("div")
         compiler = ZenuiCompiler()
         result = compiler.compile(elm)
         self.assertEqual(result, "<div></div>")
 
     def test_compile_with_attributes(self):
-        elm = Element("p")
+        elm = Node("p")
         elm.children.append(Attribute("styles", "my-paragraph"))
         elm.children.append(Attribute("id", "main-content"))
         compiler = ZenuiCompiler()
@@ -19,7 +19,7 @@ class ZenuiCompilerTests(unittest.TestCase):
 
     
     def test_compile_with_attributes(self):
-        elm = Element("p")
+        elm = Node("p")
         elm.attributes.append(Attribute("styles", "my-paragraph"))
         elm.attributes.append(Attribute("id", "main-content"))
         compiler = ZenuiCompiler()
@@ -27,7 +27,7 @@ class ZenuiCompilerTests(unittest.TestCase):
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
     def test_compile_with_attributes(self):
-        elm = Element("p")
+        elm = Node("p")
         elm.attributes.append(Attribute("styles", "my-paragraph"))
         elm.attributes.append(Attribute("id", "main-content"))
         compiler = ZenuiCompiler()
@@ -35,15 +35,15 @@ class ZenuiCompilerTests(unittest.TestCase):
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
     def test_process_attributes(self):
-        attrs = [Attribute("id", "my-element"), Attribute("styles", "important")]
+        attrs = [Attribute("id", "my-node"), Attribute("styles", "important")]
         compiler = ZenuiCompiler()
         result = compiler.process_attributes(attrs)
         #  note here space is important <div id=....
-        self.assertEqual(result, ' id="my-element" class="important"')
+        self.assertEqual(result, ' id="my-node" class="important"')
 
     def test_compile_with_children(self):
-        div = Element("div")
-        span = Element("span")
+        div = Node("div")
+        span = Node("span")
         span.children = [
             "Hello"
         ]
