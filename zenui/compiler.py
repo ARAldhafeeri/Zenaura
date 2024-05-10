@@ -77,20 +77,19 @@ class ZenuiCompiler:
         attributes = self.process_attributes(elm.attributes, componentName)
 
         # start tag
-        html = f"<{tag} {zenui_id}{attributes}>"
+        html = f"<{tag}{zenui_id}{attributes}>"
 
         # get children
         for child in elm.children:
             if  isinstance(child, Element):
-                html += self.compile(child, zenui_dom_mode=True)
-                html += f"</{child.name}>"
+                html += self.compile(child, zenui_dom_mode=zenui_dom_mode)
             else:
                 if isinstance(child, list):
                     html += self.sanitize(child[0])
                 else: 
                     html += self.sanitize(child)
                     
-        html += f'</${tag}>'
+        html += f'</{tag}>'
 
         # finish tag
         return html

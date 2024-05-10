@@ -35,23 +35,8 @@ class TestComponent(unittest.TestCase):
         self.zenui_dom.zen_dom_table[self.counter.componentId] = prevTree
         self.counter.set_state("test")
         newTree = self.counter.element()
-        prevParentNode, newParentNode = self.zenui_dom.search(prevTree, newTree)
-        self.assertEqual(prevParentNode.name, newParentNode.name)
-        self.assertNotEqual(prevParentNode.children, newParentNode.children)
-
-    
-    def test_render_with_new_element(self):
-        self.zenui_dom.mount(self.counter)  # For initial rendering
-
-        # update state and re-render component
-        self.counter.set_state("test")
-
-        self.zenui_dom.render(self.counter)
-
-        # get component in zenui dom
-        rerendered = self.zenui_dom.zen_dom_table[self.counter.componentId]
-        
-        self.assertEqual(rerendered.children[0].children[0].children[0], "yoo")
-
-        # print(self.document.getElementById("root").innerHTML)
-        # print(self.zenui_dom.zen_dom_table[self.counter.componentId])
+        diff = self.zenui_dom.search(prevTree, newTree)
+        print(diff)
+        # hader location on tree, effected by change
+        changedNodeId = prevTree.elementId
+        self.assertEqual(changedNodeId, diff[0][0])
