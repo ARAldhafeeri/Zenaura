@@ -20,6 +20,8 @@ class Route:
         self.title = title
         self.path = path
         self.comp = comp
+        handler: Optional[Callable] = None  # For optional route-specific logic
+
 
 # router 
 
@@ -30,7 +32,6 @@ class Router:
         self.paths = []
         # Call handlelocation once to handle the initial route
         window.onpopstate = self.handlelocation
-        self.handlelocation() 
 
     def navigate(self, path) -> None:
         if path in self.paths:
@@ -43,12 +44,14 @@ class Router:
 
     def handlelocation(self) -> None:
         path = window.location.pathname
+        print(path, self.paths)
         if path in self.paths:
             [comp, title] = self.routes[path]
             zenui_dom.mount(comp)
             document.title = title
         else:
             zenui_dom.mount(notFound)
+
     def addRoute(self, route : Route) -> None:
         self.routes[route.path] = [route.comp, route.title]
         self.paths.append(route.path)

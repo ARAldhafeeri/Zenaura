@@ -3,7 +3,6 @@ from zenui.compiler import ZenuiCompiler
 from pyscript import document 
 from zenui.tags import Element
 from collections import defaultdict
-compiler = ZenuiCompiler()
 
 compiler = ZenuiCompiler()
 
@@ -18,17 +17,19 @@ class ZenUIDom:
             recieve instance of ZenUIComponent child, rerender it.
         """
         prevTree = self.zen_dom_table[comp.componentId]
-        k = isinstance(prevTree, Element)
-        print(k, type(prevTree))
         newTree = comp.element()
-        oldNode, newNode = self.search(prevTree, newTree)
+        diff = self.search(prevTree, newTree)
 
-        compiled_comp = compiler.compile(
-            newNode.children, 
-            componentName=comp.__class__.__name__,
-            zenui_dom_mode=True
-        )
-        document.querySelector(f'[data-zenui-id="{oldNode.elementId}"]').outerHTML  = compiled_comp
+        while diff:
+            prevNodeId, newNodeChildren = diff.pop()
+            compiled_comp = compiler.compile(
+                newNodeChildren, 
+                componentName=comp.__class__.__name__,
+                zenui_dom_mode=True
+            )
+
+            document.querySelector(f'[data-zenui-id="{prevNodeId}"]').innerHTML  = compiled_comp
+        self.zen_dom_table[comp.componentId] = prevTree       
 
     def mount(self, comp  ) -> None:
         """
@@ -37,6 +38,7 @@ class ZenUIDom:
             2. compiles html
             3. attach container to root node 
             4. used in zenui simple router to mount elements
+            5. create blueprint for diffing algorithm in re-render mode.
         """
         comp_tree = comp.element()
         compiled_comp = compiler.compile(
@@ -52,32 +54,48 @@ class ZenUIDom:
         """
             receive old, new component tree
             compare the old to new.
-            return parent of deepest level where
-            change in childreen tree ocurred
-            old : component old tree before change
-            new : component new tree after change
-            returns: deepest level of change [newNode, oldNode ]
+            return a stack of all diff nodes
+            in the following format
+           [ [prevNode.elementId, newNode] ]
         """
-        max_depth = -1
-        max_level_parent_old = prevComponentTree
-        max_level_parent_new = newComponentTree
-        def helper(prevTreeNode : Element, newTreeNode : Element, depth):
-            nonlocal max_depth, max_level_parent_old, max_level_parent_new
+        diff = []
+        def helper(prevTreeNode : Element, newTreeNode : Element):
+            if not isinstance(prevTreeNode, Element):
+                return
+            nonlocal diff
+            # base case prevTreeNode newTreeNode is none
             if (not prevTreeNode) or (not newTreeNode):
                 return
+            #  base case: not element instance
             if (not isinstance(prevTreeNode, Element )) or (not isinstance(newTreeNode, Element )):
-                return  
-            if prevTreeNode.children != newTreeNode.children:
-                if depth > max_depth:
-                    max_depth = depth
-                    max_level_parent_new = newTreeNode
-                    max_level_parent_old = prevTreeNode
-            for prev, curr in zip(prevTreeNode.children, newTreeNode.children):
-                helper(prev, curr, depth + 1)
-            
-        helper(prevComponentTree, newComponentTree, 0)
-        return [max_level_parent_new, max_level_parent_old]
+                return 
+            # base case find deepest level of change for effecient dom updates
+            # if only text changed ignore
+            if (prevTreeNode.children != newTreeNode.children) :
+                diff.append([prevTreeNode.elementId, newTreeNode])
 
+            helper(prevTreeNode.children, newTreeNode.children)
+            
+        helper(prevComponentTree, newComponentTree)
+        return diff
+
+    # def update(self, prevTree, prevNode, newNode):
+    #     """
+    #         recieve previous zenui dom tree
+    #         update the previous tree changed node children
+    #         with the new node children
+    #         return the previous tree
+    #         this opration is done after successfully updating the real dom
+    #     """
+    #     stack = [prevTree]
+    #     while stack:
+    #         curr = stack.pop()
+    #         if isinstance(curr, Element):
+    #             if curr.elementId == prevNode.elementId:
+    #                 curr.children = newNode.children
+    #             for i in curr.children:
+    #                 stack.append(i)
+    #     return prevTree
 
 zenui_dom = ZenUIDom()
 

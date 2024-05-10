@@ -62,27 +62,38 @@ class ZenuiCompiler:
         Returns:
             A string containing the compiled HTML.
         """
-        if not elm:
-            return 
-        
         if not isinstance(elm, Element):
-            return self.sanitize(elm)
-        
-        if elm.name == "text":
-            return self.sanitize(elm.children[0])
-        
-        tag = elm.name 
+            return elm[0]
 
-        attributes = self.process_attributes(elm.attributes, componentName)
-        children = self.compile_children(elm.children)
+        tag = elm.name 
 
         zenui_id = ""
 
+        #  assign unique id for zenui dom
         if isinstance(elm, Element) and zenui_dom_mode:
             zenui_id = f'data-zenui-id="{elm.elementId}"'
 
-        # Construct the HTML tag including attributes and children
-        return f"<{tag} {zenui_id}{attributes}>{children if children else ''}</{tag}>" 
+        # get element attributes
+        attributes = self.process_attributes(elm.attributes, componentName)
+
+        # start tag
+        html = f"<{tag} {zenui_id}{attributes}>"
+
+        # get children
+        for child in elm.children:
+            if  isinstance(child, Element):
+                html += self.compile(child, zenui_dom_mode=True)
+                html += f"</{child.name}>"
+            else:
+                if isinstance(child, list):
+                    html += self.sanitize(child[0])
+                else: 
+                    html += self.sanitize(child)
+                    
+        html += f'</${tag}>'
+
+        # finish tag
+        return html
 
     def process_attributes(self, attrs: List[Attribute], componentName=None) -> str:
         """Processes a list of Attributes, converting them to HTML-formatted attributes.
@@ -107,22 +118,6 @@ class ZenuiCompiler:
                 s.write(f' {attrKey}="{attrValue}"')
             else:
                 s.write(f'{attrKey}="{attrValue}" ')
-
-        res = s.getvalue()
-        s.close()
-        return res
-
-
-    def compile_children(self, children):
-        """
-            compiles children recuresivly
-        """
-        if not children:
-            return
-
-        s = io.StringIO()
-        for child in children:
-            s.write(self.compile(child))  # Recursively compile each child
 
         res = s.getvalue()
         s.close()
