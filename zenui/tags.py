@@ -28,13 +28,40 @@ class TagBuilder:
     def __init__(self, name : str) -> None:
         self.node = Node(name)
     
-    def with_attribute(self, key : str, value : any):
+    def with_attribute(self, key : str, value : any) -> "TagBuilder":
         self.node.attributes.append(Attribute(key,value))
         return self
     
-    def with_child(self, child : Node):
+    def with_child(self, child : Node) -> "TagBuilder":
         self.node.children.append(child)
         return self 
+    
+    def with_styles(self, styles: dict) -> "TagBuilder":
+        style_str = ";".join([f"{k}:{v}" for k, v in styles.items()])
+        self.element.attributes.append(Attribute("style", style_str))
+        return self
+    
+    def with_classes(self, *class_names: str) -> "TagBuilder":
+        """Adds multiple class names to the element"""
+        for class_name in class_names:
+            self.with_class(class_name)
+        return self
+    
+    def with_class(self, class_name: str) -> "TagBuilder":
+        """Adds a single class name to the element"""
+        existing_classes = ""
+        for i in self.element.attributes:
+            if i =="class":
+                existing_classes = i
+                break
+        class_list = existing_classes.split(" ")
+
+        if class_name not in class_list:
+            class_list.append(class_name)
+
+        self.element.attributes["class"] = " ".join(class_list)
+        return self
+
     
     def build(self):
         return self.node
