@@ -38,7 +38,7 @@ class TagBuilder:
     
     def with_styles(self, styles: dict) -> "TagBuilder":
         style_str = ";".join([f"{k}:{v}" for k, v in styles.items()])
-        self.element.attributes.append(Attribute("style", style_str))
+        self.node.attributes.append(Attribute("style", style_str))
         return self
     
     def with_classes(self, *class_names: str) -> "TagBuilder":
@@ -49,17 +49,13 @@ class TagBuilder:
     
     def with_class(self, class_name: str) -> "TagBuilder":
         """Adds a single class name to the element"""
-        existing_classes = ""
-        for i in self.element.attributes:
-            if i =="class":
-                existing_classes = i
-                break
-        class_list = existing_classes.split(" ")
-
-        if class_name not in class_list:
-            class_list.append(class_name)
-
-        self.element.attributes["class"] = " ".join(class_list)
+        for i in self.node.attributes:
+            if i.key =="class":
+                if class_name not in i.value:
+                    i.value = i.value + " " +  class_name
+                    return self
+        self.node.attributes.append(Attribute("class", class_name))
+       
         return self
 
     
@@ -71,121 +67,118 @@ class TagBuilder:
 
 class HTMLTags:
     """
-        html tags exported as TagBuilder
-        for faster coding
-        exported as Blueprint
+        html tags factory
     """
-    html = TagBuilder("html")
-    head = TagBuilder("head")
-    body = TagBuilder("body")
+    def __init__(self):
+        self.html =  TagBuilder("html")
+        self.head = TagBuilder("head")
+        self.body = TagBuilder("body")
 
-    # Core structural tags
-    a = TagBuilder("a")
-    div = TagBuilder("div")
-    p = TagBuilder("p")
-    img = TagBuilder("img")
-    span = TagBuilder("span")
-    h1 = TagBuilder("h1") 
-    h2 = TagBuilder("h2")
-    h3 = TagBuilder("h3")
-    h4 = TagBuilder("h4")
-    h5 = TagBuilder("h5")
-    h6 = TagBuilder("h6")
+        # Core structural tags
+        self.a = TagBuilder("a")
+        self.div = TagBuilder("div")
+        self.p = TagBuilder("p")
+        self.img = TagBuilder("img")
+        self.span = TagBuilder("span")
+        self.h1 = TagBuilder("h1") 
+        self.h2 = TagBuilder("h2")
+        self.h3 = TagBuilder("h3")
+        self.h4 = TagBuilder("h4")
+        self.h5 = TagBuilder("h5")
+        self.h6 = TagBuilder("h6")
 
-    # Text formatting tags
-    abbr = TagBuilder("abbr")
-    acronym = TagBuilder("acronym")  
-    address = TagBuilder("address")
-    b = TagBuilder("b")
-    bdi = TagBuilder("bdi")
-    bdo = TagBuilder("bdo")
-    blockquote = TagBuilder("blockquote")
-    cite = TagBuilder("cite")
-    code = TagBuilder("code")
-    del_ = TagBuilder("del")  # Using del_ since 'del' is a Python keyword
-    dfn = TagBuilder("dfn")
-    em = TagBuilder("em")
-    i = TagBuilder("i")
-    ins = TagBuilder("ins")
-    kbd = TagBuilder("kbd")
-    mark = TagBuilder("mark")
-    pre = TagBuilder("pre")
-    q = TagBuilder("q")
-    rp = TagBuilder("rp")
-    rt = TagBuilder("rt")
-    ruby = TagBuilder("ruby")
-    s = TagBuilder("s")
-    samp = TagBuilder("samp")
-    small = TagBuilder("small")
-    strong = TagBuilder("strong")
-    sub = TagBuilder("sub")
-    sup = TagBuilder("sup")
-    time = TagBuilder("time")
-    u = TagBuilder("u")
-    var = TagBuilder("var")
+        # Text formatting tags
+        self.abbr = TagBuilder("abbr")
+        self.acronym = TagBuilder("acronym")  
+        self.address = TagBuilder("address")
+        self.b = TagBuilder("b")
+        self.bdi = TagBuilder("bdi")
+        self.bdo = TagBuilder("bdo")
+        self.blockquote = TagBuilder("blockquote")
+        self.cite = TagBuilder("cite")
+        self.code = TagBuilder("code")
+        self.del_ = TagBuilder("del")  # Using del_ since 'del' is a Python keyword
+        self.dfn = TagBuilder("dfn")
+        self.em = TagBuilder("em")
+        self.i = TagBuilder("i")
+        self.ins = TagBuilder("ins")
+        self.kbd = TagBuilder("kbd")
+        self.mark = TagBuilder("mark")
+        self.pre = TagBuilder("pre")
+        self.q = TagBuilder("q")
+        self.rp = TagBuilder("rp")
+        self.rt = TagBuilder("rt")
+        self.ruby = TagBuilder("ruby")
+        self.s = TagBuilder("s")
+        self.samp = TagBuilder("samp")
+        self.small = TagBuilder("small")
+        self.strong = TagBuilder("strong")
+        self.sub = TagBuilder("sub")
+        self.sup = TagBuilder("sup")
+        self.time = TagBuilder("time")
+        self.u = TagBuilder("u")
+        self.var = TagBuilder("var")
 
-    # List tags
-    ul = TagBuilder("ul")
-    ol = TagBuilder("ol")
-    li = TagBuilder("li")
-    dl = TagBuilder("dl")
-    dt = TagBuilder("dt")
-    dd = TagBuilder("dd")
+        # List tags
+        self.ul = TagBuilder("ul")
+        self.ol = TagBuilder("ol")
+        self.li = TagBuilder("li")
+        self.dl = TagBuilder("dl")
+        self.dt = TagBuilder("dt")
+        self.dd = TagBuilder("dd")
 
-    # Form tags
-    form = TagBuilder("form")
-    input = TagBuilder("input")
-    textarea = TagBuilder("textarea")
-    button = TagBuilder("button")
-    label = TagBuilder("label")
-    select = TagBuilder("select")
-    optgroup = TagBuilder("optgroup")
-    option = TagBuilder("option")
-    fieldset = TagBuilder("fieldset")
-    legend = TagBuilder("legend")
+        # Form tags
+        self.form = TagBuilder("form")
+        self.input = TagBuilder("input")
+        self.textarea = TagBuilder("textarea")
+        self.button = TagBuilder("button")
+        self.label = TagBuilder("label")
+        self.select = TagBuilder("select")
+        self.optgroup = TagBuilder("optgroup")
+        self.option = TagBuilder("option")
+        self.fieldset = TagBuilder("fieldset")
+        self.legend = TagBuilder("legend")
 
-    # Other common tags
-    table = TagBuilder("table")
-    thead = TagBuilder("thead")
-    tbody = TagBuilder("tbody")
-    tfoot = TagBuilder("tfoot")
-    tr = TagBuilder("tr")
-    th = TagBuilder("th")
-    td = TagBuilder("td")
-    caption = TagBuilder("caption")
-    colgroup = TagBuilder("colgroup")
-    col = TagBuilder("col")
+        # Other common tags
+        self.table = TagBuilder("table")
+        self.thead = TagBuilder("thead")
+        self.tbody = TagBuilder("tbody")
+        self.tfoot = TagBuilder("tfoot")
+        self.tr = TagBuilder("tr")
+        self.th = TagBuilder("th")
+        self.td = TagBuilder("td")
+        self.caption = TagBuilder("caption")
+        self.colgroup = TagBuilder("colgroup")
+        self.col = TagBuilder("col")
 
-    # Media tags
-    audio = TagBuilder("audio")
-    video = TagBuilder("video")
-    source = TagBuilder("source")
-    track = TagBuilder("track")
-    embed = TagBuilder("embed")
-    object = TagBuilder("object")
-    param = TagBuilder("param")
-    picture = TagBuilder("picture")
+        # Media tags
+        self.audio = TagBuilder("audio")
+        self.video = TagBuilder("video")
+        self.source = TagBuilder("source")
+        self.track = TagBuilder("track")
+        self.embed = TagBuilder("embed")
+        self.object = TagBuilder("object")
+        self.param = TagBuilder("param")
+        self.picture = TagBuilder("picture")
 
-    # Semantic/specialized tags
-    section = TagBuilder("section")
-    article = TagBuilder("article")
-    aside = TagBuilder("aside")
-    header = TagBuilder("header")
-    footer = TagBuilder("footer")
-    nav = TagBuilder("nav")
-    figure = TagBuilder("figure")
-    figcaption = TagBuilder("figcaption")
-    main = TagBuilder("main")
-    details = TagBuilder("details")
-    summary = TagBuilder("summary")
-    dialog = TagBuilder("dialog")
+        # Semantic/specialized tags
+        self.section = TagBuilder("section")
+        self.article = TagBuilder("article")
+        self.aside = TagBuilder("aside")
+        self.header = TagBuilder("header")
+        self.footer = TagBuilder("footer")
+        self.nav = TagBuilder("nav")
+        self.figure = TagBuilder("figure")
+        self.figcaption = TagBuilder("figcaption")
+        self.main = TagBuilder("main")
+        self.details = TagBuilder("details")
+        self.summary = TagBuilder("summary")
+        self.dialog = TagBuilder("dialog")
 
-    # Deprecated tags (avoid using)
-    basefont = TagBuilder("basefont") 
-    big = TagBuilder("big")
-    center = TagBuilder("center")
-    font = TagBuilder("font")
-    strike = TagBuilder("strike")
-    tt = TagBuilder("tt")
-
-Blueprint = HTMLTags()
+        # Deprecated tags (avoid using)
+        self.basefont = TagBuilder("basefont") 
+        self.big = TagBuilder("big")
+        self.center = TagBuilder("center")
+        self.font = TagBuilder("font")
+        self.strike = TagBuilder("strike")
+        self.tt = TagBuilder("tt")

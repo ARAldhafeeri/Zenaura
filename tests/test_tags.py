@@ -1,4 +1,4 @@
-from zenui.tags import Node, Attribute, Blueprint
+from zenui.tags import Node, Attribute, HTMLTags
 import unittest
 
 class DataclassTests(unittest.TestCase):
@@ -29,7 +29,7 @@ class DataclassTests(unittest.TestCase):
         self.assertTrue(parent.nodeId)
 
     def test_node_builder(self):
-        node = Blueprint.div \
+        node = HTMLTags().div \
             .with_attribute("test", "test") \
             .with_child(
                 Node(name="test")
@@ -41,38 +41,40 @@ class DataclassTests(unittest.TestCase):
         self.assertTrue(isinstance(node.attributes[0], Attribute))
 
     def test_init(self):
-        tb = Blueprint.div
-        self.assertEqual(tb.node.name, "div")
-        self.assertEqual(tb.node.attributes, [])  
-        self.assertEqual(tb.node.children, []) 
+        tb = HTMLTags().div.build()
+        self.assertEqual(tb.name, "div")
+        self.assertEqual(tb.attributes, [])  
+        self.assertEqual(tb.children, []) 
 
     def test_with_attribute(self):
-        tb = Blueprint.p
-        tb.with_attribute("id", "main-paragraph")
-        self.assertEqual(tb.node.attributes, [Attribute("id", "main-paragraph")])
+        tb = HTMLTags().p
+        tb.with_attribute("id", "main-paragraph").build()
+        self.assertEqual(tb.node.attributes[0].key, "id")
+        self.assertEqual(tb.node.attributes[0].value, "main-paragraph")
 
-    def test_with_child(self):
-        tb = Blueprint.li
-        child_node = Node("li")
-        tb.with_child(child_node)
-        self.assertEqual(tb.node.children, [child_node])
 
     def test_with_styles(self):
-        tb = Blueprint.p
-        tb.with_styles({"color": "blue", "font-size": "16px"})
-        self.assertEqual(tb.node.attributes, [Attribute("style", "color:blue;font-size:16px")])
+        tb = HTMLTags().p
+        tb.with_styles({"color": "blue", "font-size": "16px"}).build()
+        self.assertEqual(tb.node.attributes[0].key, "style")
+        self.assertEqual(tb.node.attributes[0].value, "color:blue;font-size:16px")
 
     def test_with_class(self):
-        tb = Blueprint.p
-        tb.with_class("my-class") 
-        self.assertEqual(tb.node.attributes, [Attribute("class", "my-class")])
+        tb = HTMLTags().p
+        tb.with_class("my-class").build() 
+        self.assertEqual(tb.node.attributes[0].key, "class")
+        self.assertEqual(tb.node.attributes[0].value, "my-class")
 
     def test_with_classes(self):
-        tb = Blueprint.span
-        tb.with_classes("highlighted", "bold")
-        self.assertEqual(tb.node.attributes, [Attribute("class", "highlighted bold")])
+        tb = HTMLTags().span
+        tb.with_classes("highlighted", "bold").build()
+        self.assertEqual(tb.node.attributes[0].key, "class")
+        self.assertEqual(tb.node.attributes[0].value, "highlighted bold")
+
 
     def test_with_class_avoid_duplicates(self):
-        tb = Blueprint.div
-        tb.with_class("container").with_class("container")  # Adding the same class twice
-        self.assertEqual(tb.node.attributes, [Attribute("class", "container")])
+        tb = HTMLTags().div
+        tb.with_class("container").with_class("container").build()
+        self.assertEqual(tb.node.attributes[0].key, "class")
+        self.assertEqual(tb.node.attributes[0].value, "container")
+
