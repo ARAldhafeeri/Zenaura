@@ -13,7 +13,6 @@ class DataclassTests(unittest.TestCase):
         child = Node(name="test")
         node = Node(name="div")
         node.children.append(child)
-        print(node)
         node.attributes.append(Attribute(key="test", value="test"))
         self.assertEqual(child.name, "test")
         self.assertEqual(len(node.children), 1)

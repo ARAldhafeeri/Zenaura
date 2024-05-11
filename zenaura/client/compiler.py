@@ -5,6 +5,26 @@ import html
 import re
 import bleach
 
+
+# TODO add more 
+allowed_tags = [
+    'p', 'br', 'strong', 'em', 'b', 'i', 'u', 's', 'del', 'ins', 'sub', 'sup', 
+    'ul', 'ol', 'li',
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'a', 'img',
+    'table', 'thead', 'tbody', 'tr', 'th', 'td',
+    'blockquote', 'q',
+    'pre', 'code'
+]
+
+# TODO : add more
+allowed_attributes = {
+    '*': ['class', 'id', 'title', 'lang', 'dir'],
+    'a': ['href', 'target', 'rel'],
+    'img': ['src', 'alt', 'width', 'height']
+}
+
+
 class ZenuiCompiler:
     def __init__(self):
         self.attrKeyWords= {
@@ -12,7 +32,7 @@ class ZenuiCompiler:
         }
 
 
-    def sanitize(self, user_input, allowed_tags=None, allowed_attributes=None):
+    def sanitize(self, user_input, allowed_tags=allowed_tags, allowed_attributes=allowed_attributes):
         """
         Sanitizes user input to prevent various injection attacks.
 
@@ -34,11 +54,10 @@ class ZenuiCompiler:
 
         # 2. HTML Sanitization (if necessary)
         user_input = str(user_input)
-        if allowed_tags:
-            safe_html = html.escape(user_input)  # Escape all HTML special characters initially
-            safe_html = bleach.clean(safe_html, tags=allowed_tags, attributes=allowed_attributes) 
-        else:
-            safe_html = html.escape(user_input)
+        
+        safe_html = html.escape(user_input)  # Escape all HTML special characters initially
+        safe_html = bleach.clean(safe_html, tags=allowed_tags, attributes=allowed_attributes) 
+      
 
         return safe_html 
     

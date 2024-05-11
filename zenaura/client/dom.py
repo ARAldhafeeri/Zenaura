@@ -28,6 +28,7 @@ class Dom:
             )
 
             document.querySelector(f'[data-zenui-id="{prevNodeId}"]').innerHTML  = compiled_comp
+            self.update(prevTree, prevNodeId, newNodeChildren)
         self.zen_dom_table[comp.componentId] = prevTree       
 
     def mount(self, comp  ) -> None:
@@ -78,23 +79,23 @@ class Dom:
         helper(prevComponentTree, newComponentTree)
         return diff
 
-    # def update(self, prevTree, prevNode, newNode):
-    #     """
-    #         recieve previous zenui dom tree
-    #         update the previous tree changed node children
-    #         with the new node children
-    #         return the previous tree
-    #         this opration is done after successfully updating the real dom
-    #     """
-    #     stack = [prevTree]
-    #     while stack:
-    #         curr = stack.pop()
-    #         if isinstance(curr, Node):
-    #             if curr.nodeId == prevNode.nodeId:
-    #                 curr.children = newNode.children
-    #             for i in curr.children:
-    #                 stack.append(i)
-    #     return prevTree
+    def update(self, prevTree, prevNodeId, newNodeChildren):
+        """
+            recieve previous zenui dom tree
+            update the previous tree changed node children
+            with the new node children
+            return the previous tree
+            this opration is done after successfully updating the real dom
+        """
+        stack = [prevTree]
+        while stack:
+            curr = stack.pop()
+            if isinstance(curr, Node):
+                if curr.nodeId == prevNodeId:
+                    curr.children = newNodeChildren.children
+                for i in curr.children:
+                    stack.append(i)
+        return prevTree
 
 zenaura_dom = Dom()
 

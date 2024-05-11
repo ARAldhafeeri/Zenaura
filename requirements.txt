@@ -1,1 +1,2 @@
 bleach===6.1.0
+coverage===7.5.1
