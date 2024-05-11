@@ -14,9 +14,9 @@ class Subject:
     def detach(self, observer):
         self._observers.discard(observer)
 
-    def notify(self, value):
+    def notify(self):
         for observer in self._observers:
-            observer.update(value)
+            observer.update(self._state)
 
     @property
     def state(self):

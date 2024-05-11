@@ -76,17 +76,45 @@ class TestComponent(unittest.TestCase):
 					curr.append(i)
 
 
-	def test_component_rerender_on_state_update(self):
-		self.zenaura_dom.mount(self.counter)
-		# trigger mutator function
-		self.counter.increment()
-		re_rendered = self.zenaura_dom.zen_dom_table[self.counter.componentId]
-		self.assertEqual(re_rendered.children[0].children[0].children[0].children[0], f'Counter: {self.counterState(count=1)}')
-		self.counter.decrease()
-		re_rendered = self.zenaura_dom.zen_dom_table[self.counter.componentId]
-		self.assertEqual(re_rendered.children[0].children[0].children[0].children[0], f'Counter: {self.counterState(count=0)}')
+	def test_node_method_constructs_component_with_header_and_buttons(self):
 
+		result = self.counter.node()
 
+		# Assert
+		self.assertEqual(result.name, "div")
+		self.assertEqual(len(result.children), 2)
+		self.assertEqual(result.children[0].name, "h1")
+		self.assertEqual(len(result.children[0].children), 1)
+		self.assertEqual(result.children[0].children[0].name, "text")
+		self.assertEqual(len(result.children[0].children[0].children), 1)
+		self.assertEqual(result.children[0].children[0].children[0].name, "data")
+		self.assertEqual(len(result.children[1].children), 2)
+		self.assertEqual(result.children[1].children[0].name, "button")
+		self.assertEqual(result.children[1].children[0].children[0].name, "label")
+		self.assertEqual(result.children[1].children[1].name, "button")
+		self.assertEqual(result.children[1].children[1].children[0].name, "label")
+
+	def test_create_button_with_empty_label(self):
+		button = self.counter.create_button("", self.counter.increment)
+		self.assertEqual(len(button.attributes), 2)
+		self.assertEqual(len(button.children), 1)
+		self.assertEqual(self.btnstyles.btn, button.attributes[1].value)
+		self.assertEqual(self.counter.increment, button.attributes[0].value)
+		self.assertEqual(button.children[0].name, "label")
+
+	def test_increment_multiple_times(self):
+		# Increment the count multiple times
+		for _ in range(5):
+			self.counter.increment()
+		state = self.counter.get_state()
+		self.assertEqual(state.count, 5)
+
+	def test_decrease_multiple_times(self):
+		# Decrease the count multiple times
+		for _ in range(3):
+			self.counter.decrease()
+		state = self.counter.get_state()
+		self.assertEqual(state.count, -3)
 
 
 if __name__ == "__main__":

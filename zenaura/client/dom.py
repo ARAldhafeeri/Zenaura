@@ -74,7 +74,8 @@ class Dom:
             if (prevTreeNode.children != newTreeNode.children) :
                 diff.append([prevTreeNode.nodeId, newTreeNode])
 
-            helper(prevTreeNode.children, newTreeNode.children)
+            for i in range(min(len(prevTreeNode.children), len(newTreeNode.children))):
+                helper(prevTreeNode.children[i], newTreeNode.children[i])
             
         helper(prevComponentTree, newComponentTree)
         return diff

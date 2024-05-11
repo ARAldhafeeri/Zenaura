@@ -19,9 +19,9 @@ allowed_tags = [
 
 # TODO : add more
 allowed_attributes = {
-    '*': ['class', 'id', 'title', 'lang', 'dir'],
+    '*': ['class', 'id', 'title', 'lang', 'dir', 'data-*', 'aria-*', 'role'],
     'a': ['href', 'target', 'rel'],
-    'img': ['src', 'alt', 'width', 'height']
+    'img': ['src', 'alt', 'width', 'height'],
 }
 
 
