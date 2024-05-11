@@ -1,7 +1,7 @@
 from zenaura.client.tags import Attribute, Node
 from zenaura.client.component import Component
 from dataclasses import dataclass
-
+from zenaura.client.mutator import mutator
 @dataclass
 class CounterState:
 	count: int
@@ -31,9 +31,11 @@ class Counter(Component):
 		# dependencies
 		self.dependencies = dependencies
 
+	@mutator
 	def increment(self) -> None:
 		self.set_state(CounterState(count=self.get_state().count + 1))
 
+	@mutator
 	def decrease(self) -> None:
 		self.set_state(CounterState(count=self.get_state().count - 1))
 
@@ -52,7 +54,11 @@ class Counter(Component):
 			Attribute(key="styles", value=BTN_STYLES.h1)
 		]
 		header.children = [
-			Node(name="text", children=[f"Counter: {self.get_state()}"])
+			Node(name="text", children=[
+				Node(name="data", children= [
+					f"Counter: {self.get_state()}"
+				])
+			])
 		]
 
 		#  btn controls

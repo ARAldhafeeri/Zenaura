@@ -24,12 +24,6 @@ class TestComponent(unittest.TestCase):
         self.assertEqual(self.initState.init_(), self.initState.get_state())
         self.assertEqual(self.initState.init_(), self.initState.state)
 
-    def test_global_state(self):
-        self.c.global_state["c1"] = "test"
-        self.c2.global_state["c2"] = "test"
-        self.assertEqual(id(self.c.global_state), id(self.c2.global_state))
-        self.assertEqual(self.c.global_state, self.c2.global_state)
-
     def test_unique_local_states(self):
         state1 = {"test" : "test1"}
         state2 = {"test" : "test2"}

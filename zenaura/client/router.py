@@ -45,7 +45,6 @@ class Router:
 
     def handlelocation(self) -> None:
         path = window.location.pathname
-        print(path, self.paths)
         if path in self.paths:
             [comp, title] = self.routes[path]
             zenaura_dom.mount(comp)
