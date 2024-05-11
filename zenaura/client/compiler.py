@@ -1,4 +1,4 @@
-from zenui.tags import Node, Attribute
+from zenaura.client.tags import Node, Attribute
 from typing import List 
 import io 
 import html
@@ -42,7 +42,7 @@ class ZenuiCompiler:
 
         return safe_html 
     
-    def compile(self, elm: Node, componentName=None, zenui_dom_mode=False):
+    def compile(self, elm: Node, componentName=None, zenaura_dom_mode=False):
         """Compiles a Zenui Node into its corresponding HTML representation.
 
         Args:
@@ -56,7 +56,7 @@ class ZenuiCompiler:
             this must be the output for every event handler
             otherwise the component event handler will not work.
             passed optionally as None for testing purposes.
-            zenui_dom_mode : adds unique attribute for virtual dom 
+            zenaura_dom_mode : adds unique attribute for virtual dom 
             data-zenui-id=uuid4
 
         Returns:
@@ -70,7 +70,7 @@ class ZenuiCompiler:
         zenui_id = ""
 
         #  assign unique id for zenui dom
-        if isinstance(elm, Node) and zenui_dom_mode:
+        if isinstance(elm, Node) and zenaura_dom_mode:
             zenui_id = f'data-zenui-id="{elm.nodeId}"'
 
         # get node attributes
@@ -82,7 +82,7 @@ class ZenuiCompiler:
         # get children
         for child in elm.children:
             if  isinstance(child, Node):
-                html += self.compile(child, zenui_dom_mode=zenui_dom_mode)
+                html += self.compile(child, zenaura_dom_mode=zenaura_dom_mode)
             else:
                 if isinstance(child, list):
                     html += self.sanitize(child[0])

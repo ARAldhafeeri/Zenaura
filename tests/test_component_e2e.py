@@ -1,7 +1,7 @@
 import sys
 import unittest
 from unittest.mock import patch, MagicMock
-from zenui.tags import Attribute, Node
+from zenaura.client.tags import Attribute, Node
 from tests.mocks.browser_mocks import MockDocument, MockWindow
 
 sys.modules["pyscript"] = MagicMock()

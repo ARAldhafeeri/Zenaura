@@ -1,12 +1,11 @@
-from zenui.compiler import ZenuiCompiler
-# compile zenui html dataclasses to html text
-from pyscript import document 
-from zenui.tags import Node
+from zenaura.client.compiler import ZenuiCompiler
+from zenaura.client.tags import Node
 from collections import defaultdict
+from pyscript import document 
 
 compiler = ZenuiCompiler()
 
-class ZenUIDom:
+class Dom:
 
     def __init__(self):
         self.zen_dom_table = defaultdict(str)
@@ -14,7 +13,7 @@ class ZenUIDom:
 
     def render(self, comp ) -> None:
         """
-            recieve instance of ZenUIComponent child, rerender it.
+            recieve instance of Component child, rerender it.
         """
         prevTree = self.zen_dom_table[comp.componentId]
         newTree = comp.node()
@@ -25,7 +24,7 @@ class ZenUIDom:
             compiled_comp = compiler.compile(
                 newNodeChildren, 
                 componentName=comp.__class__.__name__,
-                zenui_dom_mode=True
+                zenaura_dom_mode=True
             )
 
             document.querySelector(f'[data-zenui-id="{prevNodeId}"]').innerHTML  = compiled_comp
@@ -33,7 +32,7 @@ class ZenUIDom:
 
     def mount(self, comp  ) -> None:
         """
-            comp : recieve instance of ZenUIComponent 
+            comp : recieve instance of Component 
             1. create node tree
             2. compiles html
             3. attach container to root node 
@@ -44,7 +43,7 @@ class ZenUIDom:
         compiled_comp = compiler.compile(
             comp_tree, 
             componentName=comp.__class__.__name__,
-            zenui_dom_mode=True
+            zenaura_dom_mode=True
         )
         dom_node = document.getNodeById("root") 
         dom_node.innerHTML = compiled_comp
@@ -97,6 +96,6 @@ class ZenUIDom:
     #                 stack.append(i)
     #     return prevTree
 
-zenui_dom = ZenUIDom()
+zenaura_dom = Dom()
 
 

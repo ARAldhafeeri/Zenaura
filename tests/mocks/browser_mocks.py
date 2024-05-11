@@ -1,6 +1,5 @@
 import unittest.mock
 from collections import defaultdict
-from zenui.tags import Node
 
 
 class MockNode:

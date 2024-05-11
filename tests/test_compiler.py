@@ -1,5 +1,5 @@
-from zenui.tags import Node, Child, Attribute
-from zenui.compiler import ZenuiCompiler
+from zenaura.client.tags import Node, Child, Attribute
+from zenaura.client.compiler import ZenuiCompiler
 import unittest
 
 class ZenuiCompilerTests(unittest.TestCase):
@@ -14,7 +14,7 @@ class ZenuiCompilerTests(unittest.TestCase):
         elm.children.append(Attribute("styles", "my-paragraph"))
         elm.children.append(Attribute("id", "main-content"))
         compiler = ZenuiCompiler()
-        result = compiler.compile(elm, zenui_dom_mode=False)
+        result = compiler.compile(elm, zenaura_dom_mode=False)
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
     
@@ -23,7 +23,7 @@ class ZenuiCompilerTests(unittest.TestCase):
         elm.attributes.append(Attribute("styles", "my-paragraph"))
         elm.attributes.append(Attribute("id", "main-content"))
         compiler = ZenuiCompiler()
-        result = compiler.compile(elm, zenui_dom_mode=False)
+        result = compiler.compile(elm, zenaura_dom_mode=False)
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
     def test_compile_with_attributes(self):
@@ -31,7 +31,7 @@ class ZenuiCompilerTests(unittest.TestCase):
         elm.attributes.append(Attribute("styles", "my-paragraph"))
         elm.attributes.append(Attribute("id", "main-content"))
         compiler = ZenuiCompiler()
-        result = compiler.compile(elm, zenui_dom_mode=False)
+        result = compiler.compile(elm, zenaura_dom_mode=False)
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
     def test_process_attributes(self):
@@ -49,6 +49,6 @@ class ZenuiCompilerTests(unittest.TestCase):
         ]
         div.children.append(span)
         compiler = ZenuiCompiler()
-        result = compiler.compile(div, zenui_dom_mode=False)
+        result = compiler.compile(div, zenaura_dom_mode=False)
         self.assertEqual(result, "<div><span>Hello</span></div>")
     

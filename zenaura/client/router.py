@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from typing import List
-from zenui.zenui_dom import zenui_dom
-from zenui.tags import Node
+from zenaura.client.dom import zenaura_dom
+from zenaura.client.tags import Node
+from zenaura.client.component import Component
+# this is really nothing just to be able to mock 
 from pyscript import document, window
-from zenui.component import ZenUIComponent
 
-class NotFound(ZenUIComponent):
+class NotFound(Component):
 
     def node(self):
         em = Node("div")
@@ -36,7 +37,7 @@ class Router:
     def navigate(self, path) -> None:
         if path in self.paths:
             [comp, title] = self.routes[path]
-            zenui_dom.mount(comp)  # Mount the component
+            zenaura_dom.mount(comp)  # Mount the component
             document.title = title  # Update the title
             window.history.pushState(path, title, path) # Update browser history 
         else:
@@ -47,10 +48,10 @@ class Router:
         print(path, self.paths)
         if path in self.paths:
             [comp, title] = self.routes[path]
-            zenui_dom.mount(comp)
+            zenaura_dom.mount(comp)
             document.title = title
         else:
-            zenui_dom.mount(notFound)
+            zenaura_dom.mount(notFound)
 
     def addRoute(self, route : Route) -> None:
         self.routes[route.path] = [route.comp, route.title]

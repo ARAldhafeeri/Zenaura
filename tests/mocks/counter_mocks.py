@@ -1,5 +1,5 @@
-from zenui.tags import Attribute, Node
-from zenui.component import ZenUIComponent
+from zenaura.client.tags import Attribute, Node
+from zenaura.client.component import Component
 from dataclasses import dataclass
 
 @dataclass
@@ -20,7 +20,7 @@ BTN_STYLES = CounterStyles(
 	controls = "flex flex-row",
 )
 
-class Counter(ZenUIComponent):
+class Counter(Component):
 	def __init__(self, dependencies):			
 		
 		# set init state	 

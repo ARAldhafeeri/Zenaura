@@ -1,12 +1,12 @@
-from zenui.component import ZenUIComponent
+from zenaura.client.component import Component
 
-class Counter(ZenUIComponent):
+class Counter(Component):
     pass
 
-class Counter2(ZenUIComponent):
+class Counter2(Component):
     pass
 
-class componentWIthInitState(ZenUIComponent):
+class componentWIthInitState(Component):
     def __init__(self):
         super().set_state({"test" : "test"})
         

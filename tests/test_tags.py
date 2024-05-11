@@ -1,4 +1,4 @@
-from zenui.tags import Node, Attribute, HTMLTags
+from zenaura.client.tags import Node, Attribute, HTMLTags
 import unittest
 
 class DataclassTests(unittest.TestCase):
