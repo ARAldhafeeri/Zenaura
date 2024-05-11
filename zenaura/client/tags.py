@@ -6,6 +6,14 @@ from enum import Enum
 
 class Child:
     def __init__(self,name : str, children=None, attributes=None):
+        """
+        Initializes a Child object with the given name, children, and attributes.
+
+        Args:
+        name (str): The name of the child.
+        children (list, optional): List of children nodes. Defaults to None.
+        attributes (list, optional): List of attributes. Defaults to None.
+        """
         self.name = name
         self.children = [] if children is None else children
         self.attributes = [] if attributes is None else attributes
@@ -13,12 +21,27 @@ class Child:
     
 class Attribute:
     def __init__(self, key, value):
+        """
+        Initializes an Attribute object with the given key and value.
+
+        Args:
+        key: The key of the attribute.
+        value: The value of the attribute.
+        """
         self.key = key
         self.value = value
 
 
 class Node:
     def __init__(self,name : str, children: Optional[List[Attribute]]=None, attributes : Optional[List[Attribute]]=None):
+        """
+        Initializes a Node object with the given name, children, and attributes.
+
+        Args:
+        name (str): The name of the node.
+        children (list, optional): List of children nodes. Defaults to None.
+        attributes (list, optional): List of attributes. Defaults to None.
+        """
         self.name = name
         self.children = [] if children is None else children
         self.attributes = [] if attributes is None else attributes
@@ -26,29 +49,80 @@ class Node:
 
 class TagBuilder:
     def __init__(self, name : str) -> None:
+        """
+        Initializes a TagBuilder object with the given name.
+
+        Args:
+        name (str): The name of the tag.
+        """
         self.node = Node(name)
     
     def with_attribute(self, key : str, value : any) -> "TagBuilder":
+        """
+        Adds an attribute to the tag.
+
+        Args:
+        key (str): The key of the attribute.
+        value: The value of the attribute.
+
+        Returns:
+        TagBuilder: The TagBuilder object.
+        """
         self.node.attributes.append(Attribute(key,value))
         return self
     
     def with_child(self, child : Node) -> "TagBuilder":
+        """
+        Adds a child node to the tag.
+
+        Args:
+        child (Node): The child node to be added.
+
+        Returns:
+        TagBuilder: The TagBuilder object.
+        """
         self.node.children.append(child)
         return self 
     
     def with_styles(self, styles: dict) -> "TagBuilder":
+        """
+        Adds styles to the tag.
+
+        Args:
+        styles (dict): Dictionary of styles.
+
+        Returns:
+        TagBuilder: The TagBuilder object.
+        """
         style_str = ";".join([f"{k}:{v}" for k, v in styles.items()])
         self.node.attributes.append(Attribute("style", style_str))
         return self
     
     def with_classes(self, *class_names: str) -> "TagBuilder":
-        """Adds multiple class names to the element"""
+
+        """
+        Adds multiple class names to the element.
+
+        Args:
+        *class_names (str): Variable number of class names.
+
+        Returns:
+        TagBuilder: The TagBuilder object.
+        """
         for class_name in class_names:
             self.with_class(class_name)
         return self
     
     def with_class(self, class_name: str) -> "TagBuilder":
-        """Adds a single class name to the element"""
+        """
+        Adds a single class name to the element.
+
+        Args:
+        class_name (str): The class name to be added.
+
+        Returns:
+        TagBuilder: The TagBuilder object.
+        """
         for i in self.node.attributes:
             if i.key =="class":
                 if class_name not in i.value:
@@ -60,6 +134,12 @@ class TagBuilder:
 
     
     def build(self):
+        """
+        Builds and returns the node.
+
+        Returns:
+        Node: The built node.
+        """
         return self.node
 
 
@@ -70,6 +150,9 @@ class HTMLTags:
         html tags factory
     """
     def __init__(self):
+        """
+            Initializes the HTMLTags object with various tag builders for HTML elements.
+        """
         self.html =  TagBuilder("html")
         self.head = TagBuilder("head")
         self.body = TagBuilder("body")

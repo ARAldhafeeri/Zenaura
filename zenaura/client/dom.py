@@ -13,7 +13,13 @@ class Dom:
 
     def render(self, comp ) -> None:
         """
-            recieve instance of Component child, rerender it.
+            Renders the component by updating the DOM based on the differences between the previous and new component trees.
+
+            Parameters:
+            - comp: An instance of the Component class.
+
+            Returns:
+            None
         """
         prevTree = self.zen_dom_table[comp.componentId]
         newTree = comp.node()
@@ -33,12 +39,13 @@ class Dom:
 
     def mount(self, comp  ) -> None:
         """
-            comp : recieve instance of Component 
-            1. create node tree
-            2. compiles html
-            3. attach container to root node 
-            4. used in zenui simple router to mount nodes
-            5. create blueprint for diffing algorithm in re-render mode.
+            Mounts the component by creating the node tree, compiling HTML, and attaching the container to the root node.
+
+            Parameters:
+            - comp: An instance of the Component class.
+
+            Returns:
+            None
         """
         comp_tree = comp.node()
         compiled_comp = compiler.compile(
@@ -52,11 +59,14 @@ class Dom:
 
     def search(self, prevComponentTree : Node, newComponentTree : Node) -> Node:
         """
-            receive old, new component tree
-            compare the old to new.
-            return a stack of all diff nodes
-            in the following format
-           [ [prevNode.nodeId, newNode] ]
+            Compares the old and new component trees to identify the differences.
+
+            Parameters:
+            - prevComponentTree: The previous component tree.
+            - newComponentTree: The new component tree.
+
+            Returns:
+            A stack of all different nodes in the format: [[prevNode.nodeId, newNode]]
         """
         diff = []
         def helper(prevTreeNode : Node, newTreeNode : Node):
@@ -82,11 +92,15 @@ class Dom:
 
     def update(self, prevTree, prevNodeId, newNodeChildren):
         """
-            recieve previous zenui dom tree
-            update the previous tree changed node children
-            with the new node children
-            return the previous tree
-            this opration is done after successfully updating the real dom
+            Updates the previous zenui dom tree by replacing the changed node children with the new node children.
+
+            Parameters:
+            - prevTree: The previous zenui dom tree.
+            - prevNodeId: The id of the node to be updated.
+            - newNodeChildren: The new node children to replace the old ones.
+
+            Returns:
+            The previous tree after the update.
         """
         stack = [prevTree]
         while stack:

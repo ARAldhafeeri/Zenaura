@@ -27,6 +27,16 @@ allowed_attributes = {
 
 class ZenuiCompiler:
     def __init__(self):
+        """
+            Constructor for the ZenuiCompiler class.
+            Initializes the attribute keyword mapping.
+
+            Args:
+                self: The ZenuiCompiler instance.
+
+            Returns:
+                None
+        """
         self.attrKeyWords= {
              "styles" : "class"
         }
@@ -45,14 +55,6 @@ class ZenuiCompiler:
         Returns:
             str: The sanitized input.
         """
-
-        # # 1. Input Validation (using regular expressions for flexibility)
-        # safe_chars = re.compile(r"[^\w\s\.,\-+=@#$%^&*()]")  # Customize this allowed character list
-
-        # if not safe_chars.sub("", user_input) == user_input:  
-        #     raise ValueError("Invalid characters detected in input")
-
-        # 2. HTML Sanitization (if necessary)
         user_input = str(user_input)
         
         safe_html = html.escape(user_input)  # Escape all HTML special characters initially
@@ -62,24 +64,16 @@ class ZenuiCompiler:
         return safe_html 
     
     def compile(self, elm: Node, componentName=None, zenaura_dom_mode=False):
-        """Compiles a Zenui Node into its corresponding HTML representation.
+        """
+        Compiles a Zenui Node into its corresponding HTML representation.
 
         Args:
-            elm: The Zenui Node object to compile.
-            parent: true by default, zenui set data-zenui-id to every parent component
-            the data-zenui-id will be used in zenui-dom functionality
-            in tests, if not testing zenui-dom, set this to false.
-            componentName: for event handling attributes like onclick,
-            transcript needs the following format : 
-            "index.componentName.eventHandler"
-            this must be the output for every event handler
-            otherwise the component event handler will not work.
-            passed optionally as None for testing purposes.
-            zenaura_dom_mode : adds unique attribute for virtual dom 
-            data-zenui-id=uuid4
+            elm (Node): The Zenui Node object to compile.
+            componentName (str, optional): For event handling attributes like onclick.
+            zenaura_dom_mode (bool, optional): Adds unique attribute for virtual dom.
 
         Returns:
-            A string containing the compiled HTML.
+            str: A string containing the compiled HTML.
         """
         if not isinstance(elm, Node):
             return elm[0]
@@ -114,13 +108,15 @@ class ZenuiCompiler:
         return html
 
     def process_attributes(self, attrs: List[Attribute], componentName=None) -> str:
-        """Processes a list of Attributes, converting them to HTML-formatted attributes.
+        """
+            Processes a list of Attributes, converting them to HTML-formatted attributes.
 
-        Args:
-            attrs: A list of Zenui Attribute objects.
+            Args:
+                attrs (List[Attribute]): A list of Zenui Attribute objects.
+                componentName (str, optional): For event handling attributes like onclick.
 
-        Returns:
-            A string containing the HTML-formatted attributes, ready to be included in a tag.
+            Returns:
+                str: A string containing the HTML-formatted attributes, ready to be included in a tag.
         """
 
         s = io.StringIO()  # Create a string buffer for building the output
