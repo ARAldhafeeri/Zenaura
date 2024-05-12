@@ -80,4 +80,3 @@ class Component:
         Returns:
         None
         """
-        pass

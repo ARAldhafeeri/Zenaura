@@ -1,16 +1,167 @@
-from zenaura.client.compiler import ZenuiCompiler
+from zenaura.client.compiler import Compiler, ZENAURA_DOM_ATTRIBUTE
 from zenaura.client.tags import Node
 from collections import defaultdict
+from zenaura.client.component import Component
 from pyscript import document 
+from functools import wraps
+import inspect
 
-compiler = ZenuiCompiler()
+compiler = Compiler()
+
+class DefaultDomErrorComponent(Component):
+    def __init__(self, error_message):
+        super().__init__()
+        self.error_message = error_message
+    def node(self):
+        return Node("div", children=[Node("p", children=[str(self.error_message)])])
 
 class Dom:
 
     def __init__(self):
+        """
+        initialize zenaura dom
+        attributes:
+            - self.zen_dom_table: A dictionary that maps component IDs to their node trees.
+            - self.mounted_component_id: currently mounted container component identifier.
+        """
         self.zen_dom_table = defaultdict(str)
+        self.prev_component_id = None
+        self.prev_component_instance = None
+        self.mounted_component_id = None
 
 
+    def componentDidCatchError(self, comp, error) -> None:
+        """
+            Graceful degradation of component lifecycle methods.
+        """
+        if hasattr(comp, "componentDidCatchError"):
+             # call componentDidCatchError method
+             # mount the error message component 
+             error_comp = comp.componentDidCatchError(str(error))
+             compiled_comp = compiler.compile(
+                 error_comp, 
+                 componentName=comp.__class__.__name__,
+                 zenaura_dom_mode=True
+             )
+             dom_node = document.getNodeById("root")
+             dom_node.innerHTML = compiled_comp
+             self.prev_component_id = comp.componentId
+             self.zen_dom_table[comp.componentId] = error_comp
+        else:
+            # mount the default error message component 
+            error_comp  = DefaultDomErrorComponent(error_message=str(error))
+            error_comp = error_comp.node()
+            compiled_comp = compiler.compile(
+                 error_comp, 
+                 componentName=comp.__class__.__name__,
+                 zenaura_dom_mode=True
+             )
+            dom_node = document.getNodeById("root")
+            dom_node.innerHTML = compiled_comp
+            self.prev_component_id = comp.componentId
+            self.zen_dom_table[comp.componentId] = error_comp
+            self.mounted_component_id = comp.componentId
+
+
+    # mounting 
+    def mount(self, comp  ) -> None:
+        """
+            Mount the component, goes through the life cycle methods and mounts the component to the DOM.
+            try : 
+                - mount the component.
+            except:
+                - call componentDidCatchError method.
+            Parameters:
+            - comp: An instance of the Component class.
+
+            Returns:
+            None
+        """
+        # wrapped life cycle method componentDidCatchError 
+        # mount steps 1-4: componentWillMount -> mount -> unmount -> componentWillUnmount -> componentDidMount
+        # mount 1: lifecycle method to be called before mounting
+        try : 
+            self.componentWillMount(comp)
+
+            # mount 2: mount the component to the DOM
+            comp_tree = comp.node()
+            compiled_comp = compiler.compile(
+                comp_tree, 
+                componentName=comp.__class__.__name__,
+                zenaura_dom_mode=True
+            )
+
+            dom_node = document.getNodeById("root") 
+            dom_node.innerHTML = compiled_comp
+
+            self.zen_dom_table[comp.componentId] = comp_tree
+
+            # mount 3: lifecycle method the component will be unmountted
+            # assign the component id to the mounted component id
+            self.unmount(self.prev_component_instance)
+
+            # mount 4 : lifecycle method to be called after mounting
+            self.mounted_component_id = comp.componentId
+
+            self.componentDidMount(comp)
+
+        except Exception as e:
+            self.componentDidCatchError(comp, str(e))
+
+    def unmount(self, comp) -> None:
+        """
+        Unmounts the component and performs cleanup operations.
+
+        Parameters:
+        - comp: An instance of the Component class.
+
+        Returns:
+        None
+        """
+        # no component mounted
+        if not comp:
+            return 
+        # if component has componentWillUnmount methd call it before unmounting
+        if hasattr(comp, 'componentWillUnmount'):
+            comp.componentWillUnmount()  
+        # Perform virtual dom cleanup operations here
+        del self.zen_dom_table[comp.componentId]
+
+    def componentWillMount(self, comp) -> None:
+        """
+        Method called before the component is mounted to the DOM.
+
+        Parameters:
+        - comp: An instance of the Component class.
+
+        Returns:
+        None
+        """
+        if hasattr(comp, 'componentWillMount') and self.mounted_component_id != comp.componentId:
+            comp.componentWillMount()
+
+    def componentWillUnmount(self, comp) -> None:
+        """
+        Method called before the component is unmounted from the DOM.
+        """
+        if hasattr(comp, 'componentWillUnmount'):
+            comp.componentWillUnmount()
+
+    def componentDidMount(self, comp) -> None:
+        """
+        Method called after the component is mounted to the DOM.
+
+        Parameters:
+        - comp: An instance of the Component class.
+
+        Returns:
+        None
+        """
+        if hasattr(comp, 'componentDidMount'):
+            comp.componentDidMount()
+
+
+    # updating
     def render(self, comp ) -> None:
         """
             Renders the component by updating the DOM based on the differences between the previous and new component trees.
@@ -21,42 +172,65 @@ class Dom:
             Returns:
             None
         """
-        prevTree = self.zen_dom_table[comp.componentId]
-        newTree = comp.node()
-        diff = self.search(prevTree, newTree)
+        try:
 
-        while diff:
-            prevNodeId, newNodeChildren = diff.pop()
-            compiled_comp = compiler.compile(
-                newNodeChildren, 
-                componentName=comp.__class__.__name__,
-                zenaura_dom_mode=True
-            )
+            # update steps 1-3: componentWillUpdate -> update -> componentDidUpdate
+            # update 1: lifecycle method to be called before updating
+            self.componentWillUpdate(comp)
 
-            document.querySelector(f'[data-zenui-id="{prevNodeId}"]').innerHTML  = compiled_comp
-            self.update(prevTree, prevNodeId, newNodeChildren)
-        self.zen_dom_table[comp.componentId] = prevTree       
+            # update 2: update the component in the DOM
+            prevTree = self.zen_dom_table[comp.componentId]
+            newTree = comp.node()
+            diff = self.search(prevTree, newTree)
 
-    def mount(self, comp  ) -> None:
+            while diff:
+                prevNodeId, newNodeChildren = diff.pop()
+                compiled_comp = compiler.compile(
+                    newNodeChildren, 
+                    componentName=comp.__class__.__name__,
+                    zenaura_dom_mode=True
+                )
+
+                document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prevNodeId}"]').innerHTML  = compiled_comp
+                self.update(prevTree, prevNodeId, newNodeChildren)
+            self.zen_dom_table[comp.componentId] = prevTree
+
+            # update 3  : componentDidUpdate method to be called after updating
+            self.componentDidUpdate(comp)
+
+        except Exception as e:
+            print("render error: ", str(e))
+            self.componentDidCatchError(comp, str(e))       
+
+    def componentWillUpdate(self, comp) -> None:
         """
-            Mounts the component by creating the node tree, compiling HTML, and attaching the container to the root node.
+        Method called after the component is updated in the DOM and re-rendered.
 
-            Parameters:
-            - comp: An instance of the Component class.
+        Parameters:
+        - comp: An instance of the Component class.
 
-            Returns:
-            None
+        Returns:
+        None
         """
-        comp_tree = comp.node()
-        compiled_comp = compiler.compile(
-            comp_tree, 
-            componentName=comp.__class__.__name__,
-            zenaura_dom_mode=True
-        )
-        dom_node = document.getNodeById("root") 
-        dom_node.innerHTML = compiled_comp
-        self.zen_dom_table[comp.componentId] = comp_tree
+        # Perform operations after updating
+        if hasattr(comp, 'componentWillUpdate'):
+            comp.componentWillUpdate()
 
+    def componentDidUpdate(self, comp) -> None:
+        """
+        Method called after the component is updated in the DOM and re-rendered.
+
+        Parameters:
+        - comp: An instance of the Component class.
+
+        Returns:
+        None
+        """
+        # Perform operations after updating
+        if hasattr(comp, 'componentDidUpdate'):
+            comp.componentDidUpdate()
+
+    # dom diffing algorithm
     def search(self, prevComponentTree : Node, newComponentTree : Node) -> Node:
         """
             Compares the old and new component trees to identify the differences.
@@ -111,6 +285,8 @@ class Dom:
                 for i in curr.children:
                     stack.append(i)
         return prevTree
+    
+
 
 zenaura_dom = Dom()
 
