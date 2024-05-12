@@ -22,7 +22,7 @@ python -m coverage run -m unittest
 
 - run test coverage report :
 ```
-python -m coverage report
+python -m coverage report -m
 ```
 
 - report 

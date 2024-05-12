@@ -5,7 +5,9 @@ import html
 import re
 import bleach
 
+ZENAURA_DOM_ATTRIBUTE = "data-zenui-attribute"
 
+# TODO : add more
 # TODO add more 
 allowed_tags = [
     'p', 'br', 'strong', 'em', 'b', 'i', 'u', 's', 'del', 'ins', 'sub', 'sup', 
@@ -25,14 +27,14 @@ allowed_attributes = {
 }
 
 
-class ZenuiCompiler:
+class Compiler:
     def __init__(self):
         """
-            Constructor for the ZenuiCompiler class.
+            Constructor for the Compiler class.
             Initializes the attribute keyword mapping.
 
             Args:
-                self: The ZenuiCompiler instance.
+                self: The Compiler instance.
 
             Returns:
                 None
@@ -84,7 +86,7 @@ class ZenuiCompiler:
 
         #  assign unique id for zenui dom
         if isinstance(elm, Node) and zenaura_dom_mode:
-            zenui_id = f'data-zenui-id="{elm.nodeId}"'
+            zenui_id = f'{ZENAURA_DOM_ATTRIBUTE}="{elm.nodeId}"'
 
         # get node attributes
         attributes = self.process_attributes(elm.attributes, componentName)

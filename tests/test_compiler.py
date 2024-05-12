@@ -1,10 +1,10 @@
 from zenaura.client.tags import Node, Child, Attribute
-from zenaura.client.compiler import ZenuiCompiler
+from zenaura.client.compiler import Compiler
 import unittest
 
-compiler = ZenuiCompiler() 
+compiler = Compiler() 
 
-class ZenuiCompilerTests(unittest.TestCase):
+class CompilerTests(unittest.TestCase):
     def test_compile_simple_node(self):
         elm = Node("div")
         result = compiler.compile(elm)
