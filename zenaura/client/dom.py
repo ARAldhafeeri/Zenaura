@@ -4,7 +4,7 @@ from collections import defaultdict
 from zenaura.client.component import Component
 from pyscript import document 
 from functools import wraps
-import inspect
+import traceback
 
 compiler = Compiler()
 
@@ -29,7 +29,6 @@ class Dom:
         self.prev_component_instance = None
         self.mounted_component_id = None
 
-
     def componentDidCatchError(self, comp, error) -> None:
         """
             Graceful degradation of component lifecycle methods.
@@ -43,7 +42,7 @@ class Dom:
                  componentName=comp.__class__.__name__,
                  zenaura_dom_mode=True
              )
-             dom_node = document.getNodeById("root")
+             dom_node = document.getElementById("root")
              dom_node.innerHTML = compiled_comp
              self.prev_component_id = comp.componentId
              self.zen_dom_table[comp.componentId] = error_comp
@@ -56,7 +55,7 @@ class Dom:
                  componentName=comp.__class__.__name__,
                  zenaura_dom_mode=True
              )
-            dom_node = document.getNodeById("root")
+            dom_node = document.getElementById("root")
             dom_node.innerHTML = compiled_comp
             self.prev_component_id = comp.componentId
             self.zen_dom_table[comp.componentId] = error_comp
@@ -81,7 +80,8 @@ class Dom:
         # mount steps 1-4: componentWillMount -> mount -> unmount -> componentWillUnmount -> componentDidMount
         # mount 1: lifecycle method to be called before mounting
         try : 
-            self.componentWillMount(comp)
+            if hasattr(comp, "componentWillMount"):
+                self.componentWillMount(comp)
 
             # mount 2: mount the component to the DOM
             comp_tree = comp.node()
@@ -91,7 +91,7 @@ class Dom:
                 zenaura_dom_mode=True
             )
 
-            dom_node = document.getNodeById("root") 
+            dom_node = document.getElementById("root") 
             dom_node.innerHTML = compiled_comp
 
             self.zen_dom_table[comp.componentId] = comp_tree
@@ -103,10 +103,11 @@ class Dom:
             # mount 4 : lifecycle method to be called after mounting
             self.mounted_component_id = comp.componentId
 
-            self.componentDidMount(comp)
+            if hasattr(comp, "componentDidMount"):
+                self.componentDidMount(comp)
 
         except Exception as e:
-            self.componentDidCatchError(comp, str(e))
+            self.componentDidCatchError(comp, traceback.format_exc())
 
     def unmount(self, comp) -> None:
         """
@@ -182,7 +183,6 @@ class Dom:
             prevTree = self.zen_dom_table[comp.componentId]
             newTree = comp.node()
             diff = self.search(prevTree, newTree)
-
             while diff:
                 prevNodeId, newNodeChildren = diff.pop()
                 compiled_comp = compiler.compile(
@@ -191,16 +191,17 @@ class Dom:
                     zenaura_dom_mode=True
                 )
 
-                document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prevNodeId}"]').innerHTML  = compiled_comp
+                foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prevNodeId}"]')
+                foundNode.outerHTML = compiled_comp
                 self.update(prevTree, prevNodeId, newNodeChildren)
-            self.zen_dom_table[comp.componentId] = prevTree
+            self.zen_dom_table[comp.componentId] = newTree
 
             # update 3  : componentDidUpdate method to be called after updating
             self.componentDidUpdate(comp)
 
         except Exception as e:
-            print("render error: ", str(e))
-            self.componentDidCatchError(comp, str(e))       
+            self.componentDidCatchError(comp, traceback.format_exc())
+     
 
     def componentWillUpdate(self, comp) -> None:
         """
@@ -289,5 +290,3 @@ class Dom:
 
 
 zenaura_dom = Dom()
-
-

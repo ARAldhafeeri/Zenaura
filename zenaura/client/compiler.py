@@ -1,30 +1,16 @@
 from zenaura.client.tags import Node, Attribute
 from typing import List 
+from zenaura.client.config import (
+    allowed_tags,
+    allowed_attributes,
+    ZENAURA_DOM_ATTRIBUTE,
+    self_closing_tags
+)
 import io 
 import html
 import re
 import bleach
 
-ZENAURA_DOM_ATTRIBUTE = "data-zenui-attribute"
-
-# TODO : add more
-# TODO add more 
-allowed_tags = [
-    'p', 'br', 'strong', 'em', 'b', 'i', 'u', 's', 'del', 'ins', 'sub', 'sup', 
-    'ul', 'ol', 'li',
-    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-    'a', 'img',
-    'table', 'thead', 'tbody', 'tr', 'th', 'td',
-    'blockquote', 'q',
-    'pre', 'code'
-]
-
-# TODO : add more
-allowed_attributes = {
-    '*': ['class', 'id', 'title', 'lang', 'dir', 'data-*', 'aria-*', 'role'],
-    'a': ['href', 'target', 'rel'],
-    'img': ['src', 'alt', 'width', 'height'],
-}
 
 
 class Compiler:
@@ -78,7 +64,7 @@ class Compiler:
             str: A string containing the compiled HTML.
         """
         if not isinstance(elm, Node):
-            return elm[0]
+            return self.sanitize(elm[0])
 
         tag = elm.name 
 
@@ -86,11 +72,14 @@ class Compiler:
 
         #  assign unique id for zenui dom
         if isinstance(elm, Node) and zenaura_dom_mode:
-            zenui_id = f'{ZENAURA_DOM_ATTRIBUTE}="{elm.nodeId}"'
+            zenui_id = f' {ZENAURA_DOM_ATTRIBUTE}="{elm.nodeId}"'
 
         # get node attributes
         attributes = self.process_attributes(elm.attributes, componentName)
-
+        
+        if tag in self_closing_tags:
+            return f"<{tag}{zenui_id}{attributes}>"
+        
         # start tag
         html = f"<{tag}{zenui_id}{attributes}>"
 

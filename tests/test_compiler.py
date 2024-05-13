@@ -1,4 +1,4 @@
-from zenaura.client.tags import Node, Child, Attribute
+from zenaura.client.tags import Node, Attribute
 from zenaura.client.compiler import Compiler
 import unittest
 
@@ -114,7 +114,7 @@ class CompilerTests(unittest.TestCase):
         child1.children.extend([grandchild1, grandchild2, grandchild3])
         root.children.extend([child1, child2])
         result = compiler.compile(root, zenaura_dom_mode=False)
-        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link</a><img src="image.jpg" alt="Image"></img></div><div></div></div>'
+        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link</a><img src="image.jpg" alt="Image"></div><div></div></div>'
         self.assertEqual(result, expected_output)
 
 
@@ -141,5 +141,5 @@ class CompilerTests(unittest.TestCase):
 
         result = compiler.compile(root, zenaura_dom_mode=False)
         
-        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link<div><div></div><div></div></div></a><img src="image.jpg" alt="Image"></img></div><div></div></div>'
+        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link<div><div></div><div></div></div></a><img src="image.jpg" alt="Image"></div><div></div></div>'
         self.assertEqual(result, expected_output)
