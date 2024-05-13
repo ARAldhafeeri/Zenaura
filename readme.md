@@ -36,3 +36,12 @@ zenaura\client\tags.py          144      3    98%   9-11
 ```
 
 - important note : test coverage must be kept at 95%
+
+# run example :
+
+cd to examples folder
+cd into example folder 
+run 
+```
+flask --app hello run
+```
