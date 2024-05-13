@@ -14,7 +14,6 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-examples/
 .eggs/
 lib/
 lib64/
@@ -22,6 +21,7 @@ parts/
 sdist/
 var/
 wheels/
+examples/**/client/*
 share/python-wheels/
 *.egg-info/
 .installed.cfg
