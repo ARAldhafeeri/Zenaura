@@ -25,13 +25,15 @@ class Hyderater:
 
     def create_element(self, virtual_node: Node) -> HTMLElement:
         element = self.document.createElement(virtual_node.tag_name)
-        for attribute_name, attribute_value in virtual_node.attributes.items():
+        for attribute in virtual_node.attributes:
+            attribute_name, attribute_value = attribute.to_dict()
             element.setAttribute(attribute_name, attribute_value)
         return element
 
     def update_element(self, virtual_node: Node, element: HTMLElement) -> None:
         # Update attributes
-        for attribute_name, attribute_value in virtual_node.attributes.items():
+        for attribute in virtual_node.attributes:
+            attribute_name, attribute_value = attribute.to_dict()
             element.setAttribute(attribute_name, attribute_value)
 
         # Update children
