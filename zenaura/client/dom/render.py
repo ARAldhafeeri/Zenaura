@@ -3,7 +3,7 @@ from zenaura.client.compiler import compiler
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from .lookup import LookupTable
 from .lifecycles.render import RenderLifeCycle
-from .algorithm import DiffingAlgorithm
+from ..algorithm.algorithm import DiffingAlgorithm
 import traceback
 from pyscript import document 
 
@@ -32,18 +32,22 @@ class Render(
             # update 2: update the component in the DOM
             prevTree = self.zen_dom_table[comp.componentId]
             newTree = comp.node()
-            diff = self.search(prevTree, newTree)
+            diff = self.search(prevTree, newTree, comp.componentId)
+            print(len(diff))
             while diff:
-                prevNodeId, newNodeChildren = diff.pop()
+                prevNodeId, newNodeChildren, path= diff.pop()
                 compiled_comp = compiler.compile(
                     newNodeChildren, 
-                    componentName=comp.__class__.__name__,
-                    zenaura_dom_mode=True
+                    componentId=comp.componentId,
+                    zenaura_dom_mode=True,
+                    path = path
                 )
-
+                print(prevNodeId)
+                print(compiled_comp)
                 foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prevNodeId}"]')
-                foundNode.outerHTML = compiled_comp
-                self.update(prevTree, prevNodeId, newNodeChildren)
+                if foundNode:
+                    foundNode.outerHTML = compiled_comp
+            # self.update(prevTree, prevNodeId, newNodeChildren)
             self.zen_dom_table[comp.componentId] = newTree
 
             # update 3  : componentDidUpdate method to be called after updating

@@ -1,4 +1,4 @@
-from zenaura.client.tags import Attribute, Node
+from zenaura.client.tags import Attribute, Node, Data
 from zenaura.client.component import Component
 from dataclasses import dataclass
 from zenaura.client.mutator import mutator
@@ -56,7 +56,7 @@ class Counter(Component):
 		header.children = [
 			Node(name="text", children=[
 				Node(name="data", children= [
-					f"Counter: {self.get_state()}"
+					Data(f"Counter: {self.get_state()}")
 				])
 			])
 		]

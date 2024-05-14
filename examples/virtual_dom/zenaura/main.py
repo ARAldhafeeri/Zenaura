@@ -1,12 +1,12 @@
 from zenaura.client.component import Component
-from zenaura.client.tags import Node, Attribute
+from zenaura.client.tags import Node, Attribute, Data
 from zenaura.client.router import Route, Router
-from zenaura.client.app import ZenUIApp
-from zenaura.client.dom import zenaura_dom
 from zenaura.routes import ClientRoutes
 from dataclasses import dataclass
-from pyscript import window
+from pyscript import window, when
 from functools import cache
+from zenaura.client.mutator import mutator
+from zenaura.client.tags import Builder
 import json
 
 @dataclass
@@ -33,19 +33,25 @@ STYLES = CounterStyles(
     main_container="mainContainer"
 )
 
-@cache
-def Button( label_text : str, onclick_handler : str) -> Node:
+def Button( label_text : str, onclick_handler : str, id=None) -> Node:
     btn = Node(name="button")
-    btn.attributes.append(Attribute(key="py-click", value=onclick_handler))
-    btn.attributes.append(Attribute(key="styles", value=STYLES.btn))	
+    btn.attributes.append(Attribute(key="styles", value=STYLES.btn))
+    if id:
+        btn.attributes.append(Attribute(key="id", value=id))
+    else:
+        btn.attributes.append(Attribute(key="py-click", value=onclick_handler))
+
     btn.children.append(Node(name="label", children=[label_text]))
     return btn
 
-@cache
 def DomContainer() -> Node:
     virtualDom = Node(name="div")
     virtualDom.attributes = [
         Attribute(key="id", value="virtualDom"),
+    ]
+
+    virtualDom.children = [
+        Node(name="svg")
     ]
 
     realDom = Node(name="div")
@@ -64,7 +70,6 @@ def DomContainer() -> Node:
     ]
     return domContainer
 
-@cache
 def Image(src : str) -> Node:
      return Node(name="img", attributes=[Attribute(key="src", value=src)])
 
@@ -85,6 +90,32 @@ class SimpleUi(Component):
         div.children.append(btn)
         return div
 
+
+
+def CounterPresntaional(increaseBtn, decreaseBtn, headertext) -> Node:
+    
+    header = Builder('h1') \
+    .with_child(
+        headertext
+    ).build()
+    
+    ctrl = Builder("div") \
+        .with_attribute("styles", STYLES.controls) \
+        .with_child(
+            increaseBtn
+        ).with_child(
+            decreaseBtn
+        ).build()
+
+    return Builder("div") \
+        .with_attribute("styles", STYLES.container) \
+        .with_attribute("id", "large-header") \
+        .with_child(
+            header 
+        ).with_child(
+            ctrl
+    ).build()
+
 class Counter(Component):
     def __init__(self, dependencies):			
         
@@ -93,143 +124,97 @@ class Counter(Component):
              "count1": 0,
              "count2": 0
         })
+        
+        self.count1 = self.get_state()['count1']
 
         # dependencies
         self.dependencies = dependencies
         self.state_chnages = []
 
-    def treeGraph(self):
-        import js
-        s = json.dumps(self.node().to_dict())
-        js.window.VirtualDomGraph(s)
+    # def treeGraph(self):
+    #     import js
+    #     s = json.dumps(self.node().to_dict())
+    #     js.window.VirtualDomGraph(s)
 
         
-    def componentDidMount(self, *args , **kwargs):
-        self.treeGraph()
+    # def componentDidMount(self, *args , **kwargs):
+    #     self.treeGraph()
 
-    def componentDidUpdate(self, *args, **kwargs):
-        self.state_chnages.append(self.get_state())
-        self.treeGraph()
-        
+    # def componentDidUpdate(self, *args, **kwargs):
+    #     self.state_chnages.append(self.get_state())
+    #     self.treeGraph()
+
+    @mutator        
     def increment(self, event) -> None:
         state = self.get_state()
+        print("increment", state)
         state["count1"] = state["count1"] + 1
         self.set_state(state)
-        zenaura_dom.render(self)
 
+    @mutator        
     def decrease(self, event) -> None:
         state = self.get_state()
         state["count1"] = state["count1"] - 1
         self.set_state(state)
-        zenaura_dom.render(self)
 
+    @mutator        
     def increment2(self, event) -> None:
         state = self.get_state()
+        print("increment", state)
         state["count2"] = state["count2"] + 1
         self.set_state(state)
-        zenaura_dom.render(self)
 
+    @mutator        
     def decrease2(self, event) -> None:
         state = self.get_state()
         state["count2"] = state["count2"] - 1
         self.set_state(state)
-        zenaura_dom.render(self)
 
 
     def node(self) -> Node:
-        # header
-        header =  Node(name="h1")
-        header2 =  Node(name="h2")
-
-        header.attributes = [
-            Attribute(key="styles", value=STYLES.h1)
-        ]
-        header.children = [
-            Node(name="data", children=[f"Counter: {self.get_state()['count1']}"])
-        ]
-
-        header2.attributes = [
-            Attribute(key="styles", value=STYLES.h1)
-        ]
-        header2.children = [
-            Node(name="data", children=[f"Counter: {self.get_state()['count2']}"])
-        ]
-
-
-
-        # controls div
-        controls1 = 	Node(name="div")
-        controls1.attributes = [
-            Attribute(key="styles", value=STYLES.controls)
-        ]
-        controls1.children = [
-            Button( "-",  "counter.decrease" ),
-            Button( "+",  "counter.increment" ),
-        ]
-
-        # controls div
-        controls2 = 	Node(name="div")
-        controls2.attributes = [
-            Attribute(key="styles", value=STYLES.controls)
-        ]
-        controls2.children = [
-            Button( "-",  "counter.decrease2" ),
-            Button( "+",  "counter.increment2" ),
-        ]
-
-        # logo 
-        logoContainer = Node(name="div")
-        logoContainer.attributes = [
-            Attribute(key="styles", value=STYLES.container2)
-        ]
-
-        logoContainer.children = [
-             Image("./zenaura/assets/logo.png"),
-        ]
-
-        container = Node(name="div")
-        container.attributes = [
-            Attribute(key="styles", value=f"${STYLES.main_container} large-header"),
-        ]
-        # component
-        comp = Node(name="div")
-
-        comp.attributes = [
-            Attribute(key="styles", value=STYLES.container),
-            Attribute(key="id", value="large-header")
-        ]
-
-        table = Node(name="div")
-        # table for state_change 
+    
+        # table = Node(name="div")
+        # # table for state_change 
         
-        for state in self.state_chnages:
-            table.children.append(Node(name="p", children=[f"count: {state['count1']} {state['count2']}"]))
+        # for state in self.state_chnages:
+        #     table.children.append(f"count: {state['count1']} {state['count2']}")
         
-        table_and_graph = Node(name="div")
-        table_and_graph.attributes = [
-            Attribute(key="id", value="table_and_graph")
-        ]
-        table_and_graph.children = [
-            DomContainer(),
-            table,
-        ]
+        # table_and_graph = Node(name="div")
+        # table_and_graph.attributes = [
+        #     Attribute(key="id", value="table_and_graph")
+        # ]
+        
+        # table_and_graph.children = [
+        #     DomContainer(),
+        #     table,
+        # ]
        
 
-        comp.children = [
-            header, 
-            controls1,
-            header2,
-            controls2,
-        ]
+        return Builder("div") \
+                .with_attribute("styles", f"{STYLES.main_container} large-header") \
+                    .with_child(
+                        Builder("div")
+                        .with_child(Image("./zenaura/assets/logo.png"))
+                        .with_attribute("styles", STYLES.container2)
+                        .build()
+                    ) \
+                        .with_child(
+                            CounterPresntaional(
+                                Button("-", "counter.decrease"),
+                                Button("+", "counter.increment"),
+                                f"count: {self.get_state()['count1']}"
+                            )
+                        ) \
+                        .with_child(
+                            CounterPresntaional(
+                                Button("-", "counter.decrease2"),
+                                Button("+", "counter.increment2"),
+                                f"count: {self.get_state()['count2']}"
+                            )
+                        ) \
+                    .build()
 
-        container.children = [
-            logoContainer,
-            comp,
-            table_and_graph,
 
-        ]
-
-        return container
 
 
 simpleUi = SimpleUi()
@@ -252,8 +237,5 @@ router.addRoute(Route(
  
 router.handlelocation()
 
-
-
-app = ZenUIApp(router)
 
 

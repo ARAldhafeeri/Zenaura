@@ -4,7 +4,7 @@
     "runtimes": [],
     "interpreters": [
       {
-        "src": "https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js",
+        "src": "https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js",
         "name": "pyodide-0.22.1",
         "lang": "python"
       }
@@ -30,12 +30,12 @@
           "./zenaura/client/tags/attribute.py" ,  
           "./zenaura/client/tags/builder.py", 
           "./zenaura/client/tags/html_tags.py", 
-          "./zenaura/client/tags/node.py", 
+          "./zenaura/client/tags/node.py",
+          "./zenaura/client/tags/data.py", 
           "./zenaura/client/tags/__init__.py",  
 
           "./zenaura/client/dom/lifecycles/mount.py",
           "./zenaura/client/dom/lifecycles/render.py",
-          "./zenaura/client/dom/algorithm.py",
           "./zenaura/client/dom/error.py",
           "./zenaura/client/dom/lookup.py",
           "./zenaura/client/dom/mount.py",
@@ -43,6 +43,13 @@
           "./zenaura/client/dom/render.py",
           "./zenaura/client/dom/dom.py",
           "./zenaura/client/dom/__init__.py",
+
+          "./zenaura/client/algorithm/searcher.py",
+          "./zenaura/client/algorithm/comparer.py",
+          "./zenaura/client/algorithm/hyderater.py",
+          "./zenaura/client/algorithm/updater.py",
+          "./zenaura/client/algorithm/algorithm.py",
+          "./zenaura/client/algorithm/__init__.py",
 
           "./zenaura/client/config.py",
 

@@ -20,7 +20,8 @@ class Component:
 
         super().__init_subclass__()
 
-        cls.componentId = uuid.uuid4().hex
+        #shorter version for accessibility purposes
+        cls.componentId = uuid.uuid4().hex[:8]
 
     @property
     def state(self):

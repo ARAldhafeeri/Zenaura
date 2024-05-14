@@ -5,16 +5,14 @@ import io
 class AttributeProccessor:
     def process_attributes(
                 self, 
-                attrs: List[Attribute], 
-                componentName=None
-            ) -> str:
+                attrs: List[Attribute]
+                ) -> str:
         """
             Processes a list of Attributes, converting them to
             HTML-formatted attributes.
 
             Args:
                 attrs (List[Attribute]): A list of Zenui Attribute objects.
-                componentName (str, optional): For event handling 
                 attributes like onclick.
 
             Returns:

@@ -1,4 +1,4 @@
-ZENAURA_DOM_ATTRIBUTE = "data-zenaura-attribute"
+ZENAURA_DOM_ATTRIBUTE = "data-zenaura"
 
 # TODO : add more
 # TODO add more 

@@ -36,7 +36,7 @@ class Mount(
             comp_tree = comp.node()
             compiled_comp = compiler.compile(
                 comp_tree, 
-                componentName=comp.__class__.__name__,
+                componentId=comp.componentId,
                 zenaura_dom_mode=True
             )
 
