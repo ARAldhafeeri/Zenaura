@@ -30,55 +30,79 @@ class Comparer:
                     path: uinque path of the component tree to identify the nodes differences
                 return None
             """
-            prevNodeAttributesStr = compiler.process_attributes(prevNode.attributes)
-            newNodeAttributesStr = compiler.process_attributes(newNode.attributes)
-            if prevNodeAttributesStr!= newNodeAttributesStr:
-                diff.append([
-                    # in mount life cycle the compiler will
-                    # generate a unique id for each node using componentId
-                    # then componentId-level-dependent for each child
-                    # which in result generate a unique keyed ZENAURA_DOM_ATTRIBUTE 
-                    compiler.getKeyedUID(componentId, level, child_index, path),
-                    newNode,
-                    path
-                ])
+            self.compare_attributes(
+                 prevNode, 
+                 newNode, 
+                 level, 
+                 child_index, 
+                 componentId, 
+                 diff, 
+                 path
+            )
             
             # check if it's children is leaf node
             # this is for instances of Data
-            prevNodeChildren = prevNode.children
-            newNodeCHildren = newNode.children
-            # if nodes has children, if they are leaf nodes of str or Data
-            # compare the children and update diff stack
-            if len(prevNodeChildren) and len(newNodeCHildren) == 1:
-                if (
-                    isinstance(prevNodeChildren[0], Data)
-                        and 
-                        isinstance(newNodeCHildren[0], Data)
-                    ):
-                    if prevNodeChildren[0].content!= newNodeCHildren[0].content:
-                        diff.append([
-                            compiler.getKeyedUID(
-                                componentId=componentId, 
-                                level=level, 
-                                child_index=child_index, 
-                                path=path
-                            ),
-                            newNode,
-                            path
-                        ])
-                elif (
-                    isinstance(prevNodeChildren[0], str)
-                        and 
-                        isinstance(newNodeCHildren[0], str)
-                    ):
-                    if prevNodeChildren[0]!= newNodeCHildren[0]:
-                        diff.append([
-                            compiler.getKeyedUID(
-                                componentId=componentId, 
-                                level=level, 
-                                child_index=child_index, 
-                                path=path
-                            ),
-                            newNode,
-                            path
-                        ])
+            self.compare_children(
+                 prevNode, 
+                 newNode, 
+                 level, 
+                 child_index, 
+                 componentId, 
+                 diff, 
+                 path
+            )
+
+    def compare_attributes(
+              self, 
+              prevNode, 
+              newNode, 
+              level, 
+              child_index, 
+              componentId, 
+              diff, 
+              path
+    ):
+      
+        for prevNodeAttributes, newNodeAttributes in zip(prevNode.attributes, newNode.attributes):
+            prevDict = prevNodeAttributes.to_dict()
+            newDict = newNodeAttributes.to_dict()
+
+            if prevDict!= newDict:
+                diff.append([
+                        # in mount life cycle the compiler will
+                        # generate a unique id for each node using componentId
+                        # then componentId-level-dependent for each child
+                        # which in result generate a unique keyed ZENAURA_DOM_ATTRIBUTE 
+                        compiler.getKeyedUID(componentId, level, child_index, path),
+                        newNode,
+                        path
+                    ])
+                # break the loop node will be rerendered no need to compare further.
+                break
+
+    def compare_children(
+              self, 
+              prevNode, 
+              newNode, 
+              level, 
+              child_index, 
+              componentId, 
+              diff, 
+              path
+    ):
+        prevNodeChildren = prevNode.children
+        newNodeCHildren = newNode.children
+        # if nodes has children, if they are leaf nodes of str or Data
+        # compare the children and update diff stack
+        if len(prevNodeChildren) and len(newNodeCHildren) == 1:
+            if isinstance(prevNodeChildren[0], (Data, str)) and isinstance(newNodeCHildren[0], (Data, str)):
+                diff.append([
+                        compiler.getKeyedUID(
+                            componentId=componentId, 
+                            level=level, 
+                            child_index=child_index, 
+                            path=path
+                        ),
+                        newNode,
+                        path
+                    ])
