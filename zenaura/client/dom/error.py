@@ -26,7 +26,7 @@ class GracefulDegenerationLifeCycleWrapper:
              error_comp = comp.componentDidCatchError(str(error))
              compiled_comp = compiler.compile(
                  error_comp, 
-                 componentName=comp.__class__.__name__,
+                 componentId=comp.componentId,
                  zenaura_dom_mode=True
              )
              dom_node = document.getElementById("root")
@@ -39,7 +39,7 @@ class GracefulDegenerationLifeCycleWrapper:
             error_comp = error_comp.node()
             compiled_comp = compiler.compile(
                  error_comp, 
-                 componentName=comp.__class__.__name__,
+                 componentId=comp.componentId,
                  zenaura_dom_mode=True
              )
             dom_node = document.getElementById("root")

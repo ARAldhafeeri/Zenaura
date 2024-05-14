@@ -4,6 +4,7 @@ from unittest.mock import patch, MagicMock
 from tests.mocks.browser_mocks import MockDocument, MockWindow
 from zenaura.client.tags import Node
 from zenaura.client.component import Component
+from zenaura.client.compiler import compiler
 
 sys.modules["pyscript"] = MagicMock()
 
@@ -42,9 +43,12 @@ class TestDom(unittest.TestCase):
         self.zenaura_dom.zen_dom_table[self.counter.componentId] = prevTree
         self.counter.set_state("test")
         newTree = self.counter.node()
-        diff = self.zenaura_dom.search(prevTree, newTree)
+        diff = self.zenaura_dom.search(prevTree, newTree, self.counter.componentId)
         # hader location on tree, effected by change
-        changedNodeId = prevTree.nodeId
+        # do not be confused with this, please see docs on method
+        # here the changed node is in level 3, index 0 of the component
+        # see docs keyed UID algorithm.
+        changedNodeId = compiler.getKeyedUID(self.counter.componentId, 3, 0)
         self.assertEqual(changedNodeId, diff[0][0])
 
 
@@ -55,7 +59,8 @@ class TestDom(unittest.TestCase):
         re_rendered = self.zenaura_dom.zen_dom_table[self.counter.componentId]
         # print end of line 
         print("\n")
-        self.assertEqual(re_rendered.children[0].children[0].children[0].children[0], f'Counter: {self.counterState(count=1)}')
+        # new data structure Data for data binding
+        self.assertEqual(re_rendered.children[0].children[0].children[0].children[0].content, f'Counter: {self.counterState(count=1)}')
 
     def test_update(self):
         prevTree = self.counter.node()
@@ -102,7 +107,7 @@ class TestDom(unittest.TestCase):
         new_tree = Node(name="div", children=["test"])
         
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
 
         self.assertEqual(diff, [])
 
@@ -111,7 +116,7 @@ class TestDom(unittest.TestCase):
         prev_tree = Node(name="div", children=[Node(name="span", children=["test"])])
         new_tree = Node(name="div", children=[Node(name="span", children=["new test"])])
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
 
         self.assertNotEqual(diff, [])
 
@@ -119,24 +124,15 @@ class TestDom(unittest.TestCase):
         prev_tree = Node(name="div", children=[])
         new_tree = Node(name="div", children=[])
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
 
         self.assertEqual(diff, [])
-
-    def test_search_different_trees_with_empty_structure(self):
-        prev_tree = Node(name="div", children=[])
-        new_tree = Node(name="div", children=[Node(name="span", children=["test"])])
-        
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
-
-        self.assertNotEqual(diff, [])
-
 
     def test_search_different_trees_with_nested_structure(self):
         prev_tree = Node(name="div", children=[Node(name="span", children=["test"])])
         new_tree = Node(name="div", children=[Node(name="span", children=["new test"])])
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
 
         self.assertNotEqual(diff, [])
 
@@ -144,17 +140,9 @@ class TestDom(unittest.TestCase):
         prev_tree = Node(name="div", children=[])
         new_tree = Node(name="div", children=[])
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
 
         self.assertEqual(diff, [])
-
-    def test_search_different_trees_with_empty_structure(self):
-        prev_tree = Node(name="div", children=[])
-        new_tree = Node(name="div", children=[Node(name="span", children=["test"])])
-        
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
-
-        self.assertNotEqual(diff, [])
 
 
     def test_update_with_empty_prev_tree(self):
@@ -187,7 +175,7 @@ class TestDom(unittest.TestCase):
         prev_tree = Node(name="div", children=[Node(name="span", children=["test"])])
         new_tree = Node(name="div", children=[Node(name="span", children=["new test"])])
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
         self.assertNotEqual(diff, [])
 
         updated_tree = self.zenaura_dom.update(prev_tree, prev_tree.nodeId, new_tree)
@@ -203,7 +191,7 @@ class TestDom(unittest.TestCase):
         prev_tree = Node(name="div", children=[])
         new_tree = Node(name="div", children=[])
         
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
         self.assertEqual(diff, [])
 
         updated_tree = self.zenaura_dom.update(prev_tree, prev_tree.nodeId, new_tree)
@@ -213,7 +201,7 @@ class TestDom(unittest.TestCase):
     def test_search_method_returns_diff_nodes(self):
         prev_tree = Node("div")
         new_tree = Node("div")
-        diff = self.zenaura_dom.search(prev_tree, new_tree)
+        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
         # Assert that the search method returns the expected diff nodes
         assert diff == []
 

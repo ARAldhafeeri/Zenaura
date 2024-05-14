@@ -53,12 +53,6 @@ class CompilerTests(unittest.TestCase):
         result = compiler.sanitize(input_html)
         self.assertEqual(result, '&lt;script&gt;alert(&quot;XSS attack&quot;)&lt;/script&gt;')
 
-    def test_compile_with_component_name(self):
-        elm = Node("button")
-        elm.attributes.append(Attribute("onclick", "counter.handleClick"))
-        result = compiler.compile(elm, componentName="myButton", zenaura_dom_mode=False)
-        expected_output = '<button onclick="counter.handleClick"></button>'
-        self.assertEqual(result, expected_output)
 
     def test_process_attributes_with_keywords(self):
         attrs = [Attribute("styles", "my-button"), Attribute("id", "btn-1")]

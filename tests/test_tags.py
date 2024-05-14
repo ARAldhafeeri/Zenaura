@@ -1,4 +1,4 @@
-from zenaura.client.tags import Node, Attribute, HTMLTags
+from zenaura.client.tags import Node, Attribute, Builder
 import unittest
 
 class DataclassTests(unittest.TestCase):
@@ -28,7 +28,7 @@ class DataclassTests(unittest.TestCase):
         self.assertTrue(parent.nodeId)
 
     def test_node_builder(self):
-        node = HTMLTags().div \
+        node = Builder('div') \
             .with_attribute("test", "test") \
             .with_child(
                 Node(name="test")
@@ -40,39 +40,39 @@ class DataclassTests(unittest.TestCase):
         self.assertTrue(isinstance(node.attributes[0], Attribute))
 
     def test_init(self):
-        tb = HTMLTags().div.build()
+        tb = Builder('div').build()
         self.assertEqual(tb.name, "div")
         self.assertEqual(tb.attributes, [])  
         self.assertEqual(tb.children, []) 
 
     def test_with_attribute(self):
-        tb = HTMLTags().p
+        tb = Builder('p')
         tb.with_attribute("id", "main-paragraph").build()
         self.assertEqual(tb.node.attributes[0].key, "id")
         self.assertEqual(tb.node.attributes[0].value, "main-paragraph")
 
 
     def test_with_styles(self):
-        tb = HTMLTags().p
+        tb = Builder('p')
         tb.with_styles({"color": "blue", "font-size": "16px"}).build()
         self.assertEqual(tb.node.attributes[0].key, "style")
         self.assertEqual(tb.node.attributes[0].value, "color:blue;font-size:16px")
 
     def test_with_class(self):
-        tb = HTMLTags().p
+        tb = Builder('p')
         tb.with_class("my-class").build() 
         self.assertEqual(tb.node.attributes[0].key, "class")
         self.assertEqual(tb.node.attributes[0].value, "my-class")
 
     def test_with_classes(self):
-        tb = HTMLTags().span
+        tb = Builder('span')
         tb.with_classes("highlighted", "bold").build()
         self.assertEqual(tb.node.attributes[0].key, "class")
         self.assertEqual(tb.node.attributes[0].value, "highlighted bold")
 
 
     def test_with_class_avoid_duplicates(self):
-        tb = HTMLTags().div
+        tb = Builder('div')
         tb.with_class("container").with_class("container").build()
         self.assertEqual(tb.node.attributes[0].key, "class")
         self.assertEqual(tb.node.attributes[0].value, "container")

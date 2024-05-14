@@ -1,17 +1,17 @@
 from .attribute import Attribute
 from .node import Node
 
-class TagBuilder:
+class Builder:
     def __init__(self, name : str) -> None:
         """
-        Initializes a TagBuilder object with the given name.
+        Initializes a Builder object with the given name.
 
         Args:
         name (str): The name of the tag.
         """
         self.node = Node(name)
     
-    def with_attribute(self, key : str, value : any) -> "TagBuilder":
+    def with_attribute(self, key : str, value : any) -> "Builder":
         """
         Adds an attribute to the tag.
 
@@ -20,12 +20,12 @@ class TagBuilder:
         value: The value of the attribute.
 
         Returns:
-        TagBuilder: The TagBuilder object.
+        Builder: The Builder object.
         """
         self.node.attributes.append(Attribute(key,value))
         return self
     
-    def with_child(self, child : Node) -> "TagBuilder":
+    def with_child(self, child : Node) -> "Builder":
         """
         Adds a child node to the tag.
 
@@ -33,12 +33,12 @@ class TagBuilder:
         child (Node): The child node to be added.
 
         Returns:
-        TagBuilder: The TagBuilder object.
+        Builder: The Builder object.
         """
         self.node.children.append(child)
         return self 
     
-    def with_styles(self, styles: dict) -> "TagBuilder":
+    def with_styles(self, styles: dict) -> "Builder":
         """
         Adds styles to the tag.
 
@@ -46,13 +46,13 @@ class TagBuilder:
         styles (dict): Dictionary of styles.
 
         Returns:
-        TagBuilder: The TagBuilder object.
+        Builder: The Builder object.
         """
         style_str = ";".join([f"{k}:{v}" for k, v in styles.items()])
         self.node.attributes.append(Attribute("style", style_str))
         return self
     
-    def with_classes(self, *class_names: str) -> "TagBuilder":
+    def with_classes(self, *class_names: str) -> "Builder":
 
         """
         Adds multiple class names to the element.
@@ -61,13 +61,13 @@ class TagBuilder:
         *class_names (str): Variable number of class names.
 
         Returns:
-        TagBuilder: The TagBuilder object.
+        Builder: The Builder object.
         """
         for class_name in class_names:
             self.with_class(class_name)
         return self
     
-    def with_class(self, class_name: str) -> "TagBuilder":
+    def with_class(self, class_name: str) -> "Builder":
         """
         Adds a single class name to the element.
 
@@ -75,7 +75,7 @@ class TagBuilder:
         class_name (str): The class name to be added.
 
         Returns:
-        TagBuilder: The TagBuilder object.
+        Builder: The Builder object.
         """
         for i in self.node.attributes:
             if i.key =="class":
@@ -86,7 +86,7 @@ class TagBuilder:
        
         return self
 
-    def with_class_if(self, class_name: str, condition: bool) -> "TagBuilder":
+    def with_class_if(self, class_name: str, condition: bool) -> "Builder":
         """
         Adds a class name to the element if the condition is True.
         If the condition is False, the class is not added.
@@ -98,7 +98,7 @@ class TagBuilder:
         self.with_class(class_name) if condition else None
         return self 
 
-    def with_attribute_if(self, key : str, value : any, condition: bool) -> "TagBuilder":
+    def with_attribute_if(self, key : str, value : any, condition: bool) -> "Builder":
         """
             adds attribute if condition is true 
             args :
@@ -109,7 +109,7 @@ class TagBuilder:
         self.with_attribute(key, value) if condition else None
         return self
     
-    def with_child_if(self, child : Node, condition: bool) -> "TagBuilder":
+    def with_child_if(self, child : Node, condition: bool) -> "Builder":
         """
             adds child if condition is true
             args :

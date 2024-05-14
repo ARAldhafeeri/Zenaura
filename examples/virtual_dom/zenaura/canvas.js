@@ -15,19 +15,17 @@ const VirtualDomGraph = (treeData) => {
       // maps the node data to the tree layout
       nodes = treemap(nodes);
 
-      console.log("nodes: ", nodes)
-
       
       // append the svg obgect to the body of the page
       // appends a 'group' element to 'svg'
       // moves the 'group' element to the top left margin
-      var svg = d3.select("#virtualDom").append("svg")
+      var svg = d3.select("#virtualDom").select("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom),
           g = svg.append("g")
             .attr("transform",
                   "translate(" + margin.left + "," + margin.top + ")");
-
+      
       // adds the links between the nodes
       g.selectAll(".link")
           .data( nodes.descendants().slice(1))
@@ -39,6 +37,7 @@ const VirtualDomGraph = (treeData) => {
             + " " + d.parent.x + "," +  (d.y + d.parent.y) / 2
             + " " + d.parent.x + "," + d.parent.y;
             });
+
       // adds each node as a group
       var node = g.selectAll(".node")
           .data(nodes.descendants())
@@ -48,7 +47,7 @@ const VirtualDomGraph = (treeData) => {
               (d.children ? " node--internal" : " node--leaf"); })
           .attr("transform", function(d) { 
             return "translate(" + d.x + "," + d.y + ")"; })
-            
+      
       // adds the circle to the node
       node.append("circle")
         .attr("r", 10);
@@ -59,12 +58,8 @@ const VirtualDomGraph = (treeData) => {
         .attr("y", function(d) { return d.children ? -20 : 20; })
         .style("text-anchor", "middle")
         .text(function(d) { return d.data.name ?? d.data});
-        // var k = 6 * e.alpha;
-
-    //      json.links.forEach(function(d, i) {
-    // d.source.y -= k;
-    // d.target.y += k;
-    //   };
+      
+      node.exit().remove();
   }
 
   window.VirtualDomGraph = VirtualDomGraph;
