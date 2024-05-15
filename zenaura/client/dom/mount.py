@@ -10,7 +10,6 @@ import traceback
 
 class Mount(
     GracefulDegenerationLifeCycleWrapper,
-    Hyderator,
     MountLifeCycles
     ):
     def mount(self, comp  ) -> None:
@@ -34,17 +33,12 @@ class Mount(
             self.componentWillMount(comp)
 
             # mount 2: mount the component to the DOM
-            comp_tree = comp.node()
-            compiled_comp = compiler.compile(
-                comp_tree, 
-                componentId=comp.componentId,
-                zenaura_dom_mode=True
-            )
+            # hyderation steps:
+            compiled_html = self.hyd_comp_compile_node(comp)
 
-            dom_node = document.getElementById("root") 
-            dom_node.innerHTML = compiled_comp
+            self.hyd_rdom_attach_to_root(compiled_html)
 
-            self.zen_dom_table[comp.componentId] = comp_tree
+            self.hyd_vdom_update(comp)
 
             self.componentDidMount(comp)
 
