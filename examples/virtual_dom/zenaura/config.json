@@ -55,6 +55,7 @@
           "./zenaura/client/hyderator/lookup.py",
           "./zenaura/client/hyderator/real_dom_adapter.py",
           "./zenaura/client/hyderator/__init__.py",
+          "./zenaura/client/hyderator/virtual_dom_adapter.py",
 
 
           "./zenaura/client/config.py",
