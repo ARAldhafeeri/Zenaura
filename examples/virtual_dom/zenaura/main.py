@@ -191,28 +191,28 @@ class Counter(Component):
        
 
         return Builder("div") \
-                .with_attribute("styles", f"{STYLES.main_container} large-header") \
-                    .with_child(
-                        Builder("div")
-                        .with_child(Image("./zenaura/assets/logo.png"))
-                        .with_attribute("styles", STYLES.container2)
-                        .build()
-                    ) \
-                        .with_child(
-                            CounterPresntaional(
-                                Button("-", "counter.decrease"),
-                                Button("+", "counter.increment"),
-                                f"count: {self.get_state()['count1']}"
-                            )
-                        ) \
-                        .with_child(
-                            CounterPresntaional(
-                                Button("-", "counter.decrease2"),
-                                Button("+", "counter.increment2"),
-                                f"count: {self.get_state()['count2']}"
-                            )
-                        ) \
+            .with_attribute("styles", f"{STYLES.main_container} large-header") \
+                .with_child(
+                    Builder("div")
+                    .with_child(Image("./zenaura/assets/logo.png"))
+                    .with_attribute("styles", STYLES.container2)
                     .build()
+                ) \
+                .with_child(
+                    CounterPresntaional(
+                        Button("-", "counter.decrease"),
+                        Button("+", "counter.increment"),
+                        f"count: {self.get_state()['count1']}"
+                    )
+                ) \
+                .with_child(
+                    CounterPresntaional(
+                        Button("-", "counter.decrease2"),
+                        Button("+", "counter.increment2"),
+                        f"count: {self.get_state()['count2']}"
+                    )
+                ) \
+                .build()
 
 
 
