@@ -217,7 +217,7 @@ class TestDom(unittest.TestCase):
 
         class TestComponent(Component):
             def componentDidCatchError(self, error):
-                return CustomErrorComponent(error_message=error).node()
+                return CustomErrorComponent(error_message=error)
 
         test_component = TestComponent()
 

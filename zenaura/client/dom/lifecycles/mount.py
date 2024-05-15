@@ -1,4 +1,8 @@
-class MountLifeCycles:
+from zenaura.client.hyderator import HyderatorVirtualDomAdapter
+
+class MountLifeCycles(
+    HyderatorVirtualDomAdapter
+):
     
     def unmount(self, comp) -> None:
         """
@@ -17,7 +21,7 @@ class MountLifeCycles:
         if hasattr(comp, 'componentWillUnmount'):
             comp.componentWillUnmount()  
         # Perform virtual dom cleanup operations here
-        del self.zen_dom_table[comp.componentId]
+        self.hyd_vdom_delete(comp)
 
     def componentWillMount(self, comp) -> None:
         """

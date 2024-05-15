@@ -25,7 +25,7 @@ class HyderatorRealDomAdapter:
             args:
                 page: Page
         """
-        self.document.getElementById("root").innerHTML = html
+        document.getElementById("root").innerHTML = html
 
     def hyd_rdom_attach_to_mounted_comp(
             self,

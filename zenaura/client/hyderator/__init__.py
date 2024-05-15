@@ -1,3 +1,4 @@
 from .hyderator import Hyderator
 from .compiler_adapter import HyderatorCompilerAdapter
 from .real_dom_adapter import HyderatorRealDomAdapter
+from .virtual_dom_adapter import HyderatorVirtualDomAdapter

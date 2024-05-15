@@ -3,7 +3,7 @@ from zenaura.client.component import Component
 from zenaura.client.tags import Node 
 from zenaura.client.compiler import compiler
 from pyscript import document 
-from zenaura.client.hyderator import HyderatorCompilerAdapter
+from zenaura.client.hyderator import Hyderator
 
 class DefaultDomErrorComponent(Component):
     def __init__(self, error_message):
@@ -14,7 +14,7 @@ class DefaultDomErrorComponent(Component):
 
 
 class GracefulDegenerationLifeCycleWrapper(
-    HyderatorCompilerAdapter
+    Hyderator
 ):
     
     def componentDidCatchError(self, comp, error) -> None:
@@ -22,26 +22,30 @@ class GracefulDegenerationLifeCycleWrapper(
             Graceful degradation of component lifecycle methods.
         """
         if hasattr(comp, "componentDidCatchError"):
-             # call componentDidCatchError method
-             # mount the error message component 
-             error_comp = comp.componentDidCatchError(str(error))
-             compiled_comp = compiler.compile(
-                 error_comp, 
-                 componentId=comp.componentId,
-                 zenaura_dom_mode=True
-             )
-             dom_node = document.getElementById("root")
-             dom_node.innerHTML = compiled_comp
-             self.zen_dom_table[comp.componentId] = error_comp
+            # call componentDidCatchError method
+            # mount the error message component 
+            error_comp = comp.componentDidCatchError(str(error))
+            compiled_comp =  self.hyd_comp_compile_node(
+                 error_comp
+            )
+            
+            # attach to real dom
+            self.hyd_rdom_attach_to_root(compiled_comp)
+
+            # update virtual dom
+            self.hyd_vdom_update_with_new_node(comp, error_comp.node())
+
         else:
-            # mount the default error message component 
+            # mount the default error message component
             error_comp  = DefaultDomErrorComponent(error_message=str(error))
-            error_comp = error_comp.node()
-            compiled_comp = compiler.compile(
-                 error_comp, 
-                 componentId=comp.componentId,
-                 zenaura_dom_mode=True
+            
+            #compile the comp
+            compiled_comp =  self.hyd_comp_compile_node(
+                 error_comp
              )
-            dom_node = document.getElementById("root")
-            dom_node.innerHTML = compiled_comp
-            self.zen_dom_table[comp.componentId] = error_comp
+            
+            # attach to real dom
+            self.hyd_rdom_attach_to_root(compiled_comp)
+
+            # update virtual dom
+            self.hyd_vdom_update_with_new_node(comp, error_comp.node())

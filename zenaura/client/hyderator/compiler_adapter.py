@@ -11,6 +11,7 @@ class HyderatorCompilerAdapter:
         hyd_comp_
     """        
     def hyd_comp_get_keyed_uuid(
+        self,
         componentId : str, 
         level : int, 
         child_index : int, 
@@ -27,6 +28,7 @@ class HyderatorCompilerAdapter:
         )
     
     def hyd_comp_compile_node(
+        self,
         comp: Component,
     ):
         """
@@ -40,6 +42,7 @@ class HyderatorCompilerAdapter:
             )
     
     def hyd_comp_compile_children(
+        self,
         children: List[Node],
         componentId: str,
         zenaura_dom_mode: bool,

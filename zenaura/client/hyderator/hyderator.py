@@ -1,12 +1,12 @@
 
-from .lookup import VDomLookupTable
 from .compiler_adapter import HyderatorCompilerAdapter
 from .real_dom_adapter import HyderatorRealDomAdapter
-from zenaura.client.component import Component
+from .virtual_dom_adapter import HyderatorVirtualDomAdapter
+
 
 
 class Hyderator(
-    VDomLookupTable,
+    HyderatorVirtualDomAdapter,
     HyderatorCompilerAdapter,
     HyderatorRealDomAdapter
 ):
@@ -33,18 +33,3 @@ class Hyderator(
             e.g. :
             hyd_rdom_attach_to_root
     """
-    def hyd_vdom_update(self, comp: Component) -> None:
-        """
-            virtual dom operation : updates virtual dom of component
-            args:
-                comp: Component
-        """
-        self.zen_dom_table[comp.componentId] = comp.node()
-
-    def hyd_vdom_delete(self, comp: Component) -> None:
-        """
-            virtual dom operation : deletes virtual dom of component
-            args:
-                comp: Component
-        """
-        del self.zen_dom_table[comp.componentId]
