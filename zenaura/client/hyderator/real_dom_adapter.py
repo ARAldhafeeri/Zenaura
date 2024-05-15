@@ -30,7 +30,7 @@ class HyderatorRealDomAdapter:
     def hyd_rdom_attach_to_mounted_comp(
             self,
             mounted_comp_id: str,
-            compiled_comp: str
+            html: str
     ):
         """
             DOM operation : attaches compiled_comp to mounted_comp_id
@@ -40,4 +40,4 @@ class HyderatorRealDomAdapter:
         """
         foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if foundNode:
-            foundNode.outerHTML = compiled_comp
+            foundNode.outerHTML = html
