@@ -3,6 +3,7 @@ from zenaura.client.component import Component
 from zenaura.client.tags import Node 
 from zenaura.client.compiler import compiler
 from pyscript import document 
+from zenaura.client.hyderator import HyderatorCompilerAdapter
 
 class DefaultDomErrorComponent(Component):
     def __init__(self, error_message):
@@ -12,7 +13,9 @@ class DefaultDomErrorComponent(Component):
         return Node("div", children=[Node("p", children=[str(self.error_message)])])
 
 
-class GracefulDegenerationLifeCycleWrapper:
+class GracefulDegenerationLifeCycleWrapper(
+    HyderatorCompilerAdapter
+):
     
     def componentDidCatchError(self, comp, error) -> None:
         """

@@ -1,6 +1,7 @@
 from zenaura.client.tags import Node
 from zenaura.client.tags import HTMLElement
 from zenaura.client.component import Component
+from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from pyscript import document
 
 class HyderatorRealDomAdapter:
@@ -17,16 +18,14 @@ class HyderatorRealDomAdapter:
         element = self.document.createElement(virtual_node.tag_name)
         
         return element
-
-    def hyd_rdom_attach_to_root(self, comp : Component) -> None:
+    
+    def hyd_rdom_attach_to_root(self, html : str) -> None:
         """
             atttach page to root
             args:
                 page: Page
         """
-        dom_node = document.getElementById("root")
-        compiled_comp = self.compile_node(comp.node(), comp)
-        dom_node.innerHTML = compiled_comp
+        self.document.getElementById("root").innerHTML = html
 
     def hyd_rdom_attach_to_mounted_comp(
             self,
@@ -39,6 +38,6 @@ class HyderatorRealDomAdapter:
                 mounted_comp_id: str previosuly mounted component id
                 compiled_comp: str compiled html from comp.node()
         """
-        foundNode = document.querySelector(f'[{mounted_comp_id}="{mounted_comp_id}"]')
+        foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if foundNode:
             foundNode.outerHTML = compiled_comp

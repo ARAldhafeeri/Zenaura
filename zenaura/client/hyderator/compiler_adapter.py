@@ -27,14 +27,31 @@ class HyderatorCompilerAdapter:
         )
     
     def hyd_comp_compile_node(
-        comp_tree: Node,
-        comp: Component
+        comp: Component,
     ):
         """
             compiler operation : wraps compiler compile, returns str "HTMLElement"
+            compile node
         """
         return compiler.compile(
-                comp_tree, 
+                comp.node(), 
                 componentId=comp.componentId,
                 zenaura_dom_mode=True
             )
+    
+    def hyd_comp_compile_children(
+        children: List[Node],
+        componentId: str,
+        zenaura_dom_mode: bool,
+        path: str
+    ):
+        """
+            compiler operation : wraps compiler compile, returns str "HTMLElement"
+            compiles node children
+        """
+        return compiler.compile(
+            children, 
+            componentId=componentId,
+            zenaura_dom_mode=True,
+            path = path
+        )
