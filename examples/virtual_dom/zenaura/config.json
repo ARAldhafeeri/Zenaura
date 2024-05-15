@@ -29,7 +29,7 @@
 
           "./zenaura/client/tags/attribute.py" ,  
           "./zenaura/client/tags/builder.py", 
-          "./zenaura/client/tags/html_tags.py", 
+          "./zenaura/client/tags/html.py", 
           "./zenaura/client/tags/node.py",
           "./zenaura/client/tags/data.py", 
           "./zenaura/client/tags/__init__.py",  
@@ -46,10 +46,16 @@
 
           "./zenaura/client/algorithm/searcher.py",
           "./zenaura/client/algorithm/comparer.py",
-          "./zenaura/client/algorithm/hyderater.py",
           "./zenaura/client/algorithm/updater.py",
           "./zenaura/client/algorithm/algorithm.py",
           "./zenaura/client/algorithm/__init__.py",
+
+          "./zenaura/client/hyderator/hyderator.py",
+          "./zenaura/client/hyderator/compiler_adapter.py",
+          "./zenaura/client/hyderator/lookup.py",
+          "./zenaura/client/hyderator/real_dom_adapter.py",
+          "./zenaura/client/hyderator/__init__.py",
+
 
           "./zenaura/client/config.py",
 

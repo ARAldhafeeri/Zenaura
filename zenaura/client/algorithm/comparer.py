@@ -25,9 +25,9 @@ class Comparer:
                     prevNode: The previous component tree
                     newNode: The new component tree
                     level: The current level of the component tree
-                    child_index: The index of the current child node in the component tree
+                    child_index: The index of the current child node 
                     componentId: The id of the component in virtual dom
-                    path: uinque path of the component tree to identify the nodes differences
+                    path: uinque path of the component tree to identify the nodes
                 return None
             """
             self.compare_attributes(
@@ -63,7 +63,10 @@ class Comparer:
               path
     ):
       
-        for prevNodeAttributes, newNodeAttributes in zip(prevNode.attributes, newNode.attributes):
+        for prevNodeAttributes, newNodeAttributes in zip(
+             prevNode.attributes, 
+             newNode.attributes
+        ):
             prevDict = prevNodeAttributes.to_dict()
             newDict = newNodeAttributes.to_dict()
 
@@ -73,7 +76,12 @@ class Comparer:
                         # generate a unique id for each node using componentId
                         # then componentId-level-dependent for each child
                         # which in result generate a unique keyed ZENAURA_DOM_ATTRIBUTE 
-                        compiler.getKeyedUID(componentId, level, child_index, path),
+                        compiler.getKeyedUID(
+                             componentId, 
+                             level, 
+                             child_index, 
+                             path
+                        ),
                         newNode,
                         path
                     ])

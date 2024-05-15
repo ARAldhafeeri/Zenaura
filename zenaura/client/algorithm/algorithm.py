@@ -1,12 +1,10 @@
 from .searcher import Searcher
 from .comparer import Comparer
-from .hyderater import Hyderater
 from .updater import Updater
 
 class DiffingAlgorithm(
     Searcher,
     Comparer,
-    Hyderater,
     Updater,
 ):
     """

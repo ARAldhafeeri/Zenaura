@@ -1,10 +1,8 @@
 
 from zenaura.client.component import Component
 from zenaura.client.tags import Node 
-from zenaura.client.compiler import Compiler
+from zenaura.client.compiler import compiler
 from pyscript import document 
-
-compiler = Compiler()
 
 class DefaultDomErrorComponent(Component):
     def __init__(self, error_message):
@@ -31,7 +29,6 @@ class GracefulDegenerationLifeCycleWrapper:
              )
              dom_node = document.getElementById("root")
              dom_node.innerHTML = compiled_comp
-             self.prev_component_id = comp.componentId
              self.zen_dom_table[comp.componentId] = error_comp
         else:
             # mount the default error message component 
@@ -44,6 +41,4 @@ class GracefulDegenerationLifeCycleWrapper:
              )
             dom_node = document.getElementById("root")
             dom_node.innerHTML = compiled_comp
-            self.prev_component_id = comp.componentId
             self.zen_dom_table[comp.componentId] = error_comp
-            self.mounted_component_id = comp.componentId

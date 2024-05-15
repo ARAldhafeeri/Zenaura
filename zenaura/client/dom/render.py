@@ -1,16 +1,16 @@
+import traceback
 from zenaura.client.dom.error import GracefulDegenerationLifeCycleWrapper
 from zenaura.client.compiler import compiler
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
-from .lookup import LookupTable
+from zenaura.client.hyderator import Hyderator
 from .lifecycles.render import RenderLifeCycle
-from ..algorithm.algorithm import DiffingAlgorithm
-import traceback
+from zenaura.client.algorithm import DiffingAlgorithm
 from pyscript import document 
 
 
 class Render(
     GracefulDegenerationLifeCycleWrapper,
-    LookupTable,
+    Hyderator,
     RenderLifeCycle, 
     DiffingAlgorithm
     ):
@@ -44,6 +44,7 @@ class Render(
                 )
                 print(prevNodeId)
                 print(compiled_comp)
+
                 foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prevNodeId}"]')
                 if foundNode:
                     foundNode.outerHTML = compiled_comp

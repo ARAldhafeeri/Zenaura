@@ -1,7 +1,7 @@
 
 from zenaura.client.compiler import compiler
 from .lifecycles.mount import MountLifeCycles
-from .lookup import LookupTable
+from zenaura.client.hyderator import Hyderator
 from .error import GracefulDegenerationLifeCycleWrapper
 from pyscript import document 
 
@@ -10,12 +10,13 @@ import traceback
 
 class Mount(
     GracefulDegenerationLifeCycleWrapper,
-    LookupTable,
+    Hyderator,
     MountLifeCycles
     ):
     def mount(self, comp  ) -> None:
         """
-            Mount the component, goes through the life cycle methods and mounts the component to the DOM.
+            Mount only Page instance to the DOM. This will allow 
+            for cleaner code. Seperation of concerns.
             try : 
                 - mount the component.
             except:
@@ -45,15 +46,10 @@ class Mount(
 
             self.zen_dom_table[comp.componentId] = comp_tree
 
-            # mount 3: lifecycle method the component will be unmountted
-            # assign the component id to the mounted component id
-            self.unmount(self.prev_component_instance)
-
-            # mount 4 : lifecycle method to be called after mounting
-            self.mounted_component_id = comp.componentId
-
-        
             self.componentDidMount(comp)
+
+            # mount 4 : update the previous mountd page instance
+            self.prev_page_instance = comp
 
         except Exception as e:
             self.componentDidCatchError(comp, traceback.format_exc())
