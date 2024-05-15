@@ -1,6 +1,11 @@
+import unittest
+import time 
+import sys
+import random
+import string
 from zenaura.client.tags import Node, Attribute
 from zenaura.client.compiler import Compiler
-import unittest
+
 
 compiler = Compiler() 
 
@@ -137,3 +142,38 @@ class CompilerTests(unittest.TestCase):
         
         expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link<div><div></div><div></div></div></a><img src="image.jpg" alt="Image"></div><div></div></div>'
         self.assertEqual(result, expected_output)
+
+    def test_compile_with_very_large_structure(self):
+        root = Node("div", attributes=[Attribute("id", "root")])
+        parent = root
+
+    # Function to generate random attributes
+        def generate_attributes(num_attributes):
+            attributes = []
+            for _ in range(num_attributes):
+                key = ''.join(random.choices(string.ascii_lowercase, k=5))  # Random 5-letter key
+                value = ''.join(random.choices(string.ascii_letters + string.digits, k=10))  # Random 10-char value
+                attributes.append(Attribute(key, value))
+            return attributes
+
+        # Create 10 levels of nested divs, each with 10 children, and attributes
+        for level in range(10):
+            for i in range(10):
+                child = Node("div", attributes=generate_attributes(3))  # 3 attributes per child
+                parent.children.append(child)
+            parent = child
+    
+        # Add some content to the leaf nodes
+        for child in parent.children:
+            child.children.append("Some content")
+
+        # Benchmark compilation time
+        start_time = time.time()  # Start timer
+        result = compiler.compile(root, zenaura_dom_mode=True)
+        end_time = time.time()  # End timer
+        compilation_time = end_time - start_time
+
+        # Assert the size of the generated HTML
+        self.assertGreater(0.001, compilation_time)
+        self.assertLess(sys.getsizeof(result), 30000)  # Adjust the threshold as needed
+

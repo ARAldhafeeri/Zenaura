@@ -1,8 +1,10 @@
 from zenaura.client.tags import Node
+from zenaura.client.page import Page
 from zenaura.client.compiler import compiler
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from zenaura.client.component import Component
 from typing import List
+import io
 
 class HyderatorCompilerAdapter:
     """
@@ -58,3 +60,16 @@ class HyderatorCompilerAdapter:
             zenaura_dom_mode=True,
             path = path
         )
+    
+    def hyd_comp_compile_page(self, page: Page) -> str:
+        html = io.StringIO()
+        for comp in page.children:
+            html.write(
+                compiler.compile(
+                    comp.node(), 
+                    comp.componentId,
+                    zenaura_dom_mode=True,
+                    path=""
+                )
+            )
+        return html.getvalue()

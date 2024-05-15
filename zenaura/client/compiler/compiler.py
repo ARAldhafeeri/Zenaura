@@ -1,6 +1,7 @@
 from zenaura.client.tags import Node, Data
 from .attribute import AttributeProccessor
 from .sanitize import CompilerSanitizer
+import io
 from zenaura.client.config import (
     ZENAURA_DOM_ATTRIBUTE,
     self_closing_tags
@@ -103,34 +104,35 @@ class Compiler(
             return f"<{tag}{zenui_id}{attributes}>"
         
         # start tag
-        html = f"<{tag}{zenui_id}{attributes}>"
+        html = io.StringIO()
+        html.write(f"<{tag}{zenui_id}{attributes}>")
 
         # get children
         for idx, child in enumerate(elm.children):
             if  isinstance(child, Node):
                 path += f"{level}{idx}"
-                html += self.compile(
-                    child, 
-                    componentId, 
-                    zenaura_dom_mode=zenaura_dom_mode,
-                    level=level,
-                    child_index=child_index,
-                    path=path
+                html.write(
+                    self.compile(
+                        child, 
+                        componentId, 
+                        zenaura_dom_mode, 
+                        level, 
+                        child_index, 
+                        path
+                    )
                 )
                 child_index += idx
                 level += 1
-            
-            if isinstance(child, list):
+            elif isinstance(child, list):
                 if isinstance(child[0], Data):
-                    html += self.sanitize(child[0].content)
+                    html.write(self.sanitize(child[0].content))
                 else:
-                    html += self.sanitize(child[0])
-
-            if isinstance(child, str):
-                html += self.sanitize(child)
+                    html.write(self.sanitize(child[0]))
+            elif isinstance(child, str):
+                html.write(self.sanitize(child))
 
                     
-        html += f'</{tag}>'
+        html.write(f"</{tag}>")
 
         # finish tag
-        return html
+        return html.getvalue()

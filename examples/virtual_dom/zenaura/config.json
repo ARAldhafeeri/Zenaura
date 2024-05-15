@@ -4,7 +4,7 @@
     "runtimes": [],
     "interpreters": [
       {
-        "src": "https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js",
+        "src": "https://cdn.jsdelivr.net/pyodide/dev/full/",
         "name": "pyodide-0.22.1",
         "lang": "python"
       }
@@ -16,7 +16,8 @@
       {
         "files": [
           "./zenaura/routes.py", 
-          "./zenaura/client/component.py" , 
+          "./zenaura/client/component.py" ,
+          "./zenaura/client/page.py",
           "./zenaura/client/app.py" , 
 
           "./zenaura/client/compiler/compiler.py" ,

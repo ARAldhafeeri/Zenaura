@@ -1,6 +1,5 @@
 from zenaura.client.component import Component
 from .lookup import VDomLookupTable
-from pyscript import document
 
 class HyderatorVirtualDomAdapter(
     VDomLookupTable

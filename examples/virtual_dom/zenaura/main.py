@@ -1,4 +1,4 @@
-from zenaura.client.component import Component
+from zenaura.client.component import Component, Reuseable
 from zenaura.client.tags import Node, Attribute, Data
 from zenaura.client.router import Route, Router
 from zenaura.routes import ClientRoutes
@@ -7,6 +7,7 @@ from pyscript import window, when
 from functools import cache
 from zenaura.client.mutator import mutator
 from zenaura.client.tags import Builder
+from zenaura.client.page import Page
 import json
 
 @dataclass
@@ -116,123 +117,53 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext) -> Node:
             ctrl
     ).build()
 
+@Reuseable
 class Counter(Component):
-    def __init__(self, dependencies):			
-        
-        # set init state	 
-        super().set_state({
-             "count1": 0,
-             "count2": 0
-        })
-        
-        self.count1 = self.get_state()['count1']
+    def __init__(self, dependencies):
+        super().__init__()
+        self.set_state({"count": 0})
+        self.dependencies = dependencies  # If you need dependencies
+        self.instance_name = dependencies["instance_name"]
+    @mutator
+    def increment_counter1(self, event) -> None:
+        self.set_state({"count": self.get_state()["count"] + 1})
 
-        # dependencies
-        self.dependencies = dependencies
-        self.state_chnages = []
-
-    # def treeGraph(self):
-    #     import js
-    #     s = json.dumps(self.node().to_dict())
-    #     js.window.VirtualDomGraph(s)
-
-        
-    # def componentDidMount(self, *args , **kwargs):
-    #     self.treeGraph()
-
-    # def componentDidUpdate(self, *args, **kwargs):
-    #     self.state_chnages.append(self.get_state())
-    #     self.treeGraph()
-
-    @mutator        
-    def increment(self, event) -> None:
-        state = self.get_state()
-        print("increment", state)
-        state["count1"] = state["count1"] + 1
-        self.set_state(state)
-
-    @mutator        
-    def decrease(self, event) -> None:
-        state = self.get_state()
-        state["count1"] = state["count1"] - 1
-        self.set_state(state)
-
-    @mutator        
-    def increment2(self, event) -> None:
-        state = self.get_state()
-        print("increment", state)
-        state["count2"] = state["count2"] + 1
-        self.set_state(state)
-
-    @mutator        
-    def decrease2(self, event) -> None:
-        state = self.get_state()
-        state["count2"] = state["count2"] - 1
-        self.set_state(state)
-
+    @mutator
+    def decrease_counter1(self, event) -> None:
+        self.set_state({"count": self.get_state()["count"] - 1})
 
     def node(self) -> Node:
-    
-        # table = Node(name="div")
-        # # table for state_change 
-        
-        # for state in self.state_chnages:
-        #     table.children.append(f"count: {state['count1']} {state['count2']}")
-        
-        # table_and_graph = Node(name="div")
-        # table_and_graph.attributes = [
-        #     Attribute(key="id", value="table_and_graph")
-        # ]
-        
-        # table_and_graph.children = [
-        #     DomContainer(),
-        #     table,
-        # ]
-       
-
         return Builder("div") \
-            .with_attribute("styles", f"{STYLES.main_container} large-header") \
-                .with_child(
-                    Builder("div")
-                    .with_child(Image("./zenaura/assets/logo.png"))
-                    .with_attribute("styles", STYLES.container2)
-                    .build()
-                ) \
-                .with_child(
-                    CounterPresntaional(
-                        Button("-", "counter.decrease"),
-                        Button("+", "counter.increment"),
-                        f"count: {self.get_state()['count1']}"
-                    )
-                ) \
-                .with_child(
-                    CounterPresntaional(
-                        Button("-", "counter.decrease2"),
-                        Button("+", "counter.increment2"),
-                        f"count: {self.get_state()['count2']}"
-                    )
-                ) \
-                .build()
+            .with_child(
+                CounterPresntaional(  # Assuming you have this class
+                    Button("-", f"{self.instance_name}.decrease_counter1"),  # Note the change
+                    Button("+", f"{self.instance_name}.increment_counter1"),  # Note the change
+                    f"Count 1: {self.get_state()['count']}"
+                )
+            ).build()
 
 
 
 
 simpleUi = SimpleUi()
 
-counter = Counter([])
+counter1 = Counter({"instance_name": "counter1"})
+counter2 = Counter({"instance_name": "counter2"})
+print("counter1 id", counter1.componentId)
+print("counter2 id", counter2.componentId)
 # print(counter.node().to_dict())
 router = Router()
 
 router.addRoute(Route(
         title="test",
         path=ClientRoutes.home.value,
-        comp=simpleUi
+        page=Page([simpleUi])
     ))
 
 router.addRoute(Route(
 		title="counter",
 		path=ClientRoutes.counter.value,
-		comp=counter
+		page=counter1
     ))
  
 router.handlelocation()

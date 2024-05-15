@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from tests.mocks.browser_mocks import MockDocument, MockWindow
 from zenaura.client.tags import Node
+from zenaura.client.page import Page
 from zenaura.client.component import Component
 from zenaura.client.compiler import compiler
 
@@ -29,7 +30,7 @@ class TestDom(unittest.TestCase):
         self.dom_node.innerHTML = ""
         
     def test_mount(self):
-        self.zenaura_dom.mount(self.counter)
+        self.zenaura_dom.mount(Page([self.counter]))
         self.assertIn(self.counter.componentId, self.zenaura_dom.zen_dom_table.keys())
         prev = self.zenaura_dom.zen_dom_table[self.counter.componentId]
         self.assertTrue(prev)
@@ -52,12 +53,11 @@ class TestDom(unittest.TestCase):
 
 
     def test_render(self):
-        self.zenaura_dom.mount(self.counter)
+        self.zenaura_dom.mount(Page([self.counter]))
         self.counter.set_state(self.counterState(count=1))
         self.zenaura_dom.render(self.counter)
         re_rendered = self.zenaura_dom.zen_dom_table[self.counter.componentId]
         # print end of line 
-        print("\n")
         # new data structure Data for data binding
         self.assertEqual(re_rendered.children[0].children[0].children[0].children[0].content, f'Counter: {self.counterState(count=1)}')
 
@@ -70,7 +70,7 @@ class TestDom(unittest.TestCase):
         
     def test_mount_existing_component(self):
         
-        self.zenaura_dom.mount(self.counter)
+        self.zenaura_dom.mount(Page([self.counter]))
         exists = self.zenaura_dom.zen_dom_table[self.counter.componentId]
 
         
@@ -236,50 +236,24 @@ class TestDom(unittest.TestCase):
         self.assertEqual(self.zenaura_dom.zen_dom_table[test.componentId].children[0].children[0], "Default error message")
 
     # Mount - testing component lifecycle methods 
-    def test_unmount_no_componentWillUnmount_method(self):
-        class TestComponent(Component):
-            pass
 
-        component = TestComponent()
-        
-        self.zenaura_dom.mount(component)
-        self.zenaura_dom.unmount(component)
-
-        self.assertNotIn(component.componentId, self.zenaura_dom.zen_dom_table)
-
-    def test_unmount_with_componentWillUnmount_method(self):
-        class TestComponent(Component):
-            x = 0
-
-            def componentWillUnmount(self, *args, **kwargs):
-                self.x = 10
-    
-        component = TestComponent()
-
-        self.zenaura_dom.mount(component)
-        self.zenaura_dom.unmount(component)
-
-        self.assertNotIn(component.componentId, self.zenaura_dom.zen_dom_table)
-        self.assertEqual(component.x, 10)
-
-
-    def test_component_did_mount_without_componentDidMount_method(self):
+    def test_component_did_mount_without_attached_method(self):
         class TestComponent(Component):
             def node(self):
                 return Node("p")
 
         component = TestComponent()
 
-        self.zenaura_dom.mount(component)
+        self.zenaura_dom.mount(Page([component]))
 
         self.assertEqual(self.zenaura_dom.zen_dom_table[component.componentId].name, "p")
 
     
-    def test_component_did_mount_with_componentDidMount_method(self):
+    def test_component_did_mount_with_attached_method(self):
         class TestComponent(Component):
             x = 0
     
-            def componentDidMount(self, *args, **kwargs):
+            def attached(self, *args, **kwargs):
                 self.x = 10
 
             def node(self):
@@ -288,7 +262,7 @@ class TestDom(unittest.TestCase):
         component = TestComponent()
 
         self.assertEqual(component.x, 0)
-        self.zenaura_dom.mount(component)
+        self.zenaura_dom.mount(Page([component]))
       
         self.assertEqual(component.x, 10)
 
@@ -299,7 +273,8 @@ class TestDom(unittest.TestCase):
                 return Node("p")
             
         component = TestComponent()
-        self.zenaura_dom.mount(component)
+        print("soko boko",type(self.zenaura_dom.zen_dom_table[component.componentId]))
+        self.zenaura_dom.mount(Page([component]))
         self.assertEqual(self.zenaura_dom.zen_dom_table[component.componentId].name, "p")
         
 
@@ -313,32 +288,9 @@ class TestDom(unittest.TestCase):
             
             def componentDidUpdate(self, *args, **kwargs):
                 self.x = 10
-            
 
         component = TestComponent()
         self.assertEqual(component.x, 0)
         self.zenaura_dom.render(component)
         self.assertEqual(component.x, 10)
 
-
-    def test_mount_with_lifecycle_methods(self):
-        class TestComponent(Component):
-            x = 0
-
-            def componentWillMount(self, *args, **kwargs):
-                self.x = 5
-
-
-            def componentWillUnmount(self, *args, **kwargs):
-                self.x = 15
-
-        component = TestComponent()
-
-
-        self.zenaura_dom.mount(component)
-
-        self.assertEqual(component.x, 5)
-
-        self.zenaura_dom.unmount(component)
-
-        self.assertEqual(component.x, 15)

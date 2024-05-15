@@ -28,6 +28,8 @@ class VDomLookupTable:
             - get the prev page instance
             - iterage over the prev page components
             - delete the prev page component from zen_dom_table
+
     """
     zen_dom_table = defaultdict(str)
     prev_page_instance = None
+    zen_pre_compiled = defaultdict(str)

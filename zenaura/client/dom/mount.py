@@ -1,10 +1,8 @@
 
-from zenaura.client.compiler import compiler
 from .lifecycles.mount import MountLifeCycles
-from zenaura.client.hyderator import Hyderator
 from .error import GracefulDegenerationLifeCycleWrapper
+from zenaura.client.page import Page
 from pyscript import document 
-
 import traceback
 
 
@@ -12,10 +10,16 @@ class Mount(
     GracefulDegenerationLifeCycleWrapper,
     MountLifeCycles
     ):
-    def mount(self, comp  ) -> None:
+    def mount(self, page: Page  ) -> None:
         """
-            Mount only Page instance to the DOM. This will allow 
-            for cleaner code. Seperation of concerns.
+            Mount only Page instance to the DOM.
+            Only one page instance can be mounted at a time.
+            Lifecycle:
+            2. in-time compile html for the page components.
+            3. attach compiled html to the DOM.
+            4. trigger attached for page components.
+            5. update state in vdom for each component.
+            6. cleanup vdom from unmounted components.
             try : 
                 - mount the component.
             except:
@@ -26,24 +30,19 @@ class Mount(
             Returns:
             None
         """
-        # wrapped life cycle method componentDidCatchError 
-        # mount steps 1-4: componentWillMount -> mount -> unmount -> componentWillUnmount -> componentDidMount
-        try : 
-            # mount 1: lifecycle method to be called before mounting
-            self.componentWillMount(comp)
 
-            # mount 2: mount the component to the DOM
-            # hyderation steps:
-            compiled_html = self.hyd_comp_compile_node(comp)
+        try :
+                    
+            compiled_html = self.hyd_comp_compile_page(page)
 
             self.hyd_rdom_attach_to_root(compiled_html)
 
-            self.hyd_vdom_update(comp)
-
-            self.componentDidMount(comp)
-
-            # mount 4 : update the previous mountd page instance
-            self.prev_page_instance = comp
+            # trigger attached for page components
+            for comp in page.children:
+                # trigger attached for page components
+                self.attached(comp)
+                # update state in vdom
+                self.hyd_vdom_update(comp)
 
         except Exception as e:
-            self.componentDidCatchError(comp, traceback.format_exc())
+            self.componentDidCatchError(page.children[0], traceback.format_exc())
