@@ -1,7 +1,7 @@
 from zenaura.client.component import Component
 from .lookup import VDomLookupTable
 
-class HyderatorVirtualDomAdapter(
+class HydratorVirtualDomAdapter(
     VDomLookupTable
 ):
     """

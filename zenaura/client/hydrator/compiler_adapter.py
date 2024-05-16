@@ -6,7 +6,7 @@ from zenaura.client.component import Component
 from typing import List
 import io
 
-class HyderatorCompilerAdapter:
+class HydratorCompilerAdapter:
     """
         hyderator adapter for all real dom operations
         methods should start with:

@@ -1,4 +1,4 @@
-# Virtual DOM Hyderator
+# Virtual DOM Hydrator
 
 - Virtual dom hyderator is the adapter composer single point of contact between real dom, virtual dom, compiler . Here is the planned next changes
 
@@ -129,7 +129,7 @@ GracefulDegenerationLifeCycleWrapper
 
 ```python
 class GracefulDegenerationLifeCycleWrapper(
-    HyderatorCompilerAdapter
+    HydratorCompilerAdapter
 ):
 ```
 

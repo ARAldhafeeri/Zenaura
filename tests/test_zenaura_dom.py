@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 from tests.mocks.browser_mocks import MockDocument, MockWindow
 from zenaura.client.tags import Node
 from zenaura.client.page import Page
-from zenaura.client.component import Component
+from zenaura.client.component import Component, Reuseable
 from zenaura.client.compiler import compiler
 
 sys.modules["pyscript"] = MagicMock()
@@ -215,6 +215,7 @@ class TestDom(unittest.TestCase):
             def node(self):
                 return Node("div", children=[Node("p", children=[str(self.error_message)])])
 
+        @Reuseable
         class TestComponent(Component):
             def componentDidCatchError(self, error):
                 return CustomErrorComponent(error_message=error)
@@ -227,6 +228,7 @@ class TestDom(unittest.TestCase):
 
     def test_componentDidCatchError_with_default_error_component(self):
 
+        @Reuseable
         class TestComponent(Component):
             pass
         
@@ -250,6 +252,8 @@ class TestDom(unittest.TestCase):
 
     
     def test_component_did_mount_with_attached_method(self):
+
+        @Reuseable
         class TestComponent(Component):
             x = 0
     
@@ -268,6 +272,8 @@ class TestDom(unittest.TestCase):
 
 
     def test_component_did_update_without_componentDidUpdate_method(self):
+
+        @Reuseable
         class TestComponent(Component):
             def node(self):
                 return Node("p")
@@ -279,6 +285,7 @@ class TestDom(unittest.TestCase):
         
 
     def test_component_did_update_with_componentDidUpdate_method(self):
+        @Reuseable
         class TestComponent(Component):
             
             x  = 0

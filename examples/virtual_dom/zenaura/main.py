@@ -93,13 +93,19 @@ class SimpleUi(Component):
 
 
 
-def CounterPresntaional(increaseBtn, decreaseBtn, headertext) -> Node:
+def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
     
     header = Builder('h1') \
     .with_child(
         headertext
     ).build()
     
+    even = count % 2 == 0
+
+    isEven = Builder('h2').with_child("even" if even else "odd").build()
+
+    countIsEven = Button("h3", "h")
+
     ctrl = Builder("div") \
         .with_attribute("styles", STYLES.controls) \
         .with_child(
@@ -114,8 +120,10 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext) -> Node:
         .with_child(
             header 
         ).with_child(
+            isEven
+        ).with_child(
             ctrl
-    ).build()
+    ).with_child_if(countIsEven, even).build()
 
 @Reuseable
 class Counter(Component):
@@ -138,7 +146,8 @@ class Counter(Component):
                 CounterPresntaional(  # Assuming you have this class
                     Button("-", f"{self.instance_name}.decrease_counter1"),  # Note the change
                     Button("+", f"{self.instance_name}.increment_counter1"),  # Note the change
-                    f"Count 1: {self.get_state()['count']}"
+                    f"Count 1: {self.get_state()['count']}",
+                    self.get_state()["count"]
                 )
             ).build()
 
@@ -163,7 +172,7 @@ router.addRoute(Route(
 router.addRoute(Route(
 		title="counter",
 		path=ClientRoutes.counter.value,
-		page=counter1
+		page=Page([counter1, counter2])
     ))
  
 router.handlelocation()

@@ -1,7 +1,7 @@
-from zenaura.client.hyderator import HyderatorVirtualDomAdapter
+from zenaura.client.hydrator import HydratorVirtualDomAdapter
 
 class MountLifeCycles(
-    HyderatorVirtualDomAdapter
+    HydratorVirtualDomAdapter
 ):
     
     def attached(self, comp) -> None:

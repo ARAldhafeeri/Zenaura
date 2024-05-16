@@ -1,17 +1,17 @@
 
-from .compiler_adapter import HyderatorCompilerAdapter
-from .real_dom_adapter import HyderatorRealDomAdapter
-from .virtual_dom_adapter import HyderatorVirtualDomAdapter
+from .compiler_adapter import HydratorCompilerAdapter
+from .real_dom_adapter import HydratorRealDomAdapter
+from .virtual_dom_adapter import HydratorVirtualDomAdapter
 
 
 
-class Hyderator(
-    HyderatorVirtualDomAdapter,
-    HyderatorCompilerAdapter,
-    HyderatorRealDomAdapter
+class Hydrator(
+    HydratorVirtualDomAdapter,
+    HydratorCompilerAdapter,
+    HydratorRealDomAdapter
 ):
     """
-        Hyderator is the bridge of communication between:
+        Hydrator is the bridge of communication between:
         1. Virtual dom and compiler :
             methods that communicate with the compiler
             should start with:

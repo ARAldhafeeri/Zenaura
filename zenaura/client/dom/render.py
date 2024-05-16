@@ -2,7 +2,7 @@ import traceback
 from zenaura.client.dom.error import GracefulDegenerationLifeCycleWrapper
 from zenaura.client.compiler import compiler
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
-from zenaura.client.hyderator import Hyderator
+from zenaura.client.hydrator import Hydrator
 from .lifecycles.render import RenderLifeCycle
 from zenaura.client.algorithm import DiffingAlgorithm
 from pyscript import document 
@@ -10,7 +10,7 @@ from pyscript import document
 
 class Render(
     GracefulDegenerationLifeCycleWrapper,
-    Hyderator,
+    Hydrator,
     RenderLifeCycle, 
     DiffingAlgorithm
     ):

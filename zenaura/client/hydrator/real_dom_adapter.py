@@ -4,7 +4,7 @@ from zenaura.client.component import Component
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from pyscript import document
 
-class HyderatorRealDomAdapter:
+class HydratorRealDomAdapter:
     """
         hyderator adapter for all real dom operations
         methods should start with:
