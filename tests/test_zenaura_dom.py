@@ -52,10 +52,10 @@ class TestDom(unittest.TestCase):
         changedNodeId = compiler.getKeyedUID(self.counter.componentId, 3, 0)
 
 
-    def test_render(self):
+    async def test_render(self):
         self.zenaura_dom.mount(Page([self.counter]))
         self.counter.set_state(self.counterState(count=1))
-        self.zenaura_dom.render(self.counter)
+        await self.zenaura_dom.render(self.counter)
         re_rendered = self.zenaura_dom.zen_dom_table[self.counter.componentId]
         # print end of line 
         # new data structure Data for data binding
@@ -216,7 +216,7 @@ class TestDom(unittest.TestCase):
         self.assertEqual(self.zenaura_dom.zen_dom_table[component.componentId].name, "p")
         
 
-    def test_component_did_update_with_componentDidUpdate_method(self):
+    async def test_component_did_update_with_componentDidUpdate_method(self):
         @Reuseable
         class TestComponent(Component):
             
@@ -230,6 +230,6 @@ class TestDom(unittest.TestCase):
 
         component = TestComponent()
         self.assertEqual(component.x, 0)
-        self.zenaura_dom.render(component)
+        await self.zenaura_dom.render(component)
         self.assertEqual(component.x, 10)
 
