@@ -1,10 +1,11 @@
 
-from zenaura.client.component import Component
+from zenaura.client.component import Component, Reuseable
 from zenaura.client.tags import Node 
 from zenaura.client.compiler import compiler
 from pyscript import document 
 from zenaura.client.hydrator import Hydrator
 
+@Reuseable
 class DefaultDomErrorComponent(Component):
     def __init__(self, error_message):
         super().__init__()

@@ -1,7 +1,11 @@
 from zenaura.client.tags import Node
 from typing import List
+from zenaura.client.hydrator.compiler_adapter import HydratorCompilerAdapter
+from zenaura.client.tags import Data
 
-class Searcher:
+class Searcher(
+    HydratorCompilerAdapter
+):
     """
         searching step of zenaura virtual dom algorithm.
     """
@@ -22,7 +26,7 @@ class Searcher:
                 Returns:
                     [[prevNode.nodeId, newNode, path]]
             """
-            diff = []
+            differences = []
             def helper(
                 prevNode : Node, 
                 newNode : Node,
@@ -43,46 +47,45 @@ class Searcher:
                     return None
                 """
 
-                nonlocal diff
+                nonlocal differences
 
-                # base cases :
-                if ( not prevNode) or (not newNode):
-                    return
+                if not isinstance(prevNode, Node) or not isinstance(newNode, Node):
+                    return differences
+                if prevNode is None or newNode is None:
+                    differences.append((path, prevNode or newNode))  # Add the non-null node with its path
+                    return differences
                 
-                # ignore Data, str because they are handled by parent  recursion call 
-                if (not isinstance(prevNode, Node)) or (not isinstance(newNode, Node)):
-                    return 
-                
-                if (not prevNode.children) or (not newNode.children):
-                    return
-                
-                
-                # compare and update diff stack
-                # check if parent node attributes changed
-                self.compare(
-                    prevNode,
-                    newNode, 
-                    level, 
-                    child_index,
-                    componentId,
-                    diff,
-                    path
-                    )
+                if len(prevNode.children) and len(newNode.children) == 1:
+                    if isinstance(prevNode.children[0], (Data, str)) and isinstance(newNode.children[0], (Data, str)):
+                        differences.append([
+                                self.hyd_comp_get_keyed_uuid(
+                                    componentId=componentId, 
+                                    level=level, 
+                                    child_index=child_index, 
+                                    path=path
+                                ),
+                                newNode,
+                                path
+                            ])
+                    return differences
 
-                        
-                # recursivly call search on children nodes 
-                for idx, [prevNodeChild, newNodeChild] in enumerate(zip(prevNode.children, newNode.children)):
-                    # search and diff each child node
+                # Attribute comparison
+                for attr1 in prevNode.attributes:
+                    attr2 = next((a for a in newNode.attributes if a.key == attr1.key), None)
+                    if not attr2 or attr1.value != attr2.value:
+                        differences.append((path, prevNode))
+                        break
+                
+                # Update path for children
+
+                # Children comparison (recursive)
+                for idx, [child1, child2] in enumerate(zip(prevNode.children, newNode.children)):
+
                     path += f"{level}{idx}"
-                    helper(
-                        prevNodeChild, 
-                        newNodeChild, 
-                        level, 
-                        child_index,
-                        path
-                    )
+                    differences.extend(helper(child1, child2, level, child_index, path))
                     child_index += 1
                     level += 1
+                return differences
                     
             # start comparison 
             helper(
@@ -91,4 +94,4 @@ class Searcher:
                 0,
                 0
             )
-            return diff    
+            return differences    
