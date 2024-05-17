@@ -32,7 +32,7 @@ class Mount(
         """
 
         try :
-                    
+            
             compiled_html = self.hyd_comp_compile_page(page)
 
             self.hyd_rdom_attach_to_root(compiled_html)

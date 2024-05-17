@@ -26,8 +26,8 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(state.count, 0)  # Ensure initial count is 0
 	
 
-	def test_increment(self):
-		self.counter.increment()
+	async def test_increment(self):
+		await self.counter.increment()
 		state = self.counter.get_state()
 		self.assertEqual(state.count, 1)
 	
@@ -43,8 +43,8 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(self.counter.increment, button.attributes[0].value)
 		self.assertEqual(button.children[0].name , "label")
 
-	def test_decrease(self):
-		self.counter.decrease()
+	async def test_decrease(self):
+		await self.counter.decrease()
 		state = self.counter.get_state()
 		self.assertEqual(state.count, -1)
 	
@@ -102,17 +102,17 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(self.counter.increment, button.attributes[0].value)
 		self.assertEqual(button.children[0].name, "label")
 
-	def test_increment_multiple_times(self):
+	async def test_increment_multiple_times(self):
 		# Increment the count multiple times
 		for _ in range(5):
-			self.counter.increment()
+			await self.counter.increment()
 		state = self.counter.get_state()
 		self.assertEqual(state.count, 5)
 
-	def test_decrease_multiple_times(self):
+	async def test_decrease_multiple_times(self):
 		# Decrease the count multiple times
 		for _ in range(3):
-			self.counter.decrease()
+			await self.counter.decrease()
 		state = self.counter.get_state()
 		self.assertEqual(state.count, -3)
 

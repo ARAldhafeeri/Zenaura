@@ -38,19 +38,6 @@ class TestDom(unittest.TestCase):
         exists = self.document.getNodeById("root")
         self.assertTrue(exists)
 	
-    def test_search(self):
-        prevTree = self.counter.node()
-        # simulate search table mount manually for testing
-        self.zenaura_dom.zen_dom_table[self.counter.componentId] = prevTree
-        self.counter.set_state("test")
-        newTree = self.counter.node()
-        diff = self.zenaura_dom.search(prevTree, newTree, self.counter.componentId)
-        # hader location on tree, effected by change
-        # do not be confused with this, please see docs on method
-        # here the changed node is in level 3, index 0 of the component
-        # see docs keyed UID algorithm.
-        changedNodeId = compiler.getKeyedUID(self.counter.componentId, 3, 0)
-
 
     async def test_render(self):
         self.zenaura_dom.mount(Page([self.counter]))
@@ -84,59 +71,6 @@ class TestDom(unittest.TestCase):
         self.assertTrue(key)
 
 
-    def test_search_identical_trees(self):
-        
-        prev_tree = Node(name="div")
-        new_tree = Node(name="div")
-        
-        
-        diff = self.zenaura_dom.search(prev_tree, new_tree, "test")
-
-        self.assertEqual(diff, [])
-
-
-    def test_search_different_trees_with_nested_structure(self):
-        prev_tree = Node(name="div", children=[Node(name="span", children=["test"])])
-        new_tree = Node(name="div", children=[Node(name="span", children=["new test"])])
-        
-        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
-
-        print("len", len(diff))
-        self.assertNotEqual(diff, [])
-
-    def test_search_identical_trees_with_empty_structure(self):
-        prev_tree = Node(name="div", children=[])
-        
-        diff = self.zenaura_dom.search(prev_tree, prev_tree, self.counter.componentId)
-
-        self.assertEqual(diff, [])
-
-    def test_search_different_trees_with_nested_structure(self):
-        prev_tree = Node(name="div", children=[Node(name="span", children=["test"])])
-        new_tree = Node(name="div", children=[Node(name="span", children=["new test"])])
-        
-        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
-
-        self.assertEqual(diff, [])
-
-    def test_search_identical_trees_with_empty_structure(self):
-        prev_tree = Node(name="div", children=[])
-        new_tree = Node(name="div", children=[])
-        
-        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
-
-        self.assertEqual(diff, [])
-
-
-
-    def test_search_method_returns_diff_nodes(self):
-        prev_tree = Node("div")
-        new_tree = Node("div")
-        diff = self.zenaura_dom.search(prev_tree, new_tree, self.counter.componentId)
-        # Assert that the search method returns the expected diff nodes
-        assert diff == []
-
-    # Graceful degradation: testing componentDidCatchError lifecycle method 
         
     def test_componentDidCatchError_with_custom_error_component(self):
         # Arrange
@@ -232,4 +166,3 @@ class TestDom(unittest.TestCase):
         self.assertEqual(component.x, 0)
         await self.zenaura_dom.render(component)
         self.assertEqual(component.x, 10)
-

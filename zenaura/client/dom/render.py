@@ -5,7 +5,8 @@ from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from zenaura.client.hydrator import Hydrator
 from .lifecycles.render import RenderLifeCycle
 from zenaura.client.algorithm import DiffingAlgorithm
-from pyscript import document 
+from pyscript import document
+import asyncio
 
 
 class Render(
@@ -32,21 +33,24 @@ class Render(
             
             # update 2: update the component in the DOM
             prevTree = self.zen_dom_table[comp.componentId]
+            print("changed", comp.componentId)
+            print(prevTree)
             newTree = comp.node()
 
             diff = self.search(prevTree, newTree, comp.componentId)
             
-            async def apply_diff_chunk(chunk_size=50):
+            print(len(diff))
+            async def apply_diff_chunk(chunk_size=5):
                 for _ in range(chunk_size):
                     if not diff:
                         break
                     prevNodeId, newNodeChildren, path = diff.pop()
-                    compiled_html = self.hyd_comp_compile_children(newNodeChildren, comp.componentId, True, path)
+                    compiled_html = self.hyd_comp_compile_children(newNodeChildren, comp.componentId, True)
                     self.hyd_rdom_attach_to_mounted_comp(prevNodeId, compiled_html)
 
             while diff:
-                await apply_diff_chunk()    
-            self.hyd_vdom_update_with_new_node(comp, newTree)
+                await apply_diff_chunk()     
+            self.hyd_vdom_update(comp)
 
             # update 3  : componentDidUpdate method to be called after updating
             self.componentDidUpdate(comp)

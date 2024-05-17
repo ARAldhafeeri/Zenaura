@@ -133,11 +133,11 @@ class Counter(Component):
         self.dependencies = dependencies  # If you need dependencies
         self.instance_name = dependencies["instance_name"]
     @mutator
-    def increment_counter1(self, event) -> None:
+    async def increment_counter1(self, event) -> None:
         self.set_state({"count": self.get_state()["count"] + 1})
 
     @mutator
-    def decrease_counter1(self, event) -> None:
+    async def decrease_counter1(self, event) -> None:
         self.set_state({"count": self.get_state()["count"] - 1})
 
     def node(self) -> Node:

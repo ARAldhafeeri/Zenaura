@@ -51,12 +51,12 @@
           "./zenaura/client/algorithm/algorithm.py",
           "./zenaura/client/algorithm/__init__.py",
 
-          "./zenaura/client/hyderator/hyderator.py",
-          "./zenaura/client/hyderator/compiler_adapter.py",
-          "./zenaura/client/hyderator/lookup.py",
-          "./zenaura/client/hyderator/real_dom_adapter.py",
-          "./zenaura/client/hyderator/__init__.py",
-          "./zenaura/client/hyderator/virtual_dom_adapter.py",
+          "./zenaura/client/hydrator/hydrator.py",
+          "./zenaura/client/hydrator/compiler_adapter.py",
+          "./zenaura/client/hydrator/lookup.py",
+          "./zenaura/client/hydrator/real_dom_adapter.py",
+          "./zenaura/client/hydrator/__init__.py",
+          "./zenaura/client/hydrator/virtual_dom_adapter.py",
 
 
           "./zenaura/client/config.py",

@@ -1,5 +1,5 @@
 from zenaura.client.dom import zenaura_dom
-
+import functools
 
 def mutator(func):
     """
@@ -11,7 +11,8 @@ def mutator(func):
     Returns:
     - wrapper_func: The wrapper function that executes the original function and then renders the DOM.
     """
-    def wrapper_func(self, *args, **kwargs):
+    @functools.wraps(func)
+    async def wrapper_func(self, *args, **kwargs):
         """
         Wrapper function that executes the original function and then renders the DOM.
 
@@ -23,6 +24,6 @@ def mutator(func):
         Returns:
         - None
         """
-        func(self, *args, **kwargs)
-        zenaura_dom.render(self)
+        await func(self, *args, **kwargs)
+        await zenaura_dom.render(self)
     return wrapper_func
