@@ -137,7 +137,7 @@ class TestDom(unittest.TestCase):
         self.assertEqual(component.x, 10)
 
 
-    def test_component_did_update_without_componentDidUpdate_method(self):
+    def test_component_did_update_without_on_settled_method(self):
 
         @Reuseable
         class TestComponent(Component):
@@ -150,7 +150,7 @@ class TestDom(unittest.TestCase):
         self.assertEqual(self.zenaura_dom.zen_dom_table[component.componentId].name, "p")
         
 
-    async def test_component_did_update_with_componentDidUpdate_method(self):
+    async def test_component_did_update_with_on_settled_method(self):
         @Reuseable
         class TestComponent(Component):
             
@@ -159,7 +159,7 @@ class TestDom(unittest.TestCase):
             def node(self):
                 return Node("p")
             
-            def componentDidUpdate(self, *args, **kwargs):
+            def on_settled(self, *args, **kwargs):
                 self.x = 10
 
         component = TestComponent()

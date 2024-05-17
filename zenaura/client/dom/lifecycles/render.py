@@ -1,5 +1,5 @@
 class RenderLifeCycle:
-    def componentWillUpdate(self, comp) -> None:
+    def on_mutation(self, comp) -> None:
         """
         Method called after the component is updated in the DOM and re-rendered.
 
@@ -10,10 +10,10 @@ class RenderLifeCycle:
         None
         """
         # Perform operations after updating
-        if hasattr(comp, 'componentWillUpdate'):
-            comp.componentWillUpdate()
+        if hasattr(comp, 'on_mutation'):
+            comp.on_mutation()
 
-    def componentDidUpdate(self, comp) -> None:
+    def on_settled(self, comp) -> None:
         """
         Method called after the component is updated in the DOM and re-rendered.
 
@@ -24,5 +24,5 @@ class RenderLifeCycle:
         None
         """
         # Perform operations after updating
-        if hasattr(comp, 'componentDidUpdate'):
-            comp.componentDidUpdate()
+        if hasattr(comp, 'on_settled'):
+            comp.on_settled()

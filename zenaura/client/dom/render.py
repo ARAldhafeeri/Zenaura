@@ -27,9 +27,9 @@ class Render(
         """
         try:
 
-            # update steps 1-3: componentWillUpdate -> update -> componentDidUpdate
+            # update steps 1-3: on_mutation -> update -> on_settled
             # update 1: lifecycle method to be called before updating
-            self.componentWillUpdate(comp)
+            self.on_mutation(comp)
             
             # update 2: update the component in the DOM
             prevTree = self.zen_dom_table[comp.componentId]
@@ -52,8 +52,8 @@ class Render(
                 await apply_diff_chunk()     
             self.hyd_vdom_update(comp)
 
-            # update 3  : componentDidUpdate method to be called after updating
-            self.componentDidUpdate(comp)
+            # update 3  : on_settled method to be called after updating
+            self.on_settled(comp)
 
         except Exception as e:
             self.componentDidCatchError(comp, traceback.format_exc())
