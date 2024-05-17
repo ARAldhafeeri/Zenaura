@@ -1,29 +1,70 @@
-import unittest.mock
 from collections import defaultdict
+from unittest.mock import MagicMock 
 
+class MockTextNode:
+    def __init__(self, text):
+        self.nodeValue = text
+        self.parentNode = None
 
-class MockNode:
-    def __init__(self, tagName=None, innerHTML=None):
-        self.tagName = tagName
-        self.innerHTML = None
+class MockElement:
+    def __init__(self, tag_name=None, innerHTML=""):
+        self.tagName = tag_name
+        self.innerHTML = innerHTML
+        self.outerHTML = ""
+        self.attributes = {}
+        self.childNodes = []
+        self.parentNode = None
 
-root = MockNode()
+    def setAttribute(self, name, value):
+        self.attributes[name] = value
 
-class MockDocument:
-    def __init__(self):
-        self.nodes = defaultdict(lambda: MockNode)
-        self.nodes["root"] = root
-    def getNodeById(self, node_id):
-        return self.nodes.get(node_id)
+    def getAttribute(self, name):
+        return self.attributes.get(name)
 
-    def createNode(self, tag_name):
-        node = MockNode()
-        return node
+    def removeAttribute(self, name):
+        self.attributes.pop(name, None)
+
+    def appendChild(self, child):
+        if child not in self.childNodes:
+            self.childNodes.append(child)
+            child.parentNode = self
+
+    def removeChild(self, child):
+        if child in self.childNodes:
+            self.childNodes.remove(child)
+            child.parentNode = None
+
+    def createElement(self, tag_name):
+        return MockElement(tag_name)
     
+
+    def __repr__(self):  # Helpful for debugging
+        return f"<MockElement '{self.tagName}'>"
+
+class MockDocument:  # Use MagicMock for flexibility
+    def __init__(self):
+        self.body = MockElement("body")  # Create a body element
+        self.elementsById = {"root": self.body}  # Store elements by ID
+
+    def getElementById(self, element_id):
+        return self.elementsById.get(element_id)
+
+    def createElement(self, tag_name):
+        return MockElement(tag_name)
+    
+    def setElementById(self, element_id, element):
+        # for mocking purposes
+        self.elementsById[element_id] = element
+
+    def createTextNode(self,txt):
+        textNode = MockTextNode(txt)
+        return textNode
+
     def querySelector(self, query:str):
         query = query.replace("[", "").replace("]", "").replace('"', "").split("=")
         id = query[-1]
-        return self.nodes[id]
+        print("ID", id)
+        return self.elementsById[id]
 
 class MockWindow:
     def __init__(self):

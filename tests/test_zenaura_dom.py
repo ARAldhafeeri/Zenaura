@@ -35,7 +35,7 @@ class TestDom(unittest.TestCase):
         prev = self.zenaura_dom.zen_dom_table[self.counter.componentId]
         self.assertTrue(prev)
         # mount is called on root div
-        exists = self.document.getNodeById("root")
+        exists = self.document.getElementById("root")
         self.assertTrue(exists)
 	
 
