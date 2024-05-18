@@ -1,5 +1,6 @@
 import sys
 import unittest
+import gc
 from unittest.mock import patch, MagicMock
 from zenaura.client.tags import Node, Attribute
 from zenaura.client.compiler import compiler
@@ -14,6 +15,8 @@ class TestSearchAlgorithm(unittest.TestCase):
         from tests.mocks.counter_mocks import Counter, BTN_STYLES, CounterState
         from zenaura.client.dom import zenaura_dom
         self.zenaura_dom = zenaura_dom
+        gc.collect()  # Ensure a clean state before each test
+        self.initial_garbage_count = len(gc.garbage)  # Record initial garbage
         
     def test_no_diff(self):
         prev_tree = Node(name="div", children=["child1"])
@@ -332,5 +335,86 @@ class TestSearchAlgorithm(unittest.TestCase):
         # 11 Changes have been made
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 13)
+
+
+
+    def test_extremely_nested_with_comprehensive_changes_gc(self):
+        prev_tree = Node("html", children=[
+            Node("body", children=[
+                Node("div", attributes=[Attribute("id", "container")], children=[
+                    Node("header", children=[
+                        Node("h1", children=["Old Title"]),
+                        Node("nav", children=[
+                            Node("ul", children=[
+                                Node("li", children=[Node("a", children=["Home"])]),
+                                Node("li", children=[Node("a", children=["About"])]),
+                                Node("li", children=[Node("a", children=["Contact"])])
+                            ])
+                        ])
+                    ]),
+                    Node("main", children=[
+                        Node("section", children=[
+                            Node("article", children=[
+                                Node("h2", children=["Old Article Title"]),
+                                Node("p", children=["Paragraph 1"]),
+                                Node("p", children=["Paragraph 2"]),
+                                Node("img", attributes=[Attribute("src", "old-image.jpg")])
+                            ]),
+                            Node("aside", children=[
+                                Node("p", children=["Old sidebar content"])
+                            ])
+                        ])
+                    ]),
+                    Node("footer", children=[
+                        Node("p", children=["Old footer text"])
+                    ])
+                ])
+            ])
+        ])
+
+        new_tree = Node("html", children=[
+            Node("body", children=[
+                Node("div", attributes=[Attribute("id", "updated-container")], children=[
+                    Node("header", children=[
+                        Node("h1", children=["New Title"]),
+                        Node("nav", children=[
+                            Node("ul", children=[
+                                Node("li", children=[Node("a", children=["Home"])]),
+                                Node("li", children=[Node("a", children=["Products"])]),  # Changed
+                                Node("li", children=[Node("a", children=["Blog"])]),   # Changed
+                            ])
+                        ])
+                    ]),
+                    Node("main", children=[
+                        Node("section", children=[
+                            Node("article", children=[
+                                Node("h2", children=["New Article Title"]),
+                                Node("p", children=["Modified Paragraph 1"]),
+                                Node("img", attributes=[Attribute("src", "new-image.jpg"), Attribute("alt", "New Image Description")])  # Changed + added
+                            ]),
+                            Node("aside", children=[
+                                Node("p", children=["New sidebar content"])
+                            ])
+                        ])
+                    ]),
+                    Node("footer", children=[  # Changed order
+                        Node("p", children=["Copyright 2024"]),
+                        Node("p", children=["New footer text"])
+                    ])
+                ])
+            ])
+        ])
+
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 13)
+
+        # Garbage collection assessment
+        gc.collect()  # Force garbage collection after the diff
+        final_garbage_count = len(gc.garbage)  # Record garbage after collection
+
+        # Assert that garbage did not increase significantly
+        garbage_increase = final_garbage_count - self.initial_garbage_count
+        self.assertLessEqual(garbage_increase, 10,  # Allow for some minor fluctuations
+                             "Unexpected increase in garbage objects after diff")
 if __name__ == "__main__":
     unittest.main()
