@@ -3,6 +3,7 @@ from typing import List
 from zenaura.client.hydrator.compiler_adapter import HydratorCompilerAdapter
 from zenaura.client.tags import Data
 from itertools import zip_longest
+from .operations import *
 class Searcher(
     HydratorCompilerAdapter
 ):
@@ -33,7 +34,11 @@ class Searcher(
                             path=path
                     ),
                     new_child_node, 
-                    path
+                    path,
+                    self.updater_context_builder(
+                        name=ADD_NODE,
+                        context={"children" : new_child_node}
+                    )
                 ])
                 return
 
@@ -44,7 +49,11 @@ class Searcher(
                         path=path
                     ),
                     new_child_node, 
-                    path
+                    path,
+                    self.updater_context_builder(
+                        name=REMOVE_NODE,
+                        context={"children" : prev_child_node}
+                    )
                 ])
                 return
             
@@ -55,7 +64,23 @@ class Searcher(
                         path=path
                     ),
                     new_child_node, 
-                    path
+                    path,
+                    self.updater_context_builder(
+                        name=REMOVE_NODE,
+                        context={"children" : prev_child_node}
+                    )
+                ])
+                differences.append([
+                    self.hyd_comp_get_keyed_uuid(
+                        componentId=componentId, 
+                        path=path
+                    ),
+                    new_child_node, 
+                    path,
+                    self.updater_context_builder(
+                        name=ADD_NODE,
+                        context={"children" : new_child_node}
+                    )
                 ])
                 return
 
@@ -70,7 +95,11 @@ class Searcher(
                             path=path
                         ),
                         new_child_node, 
-                        path
+                        path,
+                        self.updater_context_builder(
+                            name=REMOVE_ATTRIBUTE,
+                            context={"attr_name" : prev_attr.key}
+                        )
                     ])
                     continue
                 
@@ -82,7 +111,11 @@ class Searcher(
                             path=path
                         ), 
                         new_child_node, 
-                        path
+                        path, 
+                        self.updater_context_builder(
+                            name=ADD_ATTRIBUTE,
+                            context={"attr_name" : new_attr.key, "attr_value" : new_attr.value}
+                        )
                     ])
                     continue
 
@@ -95,7 +128,11 @@ class Searcher(
                                 path=path
                             ),
                             new_child_node, 
-                            path
+                            path,
+                            self.updater_context_builder(
+                                name=ADD_ATTRIBUTE,
+                                context={"attr_name" : new_attr.key, "attr_value" : new_attr.value}
+                            )
                         ])
 
 
@@ -110,7 +147,11 @@ class Searcher(
                                 path=path
                             ),
                             new_child_node,
-                            path
+                            path,
+                            self.updater_context_builder(
+                                name=NODE_INNER_TEXT,
+                                context={"text" : new_child}
+                            )
                         ])
                     continue 
 
