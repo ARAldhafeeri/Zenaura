@@ -2,13 +2,15 @@
 from .compiler_adapter import HydratorCompilerAdapter
 from .real_dom_adapter import HydratorRealDomAdapter
 from .virtual_dom_adapter import HydratorVirtualDomAdapter
+from .tasker import HydratorTasker
 
 
 
 class Hydrator(
     HydratorVirtualDomAdapter,
     HydratorCompilerAdapter,
-    HydratorRealDomAdapter
+    HydratorRealDomAdapter,
+    HydratorTasker
 ):
     """
         Hydrator is the bridge of communication between:
@@ -32,4 +34,8 @@ class Hydrator(
             hyd_dom_
             e.g. :
             hyd_rdom_attach_to_root
+        4. Tasker:
+            task to update the dom are created in the updeter.
+            dequeued in render lifecycle and 
+            updates the dom asynchronously
     """

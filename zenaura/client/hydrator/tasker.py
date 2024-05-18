@@ -20,7 +20,7 @@ class HydratorTasker:
     def __init__(self):
         pass
 
-    def hyd_tsk_get_or_create_task_queue(self, component_id):
+    def hyd_tsk_get_or_create_task_queue(self, component_id) -> asyncio.Queue:
         """
             gets or create task queue for component_id
             args:

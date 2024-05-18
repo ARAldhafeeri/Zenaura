@@ -1,8 +1,10 @@
-from zenaura.client.hydrator import HydratorRealDomAdapter, HydratorTasker
+from zenaura.client.hydrator import Hydrator
 from .operations import *
 from typing import List
 
-class Updater(HydratorRealDomAdapter, HydratorTasker):
+class Updater(
+    Hydrator
+    ):
 
     async def update(self, patches : List, componentId : str) -> None:
         """
