@@ -2,8 +2,7 @@
 
 <img title="a title" alt="Alt text" src="./assets/logo.png" width="300" height="300" />
 
-Zenaura, is expermenital library built on top of pyscript that allows python developers to build stateful component based SAP applications.
-The library uses virtual dom implmentation to optimize performance and reactivity, responsiveness and interactivity of web apps.
+Zenaura is an experimental Python library built upon PyScript, designed to empower Python developers to create stateful, component-based Single Page Applications (SPAs). By leveraging a virtual DOM implementation, Zenaura optimizes the performance, reactivity, responsiveness, and interactivity of web applications. This allows developers to build high-performance, dynamic web applications using familiar Python concepts and syntax.
 
 ## Quick Example : 
 
