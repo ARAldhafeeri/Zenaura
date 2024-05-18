@@ -121,3 +121,27 @@ class HydratorRealDomAdapter:
             first_child = element.childNodes[0]
             element.removeChild(first_child)
             element.appendChild(text_node)
+
+    def hyd_rdom_is_interactive(self) -> bool:
+        """
+        DOM operation: checks if real dom  is interactive
+        """
+        return document.readyState == "interactive"
+
+    def hyd_rdom_is_complete(self) -> bool:
+        """
+        DOM operation: checks if real dom  is complete
+        """
+        return document.readyState == "complete"
+    
+    def hyd_rdom_is_loading(self) -> bool:
+        """
+        DOM operation: checks if real dom  is loading
+        """
+        return document.readyState == "load"
+    
+    def hyd_rdom_is_content_loaded(self) -> bool:
+        """
+        DOM operation: checks if real dom  is content loaded
+        """
+        return document.readyState == "DOMContentLoaded"
