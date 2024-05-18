@@ -12,8 +12,8 @@ class TestDom(unittest.TestCase):
     @patch('pyscript.document')
     @patch('pyscript.window')
     def setUp(self, document, window):  # Run before each test
-        from zenaura.client.hydrator.tasker import Tasker
-        self.tasker = Tasker()
+        from zenaura.client.hydrator.tasker import HydratorTasker
+        self.tasker = HydratorTasker()
 
     def test_get_or_create_task_queue_new_queue(self):
         component_id = "comp-id1"

@@ -1,6 +1,6 @@
 from collections import defaultdict
 import asyncio
-class Tasker:
+class HydratorTasker:
     """
         manage tasks coming from zenaura diffing algorithm:
             for:
