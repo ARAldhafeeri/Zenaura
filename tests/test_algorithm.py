@@ -1,6 +1,7 @@
 import sys
 import unittest
 import gc
+import time
 from unittest.mock import patch, MagicMock
 from zenaura.client.tags import Node, Attribute
 from zenaura.client.compiler import compiler
@@ -23,6 +24,16 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=["child1"])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 0)  # No differences
+
+    def test_identical_trees(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        new_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 0)
 
     def test_search_child_appended(self):
         prev_tree = Node(name="div", children=[])
@@ -64,15 +75,42 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 1)
         prevNodeId, diffedNode, path = diff.pop()
         self.assertEqual(diffedNode.attributes[0].value, "test2")  # Attribute removed
-
-    def test_multiple_changes(self):
-        prev_tree = Node("div", children=["old"], attributes=[Attribute("class", "old")])
-        new_tree = Node("div", children=["new1"], attributes=[Attribute("id", "new")])
-
-        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
-
-        self.assertEqual(len(diff), 2)
     
+    def test_attribute_added(self):
+        prev_tree = Node(name="div", children=[])
+        new_tree = Node(name="div", children=[], attributes=[Attribute("class", "new-class")])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.attributes[0].value, "new-class")
+
+    def test_attribute_removed(self):
+        prev_tree = Node(name="div", children=[], attributes=[Attribute("class", "old-class")])
+        new_tree = Node(name="div", children=[])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(len(diffed_node.attributes), 0)
+
+    def test_attribute_value_changed(self):
+        prev_tree = Node(name="div", children=[], attributes=[Attribute("class", "old-class")])
+        new_tree = Node(name="div", children=[], attributes=[Attribute("class", "new-class")])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.attributes[0].value, "new-class")
+
+    def test_attribute_moved(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"], attributes=[Attribute("class", "old-class")])
+        ])
+        new_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"], attributes=[Attribute("class", "new-class")])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.attributes[0].value, "new-class")
 
     def test_deeply_nested_add_child(self):
         prev_tree = Node("div", children=[
@@ -334,7 +372,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         # 11 Changes have been made
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
-        self.assertEqual(len(diff), 13)
+        self.assertEqual(len(diff), 11)
 
 
 
@@ -406,7 +444,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
 
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
-        self.assertEqual(len(diff), 13)
+        self.assertEqual(len(diff), 11)
 
         # Garbage collection assessment
         gc.collect()  # Force garbage collection after the diff
@@ -416,5 +454,239 @@ class TestSearchAlgorithm(unittest.TestCase):
         garbage_increase = final_garbage_count - self.initial_garbage_count
         self.assertLessEqual(garbage_increase, 10,  # Allow for some minor fluctuations
                              "Unexpected increase in garbage objects after diff")
+        
+
+    def test_child_added(self):
+        prev_tree = Node(name="div", children=[])
+        new_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0].children[0], "Hello, world!")
+
+    def test_child_removed(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        new_tree = Node(name="div", children=[])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(len(diffed_node.children), 0)
+
+    def test_child_moved(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        new_tree = Node(name="div", children=[
+            Node(name="span", children=["Hello, world!"])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "Hello, world!")
+
+    def test_child_order_changed(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"]),
+            Node(name="span", children=["Goodbye, world!"])
+        ])
+        new_tree = Node(name="div", children=[
+            Node(name="span", children=["Goodbye, world!"]),
+            Node(name="p", children=["Hello, world!"])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 2)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "Hello, world!")
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "Goodbye, world!")
+
+    def test_text_node_added(self):
+        prev_tree = Node(name="div", children=[])
+        new_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0].children[0], "Hello, world!")
+
+    def test_text_node_removed(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        new_tree = Node(name="div", children=[])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(len(diffed_node.children), 0)
+
+    def test_text_node_content_changed(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ])
+        new_tree = Node(name="div", children=[
+            Node(name="p", children=["Goodbye, world!"])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 1)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "Goodbye, world!")
+
+    def test_multiple_changes(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="p", children=["Hello, world!"])
+        ], attributes=[Attribute("class", "old-class")])
+        new_tree = Node(name="div", children=[
+            Node(name="span", children=["Goodbye, world!"])
+        ], attributes=[Attribute("class", "new-class")])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 2)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "Goodbye, world!")
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.attributes[0].value, "new-class")
+
+    def test_deeply_nested_changes(self):
+        prev_tree = Node(name="div", children=[
+            Node(name="section", children=[
+                Node(name="article", children=[
+                    Node(name="h2", children=["Old Title"]),
+                    Node(name="p", children=["Old paragraph text."])
+                ])
+            ])
+        ])
+        new_tree = Node(name="div", children=[
+            Node(name="section", children=[
+                Node(name="article", children=[
+                    Node(name="h2", children=["New Title"]),
+                    Node(name="p", children=["Modified paragraph text."])
+                ])
+            ])
+        ])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 2)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "Modified paragraph text.")
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.children[0], "New Title")
+
+    def test_changes_with_complex_attributes(self):
+        prev_tree = Node(name="div", children=[], attributes=[Attribute("data-id", "123"), Attribute("data-options", '{"key": "value"}')])
+        new_tree = Node(name="div", children=[], attributes=[Attribute("data-id", "456"), Attribute("data-options", '{"key": "new-value"}')])
+        diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
+        self.assertEqual(len(diff), 2)
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.attributes[0].value, "456")
+        prev_node_id, diffed_node, path = diff.pop()
+        self.assertEqual(diffed_node.attributes[1].value, '{"key": "new-value"}')
+
+
+    def test_performance_large_tree(self):
+        # Create a large tree with many nodes and attributes
+        large_tree = Node("html", children=[
+            Node("body", children=[
+                Node("div", attributes=[Attribute("id", "updated-container")], children=[
+                    Node("header", children=[
+                        Node("h1", children=["New Title"]),
+                        Node("nav", children=[
+                            Node("ul", children=[
+                                Node("li", children=[Node("a", children=["Home"])]),
+                                Node("li", children=[Node("a", children=["Products"])]),  # Changed
+                                Node("li", children=[Node("a", children=["Blog"])]),   # Changed
+                            ])
+                        ])
+                    ]),
+                    Node("main", children=[
+                        Node("section", children=[
+                            Node("article", children=[
+                                Node("h2", children=["New Article Title"]),
+                                Node("p", children=["Modified Paragraph 1"]),
+                                Node("img", attributes=[Attribute("src", "new-image.jpg"), Attribute("alt", "New Image Description")])  # Changed + added
+                            ]),
+                            Node("aside", children=[
+                                Node("p", children=["New sidebar content"])
+                            ])
+                        ])
+                    ]),
+                    Node("footer", children=[  # Changed order
+                        Node("p", children=["Copyright 2024"]),
+                        Node("p", children=["New footer text"])
+                    ])
+                ])
+            ]),
+             Node("body", children=[
+                Node("div", attributes=[Attribute("id", "updated-container")], children=[
+                    Node("header", children=[
+                        Node("h1", children=["New Title"]),
+                        Node("nav", children=[
+                            Node("ul", children=[
+                                Node("li", children=[Node("a", children=["Home"])]),
+                                Node("li", children=[Node("a", children=["Products"])]),  # Changed
+                                Node("li", children=[Node("a", children=["Blog"])]),   # Changed
+                            ])
+                        ])
+                    ]),
+                    Node("main", children=[
+                        Node("section", children=[
+                            Node("article", children=[
+                                Node("h2", children=["New Article Title"]),
+                                Node("p", children=["Modified Paragraph 1"]),
+                                Node("img", attributes=[Attribute("src", "new-image.jpg"), Attribute("alt", "New Image Description")])  # Changed + added
+                            ]),
+                            Node("aside", children=[
+                                Node("p", children=["New sidebar content"])
+                            ])
+                        ])
+                    ]),
+                    Node("footer", children=[  # Changed order
+                        Node("p", children=["Copyright 2024"]),
+                        Node("p", children=["New footer text"])
+                    ])
+                ])
+            ]),
+             Node("body", children=[
+                Node("div", attributes=[Attribute("id", "updated-container")], children=[
+                    Node("header", children=[
+                        Node("h1", children=["New Title"]),
+                        Node("nav", children=[
+                            Node("ul", children=[
+                                Node("li", children=[Node("a", children=["Home"])]),
+                                Node("li", children=[Node("a", children=["Products"])]),  # Changed
+                                Node("li", children=[Node("a", children=["Blog"])]),   # Changed
+                            ])
+                        ])
+                    ]),
+                    Node("main", children=[
+                        Node("section", children=[
+                            Node("article", children=[
+                                Node("h2", children=["New Article Title"]),
+                                Node("p", children=["Modified Paragraph 1"]),
+                                Node("img", attributes=[Attribute("src", "new-image.jpg"), Attribute("alt", "New Image Description")])  # Changed + added
+                            ]),
+                            Node("aside", children=[
+                                Node("p", children=["New sidebar content"])
+                            ])
+                        ])
+                    ]),
+                    Node("footer", children=[  # Changed order
+                        Node("p", children=["Copyright 2024"]),
+                        Node("p", children=["New footer text"])
+                    ])
+                ])
+            ])
+        ])
+        # Measure the time it takes to search the tree
+        start_time = time.time()
+        diff = self.zenaura_dom.search(large_tree, large_tree, "comp-id")
+        end_time = time.time()
+        print("time", end_time - start_time)
+        # Assert that the search time is within an acceptable range
+        self.assertLess(end_time - start_time, 1)
+        self.assertEqual(len(diff), 0)
+
 if __name__ == "__main__":
     unittest.main()

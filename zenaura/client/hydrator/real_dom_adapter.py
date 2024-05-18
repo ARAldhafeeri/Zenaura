@@ -121,4 +121,3 @@ class HydratorRealDomAdapter:
             first_child = element.childNodes[0]
             element.removeChild(first_child)
             element.appendChild(text_node)
-            print("ELMENT FOUND", element.childNodes[0].nodeValue)

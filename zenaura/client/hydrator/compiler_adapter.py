@@ -15,8 +15,6 @@ class HydratorCompilerAdapter:
     def hyd_comp_get_keyed_uuid(
         self,
         componentId : str, 
-        level : int, 
-        child_index : int, 
         path : str
     ):
         """
@@ -24,8 +22,6 @@ class HydratorCompilerAdapter:
         """
         return compiler.getKeyedUID(
             componentId, 
-            level, 
-            child_index, 
             path
         )
     
@@ -72,4 +68,4 @@ class HydratorCompilerAdapter:
                     path=""
                 )
             )
-        return html.getvalue()
+    

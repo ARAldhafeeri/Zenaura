@@ -30,8 +30,6 @@ class Compiler(
     
     def getKeyedUID(self, 
                     componentId, 
-                    level, 
-                    child_index, 
                     withAttribut=False, 
                     path=None
                 ):
@@ -91,8 +89,6 @@ class Compiler(
         if isinstance(elm, Node) and zenaura_dom_mode:
             zenui_id = self.getKeyedUID(
                 componentId, 
-                level, 
-                child_index, 
                 withAttribut=True, 
                 path=path
             )
@@ -128,7 +124,7 @@ class Compiler(
                     html.write(self.sanitize(child[0].content))
                 else:
                     html.write(self.sanitize(child[0]))
-            elif isinstance(child, str):
+            elif isinstance(child, (str, list)):
                 html.write(self.sanitize(child))
 
                     
