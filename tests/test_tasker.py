@@ -39,3 +39,35 @@ class TestDom(unittest.TestCase):
         self.assertEqual(queue.qsize(), 0)
         # task queue cleaned after emptied
         self.assertEqual(self.tasker.queue_lookup[component_id], "")
+    
+    def test_dequeue_task_empty_queue(self):
+        component_id = "comp-id5"
+        result = self.tasker.hyd_tsk_dequeue_task(component_id)
+        self.assertFalse(result)
+        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+    
+    def test_dequeue_task_non_existent_queue(self):
+        component_id = "comp-id6"
+        result = self.tasker.hyd_tsk_dequeue_task(component_id)
+        self.assertFalse(result)
+        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+
+    def test_dequeue_task_multiple_tasks(self):
+        component_id = "comp-id7"
+        queue = self.tasker.hyd_tsk_get_or_create_task_queue(component_id)
+        task1 = MagicMock()
+        task2 = MagicMock()
+        task3 = MagicMock()
+        queue.put_nowait(task1)
+        queue.put_nowait(task2)
+        queue.put_nowait(task3)
+        dequeued_task1 = self.tasker.hyd_tsk_dequeue_task(component_id)
+        dequeued_task2 = self.tasker.hyd_tsk_dequeue_task(component_id)
+        dequeued_task3 = self.tasker.hyd_tsk_dequeue_task(component_id)
+        self.assertEqual(dequeued_task1, task1)
+        self.assertEqual(dequeued_task2, task2)
+        self.assertEqual(dequeued_task3, task3)
+        self.assertEqual(queue.qsize(), 0)
+        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+
+
