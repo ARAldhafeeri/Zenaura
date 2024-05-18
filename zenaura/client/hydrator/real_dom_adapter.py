@@ -87,7 +87,7 @@ class HydratorRealDomAdapter:
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
             child_node = document.createElement("div")
-            child_node.outerHTML = child_html
+            child_node.innerHTML = child_html
             element.appendChild(child_node)
 
     def hyd_rdom_remove_child(self, child_id:str) -> None:
@@ -115,10 +115,7 @@ class HydratorRealDomAdapter:
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
-            text_node = document.createTextNode(new_text)
-            first_child = element.childNodes[0]
-            element.removeChild(first_child)
-            element.appendChild(text_node)
+            element.textContent = new_text
 
     def hyd_rdom_is_interactive(self) -> bool:
         """

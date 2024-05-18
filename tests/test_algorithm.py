@@ -131,7 +131,7 @@ class TestSearchAlgorithm(unittest.TestCase):
 
         self.assertEqual(diffedNode.name, "section")  
         self.assertEqual(diffedNode.children[1].children[0], "new text")
-        self.assertEqual(path, "000")  # Path to the parent where the addition occurred
+        self.assertEqual(path, "0000")  # Path to the parent where the addition occurred
 
     def test_deeply_nested_remove_child(self):
         prev_tree = Node("div", children=[
@@ -150,7 +150,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 1)
         prevNodeId, diffedNode, path, op = diff.pop()
         # self.assertEqual(diffedNode.name, "li")  
-        self.assertEqual(path, "000")  # Removed node's parent path
+        self.assertEqual(path, "0000")  # Removed node's parent path
         self.assertEqual(diffedNode.children[0].children[0],"item1")
 
 
@@ -170,7 +170,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 1)
         prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.attributes[0].value, "new-title")
-        self.assertEqual(path, "000")  # Path to the node with the attribute change
+        self.assertEqual(path, "0000")  # Path to the node with the attribute change
 
     def test_mixed_deep_changes(self):
         prev_tree = Node("div", children=[

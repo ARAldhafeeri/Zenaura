@@ -1,6 +1,7 @@
 from zenaura.client.hydrator import Hydrator
 from .operations import *
 from typing import List
+from zenaura.client.tags.attribute import Attribute
 
 class Updater(
     Hydrator
@@ -17,35 +18,40 @@ class Updater(
         """
         while patches:
             prev_node_id, diffed_node, path, op = patches.pop(0)
-
+            print("operation", op, prev_node_id)
             if op["name"] == ADD_NODE:
-                async def task(): 
-                    self.hyd_rdom_append_child(prev_node_id, op["context"]["children"])
+                async def task(dn=diffed_node, ci=componentId):
+                    compiled_html = self.hyd_comp_compile_children(dn, ci, True)
+                    print("ADD_NODE compiled html", compiled_html)
+                    self.hyd_rdom_append_child(prev_node_id, compiled_html)
                 self.hyd_tsk_enqueue_task(componentId, task)
             
             if op["name"] == REMOVE_NODE:
-                async def task():
+                async def task(d=diffed_node, c=prev_node_id):
+                    compiled_html = self.hyd_comp_compile_children(d, c, True)
+                    # print("ADD_NODE compiled html", compiled_html)
                     self.hyd_rdom_remove_child(prev_node_id)
                 self.hyd_tsk_enqueue_task(componentId, task)
 
             if op["name"] == NODE_INNER_TEXT:
-                async def task():
-                    self.hyd_rdom_replace_inner_text(prev_node_id, op["context"]["text"])
+                # avoid late binding 
+                async def task(id=prev_node_id, c=op["context"]["text"]):       
+                    self.hyd_rdom_replace_inner_text(id, c)
                 self.hyd_tsk_enqueue_task(componentId, task)
 
             if op["name"] == ADD_ATTRIBUTE:
-                async def task():
-                    self.hyd_rdom_set_attribute(prev_node_id, op["context"]["attr_name"], op["context"]["attr_value"])
+                async def task(id=prev_node_id, op1=Attribute(op["context"]["attr_name"],op["context"]["attr_value"])):
+                    self.hyd_rdom_set_attribute(prev_node_id, op1 )
                 self.hyd_tsk_enqueue_task(componentId, task)
 
             if op["name"] == REMOVE_ATTRIBUTE:
-                async def task():
-                    self.hyd_rdom_remove_attribute(prev_node_id, op["context"]["attr_name"])
+                async def task(id=prev_node_id, op1=op["context"]["attr_name"]):
+                    self.hyd_rdom_remove_attribute(id, op1 )
                 self.hyd_tsk_enqueue_task(componentId, task)
 
             if op["name"] == REPLACE_ATTRIBUTE:
-                async def task():
-                    self.hyd_rdom_remove_attribute(prev_node_id, op["context"]["attr_name"])
+                async def task(id=prev_node_id, op1=op["context"]["attr_name"]):
+                    self.hyd_rdom_remove_attribute(prev_node_id, op1 )
                 self.hyd_tsk_enqueue_task(componentId, task)
 
 

@@ -87,7 +87,7 @@ class TestHydratorRealDomAdapter(unittest.TestCase):
         child_html = "<span>Child content</span>"
         self.hydrator.hyd_rdom_append_child("parent-comp", child_html)
         self.assertEqual(len(parent_div.childNodes), 1)  # Should have one child
-        self.assertEqual(parent_div.childNodes[0].outerHTML, child_html)
+        self.assertEqual(parent_div.childNodes[0].innerHTML, child_html)
 
     def test_hyd_rdom_remove_child(self):
         parent_div = self.mock_document.createElement("div")
@@ -119,15 +119,13 @@ class TestHydratorRealDomAdapter(unittest.TestCase):
         element.setAttribute(ZENAURA_DOM_ATTRIBUTE, "my-comp")
         existing_text = "Existing text"
         self.mock_document.setElementById("my-comp", element)
-        self.hydrator.hyd_rdom_add_text_node("my-comp", existing_text)  # Add initial text node
+        self.hydrator.hyd_rdom_replace_inner_text("my-comp", existing_text)  # Add initial text node
 
         new_text = "New text"
         self.hydrator.hyd_rdom_replace_inner_text("my-comp", new_text)
 
         # Assertions:
-        self.assertEqual(len(element.childNodes), 1)  # Only one child (the text node)
-        self.assertIsInstance(element.childNodes[0], MockTextNode)
-        self.assertEqual(element.childNodes[0].nodeValue, new_text)  # Text should be replaced
+        self.assertEqual(element.textContent, new_text)  # Text should be replaced
 
 if __name__ == "__main__":
     unittest.main()

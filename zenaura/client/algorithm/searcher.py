@@ -24,7 +24,7 @@ class Searcher(
             return []
 
         differences = []
-        def helper(prev_child_node: Node, new_child_node: Node, componentId, path: str = "") -> None:
+        def helper(prev_child_node: Node, new_child_node: Node, componentId, path: str = "", level=0) -> None:
             nonlocal differences
 
             if not prev_child_node and new_child_node:  # Added
@@ -67,7 +67,7 @@ class Searcher(
                     path,
                     self.updater_context_builder(
                         name=REMOVE_NODE,
-                        context={"children" : prev_child_node}
+                        context={"children" : new_child_node}
                     )
                 ])
                 differences.append([
@@ -139,6 +139,7 @@ class Searcher(
 
             # Compare children
             for idx, (prev_child, new_child) in enumerate(zip_longest(prev_child_node.children, new_child_node.children)):
+                # leaf text nodes
                 if not isinstance(prev_child, Node) or not isinstance(new_child, Node):
                     if prev_child != new_child:
                         differences.append([
@@ -154,9 +155,9 @@ class Searcher(
                             )
                         ])
                     continue 
+                path += f"{level}{idx}"
+                helper(prev_child, new_child, componentId, path, level)
+                level += 1
 
-                path += f"{path}{idx}"
-                helper(prev_child, new_child, componentId, path)
-
-        helper(prevNode, newNode, componentId)
+        helper(prevNode, newNode, componentId,"", 0)
         return differences

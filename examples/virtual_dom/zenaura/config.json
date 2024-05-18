@@ -50,6 +50,7 @@
           "./zenaura/client/algorithm/updater.py",
           "./zenaura/client/algorithm/algorithm.py",
           "./zenaura/client/algorithm/__init__.py",
+          "./zenaura/client/algorithm/operations.py",
 
           "./zenaura/client/hydrator/hydrator.py",
           "./zenaura/client/hydrator/compiler_adapter.py",
@@ -57,6 +58,7 @@
           "./zenaura/client/hydrator/real_dom_adapter.py",
           "./zenaura/client/hydrator/__init__.py",
           "./zenaura/client/hydrator/virtual_dom_adapter.py",
+          "./zenaura/client/hydrator/tasker.py",
 
 
           "./zenaura/client/config.py",

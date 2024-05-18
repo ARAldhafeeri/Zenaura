@@ -15,7 +15,7 @@ class HydratorTasker:
 
         component-id : asyncio-task-queue
     """
-    queue_lookup = defaultdict(str)
+    queue_lookup = defaultdict(lambda : None)
 
     def __init__(self):
         pass
@@ -43,39 +43,29 @@ class HydratorTasker:
             enque task for component if not full and exists
             returns True if task is enqueued else False
         """
-        comp_queue = None
+        comp_queue = self.queue_lookup[component_id]
         try :
-            try: 
-                comp_queue = self.queue_lookup[component_id]
-            except KeyError:
-                return False
-            if comp_queue and not comp_queue.full():
-                comp_queue.put_nowait(task)
-                return True
+            comp_queue.put_nowait(task)
+            return True
         except asyncio.QueueFull:
             return False
 
-
+    async def hyd_tsk_do_nothing(self):
+        """
+            final call to queue tasks when que is empty
+        """
+        pass
+    
     def hyd_tsk_dequeue_task(self, component_id):
         """
             dequeue task for component if exists
             else return False        
         """
-        comp_queue = None
+        comp_queue = self.queue_lookup[component_id]
         try :
-            try: 
-                comp_queue = self.queue_lookup[component_id]
-            except KeyError:
-                return False
-            
-            if comp_queue and not comp_queue.empty():
-                task = comp_queue.get_nowait()
-                if comp_queue.empty():
-                    del self.queue_lookup[component_id]
-                return task
-            else:
-                return False
-            
+            task = comp_queue.get_nowait()
+            return task
         except asyncio.QueueEmpty:
+            # clean up and return empty function
             del self.queue_lookup[component_id]
-            return False
+            return self.hyd_tsk_do_nothing

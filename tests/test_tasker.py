@@ -36,21 +36,27 @@ class TestDom(unittest.TestCase):
         self.assertEqual(queue.qsize(), 1)
         dequeued_task = self.tasker.hyd_tsk_dequeue_task(component_id)
         self.assertEqual(dequeued_task, task)
-        self.assertEqual(queue.qsize(), 0)
+        self.assertEqual(queue.qsize(),0)
+        self.tasker.hyd_tsk_dequeue_task(component_id)
         # task queue cleaned after emptied
-        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+        self.assertEqual(self.tasker.queue_lookup[component_id], None)
     
     def test_dequeue_task_empty_queue(self):
         component_id = "comp-id5"
+        queue = self.tasker.hyd_tsk_get_or_create_task_queue(component_id)
+
         result = self.tasker.hyd_tsk_dequeue_task(component_id)
-        self.assertFalse(result)
-        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+
+        self.assertTrue(callable(result))
+        self.assertEqual(self.tasker.queue_lookup[component_id], None)
     
     def test_dequeue_task_non_existent_queue(self):
         component_id = "comp-id6"
+        queue = self.tasker.hyd_tsk_get_or_create_task_queue(component_id)
+
         result = self.tasker.hyd_tsk_dequeue_task(component_id)
-        self.assertFalse(result)
-        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+        self.assertTrue(callable(result))
+        self.assertEqual(self.tasker.queue_lookup[component_id], None)
 
     def test_dequeue_task_multiple_tasks(self):
         component_id = "comp-id7"
@@ -64,10 +70,11 @@ class TestDom(unittest.TestCase):
         dequeued_task1 = self.tasker.hyd_tsk_dequeue_task(component_id)
         dequeued_task2 = self.tasker.hyd_tsk_dequeue_task(component_id)
         dequeued_task3 = self.tasker.hyd_tsk_dequeue_task(component_id)
+        self.tasker.hyd_tsk_dequeue_task(component_id)
         self.assertEqual(dequeued_task1, task1)
         self.assertEqual(dequeued_task2, task2)
         self.assertEqual(dequeued_task3, task3)
         self.assertEqual(queue.qsize(), 0)
-        self.assertEqual(self.tasker.queue_lookup[component_id], "")
+        self.assertEqual(self.tasker.queue_lookup[component_id], None)
 
 

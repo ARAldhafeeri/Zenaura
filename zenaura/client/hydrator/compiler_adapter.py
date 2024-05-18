@@ -21,8 +21,8 @@ class HydratorCompilerAdapter:
             compiler operation : wraps compiler.getKeyedUID 
         """
         return compiler.getKeyedUID(
-            componentId, 
-            path
+            componentId=componentId, 
+            path=path,
         )
     
     def hyd_comp_compile_node(
@@ -44,7 +44,7 @@ class HydratorCompilerAdapter:
         children: List[Node],
         componentId: str,
         zenaura_dom_mode: bool,
-        path: str
+        path: str=""
     ):
         """
             compiler operation : wraps compiler compile, returns str "HTMLElement"
@@ -68,4 +68,5 @@ class HydratorCompilerAdapter:
                     path=""
                 )
             )
+        return html.getvalue()
     

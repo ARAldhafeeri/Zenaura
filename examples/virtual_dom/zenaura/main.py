@@ -100,11 +100,13 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
         headertext
     ).build()
     
+
     even = count % 2 == 0
+    
 
     isEven = Builder('h2').with_child("even" if even else "odd").build()
 
-    countIsEven = Button("h3", "h")
+    countIsEven = Builder("div").with_child(Button("h3", "even") if even else Node("div")).build()
 
     ctrl = Builder("div") \
         .with_attribute("styles", STYLES.controls) \
@@ -120,10 +122,10 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
         .with_child(
             header 
         ).with_child(
-            isEven
-        ).with_child(
+           isEven
+        ).with_child(countIsEven).with_child(
             ctrl
-    ).with_child_if(countIsEven, even).build()
+    ).build()
 
 @Reuseable
 class Counter(Component):
@@ -132,6 +134,7 @@ class Counter(Component):
         self.set_state({"count": 0})
         self.dependencies = dependencies  # If you need dependencies
         self.instance_name = dependencies["instance_name"]
+
     @mutator
     async def increment_counter1(self, event) -> None:
         self.set_state({"count": self.get_state()["count"] + 1})
@@ -144,10 +147,10 @@ class Counter(Component):
         return Builder("div") \
             .with_child(
                 CounterPresntaional(  # Assuming you have this class
-                    Button("-", f"{self.instance_name}.decrease_counter1"),  # Note the change
-                    Button("+", f"{self.instance_name}.increment_counter1"),  # Note the change
-                    f"Count 1: {self.get_state()['count']}",
-                    self.get_state()["count"]
+                    increaseBtn=Button("-", f"{self.instance_name}.decrease_counter1"),  # Note the change
+                    decreaseBtn=Button("+", f"{self.instance_name}.increment_counter1"),  # Note the change
+                    headertext=f"Count 1: {self.get_state()['count']}",
+                    count=self.get_state()["count"]
                 )
             ).build()
 
@@ -158,8 +161,7 @@ simpleUi = SimpleUi()
 
 counter1 = Counter({"instance_name": "counter1"})
 counter2 = Counter({"instance_name": "counter2"})
-print("counter1 id", counter1.componentId)
-print("counter2 id", counter2.componentId)
+
 # print(counter.node().to_dict())
 router = Router()
 
