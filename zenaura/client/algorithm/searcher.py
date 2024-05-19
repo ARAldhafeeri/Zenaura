@@ -15,7 +15,19 @@ class Searcher(
             "name": name,
             "context": context
         }
-
+    def patches_builder(self, prev_child_node, new_child_node, componentId, path):
+        return [
+                self.hyd_comp_get_keyed_uuid(
+                    componentId=componentId, 
+                    path=path
+                ),
+                new_child_node, 
+                path,
+                self.updater_context_builder(
+                    name=REMOVE_NODE,
+                    context={"children" : prev_child_node}
+                )
+            ]
     def search(self, prevNode: Node, newNode: Node, componentId: str) -> List[List[any]]:
         # error handling :
         if not prevNode and not newNode:

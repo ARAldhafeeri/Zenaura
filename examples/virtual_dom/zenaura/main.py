@@ -82,12 +82,16 @@ class SimpleUi(Component):
 		
     def node(self):
         div = Node(name="div")
+        div.attributes.append(
+            Attribute("styles", "logoContainer")
+        )
         btn = Node(name="button", children=["test"])
         btn.attributes = [
             Attribute("py-click", "simpleUi.nvaigate"),
             Attribute("styles", STYLES.btn),
             Attribute("id", "centered"),
         ]
+        div.children.append(Image("./zenaura/assets/logo.png"))
         div.children.append(btn)
         return div
 
@@ -106,8 +110,6 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
 
     isEven = Builder('h2').with_child("even" if even else "odd").build()
 
-    countIsEven = Builder("div").with_child(Button("h3", "even") if even else Node("div")).build()
-
     ctrl = Builder("div") \
         .with_attribute("styles", STYLES.controls) \
         .with_child(
@@ -123,7 +125,7 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
             header 
         ).with_child(
            isEven
-        ).with_child(countIsEven).with_child(
+        ).with_child(
             ctrl
     ).build()
 
@@ -142,6 +144,7 @@ class Counter(Component):
     @mutator
     async def decrease_counter1(self, event) -> None:
         self.set_state({"count": self.get_state()["count"] - 1})
+
 
     def node(self) -> Node:
         return Builder("div") \
