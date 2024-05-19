@@ -7,13 +7,13 @@ from collections import defaultdict
 _is_reuseable = defaultdict(lambda: False)
 
 def Reuseable(cls):
-    """Decorator that rewrites the componentId of a class upon instantiation."""
+    """Decorator that rewrites the id of a class upon instantiation."""
 
     original_init = cls.__init__
 
     def new_init(self, *args, **kwargs):
         original_init(self, *args, **kwargs)
-        self.componentId = uuid.uuid4().hex[:8]
+        self.id = uuid.uuid4().hex[:8]
         _is_reuseable[cls.__name__] = True
     cls.__init__ = new_init
     return cls
@@ -27,7 +27,7 @@ class Component:
         """
         Initialize a new subclass of Component.
 
-        This method generates a unique componentId for each subclass using uuid.
+        This method generates a unique id for each subclass using uuid.
 
         Args:
         cls: The subclass being initialized.
@@ -39,7 +39,7 @@ class Component:
         super().__init_subclass__()
 
         #shorter version for accessibility purposes
-        cls.componentId = uuid.uuid4().hex[:8]
+        cls.id = uuid.uuid4().hex[:8]
 
         """
         zenaura class component are limited by design 

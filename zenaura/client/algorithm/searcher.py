@@ -15,10 +15,10 @@ class Searcher(
             "name": name,
             "context": context
         }
-    def patches_builder(self, prev_child_node, new_child_node, componentId, path):
+    def patches_builder(self, prev_child_node, new_child_node, id, path):
         return [
                 self.hyd_comp_get_keyed_uuid(
-                    componentId=componentId, 
+                    id=id, 
                     path=path
                 ),
                 new_child_node, 
@@ -28,7 +28,7 @@ class Searcher(
                     context={"children" : prev_child_node}
                 )
             ]
-    def search(self, prevNode: Node, newNode: Node, componentId: str) -> List[List[any]]:
+    def search(self, prevNode: Node, newNode: Node, id: str) -> List[List[any]]:
         # error handling :
         if not prevNode and not newNode:
             return []
@@ -36,13 +36,13 @@ class Searcher(
             return []
 
         differences = []
-        def helper(prev_child_node: Node, new_child_node: Node, componentId, path: str = "", level=0) -> None:
+        def helper(prev_child_node: Node, new_child_node: Node, id, path: str = "", level=0) -> None:
             nonlocal differences
 
             if not prev_child_node and new_child_node:  # Added
                 differences.append([
                 self.hyd_comp_get_keyed_uuid(
-                            componentId=componentId, 
+                            id=id, 
                             path=path
                     ),
                     new_child_node, 
@@ -57,10 +57,10 @@ class Searcher(
             if prev_child_node and not new_child_node:  # Removed
                 differences.append([
                     self.hyd_comp_get_keyed_uuid(
-                        componentId=componentId, 
+                        id=id, 
                         path=path
                     ),
-                    new_child_node, 
+                    prev_child_node, 
                     path,
                     self.updater_context_builder(
                         name=REMOVE_NODE,
@@ -72,19 +72,19 @@ class Searcher(
             if prev_child_node.name != new_child_node.name:  # Changed child by name
                 differences.append([
                     self.hyd_comp_get_keyed_uuid(
-                        componentId=componentId, 
+                        id=id, 
                         path=path
                     ),
-                    new_child_node, 
+                    prev_child_node, 
                     path,
                     self.updater_context_builder(
                         name=REMOVE_NODE,
-                        context={"children" : new_child_node}
+                        context={"children" : prev_child_node}
                     )
                 ])
                 differences.append([
                     self.hyd_comp_get_keyed_uuid(
-                        componentId=componentId, 
+                        id=id, 
                         path=path
                     ),
                     new_child_node, 
@@ -103,7 +103,7 @@ class Searcher(
                 if prev_attr and not new_attr:
                     differences.append([
                         self.hyd_comp_get_keyed_uuid(
-                            componentId=componentId, 
+                            id=id, 
                             path=path
                         ),
                         new_child_node, 
@@ -119,7 +119,7 @@ class Searcher(
                 if not prev_attr and new_attr:
                     differences.append([
                         self.hyd_comp_get_keyed_uuid(
-                            componentId=componentId, 
+                            id=id, 
                             path=path
                         ), 
                         new_child_node, 
@@ -136,7 +136,7 @@ class Searcher(
                     if prev_attr.value != new_attr.value:
                         differences.append([
                            self.hyd_comp_get_keyed_uuid(
-                                componentId=componentId, 
+                                id=id, 
                                 path=path
                             ),
                             new_child_node, 
@@ -152,11 +152,11 @@ class Searcher(
             # Compare children
             for idx, (prev_child, new_child) in enumerate(zip_longest(prev_child_node.children, new_child_node.children)):
                 # leaf text nodes
-                if not isinstance(prev_child, Node) or not isinstance(new_child, Node):
-                    if prev_child != new_child:
+                if prev_child and new_child:
+                    if prev_child._is_text_node and new_child._is_text_node and (prev_child.text != new_child.text):
                         differences.append([
                             self.hyd_comp_get_keyed_uuid(
-                                componentId=componentId, 
+                                id=id, 
                                 path=path
                             ),
                             new_child_node,
@@ -166,10 +166,10 @@ class Searcher(
                                 context={"text" : new_child}
                             )
                         ])
-                    continue 
+                        continue 
                 path += f"{level}{idx}"
-                helper(prev_child, new_child, componentId, path, level)
+                helper(prev_child, new_child, id, path, level)
                 level += 1
 
-        helper(prevNode, newNode, componentId,"", 0)
+        helper(prevNode, newNode, id,"", 0)
         return differences

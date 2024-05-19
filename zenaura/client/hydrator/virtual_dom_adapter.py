@@ -16,7 +16,7 @@ class HydratorVirtualDomAdapter(
             args:
                 comp: Component
         """
-        self.zen_dom_table[comp.componentId] = comp.node()
+        self.zen_dom_table[comp.id] = comp.node()
 
     def hyd_vdom_delete(self, comp: Component) -> None:
         """
@@ -24,7 +24,7 @@ class HydratorVirtualDomAdapter(
             args:
                 comp: Component
         """
-        del self.zen_dom_table[comp.componentId]
+        del self.zen_dom_table[comp.id]
 
     def hyd_vdom_update_with_new_node(self, comp: Component, new_node):
         """
@@ -33,4 +33,4 @@ class HydratorVirtualDomAdapter(
                 comp: Component
                 new_node: Node
         """
-        self.zen_dom_table[comp.componentId] = new_node
+        self.zen_dom_table[comp.id] = new_node

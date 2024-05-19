@@ -4,7 +4,12 @@ from zenaura.client.config import self_closing_tags
 from .attribute import Attribute
 
 class Node:
-    def __init__(self,name : str, children: Optional[List["Node"]]=None, attributes : Optional[List[Attribute]]=None):
+    def __init__(
+            self,name : str = None, 
+            children: Optional[List["Node"]]=None, 
+            attributes : Optional[List[Attribute]]=None,
+            text: str = None,
+            ):
         """
         Initializes a Node object with the given name, children, and attributes.
 
@@ -17,7 +22,35 @@ class Node:
         self.children = [] if children is None else children
         self.attributes = [] if attributes is None else attributes
         self.nodeId = uuid.uuid4().hex
+        self.text = text 
 
+        # calculated properties
+        self._level = 0
+        self._is_leaf = len(self.children) == 0
+        self._path = []
+        self._is_text_node = isinstance(self.text , str)
+        self._parent = None 
+
+
+    @property
+    def children(self):
+        """Provide read-only access to the children list"""
+        return self._children
+    
+    @children.setter
+    def children(self, new_children):
+        """Intercept assignment to update child relationships"""
+        self._children = new_children
+        for idx, child in enumerate(self._children):
+            # backward compatiblity update ['some-text'] to node(text="some-text")
+            if isinstance(child, str):
+                child = Node(text=child)
+                self._children[idx] = child
+            child._parent = self  # Update parent reference
+        self._is_leaf = len(self._children) == 0
+        self._path_ids = []  # Reset path_ids
+
+    
     def to_dict(self) -> dict:
         """
             convert a node object into nested dictionary.

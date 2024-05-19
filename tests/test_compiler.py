@@ -47,7 +47,7 @@ class CompilerTests(unittest.TestCase):
         div = Node("div")
         span = Node("span")
         span.children = [
-            "Hello"
+            Node(text="Hello")
         ]
         div.children.append(span)
         result = compiler.compile(div, zenaura_dom_mode=False)
@@ -67,7 +67,7 @@ class CompilerTests(unittest.TestCase):
     def test_compile_with_nested_elements(self):
         div = Node("div")
         span = Node("span")
-        span.children = ["Hello"]
+        span.children = [Node(text="Hello")]
         div.children.append(span)
         result = compiler.compile(div, zenaura_dom_mode=False)
         self.assertEqual(result, "<div><span>Hello</span></div>")
@@ -105,11 +105,11 @@ class CompilerTests(unittest.TestCase):
         grandchild1 = Node("span")
         grandchild2 = Node("a")
         grandchild2.attributes.append(Attribute("href", "https://example.com"))
-        grandchild2.children = ["Link"]
+        grandchild2.children = [Node(text="Link")]
         grandchild3 = Node("img")
         grandchild3.attributes.append(Attribute("src", "image.jpg"))
         grandchild3.attributes.append(Attribute("alt", "Image"))
-        grandchild1.children = ["Hello"]
+        grandchild1.children = [Node(text="Hello")]
         child1.children.extend([grandchild1, grandchild2, grandchild3])
         root.children.extend([child1, child2])
         result = compiler.compile(root, zenaura_dom_mode=False)
@@ -124,11 +124,11 @@ class CompilerTests(unittest.TestCase):
         grandchild1 = Node("span")
         grandchild2 = Node("a")
         grandchild2.attributes.append(Attribute("href", "https://example.com"))
-        grandchild2.children = ["Link"]
+        grandchild2.children = [Node(text="Link")]
         grandchild3 = Node("img")
         grandchild3.attributes.append(Attribute("src", "image.jpg"))
         grandchild3.attributes.append(Attribute("alt", "Image"))
-        grandchild1.children = ["Hello"]
+        grandchild1.children = [Node(text="Hello")]
         child1.children.extend([grandchild1, grandchild2, grandchild3])
         root.children.extend([child1, child2])
 

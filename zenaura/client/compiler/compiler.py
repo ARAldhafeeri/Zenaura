@@ -29,7 +29,7 @@ class Compiler(
         }
     
     def getKeyedUID(self, 
-                    componentId, 
+                    id, 
                     withAttribut=False, 
                     path=None
                 ):
@@ -39,7 +39,7 @@ class Compiler(
             This is used to create keyed ZENAURA_DOM_ATTRIBUTE
 
             args :
-                componentId (str): unique id for the component
+                id (str): unique id for the component
                 level (int): level of the component tree
                 child index (int): index of the child within the component tree
                 withAttribute (bool, optional): adds unique attribute for virtual dom.
@@ -49,37 +49,34 @@ class Compiler(
                 - render life cycle
             returns :
                 if withAttribute is True :
-                {ZENAURA_DOM_ATTRIBUTE}="{componentId}-{level}-{child_index}"
+                {ZENAURA_DOM_ATTRIBUTE}="{id}-{level}-{child_index}"
                 else :
-                {componentId}-{level}-{child_index}
+                {id}-{level}-{child_index}
         """
         if withAttribut:
-            return f' {ZENAURA_DOM_ATTRIBUTE}="{componentId}{path}"'
-        return f'{componentId}{path}'
+            return f' {ZENAURA_DOM_ATTRIBUTE}="{id}{path}"'
+        return f'{id}{path}'
     
     def compile(
         self, 
         elm: Node,
-        componentId=None, 
-        zenaura_dom_mode=False,
-        level=0,
-        child_index=0,
-        path=""
+        id=None, 
+        zenaura_dom_mode=False
     ):
         """
         Compiles a Zenui Node into its corresponding HTML representation.
 
         Args:
             elm (Node): The Zenui Node object to compile.
-            componentId (str, optional): used to create keyed ZENAURA_DOM_ATTRIBUTE
+            id (str, optional): used to create keyed ZENAURA_DOM_ATTRIBUTE
             attribute UID-parent-child-child-child on so on.
             zenaura_dom_mode (bool, optional): Adds unique attribute for virtual dom.
 
         Returns:
             str: A string containing the compiled HTML.
         """
-        if not isinstance(elm, Node):
-            return self.sanitize(elm[0])
+        if elm._is_text_node:
+            return self.sanitize(elm.text)
 
         tag = elm.name 
 
@@ -88,9 +85,9 @@ class Compiler(
         #  assign unique id for zenui dom
         if isinstance(elm, Node) and zenaura_dom_mode:
             zenui_id = self.getKeyedUID(
-                componentId, 
+                id, 
                 withAttribut=True, 
-                path=path
+                path="" # should be from node.path
             )
 
         # get node attributes
@@ -104,28 +101,14 @@ class Compiler(
         html.write(f"<{tag}{zenui_id}{attributes}>")
 
         # get children
-        for idx, child in enumerate(elm.children):
-            if  isinstance(child, Node):
-                path += f"{level}{idx}"
-                html.write(
-                    self.compile(
-                        child, 
-                        componentId, 
-                        zenaura_dom_mode, 
-                        level, 
-                        child_index, 
-                        path
-                    )
+        for child in elm.children:
+            html.write(
+                self.compile(
+                    child, 
+                    id, 
+                    zenaura_dom_mode, 
                 )
-                child_index += idx
-                level += 1
-            elif isinstance(child, list):
-                if isinstance(child[0], Data):
-                    html.write(self.sanitize(child[0].content))
-                else:
-                    html.write(self.sanitize(child[0]))
-            elif isinstance(child, (str, list)):
-                html.write(self.sanitize(child))
+            )
 
                     
         html.write(f"</{tag}>")

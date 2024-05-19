@@ -19,7 +19,7 @@ for idx, child in enumerate(elm.children):
         path += f"{level}{idx}"
         html += self.compile(
             child, 
-            componentId, 
+            id, 
             zenaura_dom_mode=zenaura_dom_mode,
             level=level,
             child_index=child_index,

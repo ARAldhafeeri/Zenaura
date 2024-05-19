@@ -4,7 +4,7 @@ class VDomLookupTable:
     """
         1. zen_dom_table :
         - Optimizing general tree structure
-        - each component unique componentId
+        - each component unique id
         - each child of the component has ZENAURA_DOM_ATTRIBUTE
         this allows for:
         - searching for mounted component prev state : O(1)

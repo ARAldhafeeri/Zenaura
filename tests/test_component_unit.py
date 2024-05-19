@@ -32,7 +32,7 @@ class TestComponent(unittest.TestCase):
         self.assertNotEqual(self.c.get_state(), self.c2.get_state())
 
     def test_unique_comp_ids(self):
-        self.assertNotEqual(self.c2.componentId, self.c.componentId)
+        self.assertNotEqual(self.c2.id, self.c.id)
 
 
 

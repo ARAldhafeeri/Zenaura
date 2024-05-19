@@ -27,14 +27,14 @@ before :
 comp_tree = comp.node()
 compiled_comp = compiler.compile(
     comp_tree, 
-    componentId=comp.componentId,
+    id=comp.id,
     zenaura_dom_mode=True
 )
 
 dom_node = document.getElementById("root") 
 dom_node.innerHTML = compiled_comp
 
-self.zen_dom_table[comp.componentId] = comp_tree
+self.zen_dom_table[comp.id] = comp_tree
 ```
 
 after :
@@ -59,15 +59,15 @@ self.prev_page_instance : a breaking change coming next, where only a page can b
 before :
 
 ```python
- prevTree = self.zen_dom_table[comp.componentId]
+ prevTree = self.zen_dom_table[comp.id]
   newTree = comp.node()
-  diff = self.search(prevTree, newTree, comp.componentId)
+  diff = self.search(prevTree, newTree, comp.id)
   print(len(diff))
   while diff:
       prevNodeId, newNodeChildren, path= diff.pop()
       compiled_comp = compiler.compile(
           newNodeChildren, 
-          componentId=comp.componentId,
+          id=comp.id,
           zenaura_dom_mode=True,
           path = path
       )
@@ -78,7 +78,7 @@ before :
       if foundNode:
           foundNode.outerHTML = compiled_comp
   # self.update(prevTree, prevNodeId, newNodeChildren)
-  self.zen_dom_table[comp.componentId] = newTree
+  self.zen_dom_table[comp.id] = newTree
 ```
 
 after: 
@@ -88,12 +88,12 @@ while diff:
 	prevNodeId, newNodeChildren, path= diff.pop()
 	compiled_html = self.hyd_comp_compile_children(
 		newNodeChildren, 
-	  comp.componentId,
+	  comp.id,
 	  True,
 		path
 	)
 	self.hyd_rdom_attach_to_mounted_comp(
-		comp.componentId, 
+		comp.id, 
 		compiled_html
 	)
 	self.hyd_vdom_update(comp)
@@ -106,7 +106,7 @@ before :
 ```python
 compiled_comp = compiler.compile(
   newNodeChildren, 
-  componentId=comp.componentId,
+  id=comp.id,
   zenaura_dom_mode=True,
   path = path
 )
@@ -116,7 +116,7 @@ after :
 
 ```python
 self.hyd_comp_get_keyed_uuid(
-    componentId, 
+    id, 
     level, 
     child_index, 
     path

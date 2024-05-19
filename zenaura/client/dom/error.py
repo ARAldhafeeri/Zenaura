@@ -11,7 +11,7 @@ class DefaultDomErrorComponent(Component):
         super().__init__()
         self.error_message = error_message
     def node(self):
-        return Node("div", children=[Node("p", children=[str(self.error_message)])])
+        return Node("div", children=[Node(text=str(self.error_message))])
 
 
 class GracefulDegenerationLifeCycleWrapper(
@@ -22,6 +22,9 @@ class GracefulDegenerationLifeCycleWrapper(
         """
             Graceful degradation of component lifecycle methods.
         """
+        # cleanup
+        self.zen_dom_table.clear()
+
         if hasattr(comp, "componentDidCatchError"):
             # call componentDidCatchError method
             # mount the error message component 

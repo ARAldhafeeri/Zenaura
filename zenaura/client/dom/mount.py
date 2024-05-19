@@ -37,6 +37,9 @@ class Mount(
 
             self.hyd_rdom_attach_to_root(compiled_html)
 
+            # clean up perviously mounted components :
+            self.zen_dom_table.clear()
+
             # trigger attached for page components
             for comp in page.children:
                 # trigger attached for page components

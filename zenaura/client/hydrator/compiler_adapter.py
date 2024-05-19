@@ -14,14 +14,14 @@ class HydratorCompilerAdapter:
     """        
     def hyd_comp_get_keyed_uuid(
         self,
-        componentId : str, 
+        id : str, 
         path : str
     ):
         """
             compiler operation : wraps compiler.getKeyedUID 
         """
         return compiler.getKeyedUID(
-            componentId=componentId, 
+            id=id, 
             path=path,
         )
     
@@ -35,14 +35,14 @@ class HydratorCompilerAdapter:
         """
         return compiler.compile(
                 comp.node(), 
-                componentId=comp.componentId,
+                id=comp.id,
                 zenaura_dom_mode=True
             )
     
     def hyd_comp_compile_children(
         self,
         children: List[Node],
-        componentId: str,
+        id: str,
         zenaura_dom_mode: bool,
         path: str=""
     ):
@@ -52,7 +52,7 @@ class HydratorCompilerAdapter:
         """
         return compiler.compile(
             children, 
-            componentId=componentId,
+            id=id,
             zenaura_dom_mode=True,
             path = path
         )
@@ -63,9 +63,8 @@ class HydratorCompilerAdapter:
             html.write(
                 compiler.compile(
                     comp.node(), 
-                    comp.componentId,
+                    comp.id,
                     zenaura_dom_mode=True,
-                    path=""
                 )
             )
         return html.getvalue()

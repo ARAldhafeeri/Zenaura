@@ -28,7 +28,7 @@ class Render(
             # update steps 1-3: on_mutation -> update -> on_settled
             # update 1: lifecycle method to be called before updating
             self.on_mutation(comp)
-            comp_id = comp.componentId            
+            comp_id = comp.id            
             prev_tree = self.zen_dom_table[comp_id]
             new_tree = comp.node()
 

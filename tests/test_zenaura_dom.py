@@ -31,8 +31,8 @@ class TestDom(unittest.TestCase):
         
     def test_mount(self):
         self.zenaura_dom.mount(Page([self.counter]))
-        self.assertIn(self.counter.componentId, self.zenaura_dom.zen_dom_table.keys())
-        prev = self.zenaura_dom.zen_dom_table[self.counter.componentId]
+        self.assertIn(self.counter.id, self.zenaura_dom.zen_dom_table.keys())
+        prev = self.zenaura_dom.zen_dom_table[self.counter.id]
         self.assertTrue(prev)
         # mount is called on root div
         exists = self.document.getElementById("root")
@@ -43,7 +43,7 @@ class TestDom(unittest.TestCase):
         self.zenaura_dom.mount(Page([self.counter]))
         self.counter.set_state(self.counterState(count=1))
         await self.zenaura_dom.render(self.counter)
-        re_rendered = self.zenaura_dom.zen_dom_table[self.counter.componentId]
+        re_rendered = self.zenaura_dom.zen_dom_table[self.counter.id]
         # print end of line 
         # new data structure Data for data binding
         self.assertEqual(re_rendered.children[0].children[0].children[0].children[0].content, f'Counter: {self.counterState(count=1)}')
@@ -52,7 +52,7 @@ class TestDom(unittest.TestCase):
     def test_mount_existing_component(self):
         
         self.zenaura_dom.mount(Page([self.counter]))
-        exists = self.zenaura_dom.zen_dom_table[self.counter.componentId]
+        exists = self.zenaura_dom.zen_dom_table[self.counter.id]
 
         
         self.assertTrue(exists)
@@ -61,13 +61,13 @@ class TestDom(unittest.TestCase):
         
         class K(Component):
             def node(self):
-                return Node(name="div", children=[Node(name="span", children=["test"])])
+                return Node(name="div", children=[Node(name="span", children=Node(text="test"))])
         
         unmounted_counter = K()
 
         
         self.zenaura_dom.render(unmounted_counter)
-        key = self.zenaura_dom.zen_dom_table[self.counter.componentId]
+        key = self.zenaura_dom.zen_dom_table[self.counter.id]
         self.assertTrue(key)
 
 
@@ -79,7 +79,7 @@ class TestDom(unittest.TestCase):
                 super().__init__()
                 self.error_message = error_message
             def node(self):
-                return Node("div", children=[Node("p", children=[str(self.error_message)])])
+                return Node("div", children=[Node("p", children=[Node(text=self.error_message)])])
 
         @Reuseable
         class TestComponent(Component):
@@ -90,7 +90,7 @@ class TestDom(unittest.TestCase):
 
         self.zenaura_dom.componentDidCatchError(test_component, "Custom error message")
 
-        self.assertEqual(self.zenaura_dom.zen_dom_table[test_component.componentId].children[0].children[0], "Custom error message")
+        self.assertEqual(self.zenaura_dom.zen_dom_table[test_component.id].children[0].children[0].text, "Custom error message")
 
     def test_componentDidCatchError_with_default_error_component(self):
 
@@ -101,23 +101,25 @@ class TestDom(unittest.TestCase):
         test = TestComponent()
         self.zenaura_dom.componentDidCatchError(test, "Default error message")
 
-        self.assertEqual(self.zenaura_dom.zen_dom_table[test.componentId].children[0].children[0], "Default error message")
+        self.assertEqual(self.zenaura_dom.zen_dom_table[test.id].children[0].text, "Default error message")
 
     # Mount - testing component lifecycle methods 
 
     def test_component_did_mount_without_attached_method(self):
+        
+        @Reuseable
         class TestComponent(Component):
             def node(self):
                 return Node("p")
 
-        component = TestComponent()
+        c = TestComponent()
 
-        self.zenaura_dom.mount(Page([component]))
+        self.zenaura_dom.mount(Page([c]))
 
-        self.assertEqual(self.zenaura_dom.zen_dom_table[component.componentId].name, "p")
+        self.assertEqual(self.zenaura_dom.zen_dom_table[c.id].name, "p")
 
     
-    def test_component_did_mount_with_attached_method(self):
+    def test_component_did_mount_with_on_seatled_method(self):
 
         @Reuseable
         class TestComponent(Component):
@@ -136,19 +138,6 @@ class TestDom(unittest.TestCase):
       
         self.assertEqual(component.x, 10)
 
-
-    def test_component_did_update_without_on_settled_method(self):
-
-        @Reuseable
-        class TestComponent(Component):
-            def node(self):
-                return Node("p")
-            
-        component = TestComponent()
-        print("soko boko",type(self.zenaura_dom.zen_dom_table[component.componentId]))
-        self.zenaura_dom.mount(Page([component]))
-        self.assertEqual(self.zenaura_dom.zen_dom_table[component.componentId].name, "p")
-        
 
     async def test_component_did_update_with_on_settled_method(self):
         @Reuseable
