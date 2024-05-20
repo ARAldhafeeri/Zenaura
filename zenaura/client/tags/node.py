@@ -3,6 +3,53 @@ from typing import List, Optional
 from zenaura.client.config import self_closing_tags
 from .attribute import Attribute
 
+class ChildrenList(list):
+    def __init__(self, parent_node, children):
+        super().__init__()
+        self.parent_node = parent_node
+        self.children = children
+        self._child_counter = 0
+
+        for child in self.children:
+            self.append(child)
+
+    def append(self, child):
+        if isinstance(child, str):
+            child = Node(text=child)
+            child.is_text_node = True
+
+        child._parent = self.parent_node
+        child.level = self.parent_node.level + 1
+        child.key = self._child_counter  # Assign a unique key
+        self._child_counter += 1        # Increment the counter
+
+        child.is_text_node = isinstance(child.text, str)
+        child.is_leaf = len(child.children) == 0
+        self.parent_node.is_leaf = len(self.children) == 0
+        super().append(child)
+
+    def __delitem__(self, index):
+        """Handle deletion, but don't reset the counter."""
+        deleted_child = self[index]
+        super().__delitem__(index)
+        deleted_child._parent = None
+        self.parent_node.is_leaf = len(self.children) == 0
+
+    def insert(self, index, child):
+        """Handle insertion, assigning a new unique key."""
+        if isinstance(child, str):
+            child = Node(text=child)
+            child.is_text_node = True
+
+        child._parent = self.parent_node
+        child.level = self.parent_node.level + 1
+        child.key = self._child_counter
+        self._child_counter += 1
+
+        super().insert(index, child)
+        self.parent_node.is_leaf = len(self.children) == 0
+
+    
 class Node:
     def __init__(
             self,name : str = None, 
@@ -18,39 +65,78 @@ class Node:
         children (list, optional): List of children nodes. Defaults to None.
         attributes (list, optional): List of attributes. Defaults to None.
         """
-        self.name = name 
-        self.children = [] if children is None else children
-        self.attributes = [] if attributes is None else attributes
-        self.nodeId = uuid.uuid4().hex
-        self.text = text 
 
         # calculated properties
         self._level = 0
-        self._is_leaf = len(self.children) == 0
-        self._path = []
-        self._is_text_node = isinstance(self.text , str)
-        self._parent = None 
+        self._key = 0 # root key
+        self._parent = None
+        self._is_leaf = True
+
+        self.name = name
+        self.next_child_index = 0
+        self.children =ChildrenList(self, children if children else [])
+        self._children =ChildrenList(self, children if children else [])
+        self.attributes = [] if attributes is None else attributes
+        self.nodeId = uuid.uuid4().hex
+        self.text = text        
+        # calculated proerty depends on children, text
+        self._is_text_node = isinstance(self.text, str)
+
 
 
     @property
+    def level(self):
+        return self._level
+
+    @level.setter
+    def level(self, new_level):
+        self._level = new_level
+        for child in self.children:
+            child.level = new_level + 1  # Recursively update child levels
+
+    @property
+    def is_leaf(self):
+        return self._is_leaf
+
+    @is_leaf.setter
+    def is_leaf(self, new_is_leaf):
+        self._is_leaf = new_is_leaf
+
+    @property
+    def key(self):
+        return self._key
+
+    @key.setter
+    def key(self, new_key):
+        self._key = new_key
+
+    @property
+    def is_text_node(self):
+        return self._is_text_node
+
+    @is_text_node.setter
+    def is_text_node(self, new_is_text_node):
+        self._is_text_node = new_is_text_node
+
+    @property
+    def parent(self):
+        """Read-only property referencing the node's parent."""
+        return self._parent
+
+    @parent.setter
+    def parent(self, new_parent):
+        self._parent = new_parent
+
+    @property
     def children(self):
-        """Provide read-only access to the children list"""
         return self._children
     
     @children.setter
     def children(self, new_children):
         """Intercept assignment to update child relationships"""
-        self._children = new_children
-        for idx, child in enumerate(self._children):
-            # backward compatiblity update ['some-text'] to node(text="some-text")
-            if isinstance(child, str):
-                child = Node(text=child)
-                self._children[idx] = child
-            child._parent = self  # Update parent reference
-        self._is_leaf = len(self._children) == 0
-        self._path_ids = []  # Reset path_ids
+        self._children = ChildrenList(self, new_children) # Handle None input
+        self.is_leaf = len(new_children) == 0
 
-    
     def to_dict(self) -> dict:
         """
             convert a node object into nested dictionary.
@@ -77,7 +163,9 @@ class Node:
         html += f"{self.getAttributes(self)}"
         html += ">"
         for child in self.children:
-            if isinstance(child, Node):
+            if child.is_text_node:
+                html += child.text
+            elif isinstance(child, Node):
                 html += child.to_html()
             else:
                 html += str(child)

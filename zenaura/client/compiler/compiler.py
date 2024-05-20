@@ -75,7 +75,7 @@ class Compiler(
         Returns:
             str: A string containing the compiled HTML.
         """
-        if elm._is_text_node:
+        if elm.is_text_node or isinstance(elm, str):
             return self.sanitize(elm.text)
 
         tag = elm.name 

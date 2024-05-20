@@ -153,7 +153,7 @@ class Searcher(
             for idx, (prev_child, new_child) in enumerate(zip_longest(prev_child_node.children, new_child_node.children)):
                 # leaf text nodes
                 if prev_child and new_child:
-                    if prev_child._is_text_node and new_child._is_text_node and (prev_child.text != new_child.text):
+                    if prev_child.is_text_node and new_child.is_text_node and (prev_child.text != new_child.text):
                         differences.append([
                             self.hyd_comp_get_keyed_uuid(
                                 id=id, 
