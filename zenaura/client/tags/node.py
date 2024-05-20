@@ -22,7 +22,7 @@ class ChildrenList(list):
         child.level = self.parent_node.level + 1
         child.key = self._child_counter  # Assign a unique key
         self._child_counter += 1        # Increment the counter
-
+        child.path = self.parent_node.path + [child.level, child.key]
         child.is_text_node = isinstance(child.text, str)
         child.is_leaf = len(child.children) == 0
         self.parent_node.is_leaf = len(self.children) == 0
@@ -71,10 +71,9 @@ class Node:
         self._key = 0 # root key
         self._parent = None
         self._is_leaf = True
+        self._path = [0, 0] # root [level zero, index zero]
 
         self.name = name
-        self.next_child_index = 0
-        self.children =ChildrenList(self, children if children else [])
         self._children =ChildrenList(self, children if children else [])
         self.attributes = [] if attributes is None else attributes
         self.nodeId = uuid.uuid4().hex
@@ -109,6 +108,14 @@ class Node:
     @key.setter
     def key(self, new_key):
         self._key = new_key
+
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, new_path):
+        self._path = new_path
 
     @property
     def is_text_node(self):

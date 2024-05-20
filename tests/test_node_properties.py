@@ -92,6 +92,8 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertEqual(node.children[0].text, 'child1')
         self.assertEqual(node.children[0].key, 0)
         self.assertEqual(node.children[1].key, 1)
+        self.assertEqual(node.children[1].path, [0, 0, 1, 1] )
+        self.assertEqual(node.children[0].path, [0, 0, 1, 0] )
 
     def test_is_leaf_update_on_child_change(self):
         node = Node()
@@ -100,3 +102,39 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertFalse(node.is_leaf)
         node.children = []  
         self.assertTrue(node.is_leaf)
+
+
+    def test_child_list_conversion(self):
+        # Base Node
+        root = Node(children=['child1', 'child2'])
+
+        # Level 1 children
+        child1 = root.children[0]
+        child2 = root.children[1]
+
+        # Level 2 children (added)
+        child11 = Node(children=['grandchild11'])
+        child12 = Node(children=['grandchild12'])
+        child21 = Node(children=['grandchild21'])
+
+        # Level 3 child (added for deeper nesting)
+        great_grandchild111 = Node()
+
+        # Attach children (to maintain the hierarchy)
+        child1.children.append(child11)  # Using append
+        child1.children.append(child12)
+        child2.children = [child21]        # Direct assignment
+        child11.children.append(great_grandchild111)
+
+        # Assertions for base nodes (level 1)
+        self.assertIsInstance(child1, Node)
+        self.assertEqual(child1.text, 'child1')
+        self.assertEqual(child1.key, 0)
+        self.assertEqual(child1.path, [0, 0, 1, 0])
+        self.assertEqual(child2.path, [0, 0, 1, 1])
+
+        # Assertions for nested children (levels 2 and 3)
+        self.assertEqual(child11.path, [0, 0, 1, 0, 2, 0])
+        self.assertEqual(child12.path, [0, 0, 1, 0, 2, 1])
+        self.assertEqual(child21.path, [0, 0, 1, 1, 2, 0])
+        self.assertEqual(great_grandchild111.path, [0, 0, 1, 0, 2, 0, 3, 1])
