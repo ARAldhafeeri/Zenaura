@@ -41,7 +41,7 @@ class TestSearchAlgorithm(unittest.TestCase):
 
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.text, "test")
 
     def test_update_child(self):
@@ -49,7 +49,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=["updated_child"])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.children[0].text, "updated_child")
 
     def test_add_attribute(self):
@@ -57,7 +57,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[], attributes=[Attribute("test", "test")])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.attributes[0].value, "test")
 
     def test_remove_attribute(self):
@@ -65,7 +65,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[], attributes=[])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(len(diffedNode.attributes), 0)  # Attribute removed
 
     def test_remove_attribute(self):
@@ -73,7 +73,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[], attributes=[Attribute("test", "test2")])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.attributes[0].value, "test2")  # Attribute removed
     
     def test_attribute_added(self):
@@ -81,7 +81,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[], attributes=[Attribute("class", "new-class")])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.attributes[0].value, "new-class")
 
     def test_attribute_removed(self):
@@ -89,7 +89,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(len(diffed_node.attributes), 0)
 
     def test_attribute_value_changed(self):
@@ -97,7 +97,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[], attributes=[Attribute("class", "new-class")])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.attributes[0].value, "new-class")
 
     def test_attribute_moved(self):
@@ -109,7 +109,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.attributes[0].value, "new-class")
 
     def test_deeply_nested_add_child(self):
@@ -127,11 +127,11 @@ class TestSearchAlgorithm(unittest.TestCase):
 
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
 
         self.assertEqual(diffedNode.name, "span")  
         self.assertEqual(diffedNode.children[0].text, "new text")
-        self.assertEqual(key, "")  # key to the parent where the addition occurred
+        self.assertEqual(path, "")  # path to the parent where the addition occurred
 
     def test_deeply_nested_remove_child(self):
         prev_tree = Node("div", children=[
@@ -148,9 +148,9 @@ class TestSearchAlgorithm(unittest.TestCase):
 
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         # self.assertEqual(diffedNode.name, "li")  
-        self.assertEqual(key, 1)  # Removed node's parent key
+        self.assertEqual(path, [0, 0, 1, 1])  # Removed node's parent path
         self.assertEqual(diffedNode.children[0].text,"item2")
 
 
@@ -168,9 +168,9 @@ class TestSearchAlgorithm(unittest.TestCase):
 
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prevNodeId, diffedNode, key, op = diff.pop()
+        prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.attributes[0].value, "new-title")
-        self.assertEqual(key, 0)  # key to the node with the attribute change
+        self.assertEqual(path, [0, 0, 1, 0])  # path to the node with the attribute change
 
     def test_mixed_deep_changes(self):
         prev_tree = Node("div", children=[
@@ -227,11 +227,11 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 5)
 
         # Iterate over the differences to check details (add more assertions as needed)
-        for prev_node_id, diffed_node, key, op in diff:
+        for prev_node_id, diffed_node, path, op in diff:
             # Example assertion for the added div element
             if diffed_node.name == "div":
                 self.assertEqual(diffed_node.children[0].text, "A newly added element")
-                self.assertEqual(key, "")  # root
+                self.assertEqual(path, "")  # root
 
 
     def test_extreme_deeply_nested_with_various_changes(self):
@@ -296,11 +296,11 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 6)
 
         # Iterate over the differences to check details (add more assertions as needed)
-        for prev_node_id, diffed_node, key, op in diff:
+        for prev_node_id, diffed_node, path, op in diff:
             # Example assertion for the added aside element
             if diffed_node.name == "aside":
                 self.assertEqual(diffed_node.children[0].children[0].text, "Sidebar content")
-                self.assertEqual(key, "") 
+                self.assertEqual(path, "") 
 
 
     def test_extremely_nested_with_comprehensive_changes(self):
@@ -463,7 +463,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Hello, world!")
 
     def test_child_removed(self):
@@ -473,7 +473,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         new_tree = Node(name="div", children=[])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op= diff.pop()
+        prev_node_id, diffed_node, path, op= diff.pop()
         self.assertEqual(len(diffed_node.children), 1)
 
     def test_child_moved(self):
@@ -485,7 +485,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 2)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Hello, world!")
 
     def test_child_order_changed(self):
@@ -499,15 +499,15 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 4)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         # removed - added pair 1 :
         self.assertEqual(diffed_node.children[0].text, "Hello, world!")
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Goodbye, world!")
         # remove added pair 2: 
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Goodbye, world!")
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Hello, world!")
 
 
@@ -520,7 +520,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Hello, world!")
 
     def test_text_node_removed(self):
@@ -540,7 +540,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 1)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Goodbye, world!")
 
     def test_multiple_changes(self):
@@ -552,9 +552,9 @@ class TestSearchAlgorithm(unittest.TestCase):
         ], attributes=[Attribute("class", "new-class")])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 2)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Goodbye, world!")
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.attributes[0].value, "new-class")
 
     def test_deeply_nested_changes(self):
@@ -576,20 +576,20 @@ class TestSearchAlgorithm(unittest.TestCase):
         ])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 2)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "Modified paragraph text.")
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.children[0].text, "New Title")
 
     def test_changes_with_complex_attributes(self):
-        prev_tree = Node(name="div", children=[], attributes=[Attribute("data-id", "123"), Attribute("data-options", '{"key": "value"}')])
-        new_tree = Node(name="div", children=[], attributes=[Attribute("data-id", "456"), Attribute("data-options", '{"key": "new-value"}')])
+        prev_tree = Node(name="div", children=[], attributes=[Attribute("data-id", "123"), Attribute("data-options", '{"path": "value"}')])
+        new_tree = Node(name="div", children=[], attributes=[Attribute("data-id", "456"), Attribute("data-options", '{"path": "new-value"}')])
         diff = self.zenaura_dom.search(prev_tree, new_tree, "comp-id")
         self.assertEqual(len(diff), 2)
-        prev_node_id, diffed_node, key, op = diff.pop()
+        prev_node_id, diffed_node, path, op = diff.pop()
         self.assertEqual(diffed_node.attributes[0].value, "456")
-        prev_node_id, diffed_node, key, op = diff.pop()
-        self.assertEqual(diffed_node.attributes[1].value, '{"key": "new-value"}')
+        prev_node_id, diffed_node, path, op = diff.pop()
+        self.assertEqual(diffed_node.attributes[1].value, '{"path": "new-value"}')
 
 
     def test_performance_large_tree(self):

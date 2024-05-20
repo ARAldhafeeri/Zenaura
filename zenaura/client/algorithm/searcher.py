@@ -36,17 +36,16 @@ class Searcher(
             return []
 
         differences = []
-        def helper(prev_child_node: Node, new_child_node: Node, id, prev_child_id: str, new_child_id) -> None:
+        def helper(prev_child_node: Node, new_child_node: Node, id, prev_child_path: str, new_child_path) -> None:
             nonlocal differences
-
             if not prev_child_node and new_child_node:  # Added
                 differences.append([
                 self.hyd_comp_get_keyed_uuid(
                             id=id, 
-                            key=prev_child_id
+                            key=prev_child_path
                     ),
                     new_child_node, 
-                    prev_child_id,
+                    prev_child_path,
                     self.updater_context_builder(
                         name=ADD_NODE,
                         context={"children" : new_child_node}
@@ -58,10 +57,10 @@ class Searcher(
                 differences.append([
                     self.hyd_comp_get_keyed_uuid(
                         id=id, 
-                        key=prev_child_id
+                        key=prev_child_path
                     ),
                     prev_child_node, 
-                    prev_child_id,
+                    prev_child_path,
                     self.updater_context_builder(
                         name=REMOVE_NODE,
                         context={"children" : prev_child_node}
@@ -73,10 +72,10 @@ class Searcher(
                 differences.append([
                     self.hyd_comp_get_keyed_uuid(
                         id=id, 
-                        key=prev_child_id
+                        key=prev_child_path
                     ),
                     prev_child_node, 
-                    prev_child_id,
+                    prev_child_path,
                     self.updater_context_builder(
                         name=REMOVE_NODE,
                         context={"children" : prev_child_node}
@@ -85,10 +84,10 @@ class Searcher(
                 differences.append([
                     self.hyd_comp_get_keyed_uuid(
                         id=id, 
-                        key=new_child_id
+                        key=new_child_path
                     ),
                     new_child_node, 
-                    new_child_id,
+                    new_child_path,
                     self.updater_context_builder(
                         name=ADD_NODE,
                         context={"children" : new_child_node}
@@ -104,10 +103,10 @@ class Searcher(
                     differences.append([
                         self.hyd_comp_get_keyed_uuid(
                             id=id, 
-                            key=prev_child_id
+                            key=prev_child_path
                         ),
                         new_child_node, 
-                        prev_child_id,
+                        prev_child_path,
                         self.updater_context_builder(
                             name=REMOVE_ATTRIBUTE,
                             context={"attr_name" : prev_attr.key}
@@ -120,10 +119,10 @@ class Searcher(
                     differences.append([
                         self.hyd_comp_get_keyed_uuid(
                             id=id, 
-                            key=new_child_id
+                            key=new_child_path
                         ), 
                         new_child_node, 
-                        new_child_id, 
+                        new_child_path, 
                         self.updater_context_builder(
                             name=ADD_ATTRIBUTE,
                             context={"attr_name" : new_attr.key, "attr_value" : new_attr.value}
@@ -137,10 +136,10 @@ class Searcher(
                         differences.append([
                            self.hyd_comp_get_keyed_uuid(
                                 id=id, 
-                                key=prev_child_id
+                                key=prev_child_path
                             ),
                             new_child_node, 
-                            prev_child_id,
+                            prev_child_path,
                             self.updater_context_builder(
                                 name=ADD_ATTRIBUTE,
                                 context={"attr_name" : new_attr.key, "attr_value" : new_attr.value}
@@ -157,19 +156,19 @@ class Searcher(
                         differences.append([
                             self.hyd_comp_get_keyed_uuid(
                                 id=id, 
-                                key=prev_child_id
+                                key=prev_child_path
                             ),
                             new_child_node,
-                            prev_child_id,
+                            prev_child_path,
                             self.updater_context_builder(
                                 name=NODE_INNER_TEXT,
                                 context={"text" : new_child}
                             )
                         ])
                         continue
-                new_child_key = new_child.key if isinstance(new_child, Node) else ""
-                prev_child_key = prev_child.key if isinstance(prev_child, Node) else ""
-                helper(prev_child, new_child, id, prev_child_id=prev_child_key, new_child_id=new_child_key)
+                new_child_path = new_child.path if isinstance(new_child, Node) else ""
+                prev_child_path = prev_child.path if isinstance(prev_child, Node) else ""
+                helper(prev_child, new_child, id, prev_child_path=prev_child_path, new_child_path=new_child_path)
 
         helper(prevNode, newNode, id, 0, 0)
         return differences

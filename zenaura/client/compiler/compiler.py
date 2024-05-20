@@ -52,6 +52,8 @@ class Compiler(
                 else :
                 {id}{child_id}
         """
+        if isinstance(key, list):
+            key = "".join(str(i) for i in key) # [0,0,0,1] ->  0001
         if withAttribut:
             return f' {ZENAURA_DOM_ATTRIBUTE}="{id}{key}"'
         return f'{id}{key}'
