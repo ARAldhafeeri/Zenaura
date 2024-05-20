@@ -15,14 +15,14 @@ class HydratorCompilerAdapter:
     def hyd_comp_get_keyed_uuid(
         self,
         id : str, 
-        path : str
+        key : str
     ):
         """
             compiler operation : wraps compiler.getKeyedUID 
         """
         return compiler.getKeyedUID(
             id=id, 
-            path=path,
+            key=key,
         )
     
     def hyd_comp_compile_node(
@@ -44,7 +44,7 @@ class HydratorCompilerAdapter:
         children: List[Node],
         id: str,
         zenaura_dom_mode: bool,
-        path: str=""
+        key: str=""
     ):
         """
             compiler operation : wraps compiler compile, returns str "HTMLElement"
@@ -54,7 +54,7 @@ class HydratorCompilerAdapter:
             children, 
             id=id,
             zenaura_dom_mode=True,
-            path = path
+            key = key
         )
     
     def hyd_comp_compile_page(self, page: Page) -> str:

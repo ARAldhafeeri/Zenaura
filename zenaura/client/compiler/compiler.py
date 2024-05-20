@@ -31,7 +31,7 @@ class Compiler(
     def getKeyedUID(self, 
                     id, 
                     withAttribut=False, 
-                    path=None
+                    key=None
                 ):
         """
             from unique UID for component generate unique
@@ -40,8 +40,7 @@ class Compiler(
 
             args :
                 id (str): unique id for the component
-                level (int): level of the component tree
-                child index (int): index of the child within the component tree
+                child_id: which is unique counter for the child position within the component
                 withAttribute (bool, optional): adds unique attribute for virtual dom.
             used in :
                 - compiler
@@ -49,13 +48,13 @@ class Compiler(
                 - render life cycle
             returns :
                 if withAttribute is True :
-                {ZENAURA_DOM_ATTRIBUTE}="{id}-{level}-{child_index}"
+                {ZENAURA_DOM_ATTRIBUTE}="{id}{child_id}"
                 else :
-                {id}-{level}-{child_index}
+                {id}{child_id}
         """
         if withAttribut:
-            return f' {ZENAURA_DOM_ATTRIBUTE}="{id}{path}"'
-        return f'{id}{path}'
+            return f' {ZENAURA_DOM_ATTRIBUTE}="{id}{key}"'
+        return f'{id}{key}'
     
     def compile(
         self, 
@@ -87,7 +86,7 @@ class Compiler(
             zenui_id = self.getKeyedUID(
                 id, 
                 withAttribut=True, 
-                path="" # should be from node.path
+                key=elm.key
             )
 
         # get node attributes
