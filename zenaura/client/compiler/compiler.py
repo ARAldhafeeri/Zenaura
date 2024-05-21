@@ -88,7 +88,7 @@ class Compiler(
             zenui_id = self.getKeyedUID(
                 id, 
                 withAttribut=True, 
-                key=elm.key
+                key=elm.path
             )
 
         # get node attributes

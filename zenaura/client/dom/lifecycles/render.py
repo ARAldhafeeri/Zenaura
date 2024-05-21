@@ -9,7 +9,7 @@ class RenderLifeCycle:
         Returns:
         None
         """
-        # Perform operations after updating
+        # Perform operations before updating
         if hasattr(comp, 'on_mutation'):
             comp.on_mutation()
 

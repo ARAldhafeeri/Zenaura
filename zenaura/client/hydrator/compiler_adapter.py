@@ -54,7 +54,6 @@ class HydratorCompilerAdapter:
             children, 
             id=id,
             zenaura_dom_mode=True,
-            key = key
         )
     
     def hyd_comp_compile_page(self, page: Page) -> str:

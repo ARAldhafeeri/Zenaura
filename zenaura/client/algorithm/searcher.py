@@ -162,7 +162,7 @@ class Searcher(
                             prev_child_path,
                             self.updater_context_builder(
                                 name=NODE_INNER_TEXT,
-                                context={"text" : new_child}
+                                context={"text" : new_child.text}
                             )
                         ])
                         continue

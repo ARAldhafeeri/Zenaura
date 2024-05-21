@@ -42,7 +42,7 @@ def Button( label_text : str, onclick_handler : str, id=None) -> Node:
     else:
         btn.attributes.append(Attribute(key="py-click", value=onclick_handler))
 
-    btn.children.append(Node(name="label", children=[label_text]))
+    btn.append_child(Node(name="label", children=[label_text]))
     return btn
 
 def DomContainer() -> Node:
@@ -91,8 +91,8 @@ class SimpleUi(Component):
             Attribute("styles", STYLES.btn),
             Attribute("id", "centered"),
         ]
-        div.children.append(Image("./zenaura/assets/logo.png"))
-        div.children.append(btn)
+        div.append_child(Image("./zenaura/assets/logo.png"))
+        div.append_child(btn)
         return div
 
 
@@ -109,6 +109,7 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
     
 
     isEven = Builder('h2').with_child("even" if even else "odd").build()
+    isEven2 = Builder('button').with_child("even" if even else "odd").build()
 
     ctrl = Builder("div") \
         .with_attribute("styles", STYLES.controls) \
@@ -125,6 +126,8 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
             header 
         ).with_child(
            isEven
+        ).with_child(
+            isEven2 if even else Node("div")
         ).with_child(
             ctrl
     ).build()

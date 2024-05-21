@@ -17,8 +17,8 @@ class CompilerTests(unittest.TestCase):
 
     def test_compile_with_attributes(self):
         elm = Node("p")
-        elm.children.append(Attribute("styles", "my-paragraph"))
-        elm.children.append(Attribute("id", "main-content"))
+        elm.append_child(Attribute("styles", "my-paragraph"))
+        elm.append_child(Attribute("id", "main-content"))
         result = compiler.compile(elm, zenaura_dom_mode=False)
         self.assertEqual(result, '<p class="my-paragraph" id="main-content"></p>')
 
@@ -49,7 +49,7 @@ class CompilerTests(unittest.TestCase):
         span.children = [
             Node(text="Hello")
         ]
-        div.children.append(span)
+        div.append_child(span)
         result = compiler.compile(div, zenaura_dom_mode=False)
         self.assertEqual(result, "<div><span>Hello</span></div>")
     
@@ -68,7 +68,7 @@ class CompilerTests(unittest.TestCase):
         div = Node("div")
         span = Node("span")
         span.children = [Node(text="Hello")]
-        div.children.append(span)
+        div.append_child(span)
         result = compiler.compile(div, zenaura_dom_mode=False)
         self.assertEqual(result, "<div><span>Hello</span></div>")
 
@@ -160,12 +160,12 @@ class CompilerTests(unittest.TestCase):
         for level in range(10):
             for i in range(10):
                 child = Node("div", attributes=generate_attributes(3))  # 3 attributes per child
-                parent.children.append(child)
+                parent.append_child(child)
             parent = child
     
         # Add some content to the leaf nodes
         for child in parent.children:
-            child.children.append("Some content")
+            child.append_child("Some content")
 
         # Benchmark compilation time
         start_time = time.time()  # Start timer

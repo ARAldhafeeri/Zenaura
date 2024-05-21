@@ -3,52 +3,39 @@ from typing import List, Optional
 from zenaura.client.config import self_closing_tags
 from .attribute import Attribute
 
-class ChildrenList(list):
-    def __init__(self, parent_node, children):
-        super().__init__()
-        self.parent_node = parent_node
-        self.children = children
-        self._child_counter = 0
+def update_root_properties(root):
+    """
+        Upon intialization of a node or setting children
+        This method create infromation rich tree nodes:
+        1. link children to their parent
+        2. assign level, key information 
+        3. is_leaf_node, is_text node
+        and so on
+    """
+    stack = [(root, None, 0, 0, root.path)] # (node, level_parent, level, index, path)
 
-        for child in self.children:
-            self.append(child)
+    while stack :
+        curr, curr.parent, curr.level, curr.key, curr.path   = stack.pop()
+        curr.is_leaf = len(curr.children) == 0
+        for idx, child in enumerate(curr.children):
+            if isinstance(child, str):
+                child = Node(text=child)
+                child.is_text_node = True
+            child.is_leaf = len(child.children) == 0
+            curr.children[idx] = child
+            stack.append((child, curr.parent, curr.level + 1, idx, curr.path + str(curr.level) + str(idx)))
+    return root
+
+class NodeList(list):
+    """Custom list subclass to trigger update on append."""
+
+    def __init__(self, node, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.node = node  # Reference to the parent Node
 
     def append(self, child):
-        if isinstance(child, str):
-            child = Node(text=child)
-            child.is_text_node = True
-
-        child._parent = self.parent_node
-        child.level = self.parent_node.level + 1
-        child.key = self._child_counter  # Assign a unique key
-        self._child_counter += 1        # Increment the counter
-        child.path = self.parent_node.path + [child.level, child.key]
-        child.is_text_node = isinstance(child.text, str)
-        child.is_leaf = len(child.children) == 0
-        self.parent_node.is_leaf = len(self.children) == 0
         super().append(child)
-
-    def __delitem__(self, index):
-        """Handle deletion, but don't reset the counter."""
-        deleted_child = self[index]
-        super().__delitem__(index)
-        deleted_child._parent = None
-        self.parent_node.is_leaf = len(self.children) == 0
-
-    def insert(self, index, child):
-        """Handle insertion, assigning a new unique key."""
-        if isinstance(child, str):
-            child = Node(text=child)
-            child.is_text_node = True
-
-        child._parent = self.parent_node
-        child.level = self.parent_node.level + 1
-        child.key = self._child_counter
-        self._child_counter += 1
-
-        super().insert(index, child)
-        self.parent_node.is_leaf = len(self.children) == 0
-
+        self.node.children = self  # Trigger the setter
     
 class Node:
     def __init__(
@@ -65,23 +52,22 @@ class Node:
         children (list, optional): List of children nodes. Defaults to None.
         attributes (list, optional): List of attributes. Defaults to None.
         """
+        self._parent = None
 
         # calculated properties
         self._level = 0
-        self._key = 0 # root key
-        self._parent = None
+        self._key = 0 
         self._is_leaf = True
-        self._path = [0, 0] # root [level zero, index zero]
+        self._path = ""
 
         self.name = name
-        self._children =ChildrenList(self, children if children else [])
+        self._children = children if children else []
         self.attributes = [] if attributes is None else attributes
         self.nodeId = uuid.uuid4().hex
         self.text = text        
         # calculated proerty depends on children, text
         self._is_text_node = isinstance(self.text, str)
-
-
+        update_root_properties(self)
 
     @property
     def level(self):
@@ -90,8 +76,6 @@ class Node:
     @level.setter
     def level(self, new_level):
         self._level = new_level
-        for child in self.children:
-            child.level = new_level + 1  # Recursively update child levels
 
     @property
     def is_leaf(self):
@@ -141,15 +125,25 @@ class Node:
     @children.setter
     def children(self, new_children):
         """Intercept assignment to update child relationships"""
-        self._children = ChildrenList(self, new_children) # Handle None input
-        self.is_leaf = len(new_children) == 0
+        self._children = new_children
+        update_root_properties(self)
 
+    def append_child(self, child):
+        if isinstance(child, str):
+            child = Node(text=child)
+        self.children.append(child)
+        update_root_properties(self)
+    
     def to_dict(self) -> dict:
         """
             convert a node object into nested dictionary.
         """
         return {
             "name": self.name,
+            "parent": self.parent.name if self.parent else "none",
+            "level" : self.level,
+            "key": self.key,
+            "path": self.path,
             "children": [child.to_dict() if isinstance(child, Node) else child for child in self.children],
         }
     

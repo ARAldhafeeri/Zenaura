@@ -35,7 +35,7 @@ class Builder:
         Returns:
         Builder: The Builder object.
         """
-        self.node.children.append(child)
+        self.node.append_child(child)
         return self 
     
     def with_styles(self, styles: dict) -> "Builder":

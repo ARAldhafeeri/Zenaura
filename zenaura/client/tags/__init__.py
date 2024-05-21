@@ -1,4 +1,4 @@
-from .node import Node
+from .node import Node, update_root_properties
 from .attribute import Attribute
 from .builder import Builder
 from .data import Data

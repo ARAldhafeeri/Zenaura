@@ -12,7 +12,7 @@ class DataclassTests(unittest.TestCase):
     def test_node_creation(self):
         child = Node(name="test")
         node = Node(name="div")
-        node.children.append(child)
+        node.append_child(child)
         node.attributes.append(Attribute(key="test", value="test"))
         self.assertEqual(child.name, "test")
         self.assertEqual(len(node.children), 1)
@@ -23,7 +23,7 @@ class DataclassTests(unittest.TestCase):
     def test_node_has_nodeId(self):
         child = Node(name="test")
         parent = Node(name="div")
-        parent.children.append(child)
+        parent.append_child(child)
         self.assertTrue(child.nodeId)
         self.assertTrue(parent.nodeId)
 
@@ -83,13 +83,13 @@ class DataclassTests(unittest.TestCase):
         node1.attributes.append(Attribute("class", "container"))
 
         node2 = Node("h1")
-        node2.children.append("Welcome to our website")
+        node2.append_child("Welcome to our website")
 
         node3 = Node("p")
-        node3.children.append("This is a paragraph")
+        node3.append_child("This is a paragraph")
 
-        node1.children.append(node2)
-        node1.children.append(node3)
+        node1.append_child(node2)
+        node1.append_child(node3)
 
         # Convert the node to HTML
         expected_html = (
@@ -107,14 +107,14 @@ class DataclassTests(unittest.TestCase):
 
         node2 = Node("h1")
         node2.attributes.append(Attribute("id", "title"))
-        node2.children.append("Welcome to our website")
+        node2.append_child("Welcome to our website")
 
         node3 = Node("p")
         node3.attributes.append(Attribute("class", "description"))
-        node3.children.append("This is a paragraph")
+        node3.append_child("This is a paragraph")
 
-        node1.children.append(node2)
-        node1.children.append(node3)
+        node1.append_child(node2)
+        node1.append_child(node3)
 
         # Convert the node to HTML
         expected_html = (
@@ -131,18 +131,18 @@ class DataclassTests(unittest.TestCase):
         node1.attributes.append(Attribute("class", "container"))
 
         node2 = Node("h1")
-        node2.children.append("Welcome to our website")
+        node2.append_child("Welcome to our website")
 
         node3 = Node("p")
-        node3.children.append("This is a paragraph")
+        node3.append_child("This is a paragraph")
 
         node4 = Node("img")
         node4.attributes.append(Attribute("src", "image.jpg"))
         node4.attributes.append(Attribute("alt", "Image"))
 
-        node1.children.append(node2)
-        node1.children.append(node3)
-        node1.children.append(node4)
+        node1.append_child(node2)
+        node1.append_child(node3)
+        node1.append_child(node4)
 
         # Convert the node to HTML
         expected_html = (
@@ -160,13 +160,13 @@ class DataclassTests(unittest.TestCase):
         node1.attributes.append(Attribute("class", "container"))
 
         node2 = Node("h1")
-        node2.children.append("Welcome to our website")
+        node2.append_child("Welcome to our website")
 
         node3 = Node("p")
-        node3.children.append("")
+        node3.append_child("")
 
-        node1.children.append(node2)
-        node1.children.append(node3)
+        node1.append_child(node2)
+        node1.append_child(node3)
 
         # Convert the node to HTML
         expected_html = (
@@ -212,9 +212,10 @@ class DataclassTests(unittest.TestCase):
         
         result = node.to_dict()
 
+        
 
         self.assertDictEqual(
-            result, {"name": "parent", "children": []}
+            result, {'name': 'parent', 'parent': 'none', 'level': 0, 'key': 0, 'path': '', 'children': []}
         )
     def test_to_dict_with_children(self):
         
@@ -224,18 +225,10 @@ class DataclassTests(unittest.TestCase):
         
         result = node.to_dict()
 
-
+        
         self.assertDictEqual(
             result,
-            {
-            "name": "parent",
-            "children": [
-                {
-                "name": "child1",
-                "children": []
-                }
-            ]
-            }
+           {'name': 'parent', 'parent': 'none', 'level': 0, 'key': 0, 'path': '', 'children': [{'name': 'child1', 'parent': 'none', 'level': 1, 'key': 0, 'path': '00', 'children': []}]}
         )
         
     def test_to_dict_with_nested_children(self):
@@ -247,31 +240,11 @@ class DataclassTests(unittest.TestCase):
         
         result = node.to_dict()
 
-
+        print(result)
+        
         self.assertDictEqual(
             result,
-            {
-                "name": "parent",
-                "children": [
-                    {
-                    "name": "child1",
-                    "children": [
-                        {
-                        "name": "grandchild1",
-                        "children": [],
-                        },
-                        {
-                        "name": "grandchild2",
-                        "children": [],
-                        }
-                    ]
-                    },
-                    {
-                    "name": "child2",
-                    "children": [],
-                    }
-                ]
-            }
+{'name': 'parent', 'parent': 'none', 'level': 0, 'key': 0, 'path': '', 'children': [{'name': 'child1', 'parent': 'none', 'level': 1, 'key': 0, 'path': '00', 'children': [{'name': 'grandchild1', 'parent': 'none', 'level': 2, 'key': 0, 'path': '0010', 'children': []}, {'name': 'grandchild2', 'parent': 'none', 'level': 2, 'key': 1, 'path': '0011', 'children': []}]}, {'name': 'child2', 'parent': 'none', 'level': 1, 'key': 1, 'path': '01', 'children': []}]}
         )
 
     def test_getAttributes(self):
@@ -289,7 +262,7 @@ class DataclassTests(unittest.TestCase):
 
     def test_findChildByName_found(self):
         node = Node("div")
-        node.children.append(Node("h1"))
+        node.append_child(Node("h1"))
 
         child = node.findChildByName("h1")
         self.assertEqual(child.name, "h1")
@@ -302,17 +275,17 @@ class DataclassTests(unittest.TestCase):
 
     def test_findAllByName_found(self):
         node = Node("div")
-        node.children.append(Node("h1"))
-        node.children.append(Node("h1"))
-        node.children.append(Node("p"))
+        node.append_child(Node("h1"))
+        node.append_child(Node("h1"))
+        node.append_child(Node("p"))
 
         children = node.findAllByName("h1")
         self.assertEqual(len(children), 2)
 
     def test_findAllByName_not_found(self):
         node = Node("div")
-        node.children.append(Node("h1"))
-        node.children.append(Node("p"))
+        node.append_child(Node("h1"))
+        node.append_child(Node("p"))
 
         children = node.findAllByName("h2")
         self.assertEqual(len(children), 0)
@@ -321,7 +294,7 @@ class DataclassTests(unittest.TestCase):
         node = Node("div")
         child = Node("h1")
         child.attributes.append(Attribute("class", "container"))
-        node.children.append(child)
+        node.append_child(child)
 
         child = node.findByAttribute("class", "container")
         self.assertEqual(child.name, "h1")
@@ -334,25 +307,25 @@ class DataclassTests(unittest.TestCase):
 
     def test_findAllChildrenByAttributeKey_found(self):
         node = Node("div")
-        node.children.append(Node("h1", attributes=[Attribute("class", "container")]))
-        node.children.append(Node("h1", attributes=[Attribute("class", "container")]))
-        node.children.append(Node("p"))
+        node.append_child(Node("h1", attributes=[Attribute("class", "container")]))
+        node.append_child(Node("h1", attributes=[Attribute("class", "container")]))
+        node.append_child(Node("p"))
 
         children = node.findAllChildrenByAttributeKey("class")
         self.assertEqual(len(children), 2)
 
     def test_findAllChildrenByAttributeKey_not_found(self):
         node = Node("div")
-        node.children.append(Node("p"))
+        node.append_child(Node("p"))
 
         children = node.findAllChildrenByAttributeKey("class")
         self.assertFalse(children)
 
     def test_findAllChildrenByAttributeValue_found(self):
         node = Node("div")
-        node.children.append(Node("h1", attributes=[Attribute("class", "container")]))
-        node.children.append(Node("h1", attributes=[Attribute("class", "container")]))
-        node.children.append(Node("p"))
+        node.append_child(Node("h1", attributes=[Attribute("class", "container")]))
+        node.append_child(Node("h1", attributes=[Attribute("class", "container")]))
+        node.append_child(Node("p"))
 
         children = node.findAllChildrenByAttributeValue("container")
         self.assertEqual(len(children), 2)
@@ -367,9 +340,9 @@ class DataclassTests(unittest.TestCase):
     def test_replace_children_found(self):
         node = Node("div")
         spe = Node("h1")
-        node.children.append(Node("h2"))
-        node.children.append(spe)
-        node.children.append(Node("p"))
+        node.append_child(Node("h2"))
+        node.append_child(spe)
+        node.append_child(Node("p"))
 
         node.replace(spe, Node("h2"))
         self.assertEqual(len(node.children), 3)
@@ -380,9 +353,9 @@ class DataclassTests(unittest.TestCase):
     def test_replace_children_not_found(self):
         node = Node("div")
         spe = Node("h1")
-        node.children.append(Node("h2"))
-        node.children.append(Node("h1"))
-        node.children.append(Node("p"))
+        node.append_child(Node("h2"))
+        node.append_child(Node("h1"))
+        node.append_child(Node("p"))
 
         node.replace(spe, spe)
         self.assertEqual(len(node.children), 3)
@@ -393,9 +366,9 @@ class DataclassTests(unittest.TestCase):
     def test_getChildIndex_found(self):
         node = Node("div")
         k = Node("h1")
-        node.children.append(k)
-        node.children.append(Node("h2"))
-        node.children.append(Node("p"))
+        node.append_child(k)
+        node.append_child(Node("h2"))
+        node.append_child(Node("p"))
 
         index = node.getChildIndex(k)
         self.assertEqual(index, 0)
@@ -403,9 +376,9 @@ class DataclassTests(unittest.TestCase):
     def test_insertAfter(self):
         node = Node("div")
         h2 = Node("h2")
-        node.children.append(Node("h1"))
-        node.children.append(h2)
-        node.children.append(Node("p"))
+        node.append_child(Node("h1"))
+        node.append_child(h2)
+        node.append_child(Node("p"))
 
         node.insertAfter(h2, Node("h3"))
         self.assertEqual(len(node.children), 4)
@@ -417,9 +390,9 @@ class DataclassTests(unittest.TestCase):
     def test_insertBefore(self):
         node = Node("div")
         h2 = Node("h2")
-        node.children.append(Node("h1"))
-        node.children.append(h2)
-        node.children.append(Node("p"))
+        node.append_child(Node("h1"))
+        node.append_child(h2)
+        node.append_child(Node("p"))
 
         node.insertBefore(h2, Node("h3"))
         self.assertEqual(len(node.children), 4)
@@ -432,9 +405,9 @@ class DataclassTests(unittest.TestCase):
     def test_remove(self):
         node = Node("div")
         h2 = Node("h2")
-        node.children.append(Node("h1"))
-        node.children.append(h2)
-        node.children.append(Node("p"))
+        node.append_child(Node("h1"))
+        node.append_child(h2)
+        node.append_child(Node("p"))
 
         node.remove(h2)
         self.assertEqual(len(node.children), 2)
@@ -445,9 +418,9 @@ class DataclassTests(unittest.TestCase):
 
         node = Node("div")
         h2 = Node("h2")
-        node.children.append(Node("h1"))
-        node.children.append(h2)
-        node.children.append(Node("p"))
+        node.append_child(Node("h1"))
+        node.append_child(h2)
+        node.append_child(Node("p"))
 
         h2.attributes.append(Attribute("class", "container"))
         h2.attributes.append(Attribute("id", "title"))

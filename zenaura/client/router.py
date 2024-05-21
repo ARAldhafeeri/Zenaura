@@ -18,7 +18,7 @@ class NotFound(Component):
     """
     def node(self):
         em = Node("div")
-        em.children.append(Node(name="text", children=["page not found"]))
+        em.append_child(Node(name="text", children=["page not found"]))
         return em
     
 notFound = NotFound()

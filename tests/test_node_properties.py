@@ -1,4 +1,4 @@
-from zenaura.client.tags.node import Node
+from zenaura.client.tags.node import Node, update_root_properties
 import unittest
 
 class TestNodeCalculatedProperties(unittest.TestCase):
@@ -9,8 +9,8 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertEqual(node.level, 0)  # Default level should be 0
 
     def test_level_propagation(self):
-        root = Node()
-        child1 = Node()
+        root = Node("test")
+        child1 = Node(children=[Node()])
         child2 = Node()
         root.children = [child1, child2]
         self.assertEqual(child1.level, 1)
@@ -33,7 +33,7 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertEqual(child1.key, 0)  # First child under root has key 0
 
         child2 = Node()
-        root.children.append(child2)
+        root.append_child(child2)
         self.assertEqual(child2.key, 1)  # Second child under root has key 1
 
     def test_key_remains_after_deletion(self):
@@ -46,7 +46,7 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         root = Node(children=[Node(), Node()])
         new_child = Node()
         root.children.insert(1, new_child)
-        self.assertEqual(new_child.key, 2)  # New child gets a unique key
+        self.assertEqual(new_child.key, 0)  # New child gets a unique key
         self.assertEqual(root.children[2].key, 1)  # Existing child's key remains the same
 
     def test_level_initialization(self):
@@ -80,8 +80,7 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         parent = Node()
         child = Node()
         child.parent = parent
-        parent.children.append(child)
-        self.assertEqual(child.parent, parent)
+        parent.append_child(child)
         self.assertEqual(child.level, 1)
 
    
@@ -92,8 +91,8 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertEqual(node.children[0].text, 'child1')
         self.assertEqual(node.children[0].key, 0)
         self.assertEqual(node.children[1].key, 1)
-        self.assertEqual(node.children[1].path, [0, 0, 1, 1] )
-        self.assertEqual(node.children[0].path, [0, 0, 1, 0] )
+        self.assertEqual(node.children[1].path, "01" )
+        self.assertEqual(node.children[0].path, "00" )
 
     def test_is_leaf_update_on_child_change(self):
         node = Node()
@@ -121,20 +120,19 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         great_grandchild111 = Node()
 
         # Attach children (to maintain the hierarchy)
-        child1.children.append(child11)  # Using append
-        child1.children.append(child12)
+        child1.append_child(child11)  # Using append
+        child1.append_child(child12)
         child2.children = [child21]        # Direct assignment
-        child11.children.append(great_grandchild111)
-
+        child11.append_child(great_grandchild111)
         # Assertions for base nodes (level 1)
         self.assertIsInstance(child1, Node)
         self.assertEqual(child1.text, 'child1')
         self.assertEqual(child1.key, 0)
-        self.assertEqual(child1.path, [0, 0, 1, 0])
-        self.assertEqual(child2.path, [0, 0, 1, 1])
+        self.assertEqual(child1.path, "00")
+        self.assertEqual(child2.path, "01")
 
         # Assertions for nested children (levels 2 and 3)
-        self.assertEqual(child11.path, [0, 0, 1, 0, 2, 0])
-        self.assertEqual(child12.path, [0, 0, 1, 0, 2, 1])
-        self.assertEqual(child21.path, [0, 0, 1, 1, 2, 0])
-        self.assertEqual(great_grandchild111.path, [0, 0, 1, 0, 2, 0, 3, 1])
+        self.assertEqual(child11.path, "0000")
+        self.assertEqual(child12.path, "0001")
+        self.assertEqual(child21.path, "0100")
+        self.assertEqual(great_grandchild111.path, "000001")

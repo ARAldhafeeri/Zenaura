@@ -150,7 +150,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 1)
         prevNodeId, diffedNode, path, op = diff.pop()
         # self.assertEqual(diffedNode.name, "li")  
-        self.assertEqual(path, [0, 0, 1, 1])  # Removed node's parent path
+        self.assertEqual(path, "0011")  # Removed node's parent path
         self.assertEqual(diffedNode.children[0].text,"item2")
 
 
@@ -170,7 +170,7 @@ class TestSearchAlgorithm(unittest.TestCase):
         self.assertEqual(len(diff), 1)
         prevNodeId, diffedNode, path, op = diff.pop()
         self.assertEqual(diffedNode.attributes[0].value, "new-title")
-        self.assertEqual(path, [0, 0, 1, 0])  # path to the node with the attribute change
+        self.assertEqual(path,"0010")  # path to the node with the attribute change
 
     def test_mixed_deep_changes(self):
         prev_tree = Node("div", children=[

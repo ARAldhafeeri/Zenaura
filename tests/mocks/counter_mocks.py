@@ -43,7 +43,7 @@ class Counter(Component):
 		btn = Node(name="button")
 		btn.attributes.append(Attribute(key="onclick", value=onclick_handler))
 		btn.attributes.append(Attribute(key="styles", value=BTN_STYLES.btn))	
-		btn.children.append(Node(name="label", children=[Node(text=label_text)]))
+		btn.append_child(Node(name="label", children=[Node(text=label_text)]))
 		return btn
 			 
 
