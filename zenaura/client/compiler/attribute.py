@@ -1,8 +1,12 @@
 from zenaura.client.tags import Attribute
+from .sanitize import CompilerSanitizer
 from typing import List 
 import io 
 
-class AttributeProccessor:
+sanitizer = CompilerSanitizer()
+class AttributeProccessor(
+
+):
     def process_attributes(
                 self, 
                 attrs: List[Attribute]
@@ -30,9 +34,9 @@ class AttributeProccessor:
 
             # Add space only if it's not the first or last attribute
             if i == 0 or i == len(attrs) - 1:
-                s.write(f' {attrKey}="{attrValue}"')
+                s.write(f' {attrKey}="{sanitizer.sanitize(attrValue)}"')
             else:
-                s.write(f'{attrKey}="{attrValue}" ')
+                s.write(f'{attrKey}="{sanitizer.sanitize(attrValue)}" ')
 
         res = s.getvalue()
         s.close()

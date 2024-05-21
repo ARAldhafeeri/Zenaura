@@ -131,8 +131,13 @@ class Node:
     def append_child(self, child):
         if isinstance(child, str):
             child = Node(text=child)
+            child.is_text_node = True
+        child.level = self.level + 1
+        child.key = len(self.children)
+        child.parent = self 
+        child.is_leaf = len(child.children) == 0 
+        child.path = f'{self.path}{child.level}{child.key}'
         self.children.append(child)
-        update_root_properties(self)
     
     def to_dict(self) -> dict:
         """

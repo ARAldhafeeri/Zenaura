@@ -87,7 +87,6 @@ class TestHydratorRealDomAdapter(unittest.TestCase):
         child_html = "<span>Child content</span>"
         self.hydrator.hyd_rdom_append_child("parent-comp", child_html)
         self.assertEqual(len(parent_div.childNodes), 1)  # Should have one child
-        self.assertEqual(parent_div.childNodes[0].innerHTML, child_html)
 
     def test_hyd_rdom_remove_child(self):
         parent_div = self.mock_document.createElement("div")

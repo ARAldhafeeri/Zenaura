@@ -1,6 +1,10 @@
 from collections import defaultdict
 from unittest.mock import MagicMock 
 
+class Content:
+    def __init__(self):
+        self.firstChild = ""
+
 class MockTextNode:
     def __init__(self, text):
         self.nodeValue = text
@@ -14,6 +18,7 @@ class MockElement:
         self.attributes = {}
         self.childNodes = []
         self.parentNode = None
+        self.content = Content()
 
     def setAttribute(self, name, value):
         self.attributes[name] = value
@@ -27,7 +32,8 @@ class MockElement:
     def appendChild(self, child):
         if child not in self.childNodes:
             self.childNodes.append(child)
-            child.parentNode = self
+            if isinstance(child, MockElement):
+                child.parentNode = self
 
     def removeChild(self, child):
         if child in self.childNodes:

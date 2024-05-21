@@ -18,7 +18,7 @@ class Updater(
         """
         while patches:
             prev_node_id, diffed_node, path, op = patches.pop(0)
-            print("operation", op, prev_node_id)
+            # print("operation", op, prev_node_id)
             if op["name"] == ADD_NODE:
                 async def task(dn=diffed_node, ci=id):
                     compiled_html = self.hyd_comp_compile_children(dn, ci, True)
@@ -42,7 +42,7 @@ class Updater(
 
             if op["name"] == ADD_ATTRIBUTE:
                 async def task(id=prev_node_id, op1=Attribute(op["context"]["attr_name"],op["context"]["attr_value"])):
-                    self.hyd_rdom_set_attribute(prev_node_id, op1 )
+                    self.hyd_rdom_set_attribute(id, op1 )
                 self.hyd_tsk_enqueue_task(id, task)
 
             if op["name"] == REMOVE_ATTRIBUTE:
@@ -52,7 +52,7 @@ class Updater(
 
             if op["name"] == REPLACE_ATTRIBUTE:
                 async def task(id=prev_node_id, op1=op["context"]["attr_name"]):
-                    self.hyd_rdom_remove_attribute(prev_node_id, op1 )
+                    self.hyd_rdom_remove_attribute(id, op1 )
                 self.hyd_tsk_enqueue_task(id, task)
 
 

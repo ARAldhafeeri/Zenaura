@@ -132,7 +132,7 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertEqual(child2.path, "01")
 
         # Assertions for nested children (levels 2 and 3)
-        self.assertEqual(child11.path, "0000")
-        self.assertEqual(child12.path, "0001")
+        self.assertEqual(child11.path, "0020")
+        self.assertEqual(child12.path, "0021")
         self.assertEqual(child21.path, "0100")
-        self.assertEqual(great_grandchild111.path, "000001")
+        self.assertEqual(great_grandchild111.path, "002031")

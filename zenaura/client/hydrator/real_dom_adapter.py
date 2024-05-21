@@ -53,6 +53,7 @@ class HydratorRealDomAdapter:
             attributes: A dictionary of attribute names and their values.
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
+        print("set attribute found", element)
         if element:
             element.setAttribute(attribute.key, attribute.value)
 
@@ -98,9 +99,9 @@ class HydratorRealDomAdapter:
             curr_node = child_node.content.firstChild
             child_index = int( child_node_id[-1])
             prev_child = child_index - 1 # child on the dom to insert the new child after it
-            prev_child_id = child_node_id[:-1] + str(prev_child)
+            prev_child_id = child_node_id[:-1] + str(prev_child) # parent-childIndex
             prev_child = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prev_child_id}"]')
-            if curr_node: # insert after the current child:
+            if prev_child: # insert after the current child:
                 element.insertBefore(curr_node, prev_child.nextSibling)
             else: # parent is a leaf no children
                 element.append(curr_node)

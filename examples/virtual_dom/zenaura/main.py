@@ -111,6 +111,7 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
     isEven = Builder('h2').with_child("even" if even else "odd").build()
     isEven2 = Builder('button').with_child("even" if even else "odd").build()
 
+    condtionalAttr = Attribute("data-even", even) if even else Attribute("data-even", even)
     ctrl = Builder("div") \
         .with_attribute("styles", STYLES.controls) \
         .with_child(
@@ -121,6 +122,7 @@ def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
 
     return Builder("div") \
         .with_attribute("styles", STYLES.container) \
+        .with_attribute(condtionalAttr.key, condtionalAttr.value ) \
         .with_attribute("id", "large-header") \
         .with_child(
             header 

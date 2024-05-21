@@ -14,11 +14,12 @@ allowed_tags = [
 
 # TODO : add more
 allowed_attributes = {
-    '*': ['class', 'id', 'title', 'lang', 'dir', 'data-*', 'aria-*', 'role'],
+    '*': ['class', 'id', 'title', 'lang', 'dir', 'data-*', 'aria-*', 'role', 'py-*'], # py-* for pyscript 
     'a': ['href', 'target', 'rel'],
     'img': ['src', 'alt', 'width', 'height'],
 }
 
 self_closing_tags = [
     'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link',
+     'meta', 'param', 'source', 'track', 'wbr'
 ]
