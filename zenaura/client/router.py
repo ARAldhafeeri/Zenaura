@@ -6,6 +6,7 @@ from zenaura.client.component import Component
 from zenaura.client.page import Page
 # this is really nothing just to be able to mock 
 from pyscript import document, window
+from typing import Optional, Tuple, Callable, Dict, Any 
 
 class NotFound(Component):
     """
@@ -28,7 +29,7 @@ class Route:
     """
         Represents a route configuration for the Router.
     """
-    def __init__(self, title, path, page):
+    def __init__(self, title, path, page, middleware):
         """
         Initializes a Route with the specified title, path, and pageonent.
         Attributes
@@ -48,7 +49,7 @@ class Route:
 
         if not isinstance(page, Page):
             raise TypeError("Only a Page can be mounted on a route")
-        handler: Optional[Callable] = None  # For optional route-specific logic
+        self.middleware: Optional[Callable] = middleware  # For optional route-specific logic
 
 
 # router 
@@ -84,6 +85,7 @@ class Router:
         self.paths = []
         # Call handlelocation once to handle the initial route
         window.onpopstate = self.handlelocation
+        # global middleware to run on routes
 
     def navigate(self, path) -> None:
         """
@@ -94,25 +96,38 @@ class Router:
             path : str
                 The path to navigate to.
         """
-        if path in self.paths:
-            [page, title] = self.routes[path]
-            zenaura_dom.mount(page)  # Mount the page on root container
-            document.title = title  # Update the title
-            window.history.pushState(path, title, path) # Update browser history 
-        else:
-            print("Invalid Path")  # Handle invalid path (optional)
+        matched_route, params = self._match_route(path) #TODO
+
+        if not path in self.paths:
+            zenaura_dom.mount(self.notFoundComponent)
+            document.title = "Page Not Found"
+            zenaura_dom.mount([notFound])
+            return
+        [_, _, middleware] = self.routes[path]
+        # run middle ware #TODO test
+        middleware()
+
+        [page, title] = self.routes[path]
+        zenaura_dom.mount(page)  # Mount the page on root container
+        document.title = title  # Update the title
+        window.history.pushState(path, title, path) # Update browser history 
 
     def handlelocation(self) -> None:
         """
         Handles the current location by mounting the associated page and update title of document
+        #TODO Handles wild card routes with params and queries.
         """
         path = window.location.pathname
-        if path in self.paths:
-            [page, title] = self.routes[path]
-            zenaura_dom.mount(page)
-            document.title = title
-        else:
+        matched_route, params = self._match_route(path)
+        if not matched_route:
+            # Handle 404
+            zenaura_dom.mount(self.notFoundComponent)
+            document.title = "Page Not Found"
             zenaura_dom.mount([notFound])
+            return
+        [page, title] = self.routes[path] #TODO integrate params, props of new feature route wild card
+        zenaura_dom.mount(page)
+        document.title = title
 
     def addRoute(self, route : Route) -> None:
         """
@@ -123,5 +138,34 @@ class Router:
         route : Route
             The route to be added to the router's configuration.
         """
-        self.routes[route.path] = [route.page, route.title]
+        self.routes[route.path] = [route.page, route.title, route.middleware]
         self.paths.append(route.path)
+
+    def get_current_route(self) -> Optional[Tuple[Page, str]]:
+            """Get the page and title of the current route, or None if not found."""
+            path = window.location.pathname
+            return self.routes.get(path, None) 
+    
+    def _match_route(self, path: str) -> Tuple[Optional[Tuple[Page, str, Dict[str, Any]]], Dict[str, str]]:
+        """Matches the given path to a registered route and extracts parameters."""
+        for route_path, (component, title, props) in self.routes.items():
+            if "*" in route_path:  # Wildcard route
+                route_parts = route_path.split("*")
+                if path.startswith(route_parts[0]) and path.endswith(route_parts[1]):
+                    params = {"wildcard": path[len(route_parts[0]):-len(route_parts[1])]}
+                    return (component, title, props), params
+            elif ":" in route_path:  # Parameterized route
+                route_parts = route_path.split("/")
+                path_parts = path.split("/")
+                if len(route_parts) == len(path_parts):
+                    params = {}
+                    for i, part in enumerate(route_parts):
+                        if part.startswith(":"):
+                            param_name = part[1:]
+                            params[param_name] = path_parts[i]
+                    return (component, title, props), params
+            elif route_path == path:  # Exact match
+                return (component, title, props), {}
+        return None, {}  # No match found
+    
+    #TODO transition effects 
