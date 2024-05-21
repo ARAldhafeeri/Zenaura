@@ -23,7 +23,7 @@ def update_root_properties(root):
                 child.is_text_node = True
             child.is_leaf = len(child.children) == 0
             curr.children[idx] = child
-            stack.append((child, curr.parent, curr.level + 1, idx, curr.path + str(curr.level) + str(idx)))
+            stack.append((child, child, curr.level + 1, idx, curr.path + str(curr.level) + str(idx)))
     return root
 
 class NodeList(list):

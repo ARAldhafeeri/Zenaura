@@ -22,8 +22,9 @@ class Updater(
             if op["name"] == ADD_NODE:
                 async def task(dn=diffed_node, ci=id):
                     compiled_html = self.hyd_comp_compile_children(dn, ci, True)
-                    print("ADD_NODE compiled html", compiled_html)
-                    self.hyd_rdom_append_child(prev_node_id, compiled_html)
+                    parent_id = id + dn.path[0:-2] # last two digit in keyed uid is always level, index, so parent lives at the before
+                    child_id = id + dn.path
+                    self.hyd_rdom_append_child_after(parent_id, child_id, compiled_html)
                 self.hyd_tsk_enqueue_task(id, task)
             
             if op["name"] == REMOVE_NODE:

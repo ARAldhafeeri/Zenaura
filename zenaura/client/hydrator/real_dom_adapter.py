@@ -86,9 +86,25 @@ class HydratorRealDomAdapter:
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
-            child_node = document.createElement("div")
+            child_node = document.createElement("template")
             child_node.innerHTML = child_html
-            element.appendChild(child_node)
+            element.appendChild(child_node.content.firstChild)
+
+    def hyd_rdom_append_child_after(self, parent_node_id, child_node_id, child_html) -> None:
+        element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{parent_node_id}"]')
+        if element : # if parent exists
+            child_node = document.createElement("template")
+            child_node.innerHTML = child_html
+            curr_node = child_node.content.firstChild
+            child_index = int( child_node_id[-1])
+            prev_child = child_index - 1 # child on the dom to insert the new child after it
+            prev_child_id = child_node_id[:-1] + str(prev_child)
+            prev_child = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{prev_child_id}"]')
+            if curr_node: # insert after the current child:
+                element.insertBefore(curr_node, prev_child.nextSibling)
+            else: # parent is a leaf no children
+                element.append(curr_node)
+            pass
 
     def hyd_rdom_remove_child(self, child_id:str) -> None:
         """
