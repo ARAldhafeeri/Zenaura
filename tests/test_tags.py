@@ -203,8 +203,6 @@ class DataclassTests(unittest.TestCase):
         
         result = node.to_dict()
         
-        print(result)
-
         self.assertDictEqual(
             result,
 {'name': 'parent', 'parent': 'none', 'level': 0, 'key': 0, 'path': '', 'children': [{'name': 'child1', 'parent': 'child1', 'level': 1, 'key': 0, 'path': '00', 'children': [{'name': 'grandchild1', 'parent': 'grandchild1', 'level': 2, 'key': 0, 'path': '0010', 'children': []}, {'name': 'grandchild2', 'parent': 'grandchild2', 'level': 2, 'key': 1, 'path': '0011', 'children': []}]}, {'name': 'child2', 'parent': 'child2', 'level': 1, 'key': 1, 'path': '01', 'children': []}]}

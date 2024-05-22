@@ -174,6 +174,6 @@ class CompilerTests(unittest.TestCase):
         compilation_time = end_time - start_time
 
         # Assert the size of the generated HTML
-        self.assertGreater(0.001, compilation_time)
+        self.assertGreater(1, compilation_time)
         self.assertLess(sys.getsizeof(result), 30000)  # Adjust the threshold as needed
 

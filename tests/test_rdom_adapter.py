@@ -45,8 +45,6 @@ class TestHydratorRealDomAdapter(unittest.TestCase):
 
         child_html = "<span>Child content</span>"
         self.hydrator.hyd_rdom_attach_to_mounted_comp("parent_comp", child_html)
-        print(parent_div.outerHTML,"osoksdko\n")
-        print(parent_div.outerHTML)
 
         self.assertEqual(parent_div.outerHTML, child_html)
     

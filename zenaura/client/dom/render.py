@@ -37,7 +37,6 @@ class Render(
 
             # run diffing algorithm
             patches = self.search(prev_tree, new_tree, comp_id)
-            print(len(patches))
             await self.update(patches, comp_id)
             
             # schedule update with the browser

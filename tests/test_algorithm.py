@@ -690,7 +690,6 @@ class TestSearchAlgorithm(unittest.TestCase):
         start_time = time.time()
         diff = self.zenaura_dom.search(large_tree, large_tree, "comp-id")
         end_time = time.time()
-        print("time", end_time - start_time)
         # Assert that the search time is within an acceptable range
         self.assertLess(end_time - start_time, 1)
         self.assertEqual(len(diff), 0)

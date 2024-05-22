@@ -51,6 +51,7 @@ class MockDocument:  # Use MagicMock for flexibility
     def __init__(self):
         self.body = MockElement("body")  # Create a body element
         self.elementsById = {"root": self.body}  # Store elements by ID
+        self.title = ""
 
     def getElementById(self, element_id):
         return self.elementsById.get(element_id)
@@ -69,15 +70,23 @@ class MockDocument:  # Use MagicMock for flexibility
     def querySelector(self, query:str):
         query = query.replace("[", "").replace("]", "").replace('"', "").split("=")
         id = query[-1]
-        print("ID", id)
         return self.elementsById[id]
+
+class MockLocation:
+    def __init__(self):
+        self.href = "http://localhost:8000"  # Example
+        self.pathname = ""
+
+class MockWindowHistory:
+    def __init__(self):
+        self.history = []
+
+    def pushState(self, *args, **kwargs):
+        self.history.append([args, kwargs])
 
 class MockWindow:
     def __init__(self):
         self.innerWidth = 1024 
         self.innerHeight = 768
         self.location = MockLocation()
-
-class MockLocation:
-    def __init__(self):
-        self.href = "http://localhost:8000"  # Example
+        self.history = MockWindowHistory()

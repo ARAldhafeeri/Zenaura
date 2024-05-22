@@ -53,7 +53,6 @@ class HydratorRealDomAdapter:
             attributes: A dictionary of attribute names and their values.
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
-        print("set attribute found", element)
         if element:
             element.setAttribute(attribute.key, attribute.value)
 
