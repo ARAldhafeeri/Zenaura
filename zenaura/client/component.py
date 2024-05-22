@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 import uuid
+import itertools
+import shelve
 from abc import abstractmethod
-import inspect
 from collections import defaultdict
 
 _is_reuseable = defaultdict(lambda: False)
+
+def presist_uuid(cls):
+    cls.count = next(cls._component_count)
+    cls.count = str(cls.count)
+    with shelve.open("uuid") as presisted_uuid:
+        if cls.count in presisted_uuid.keys():
+            cls.id = presisted_uuid[cls.count]
+        else:
+            cls.id = uuid.uuid4().hex[:8]
+            presisted_uuid[cls.count] = cls.id = uuid.uuid4().hex[:8]
 
 def Reuseable(cls):
     """Decorator that rewrites the id of a class upon instantiation."""
@@ -13,14 +24,14 @@ def Reuseable(cls):
 
     def new_init(self, *args, **kwargs):
         original_init(self, *args, **kwargs)
-        self.id = uuid.uuid4().hex[:8]
+        presist_uuid(cls)
         _is_reuseable[cls.__name__] = True
     cls.__init__ = new_init
     return cls
 
 class Component:
     _state = defaultdict(str)  # Internal state of the component
-
+    _component_count = itertools.count(0)
     _track_instances = defaultdict(int)
 
     def __init_subclass__(cls):
@@ -37,9 +48,8 @@ class Component:
         """
 
         super().__init_subclass__()
-
-        #shorter version for accessibility purposes
-        cls.id = uuid.uuid4().hex[:8]
+        
+        presist_uuid(cls)
 
         """
         zenaura class component are limited by design 

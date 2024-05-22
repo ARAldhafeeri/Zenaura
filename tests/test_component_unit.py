@@ -1,4 +1,5 @@
 import unittest
+import shelve
 from .mocks.component_mocks import Counter, Counter2, componentWIthInitState
 
 c = Counter()
@@ -33,6 +34,14 @@ class TestComponent(unittest.TestCase):
 
     def test_unique_comp_ids(self):
         self.assertNotEqual(self.c2.id, self.c.id)
+
+    def test_uuid_presistance(self):
+        count = self.c.count
+        uuid = self.c.id 
+        with shelve.open("uuid") as pu:
+            self.assertEqual(uuid, pu[count])
+        
+
 
 
 
