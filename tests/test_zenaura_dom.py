@@ -94,11 +94,10 @@ class TestDom(unittest.TestCase):
 
     def test_componentDidCatchError_with_default_error_component(self):
 
-        @Reuseable
-        class TestComponent(Component):
+        class TestComponent2(Component):
             pass
         
-        test = TestComponent()
+        test = TestComponent2()
         self.zenaura_dom.componentDidCatchError(test, "Default error message")
 
         self.assertEqual(self.zenaura_dom.zen_dom_table[test.id].children[0].text, "Default error message")
@@ -107,12 +106,11 @@ class TestDom(unittest.TestCase):
 
     def test_component_did_mount_without_attached_method(self):
         
-        @Reuseable
-        class TestComponent(Component):
+        class TestComponent1(Component):
             def node(self):
                 return Node("p")
 
-        c = TestComponent()
+        c = TestComponent1()
 
         self.zenaura_dom.mount(Page([c]))
 
@@ -122,7 +120,7 @@ class TestDom(unittest.TestCase):
     def test_component_did_mount_with_on_seatled_method(self):
 
         @Reuseable
-        class TestComponent(Component):
+        class TestComponent3(Component):
             x = 0
     
             def attached(self, *args, **kwargs):
@@ -131,7 +129,7 @@ class TestDom(unittest.TestCase):
             def node(self):
                 return Node("p")
             
-        component = TestComponent()
+        component = TestComponent3()
 
         self.assertEqual(component.x, 0)
         self.zenaura_dom.mount(Page([component]))
