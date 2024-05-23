@@ -2,7 +2,6 @@
 from .lifecycles.mount import MountLifeCycles
 from .error import GracefulDegenerationLifeCycleWrapper
 from zenaura.client.page import Page
-from pyscript import document 
 import traceback
 
 

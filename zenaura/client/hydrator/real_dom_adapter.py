@@ -1,7 +1,11 @@
 from zenaura.client.tags import Node, HTMLElement, Attribute
 from zenaura.client.component import Component
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
-from pyscript import document
+try :
+    from pyscript import document, window
+except ImportError:
+    document = None 
+    window = None 
 from typing import Dict
 
 class HydratorRealDomAdapter:

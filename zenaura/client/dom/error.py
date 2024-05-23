@@ -2,7 +2,6 @@
 from zenaura.client.component import Component, Reuseable
 from zenaura.client.tags import Node 
 from zenaura.client.compiler import compiler
-from pyscript import document 
 from zenaura.client.hydrator import Hydrator
 
 @Reuseable

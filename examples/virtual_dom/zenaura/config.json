@@ -59,6 +59,7 @@
           "./zenaura/client/hydrator/__init__.py",
           "./zenaura/client/hydrator/virtual_dom_adapter.py",
           "./zenaura/client/hydrator/tasker.py",
+          "./zenaura/client/mocks.py",
 
 
           "./zenaura/client/config.py",

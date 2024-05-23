@@ -4,8 +4,14 @@ from zenaura.client.dom import zenaura_dom
 from zenaura.client.tags import Node
 from zenaura.client.component import Component, Reuseable
 from zenaura.client.page import Page
+from zenaura.client.mocks import MockWindow, MockDocument
 # this is really nothing just to be able to mock 
-from pyscript import document, window
+try :
+    from pyscript import document, window
+except ImportError:
+    document = MockDocument() 
+    window = MockWindow() 
+    
 from typing import Optional, Tuple, Callable, Dict, Any 
 from collections import defaultdict
 

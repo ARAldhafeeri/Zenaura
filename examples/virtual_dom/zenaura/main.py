@@ -3,7 +3,6 @@ from zenaura.client.tags import Node, Attribute, Data
 from zenaura.client.router import Route, Router
 from zenaura.routes import ClientRoutes
 from dataclasses import dataclass
-from pyscript import window, when
 from functools import cache
 from zenaura.client.mutator import mutator
 from zenaura.client.tags import Builder

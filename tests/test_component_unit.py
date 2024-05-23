@@ -1,7 +1,6 @@
 import unittest
-import shelve
 from .mocks.component_mocks import Counter, Counter2, componentWIthInitState
-
+from zenaura.client.presistence import registery
 c = Counter()
 c2 = Counter2()
 initState = componentWIthInitState()
@@ -38,8 +37,7 @@ class TestComponent(unittest.TestCase):
     def test_uuid_presistance(self):
         count = self.c.count
         uuid = self.c.id 
-        with shelve.open("uuid") as pu:
-            self.assertEqual(uuid, pu[count])
+        self.assertEqual(uuid, registery.retrieve_integer_id(count))
         
 
 

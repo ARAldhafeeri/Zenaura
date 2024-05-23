@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 import uuid
 import itertools
-import shelve
 from abc import abstractmethod
 from collections import defaultdict
+from zenaura.client.presistence import registery
 
 _is_reuseable = defaultdict(lambda: False)
-
+_is_component_presisted = defaultdict(lambda: False)
+            
 def presist_uuid(cls):
     cls.count = next(cls._component_count)
     cls.count = str(cls.count)
-    with shelve.open("uuid") as presisted_uuid:
-        if cls.count in presisted_uuid.keys():
-            cls.id = presisted_uuid[cls.count]
-        else:
-            cls.id = uuid.uuid4().hex[:8]
-            presisted_uuid[cls.count] = cls.id = uuid.uuid4().hex[:8]
+    if  _is_component_presisted[cls.count]:
+        cls.id = registery.retrieve_integer_id(cls.count)
+    else:
+        cls.id = uuid.uuid4().hex[:8]
+        registery.insert_uuid_integer_mapping(cls.id, cls.count)
+        _is_component_presisted[cls.count] = cls.id
 
 def Reuseable(cls):
     """Decorator that rewrites the id of a class upon instantiation."""
@@ -46,7 +47,7 @@ class Component:
         Returns:
         None
         """
-
+        cls.count = next(cls._component_count)
         super().__init_subclass__()
         
         presist_uuid(cls)
