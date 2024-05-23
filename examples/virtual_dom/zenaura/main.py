@@ -1,4 +1,4 @@
-from zenaura.client.component import Component, Reuseable
+from zenaura.client.component import Component, Reuseable, load_server_cache
 from zenaura.client.tags import Node, Attribute, Data
 from zenaura.client.router import Route, Router
 from zenaura.routes import ClientRoutes
@@ -169,7 +169,8 @@ simpleUi = SimpleUi()
 counter1 = Counter({"instance_name": "counter1"})
 counter2 = Counter({"instance_name": "counter2"})
 
-# print(counter.node().to_dict())
+print(counter1.id)
+print(counter2.id)
 router = Router()
 
 router.addRoute(Route(
@@ -188,3 +189,4 @@ router.handlelocation()
 
 
 
+load_server_cache()

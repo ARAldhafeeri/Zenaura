@@ -10,7 +10,8 @@
       }
     ],
     "packages": [
-      "bleach"
+      "bleach",
+      "sqlite3"
     ],
     "fetch": [
       {
@@ -60,6 +61,8 @@
           "./zenaura/client/hydrator/virtual_dom_adapter.py",
           "./zenaura/client/hydrator/tasker.py",
           "./zenaura/client/mocks.py",
+          "./zenaura/client/persistance.py",
+
 
 
           "./zenaura/client/config.py",

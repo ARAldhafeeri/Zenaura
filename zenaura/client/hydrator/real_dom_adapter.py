@@ -1,11 +1,12 @@
 from zenaura.client.tags import Node, HTMLElement, Attribute
 from zenaura.client.component import Component
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
+from zenaura.client.mocks import MockDocument, MockWindow
 try :
     from pyscript import document, window
 except ImportError:
-    document = None 
-    window = None 
+    document = MockDocument() 
+    window = MockWindow() 
 from typing import Dict
 
 class HydratorRealDomAdapter:

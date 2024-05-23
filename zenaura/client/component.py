@@ -1,31 +1,50 @@
 #!/usr/bin/env python3
 import uuid
 import itertools
+import pickle 
 from abc import abstractmethod
 from collections import defaultdict
-from zenaura.client.presistence import registery
+from zenaura.client.persistance import registry
 
 _is_reuseable = defaultdict(lambda: False)
-_is_component_presisted = defaultdict(lambda: False)
-            
-def presist_uuid(cls):
-    cls.count = next(cls._component_count)
-    cls.count = str(cls.count)
-    if  _is_component_presisted[cls.count]:
-        cls.id = registery.retrieve_integer_id(cls.count)
+_server_persistence_cache = defaultdict(str)
+_component_persistence = defaultdict(bool)
+
+def load_server_cache():
+    global _server_persistence_cache
+    try:
+        with open('server_cache.pkl', 'rb') as file:
+            _server_persistence_cache = pickle.load(file)
+    except FileNotFoundError:
+        pass
+
+def persist_server_cache():
+    global _server_persistence_cache
+    with open('server_cache.pkl', 'wb') as file:
+        pickle.dump(_server_persistence_cache, file)
+
+def persist_uuid(cls, reuseable=False):
+    global _component_persistence
+    if cls.count in _component_persistence:
+        print("presisted", cls.__name__, cls.count)
+        cls.id = _server_persistence_cache[cls.count]
     else:
-        cls.id = uuid.uuid4().hex[:8]
-        registery.insert_uuid_integer_mapping(cls.id, cls.count)
-        _is_component_presisted[cls.count] = cls.id
+        print("fuckoff", cls.__name__, cls.count)
+
+        if reuseable:
+            cls.count = next(cls._component_count)
+        id = uuid.uuid4().hex[:8]
+        _server_persistence_cache[cls.count] = id
+        _component_persistence[cls.count] = True
+        cls.id = id
 
 def Reuseable(cls):
     """Decorator that rewrites the id of a class upon instantiation."""
 
     original_init = cls.__init__
-
     def new_init(self, *args, **kwargs):
         original_init(self, *args, **kwargs)
-        presist_uuid(cls)
+        # persist_uuid(cls, True)
         _is_reuseable[cls.__name__] = True
     cls.__init__ = new_init
     return cls
@@ -48,10 +67,9 @@ class Component:
         None
         """
         cls.count = next(cls._component_count)
+        persist_uuid(cls)
         super().__init_subclass__()
-        
-        presist_uuid(cls)
-
+        print(cls.count)
         """
         zenaura class component are limited by design 
         this checks if the user tried to reuse limited component

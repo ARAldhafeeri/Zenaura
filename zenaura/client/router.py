@@ -63,7 +63,7 @@ class Route:
     """
         Represents a route configuration for the Router.
     """
-    def __init__(self, title, path, page, middleware):
+    def __init__(self, title, path, page, middleware=None):
         """
         Initializes a Route with the specified title, path, and pageonent.
         Attributes

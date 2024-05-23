@@ -1,4 +1,4 @@
-from .component import Component, presist_uuid
+from .component import Component, persist_uuid
 from typing import List
 import uuid 
 
@@ -20,7 +20,7 @@ class Page:
         """
 
         super().__init_subclass__()
-        presist_uuid(cls)
+        persist_uuid(cls)
 
     def __init__(self, children : List[Component]):
         self.children = children
