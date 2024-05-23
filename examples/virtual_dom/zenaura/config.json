@@ -62,7 +62,9 @@
           "./zenaura/client/hydrator/tasker.py",
           "./zenaura/client/mocks.py",
           "./zenaura/client/persistance.py",
+          "./zenaura/server_cache.pkl",
 
+          
 
 
           "./zenaura/client/config.py",

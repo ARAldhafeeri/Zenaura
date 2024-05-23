@@ -9,6 +9,8 @@ from zenaura.client.tags import Builder
 from zenaura.client.page import Page
 import json
 
+load_server_cache() 
+
 @dataclass
 class CounterState:
 	count: int
@@ -188,5 +190,3 @@ router.addRoute(Route(
 router.handlelocation()
 
 
-
-load_server_cache()

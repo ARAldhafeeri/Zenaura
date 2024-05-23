@@ -13,27 +13,28 @@ _component_persistence = defaultdict(bool)
 def load_server_cache():
     global _server_persistence_cache
     try:
-        with open('server_cache.pkl', 'rb') as file:
+        with open('./zenaura/server_cache.pkl', 'rb') as file:
             _server_persistence_cache = pickle.load(file)
     except FileNotFoundError:
         pass
 
 def persist_server_cache():
     global _server_persistence_cache
-    with open('server_cache.pkl', 'wb') as file:
+    with open('./zenaura/server_cache.pkl', 'wb') as file:
         pickle.dump(_server_persistence_cache, file)
 
 def persist_uuid(cls, reuseable=False):
     global _component_persistence
     if cls.count in _component_persistence:
-        print("presisted", cls.__name__, cls.count)
         cls.id = _server_persistence_cache[cls.count]
     else:
-        print("fuckoff", cls.__name__, cls.count)
-
         if reuseable:
             cls.count = next(cls._component_count)
-        id = uuid.uuid4().hex[:8]
+        if cls.count in _server_persistence_cache:
+            cls.id = _server_persistence_cache[cls.count]
+            return
+        print("cls id",_server_persistence_cache)
+        id = registry.find_or_create_uuid_integer_mapping(uuid.uuid4().hex[:8], cls.count)
         _server_persistence_cache[cls.count] = id
         _component_persistence[cls.count] = True
         cls.id = id
@@ -44,7 +45,7 @@ def Reuseable(cls):
     original_init = cls.__init__
     def new_init(self, *args, **kwargs):
         original_init(self, *args, **kwargs)
-        # persist_uuid(cls, True)
+        persist_uuid(cls, True)
         _is_reuseable[cls.__name__] = True
     cls.__init__ = new_init
     return cls
