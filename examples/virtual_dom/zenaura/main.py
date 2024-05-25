@@ -1,4 +1,4 @@
-from zenaura.client.component import Component, Reuseable, load_server_cache
+from zenaura.client.component import Component, Reuseable
 from zenaura.client.tags import Node, Attribute, Data
 from zenaura.client.router import Route, Router
 from zenaura.routes import ClientRoutes
@@ -8,8 +8,6 @@ from zenaura.client.mutator import mutator
 from zenaura.client.tags import Builder
 from zenaura.client.page import Page
 import json
-
-load_server_cache() 
 
 @dataclass
 class CounterState:
@@ -22,7 +20,6 @@ class CounterStyles:
     h1: str
     controls: str
     main_container: str
-
 
 
                 
@@ -164,8 +161,6 @@ class Counter(Component):
             ).build()
 
 
-
-
 simpleUi = SimpleUi()
 
 counter1 = Counter({"instance_name": "counter1"})
@@ -173,6 +168,8 @@ counter2 = Counter({"instance_name": "counter2"})
 
 print(counter1.id)
 print(counter2.id)
+print(simpleUi.id)
+
 router = Router()
 
 router.addRoute(Route(
@@ -186,7 +183,5 @@ router.addRoute(Route(
 		path=ClientRoutes.counter.value,
 		page=Page([counter1, counter2])
     ))
- 
+
 router.handlelocation()
-
-

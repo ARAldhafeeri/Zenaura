@@ -1,4 +1,5 @@
 from zenaura.client.tags.node import Node, update_root_properties
+from zenaura.client.tags.builder import Builder
 import unittest
 
 class TestNodeCalculatedProperties(unittest.TestCase):
@@ -132,7 +133,18 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         self.assertEqual(child2.path, "01")
 
         # Assertions for nested children (levels 2 and 3)
-        self.assertEqual(child11.path, "0020")
-        self.assertEqual(child12.path, "0021")
+        self.assertEqual(child11.path, "0000")
+        self.assertEqual(child12.path, "0001")
         self.assertEqual(child21.path, "0100")
-        self.assertEqual(great_grandchild111.path, "002031")
+        self.assertEqual(great_grandchild111.path, "000001")
+
+    def test_builder_hierarchy(self):
+        root = Builder().with_child(
+            Builder().with_child(
+                Builder().with_text("text").build()
+            ).build()
+        ).build()
+
+        self.assertEqual(root.path, "")
+        self.assertEqual(root.children[0].path, "00")
+        self.assertEqual(root.children[0].children[0].path, "0010")

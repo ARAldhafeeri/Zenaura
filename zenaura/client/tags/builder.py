@@ -2,7 +2,7 @@ from .attribute import Attribute
 from .node import Node
 
 class Builder:
-    def __init__(self, name : str) -> None:
+    def __init__(self, name : str ="div") -> None:
         """
         Initializes a Builder object with the given name.
 
@@ -117,6 +117,13 @@ class Builder:
             condition (bool): The condition for adding the child.
         """
         self.with_child(child) if condition else None
+        return self
+    
+    def with_text(self, text : str):
+        """
+            add text node
+        """
+        self.with_child(Node(text=text))
         return self
 
     
