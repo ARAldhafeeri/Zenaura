@@ -173,6 +173,7 @@ print(simpleUi.id)
 
 router = App()
 
+counters_page = Page([counter1, counter2])
 router.add_route(Route(
         title="test",
         path=ClientRoutes.home.value,
@@ -182,7 +183,13 @@ router.add_route(Route(
 router.add_route(Route(
 		title="counter",
 		path=ClientRoutes.counter.value,
-		page=Page([counter1, counter2])
+		page=counters_page
+    ))
+
+router.add_route(Route(
+		title="ssr",
+		path=ClientRoutes.ssr.value,
+		page=counters_page
     ))
 
 event_loop = asyncio.get_event_loop()

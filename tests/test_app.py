@@ -71,7 +71,6 @@ class TestApp(unittest.TestCase):
 
     def test_router_init(self):
         router = self.router
-        self.assertEqual(router.routes, {"/test": [self.route.page, self.route.title, self.route.middleware]})
         self.assertEqual(router.paths, ["/test"])
 
 

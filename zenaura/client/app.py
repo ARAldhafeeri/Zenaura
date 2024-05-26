@@ -66,7 +66,7 @@ class Route:
     """
         Represents a route configuration for the App.
     """
-    def __init__(self, title, path, page, middleware=None):
+    def __init__(self, title, path, page, middleware=None, ssr=False):
         """
         Initializes a Route with the specified title, path, and pageonent.
         Attributes
@@ -83,6 +83,7 @@ class Route:
         self.title = title
         self.path = path
         self.page = page
+        self.ssr=ssr
 
         if not isinstance(page, Page):
             raise TypeError("Only a Page can be mounted on a route")
@@ -149,9 +150,10 @@ class App:
             await middleware()
         
 
-        [page, title, middleware] = self.routes[path]
-        window.history.pushState(path, title, path) # Update browser history 
-        await zenaura_dom.mount(page)  # Mount the page on root container
+        [page, title, middleware, ssr] = self.routes[path]
+        window.history.pushState(path, title, path) # Update browser history
+        if not ssr: # ignore mount step for ssr
+            await zenaura_dom.mount(page)  # Mount the page on root container
         self.history.visit(page)
         document.title = title  # Update the title
 
@@ -165,11 +167,12 @@ class App:
         if not matched_route:
             await self.not_found()
             return
-        [page, title, middleware] = self.routes[path]
+        [page, title, middleware, ssr] = self.routes[path]
         window.history.pushState(path, title, path) # Update browser history
         if callable(middleware):
             await middleware()
-        await zenaura_dom.mount(page)
+        if not ssr: # ignore mount for ssr 
+            await zenaura_dom.mount(page)
         self.history.visit(page)
         document.title = title
 
@@ -185,7 +188,7 @@ class App:
         route : Route
             The route to be added to the router's configuration.
         """
-        self.routes[route.path] = [route.page, route.title, route.middleware]
+        self.routes[route.path] = [route.page, route.title, route.middleware, route.ssr]
         self.paths.append(route.path)
     
     async def back(self) -> None:
@@ -209,7 +212,7 @@ class App:
     # TODO still needs a lot of work
     def _match_route(self, path: str) -> Tuple[Optional[Tuple[Page, str, Dict[str, Any]]], Dict[str, str]]:
         """Matches the given path to a registered route and extracts parameters."""
-        for route_path, (page, title, props) in self.routes.items():
+        for route_path, (page, title, middleware, ssr) in self.routes.items():
             if "*" in route_path:  # Wildcard route
                 route_parts = route_path.split("*")
                 if path.startswith(route_parts[0]):
@@ -227,7 +230,7 @@ class App:
                    
                     params = {"wildcard": {"params" : params, "query" : query} }
 
-                    return (page, title, props), params
+                    return (page, title, middleware, ssr), params
             elif ":" in route_path:  # Parameterized route
                 route_parts = route_path.split("/")
                 path_parts = path.split("/")
@@ -237,9 +240,9 @@ class App:
                         if part.startswith(":"):
                             param_name = part[1:]
                             params[param_name] = path_parts[i]
-                    return (page, title, props), params
+                    return (page, title, middleware, ssr), params
             elif route_path == path:  # Exact match
-                return (page, title, props), {}
+                return (page, title, middleware, ssr), {}
         return None, {}  # No match found
         
     #TODO transition effects 
