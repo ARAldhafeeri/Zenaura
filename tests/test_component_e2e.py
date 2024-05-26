@@ -51,7 +51,7 @@ class TestComponent(unittest.TestCase):
 
 
 	def test_node_structure(self):
-		rendered_node = self.counter.node()
+		rendered_node = self.counter.render()
 		# Check for top-level container and attributes 
 		self.assertEqual(rendered_node.name, 'div')
 		# Ensure h1 header is present
@@ -78,7 +78,7 @@ class TestComponent(unittest.TestCase):
 
 	def test_node_method_constructs_component_with_header_and_buttons(self):
 
-		result = self.counter.node()
+		result = self.counter.render()
 
 		# Assert
 		self.assertEqual(result.name, "div")

@@ -79,7 +79,7 @@ class SimpleUi(Component):
    
         await router.navigate("/counter")
 		
-    def node(self):
+    def render(self):
         div = Node(name="div")
         div.attributes.append(
             Attribute("styles", "logoContainer")
@@ -150,7 +150,7 @@ class Counter(Component):
         self.set_state({"count": self.get_state()["count"] - 1})
 
 
-    def node(self) -> Node:
+    def render(self) -> Node:
         return Builder("div") \
             .with_child(
                 CounterPresntaional(  # Assuming you have this class

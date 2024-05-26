@@ -10,7 +10,7 @@ from zenaura.client.compiler import Compiler
 compiler = Compiler() 
 
 class CompilerTests(unittest.TestCase):
-    def test_compile_simple_node(self):
+    def test_compile_simple_render(self):
         elm = Node("div")
         result = compiler.compile(elm)
         self.assertEqual(result, "<div></div>")

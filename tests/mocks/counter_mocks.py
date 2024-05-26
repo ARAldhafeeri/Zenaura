@@ -47,7 +47,7 @@ class Counter(Component):
 		return btn
 			 
 
-	def node(self) -> Node:
+	def render(self) -> Node:
 		# header
 		header =  Node(name="h1")
 		header.attributes = [

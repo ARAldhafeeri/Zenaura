@@ -9,7 +9,7 @@ class DefaultDomErrorComponent(Component):
     def __init__(self, error_message):
         super().__init__()
         self.error_message = error_message
-    def node(self):
+    def render(self):
         return Node("div", children=[Node(text=str(self.error_message))])
 
 
@@ -28,7 +28,7 @@ class GracefulDegenerationLifeCycleWrapper(
             # call componentDidCatchError method
             # mount the error message component 
             error_comp = comp.componentDidCatchError(str(error))
-            compiled_comp =  self.hyd_comp_compile_node(
+            compiled_comp =  self.hyd_comp_compile_render(
                  error_comp
             )
             
@@ -36,14 +36,14 @@ class GracefulDegenerationLifeCycleWrapper(
             self.hyd_rdom_attach_to_root(compiled_comp)
 
             # update virtual dom
-            self.hyd_vdom_update_with_new_node(comp, error_comp.node())
+            self.hyd_vdom_update_with_new_render(comp, error_comp.render())
 
         else:
             # mount the default error message component
             error_comp  = DefaultDomErrorComponent(error_message=str(error))
             
             #compile the comp
-            compiled_comp =  self.hyd_comp_compile_node(
+            compiled_comp =  self.hyd_comp_compile_render(
                  error_comp
              )
             
@@ -51,4 +51,4 @@ class GracefulDegenerationLifeCycleWrapper(
             self.hyd_rdom_attach_to_root(compiled_comp)
 
             # update virtual dom
-            self.hyd_vdom_update_with_new_node(comp, error_comp.node())
+            self.hyd_vdom_update_with_new_render(comp, error_comp.render())

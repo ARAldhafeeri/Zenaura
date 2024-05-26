@@ -51,10 +51,10 @@ class NotFound(Component):
 
     Methods
     -------
-    node()
+    render()
         Returns a Node representing the "page not found" message.
     """
-    def node(self):
+    def render(self):
         em = Node("div")
         em.append_child(Node(name="text", children=["page not found"]))
         return em
@@ -144,7 +144,7 @@ class App:
         if not path in self.paths:
             await self.not_found()
             return
-        [_, _, middleware] = self.routes[path]
+        [_, _, middleware, _] = self.routes[path]
         # run middle ware #TODO test
         if callable(middleware):
             await middleware()

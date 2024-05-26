@@ -69,7 +69,7 @@ class TestNodeCalculatedProperties(unittest.TestCase):
         node_with_child = Node(children=[Node()])
         self.assertFalse(node_with_child.is_leaf)
 
-    def test_is_text_node(self):
+    def test_is_text_render(self):
         node_with_text = Node(text="Hello")
         self.assertTrue(node_with_text.is_text_node)
 

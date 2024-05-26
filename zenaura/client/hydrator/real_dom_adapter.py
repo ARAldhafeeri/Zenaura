@@ -49,7 +49,7 @@ class HydratorRealDomAdapter:
             DOM operation : attaches compiled_comp to mounted_comp_id
             args:
                 mounted_comp_id: str previosuly mounted component id
-                compiled_comp: str compiled html from comp.node()
+                compiled_comp: str compiled html from comp.render()
         """
         foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if foundNode:
@@ -126,7 +126,7 @@ class HydratorRealDomAdapter:
             child_node.outerHTML = ""
 
 
-    def hyd_rdom_add_text_node(self, mounted_comp_id: str, text_content: str) -> None:
+    def hyd_rdom_add_text_render(self, mounted_comp_id: str, text_content: str) -> None:
         """
         DOM operation: Adds a text node to an element.
         """

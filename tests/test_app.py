@@ -59,8 +59,8 @@ class TestApp(unittest.TestCase):
         page_history.visit(new_page)
         self.assertTrue(page_history.forward())
 
-    def test_not_found_node(self):
-        node = self.not_found.node()
+    def test_not_found_render(self):
+        node = self.not_found.render()
         # Add assertions to check the structure of the generated node
 
     def test_route_init(self):

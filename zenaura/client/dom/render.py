@@ -29,7 +29,7 @@ class Render(
             self.on_mutation(comp)
             comp_id = comp.id            
             prev_tree = self.zen_dom_table[comp_id]
-            new_tree = comp.node()
+            new_tree = comp.render()
 
             # create task queue for component
             task_que = self.hyd_tsk_get_or_create_task_queue(comp_id)

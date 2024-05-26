@@ -60,7 +60,7 @@ class TestDom(unittest.TestCase):
     async def test_render_unmounted_component(self):
         
         class K(Component):
-            def node(self):
+            def render(self):
                 return Node(name="div", children=[Node(name="span", children=Node(text="test"))])
         
         unmounted_counter = K()
@@ -78,7 +78,7 @@ class TestDom(unittest.TestCase):
             def __init__(self, error_message):
                 super().__init__()
                 self.error_message = error_message
-            def node(self):
+            def render(self):
                 return Node("div", children=[Node("p", children=[Node(text=self.error_message)])])
 
         @Reuseable
@@ -107,7 +107,7 @@ class TestDom(unittest.TestCase):
     async def test_component_did_mount_without_attached_method(self):
         
         class TestComponent1(Component):
-            def node(self):
+            def render(self):
                 return Node("p")
 
         c = TestComponent1()
@@ -126,7 +126,7 @@ class TestDom(unittest.TestCase):
             def attached(self, *args, **kwargs):
                 self.x = 10
 
-            def node(self):
+            def render(self):
                 return Node("p")
             
         component = TestComponent3()
@@ -143,7 +143,7 @@ class TestDom(unittest.TestCase):
             
             x  = 0
             
-            def node(self):
+            def render(self):
                 return Node("p")
             
             def on_settled(self, *args, **kwargs):

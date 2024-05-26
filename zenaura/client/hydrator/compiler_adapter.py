@@ -25,7 +25,7 @@ class HydratorCompilerAdapter:
             key=key,
         )
     
-    def hyd_comp_compile_node(
+    def hyd_comp_compile_render(
         self,
         comp: Component,
     ):
@@ -34,7 +34,7 @@ class HydratorCompilerAdapter:
             compile node
         """
         return compiler.compile(
-                comp.node(), 
+                comp.render(), 
                 id=comp.id,
                 zenaura_dom_mode=True
             )
@@ -61,7 +61,7 @@ class HydratorCompilerAdapter:
         for comp in page.children:
             html.write(
                 compiler.compile(
-                    comp.node(), 
+                    comp.render(), 
                     comp.id,
                     zenaura_dom_mode=True,
                 )

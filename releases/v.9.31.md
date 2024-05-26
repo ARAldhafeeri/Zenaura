@@ -24,7 +24,7 @@ self.hyd_rdom_attach_to_root(page)
 before :
 
 ```python
-comp_tree = comp.node()
+comp_tree = comp.render()
 compiled_comp = compiler.compile(
     comp_tree, 
     id=comp.id,
@@ -41,7 +41,7 @@ after :
 
 ```python
 # compile node
-compiled_html= self.hyd_comp_compile_node(comp)
+compiled_html= self.hyd_comp_compile_render(comp)
 # attach node to real dom
 self.hyd_rdom_attach_to_root(compiled_html)
 # update virtual dom 
@@ -60,7 +60,7 @@ before :
 
 ```python
  prevTree = self.zen_dom_table[comp.id]
-  newTree = comp.node()
+  newTree = comp.render()
   diff = self.search(prevTree, newTree, comp.id)
   print(len(diff))
   while diff:

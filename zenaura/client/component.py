@@ -130,7 +130,7 @@ class Component(metaclass=SelectiveSingleton):
         self._state = state  # Update the internal state
 
     @abstractmethod
-    def node():
+    def render():
         """
         Abstract method to be implemented by subclasses.
 

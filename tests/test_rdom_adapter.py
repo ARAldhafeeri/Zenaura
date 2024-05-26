@@ -101,12 +101,12 @@ class TestHydratorRealDomAdapter(unittest.TestCase):
         self.assertEqual(child_div.outerHTML, "")  # Child should be removed
     
     #  New test for hyd_rdom_add_text_node
-    def test_hyd_rdom_add_text_node(self):
+    def test_hyd_rdom_add_text_render(self):
         parent_div = self.mock_document.createElement("div")
         parent_div.setAttribute(ZENAURA_DOM_ATTRIBUTE, "parent-comp")
         self.mock_document.setElementById("parent-comp", parent_div)
         text_content = "Some text"
-        self.hydrator.hyd_rdom_add_text_node("parent-comp", text_content)
+        self.hydrator.hyd_rdom_add_text_render("parent-comp", text_content)
         self.assertEqual(len(parent_div.childNodes), 1)
         self.assertEqual(parent_div.childNodes[0].nodeValue, text_content)
 
