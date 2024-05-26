@@ -7,17 +7,17 @@ from zenaura.client.page import Page
 
 sys.modules["pyscript"] = MagicMock()
 
-class TestRouter(unittest.TestCase):
+class TestApp(unittest.TestCase):
 
     def setUp(self):  # Run before each test
-        from zenaura.client.router import HistoryNode, PageHistory, NotFound, Router, Route
+        from zenaura.client.app import HistoryNode, PageHistory, NotFound, App, Route
         from .mocks.counter_mocks import Counter
         from .mocks.browser_mocks import MockDocument, MockWindow
         self.middleware = MagicMock()
         self.page = Page([Counter([])])
         self.route = Route("test", "/test",self.page, self.middleware  ) 
         self.new_route = Route
-        self.router = Router()
+        self.router = App()
         self.router.addRoute(self.route)
 
         self.history_node = HistoryNode
@@ -25,9 +25,9 @@ class TestRouter(unittest.TestCase):
         self.not_found = NotFound()
         self.document = MockDocument()
         self.window = MockWindow()
-        self.dom_patcher = patch("zenaura.client.router.document", self.document)
+        self.dom_patcher = patch("zenaura.client.app.document", self.document)
         self.dom_patcher.start()
-        self.window_patcher = patch("zenaura.client.router.window", self.window)
+        self.window_patcher = patch("zenaura.client.app.window", self.window)
         self.window_patcher.start()
 
 

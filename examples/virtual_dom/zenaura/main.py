@@ -1,6 +1,6 @@
 from zenaura.client.component import Component, Reuseable
 from zenaura.client.tags import Node, Attribute, Data
-from zenaura.client.router import Route, Router
+from zenaura.client.app import Route, App
 from zenaura.routes import ClientRoutes
 from dataclasses import dataclass
 from functools import cache
@@ -170,7 +170,7 @@ print(counter1.id)
 print(counter2.id)
 print(simpleUi.id)
 
-router = Router()
+router = App()
 
 router.addRoute(Route(
         title="test",
