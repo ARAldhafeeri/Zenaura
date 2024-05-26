@@ -98,9 +98,9 @@ class App:
             Initializes the App with empty routes and paths, and sets up the initial route handling.
         navigate(path)
             Navigates to the specified path by mounting the associated pageonent and updating the document title and browser history.
-        handlelocation()
+        handle_location()
             Handles the current location by mounting the associated pageonent and updating the document title.
-        addRoute(route)
+        add_route(route)
             Adds a route to the router's configuration.
 
         Attributes
@@ -118,8 +118,8 @@ class App:
         self.routes = defaultdict(str)
         self.paths = []
         self.history = PageHistory()
-        # Call handlelocation once to handle the initial route
-        window.onpopstate = self.handlelocation
+        # Call handle_location once to handle the initial route
+        window.onpopstate = self.handle_location
         # global middleware to run on routes
 
     def not_found(self):
@@ -153,7 +153,7 @@ class App:
         document.title = title  # Update the title
         window.history.pushState(path, title, path) # Update browser history 
 
-    def handlelocation(self) -> None:
+    def handle_location(self) -> None:
         """
         Handles the current location by mounting the associated page and update title of document
         #TODO Handles wild card routes with params and queries.
@@ -168,7 +168,7 @@ class App:
         self.history.visit(page)
         document.title = title
 
-    def addRoute(self, route : Route) -> None:
+    def add_route(self, route : Route) -> None:
         """
         Adds a route to the router's configuration.
 

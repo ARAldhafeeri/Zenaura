@@ -18,7 +18,7 @@ class TestApp(unittest.TestCase):
         self.route = Route("test", "/test",self.page, self.middleware  ) 
         self.new_route = Route
         self.router = App()
-        self.router.addRoute(self.route)
+        self.router.add_route(self.route)
 
         self.history_node = HistoryNode
         self.page_history = PageHistory
@@ -98,7 +98,7 @@ class TestApp(unittest.TestCase):
         page_history.visit(home_page)
         page_history.visit(page1)
         page_history.visit(page2)
-        self.router.handlelocation()  # Simulate navigating to page2
+        self.router.handle_location()  # Simulate navigating to page2
         self.router.back()
         # Add assertions to check if page1 is mounted and document title is updated
         
@@ -111,14 +111,14 @@ class TestApp(unittest.TestCase):
         page_history.visit(home_page)
         page_history.visit(page1)
         page_history.visit(page2)
-        self.router.handlelocation()  # Simulate navigating to page2
+        self.router.handle_location()  # Simulate navigating to page2
         self.router.back()
         self.router.forward()
 
 
     def test_router_wildcard_route_matching(self):
         route = self.new_route("wildcard", "/users/*", Page([]), None)
-        self.router.addRoute(route)
+        self.router.add_route(route)
         self.router.navigate("/users/123/123?k=1&k2=3")
         self.window.location.pathname = "/users/123/123?k=1&k2=3"
         current_route, info = self.router.get_current_route()
@@ -132,8 +132,8 @@ class TestApp(unittest.TestCase):
         parent_route = self.new_route("parent", "/parent", Page([]), None)
         child_route = self.new_route("child", "/parent/child", Page([]), None)
 
-        self.router.addRoute(parent_route)
-        self.router.addRoute(child_route)
+        self.router.add_route(parent_route)
+        self.router.add_route(child_route)
         self.router.navigate("/parent/child")
         self.window.location.pathname = "/parent/child"
         current_route, info = self.router.get_current_route()
@@ -142,7 +142,7 @@ class TestApp(unittest.TestCase):
     def test_router_case_sensitive_paths(self):
         # Test case sensitivity of route paths
         case_sensitive_route = self.new_route("case_sensitive", "/CaseSensitive", Page([]), None)
-        self.router.addRoute(case_sensitive_route)
+        self.router.add_route(case_sensitive_route)
         self.router.navigate("/casesensitive")  # Attempting to navigate with different case
         self.assertEqual(self.document.title, "Page Not Found")
 
@@ -161,6 +161,6 @@ class TestApp(unittest.TestCase):
             middleware2()
 
         route_with_middleware = self.new_route("middleware_order", "/middleware", Page([]), middleware)
-        self.router.addRoute(route_with_middleware)
+        self.router.add_route(route_with_middleware)
         self.router.navigate("/middleware")
         self.assertEqual(middleware_order, [1, 2])

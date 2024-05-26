@@ -172,16 +172,16 @@ print(simpleUi.id)
 
 router = App()
 
-router.addRoute(Route(
+router.add_route(Route(
         title="test",
         path=ClientRoutes.home.value,
         page=Page([simpleUi])
     ))
 
-router.addRoute(Route(
+router.add_route(Route(
 		title="counter",
 		path=ClientRoutes.counter.value,
 		page=Page([counter1, counter2])
     ))
 
-router.handlelocation()
+router.handle_location()
