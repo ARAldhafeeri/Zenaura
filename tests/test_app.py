@@ -75,17 +75,17 @@ class TestApp(unittest.TestCase):
         self.assertEqual(router.paths, ["/test"])
 
 
-    def test_router_navigate_to_unknown_path(self):
+    async def test_router_navigate_to_unknown_path(self):
         # Navigating to an unknown path should trigger the not-found route
         unknown_path = "/unknown"
-        self.router.navigate(unknown_path)
+        await self.router.navigate(unknown_path)
         self.assertEqual(self.document.title, "Page Not Found")
         # Add more assertions to check if the NotFound component is mounted and middleware is called
 
-    def test_router_navigate_to_known_path(self):
+    async def test_router_navigate_to_known_path(self):
         # Navigating to a known path should mount the associated page and update the document title
         known_path = "/test"
-        self.router.navigate(known_path)
+        await self.router.navigate(known_path)
         self.assertEqual(self.document.title, "test")
         # Add more assertions to check if the page is mounted and middleware is called
 
@@ -139,14 +139,14 @@ class TestApp(unittest.TestCase):
         current_route, info = self.router.get_current_route()
         self.assertEqual(current_route[0].pageId, child_route.page.pageId)
 
-    def test_router_case_sensitive_paths(self):
+    async def test_router_case_sensitive_paths(self):
         # Test case sensitivity of route paths
         case_sensitive_route = self.new_route("case_sensitive", "/CaseSensitive", Page([]), None)
         self.router.add_route(case_sensitive_route)
-        self.router.navigate("/casesensitive")  # Attempting to navigate with different case
+        await self.router.navigate("/casesensitive")  # Attempting to navigate with different case
         self.assertEqual(self.document.title, "Page Not Found")
 
-    def test_router_middleware_execution_order(self):
+    async def test_router_middleware_execution_order(self):
         # Test the execution order of middleware
         middleware_order = []
 
@@ -162,5 +162,5 @@ class TestApp(unittest.TestCase):
 
         route_with_middleware = self.new_route("middleware_order", "/middleware", Page([]), middleware)
         self.router.add_route(route_with_middleware)
-        self.router.navigate("/middleware")
+        await self.router.navigate("/middleware")
         self.assertEqual(middleware_order, [1, 2])

@@ -1,12 +1,18 @@
+import asyncio 
 from zenaura.client.tags import Node, HTMLElement, Attribute
 from zenaura.client.component import Component
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from zenaura.client.mocks import MockDocument, MockWindow
 try :
     from pyscript import document, window
+    from pyodide.ffi import create_proxy
+    in_browser = True
+
 except ImportError:
     document = MockDocument() 
     window = MockWindow() 
+    create_proxy = lambda x : x 
+    in_browser = False
 from typing import Dict
 
 class HydratorRealDomAdapter:
@@ -161,3 +167,21 @@ class HydratorRealDomAdapter:
         DOM operation: checks if real dom  is content loaded
         """
         return document.readyState == "DOMContentLoaded"
+
+    async def hyd_rdom_wait_for_dom_content_loaded(self):
+        if not in_browser:
+            return 
+        future = asyncio.Future()
+
+        def on_dom_content_loaded(event):
+            future.set_result(True)
+
+        # Create a proxy for the Python callback function
+        callback_proxy = create_proxy(on_dom_content_loaded)
+        document.addEventListener('DOMContentLoaded', callback_proxy)
+
+        await future
+
+        # Clean up the event listener
+        document.removeEventListener('DOMContentLoaded', callback_proxy)
+        callback_proxy.destroy()

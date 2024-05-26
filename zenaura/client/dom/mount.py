@@ -2,14 +2,16 @@
 from .lifecycles.mount import MountLifeCycles
 from .error import GracefulDegenerationLifeCycleWrapper
 from zenaura.client.page import Page
+from zenaura.client.hydrator import HydratorRealDomAdapter
 import traceback
 
+rdom_hyd = HydratorRealDomAdapter()
 
 class Mount(
     GracefulDegenerationLifeCycleWrapper,
-    MountLifeCycles
+    MountLifeCycles,
     ):
-    def mount(self, page: Page  ) -> None:
+    async def mount(self, page: Page  ) -> None:
         """
             Mount only Page instance to the DOM.
             Only one page instance can be mounted at a time.
@@ -39,6 +41,8 @@ class Mount(
             # clean up perviously mounted components :
             self.zen_dom_table.clear()
 
+            # wait for DOMContent to be loaded 
+            await rdom_hyd.hyd_rdom_wait_for_dom_content_loaded()
             # trigger attached for page components
             for comp in page.children:
                 # trigger attached for page components

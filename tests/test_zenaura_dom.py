@@ -29,8 +29,8 @@ class TestDom(unittest.TestCase):
         self.dom_node.getNodeById = MagicMock(return_value=self.dom_node)
         self.dom_node.innerHTML = ""
         
-    def test_mount(self):
-        self.zenaura_dom.mount(Page([self.counter]))
+    async def test_mount(self):
+        await self.zenaura_dom.mount(Page([self.counter]))
         self.assertIn(self.counter.id, self.zenaura_dom.zen_dom_table.keys())
         prev = self.zenaura_dom.zen_dom_table[self.counter.id]
         self.assertTrue(prev)
@@ -40,7 +40,7 @@ class TestDom(unittest.TestCase):
 	
 
     async def test_render(self):
-        self.zenaura_dom.mount(Page([self.counter]))
+        await self.zenaura_dom.mount(Page([self.counter]))
         self.counter.set_state(self.counterState(count=1))
         await self.zenaura_dom.render(self.counter)
         re_rendered = self.zenaura_dom.zen_dom_table[self.counter.id]
@@ -49,15 +49,15 @@ class TestDom(unittest.TestCase):
         self.assertEqual(re_rendered.children[0].children[0].children[0].children[0].content, f'Counter: {self.counterState(count=1)}')
 
         
-    def test_mount_existing_component(self):
+    async def test_mount_existing_component(self):
         
-        self.zenaura_dom.mount(Page([self.counter]))
+        await self.zenaura_dom.mount(Page([self.counter]))
         exists = self.zenaura_dom.zen_dom_table[self.counter.id]
 
         
         self.assertTrue(exists)
 
-    def test_render_unmounted_component(self):
+    async def test_render_unmounted_component(self):
         
         class K(Component):
             def node(self):
@@ -66,7 +66,7 @@ class TestDom(unittest.TestCase):
         unmounted_counter = K()
 
         
-        self.zenaura_dom.render(unmounted_counter)
+        await self.zenaura_dom.render(unmounted_counter)
         key = self.zenaura_dom.zen_dom_table[self.counter.id]
         self.assertTrue(key)
 
@@ -104,7 +104,7 @@ class TestDom(unittest.TestCase):
 
     # Mount - testing component lifecycle methods 
 
-    def test_component_did_mount_without_attached_method(self):
+    async def test_component_did_mount_without_attached_method(self):
         
         class TestComponent1(Component):
             def node(self):
@@ -112,12 +112,12 @@ class TestDom(unittest.TestCase):
 
         c = TestComponent1()
 
-        self.zenaura_dom.mount(Page([c]))
+        await self.zenaura_dom.mount(Page([c]))
 
         self.assertEqual(self.zenaura_dom.zen_dom_table[c.id].name, "p")
 
     
-    def test_component_did_mount_with_on_seatled_method(self):
+    async def test_component_did_mount_with_on_seatled_method(self):
 
         @Reuseable
         class TestComponent3(Component):
@@ -132,7 +132,7 @@ class TestDom(unittest.TestCase):
         component = TestComponent3()
 
         self.assertEqual(component.x, 0)
-        self.zenaura_dom.mount(Page([component]))
+        await self.zenaura_dom.mount(Page([component]))
       
         self.assertEqual(component.x, 10)
 

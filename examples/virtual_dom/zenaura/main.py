@@ -7,6 +7,7 @@ from functools import cache
 from zenaura.client.mutator import mutator
 from zenaura.client.tags import Builder
 from zenaura.client.page import Page
+import asyncio 
 import json
 
 @dataclass
@@ -74,9 +75,9 @@ def Image(src : str) -> Node:
 
 class SimpleUi(Component):
 	
-    def nvaigate(self, event):
+    async def nvaigate(self, event):
    
-        router.navigate("/counter")
+        await router.navigate("/counter")
 		
     def node(self):
         div = Node(name="div")
@@ -184,4 +185,5 @@ router.add_route(Route(
 		page=Page([counter1, counter2])
     ))
 
-router.handle_location()
+event_loop = asyncio.get_event_loop()
+event_loop.run_until_complete(router.handle_location())

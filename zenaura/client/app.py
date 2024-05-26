@@ -5,6 +5,9 @@ from zenaura.client.tags import Node
 from zenaura.client.component import Component, Reuseable
 from zenaura.client.page import Page
 from zenaura.client.mocks import MockWindow, MockDocument
+import asyncio
+event_loop = asyncio.get_event_loop()
+
 # this is really nothing just to be able to mock 
 try :
     from pyscript import document, window
@@ -119,16 +122,16 @@ class App:
         self.paths = []
         self.history = PageHistory()
         # Call handle_location once to handle the initial route
-        window.onpopstate = self.handle_location
+        window.onpopstate = event_loop.run_until_complete(self.handle_location())
         # global middleware to run on routes
 
-    def not_found(self):
+    async def not_found(self):
         document.title = "Page Not Found"
         page = Page([notFound])
-        zenaura_dom.mount(page)
+        await zenaura_dom.mount(page)
         self.history.visit(page)
 
-    def navigate(self, path) -> None:
+    async def navigate(self, path) -> None:
         """
             Navigates to the specified path by mounting the associated pageonent and updating the document title and browser history.
 
@@ -137,36 +140,41 @@ class App:
             path : str
                 The path to navigate to.
         """
-        matched_route, params = self._match_route(path) #TODO
-
         if not path in self.paths:
-            self.not_found()
+            await self.not_found()
             return
         [_, _, middleware] = self.routes[path]
         # run middle ware #TODO test
         if callable(middleware):
-            middleware()
+            await middleware()
+        
 
         [page, title, middleware] = self.routes[path]
-        zenaura_dom.mount(page)  # Mount the page on root container
+        window.history.pushState(path, title, path) # Update browser history 
+        await zenaura_dom.mount(page)  # Mount the page on root container
         self.history.visit(page)
         document.title = title  # Update the title
-        window.history.pushState(path, title, path) # Update browser history 
 
-    def handle_location(self) -> None:
+    async def handle_location(self) -> None:
         """
         Handles the current location by mounting the associated page and update title of document
-        #TODO Handles wild card routes with params and queries.
         """
         path = window.location.pathname
         matched_route, params = self._match_route(path)
+        print(f"Updated browser history with path: {path}")
         if not matched_route:
-            self.not_found()
+            await self.not_found()
             return
-        [page, title, middleware] = self.routes[path] #TODO integrate params, props of new feature route wild card
-        zenaura_dom.mount(page)
+        [page, title, middleware] = self.routes[path]
+        window.history.pushState(path, title, path) # Update browser history
+        if callable(middleware):
+            await middleware()
+        await zenaura_dom.mount(page)
         self.history.visit(page)
         document.title = title
+
+
+
 
     def add_route(self, route : Route) -> None:
         """
@@ -180,17 +188,17 @@ class App:
         self.routes[route.path] = [route.page, route.title, route.middleware]
         self.paths.append(route.path)
     
-    def back(self) -> None:
+    async def back(self) -> None:
         page = self.history.back()
         if self.history.current.page == page:
             return # do not mount new page
-        zenaura_dom.mount(page) # else mount new page
+        await zenaura_dom.mount(page) # else mount new page
     
-    def forward(self) -> None:
+    async def forward(self) -> None:
         page = self.history.forward()
         if self.history.current.page == page:
             return # do not mount new page
-        zenaura_dom.mount(page) # else mount new page
+        await zenaura_dom.mount(page) # else mount new page
 
     def get_current_route(self) -> Optional[Tuple[Page, str]]:
             """Get the page and title of the current route, or None if not found."""
