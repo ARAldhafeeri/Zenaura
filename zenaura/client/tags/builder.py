@@ -11,6 +11,34 @@ class Builder:
         """
         self.node = Node(name)
     
+    def with_attributes(self, **kwargs) -> "Builder":
+        """
+        Adds attributes to the tag.
+
+        Args:
+            **kwargs: Key-value pairs of attributes.
+
+        Returns:
+            Builder: The Builder object.
+        """
+        for key, value in kwargs.items():
+            self.with_attribute(key, value)
+        return self
+    
+    def with_children(self, *children) -> "Builder":
+        """
+        Adds child nodes to the tag.
+
+        Args:
+            *children: List of child nodes.
+
+        Returns:
+            Builder: The Builder object.
+        """
+        for child in children:
+            self.with_child(child)
+        return self
+    
     def with_attribute(self, key : str, value : any) -> "Builder":
         """
         Adds an attribute to the tag.

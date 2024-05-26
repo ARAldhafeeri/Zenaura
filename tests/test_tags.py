@@ -398,3 +398,29 @@ class DataclassTests(unittest.TestCase):
         self.assertEqual(h2.attributes[3].key, "class")
         self.assertEqual(h2.attributes[3].value, "container2")
         
+
+    def test_with_attributes_with_children(self):
+        # Create a builder object with tag 'div'
+        node = Builder('div') \
+            .with_attribute("test", "test") \
+            .with_children(
+                Node(name="test_child1"),
+                Node(name="test_child2")
+            ) \
+            .with_attributes(
+                attr1="value1",
+                attr2="value2"
+            ).build()
+
+        # Assert attributes
+        self.assertEqual(node.attributes[0].key, "test")
+        self.assertEqual(node.attributes[0].value, "test")
+        self.assertEqual(node.attributes[1].key, "attr1")
+        self.assertEqual(node.attributes[1].value, "value1")
+        self.assertEqual(node.attributes[2].key, "attr2")
+        self.assertEqual(node.attributes[2].value, "value2")
+
+        # Assert children
+        self.assertEqual(len(node.children), 2)
+        self.assertEqual(node.children[0].name, "test_child1")
+        self.assertEqual(node.children[1].name, "test_child2")
