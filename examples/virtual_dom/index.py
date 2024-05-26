@@ -1,18 +1,16 @@
 from flask import Flask, send_file, render_template
-from zenaura.main import router, counters_page
-from zenaura.routes import ClientRoutes
+from public.main import router, counters_page
+from public.routes import ClientRoutes
 from zenaura.server import ZenauraServer
 
-
-router
 app = Flask(__name__,
-            static_folder="zenaura"
+            static_folder="public"
             )
 
 @app.route(ClientRoutes.counter.value)
 @app.route(ClientRoutes.home.value)
 def root():
-    return send_file('zenaura/index.html')
+    return send_file('public/index.html')
 
 
 @app.route('/ssr')

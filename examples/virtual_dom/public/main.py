@@ -1,7 +1,7 @@
 from zenaura.client.component import Component, Reuseable
 from zenaura.client.tags import Node, Attribute, Data
 from zenaura.client.app import Route, App
-from zenaura.routes import ClientRoutes
+from public.routes import ClientRoutes
 from dataclasses import dataclass
 from functools import cache
 from zenaura.client.mutator import mutator

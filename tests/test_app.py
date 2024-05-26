@@ -1,7 +1,7 @@
 import sys
 import unittest
 from unittest.mock import MagicMock, patch
-from zenaura.client.page import Page
+from zenaura import Page
 
 
 
