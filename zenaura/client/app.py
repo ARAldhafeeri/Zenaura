@@ -125,9 +125,6 @@ class App:
         self.routes = defaultdict(str)
         self.paths = []
         self.history = PageHistory()
-        # Call handle_location once to handle the initial route
-        window.onpopstate = event_loop.run_until_complete(self.handle_location())
-        # global middleware to run on routes
 
     async def not_found(self):
         document.title = "Page Not Found"
@@ -137,12 +134,12 @@ class App:
 
     async def navigate(self, path) -> None:
         """
-            Navigates to the specified path by mounting the associated pageonent and updating the document title and browser history.
+        Navigates to the specified path by mounting the associated pageonent and updating the document title and browser history.
 
-            Parameters
-            ----------
-            path : str
-                The path to navigate to.
+        Parameters
+        ----------
+        path : str
+            The path to navigate to.
         """
         matched_route, params = self._match_route(path)
         if not matched_route:
@@ -153,27 +150,34 @@ class App:
 
         if callable(middleware):
             await middleware()
-        
 
-        window.history.pushState(path, title, path) # Update browser history
-        if ssr: # ignore mount step for server side rendering pages.
+        if ssr:  # Ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
             self.history.visit(page)
             document.title = title
             return
-        if not self.history.current.page: # self.history.current is intially Nonde
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, page)
+
+        if not self.history.current.page:  # self.history.current is initially None
+            pass
         else:
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
+            self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
+        
+        window.history.pushState(path, title, path)  # Update browser history
         await zenaura_dom.mount(page)
         self.history.visit(page)
-        document.title = title 
+        document.title = title
 
-
+    def hyd_rdom_toggle_pages_visibilty(self, previous_page: Page, current_page: Page):
+        p_page = document.querySelector(f'[data-zenaura="{previous_page.id}"]')
+        if p_page:
+            p_page.hidden = True  # Hide the previous page
+        curr_page = document.querySelector(f'[data-zenaura="{current_page.id}"]')
+        if curr_page:
+            curr_page.hidden = False  # Show the current page
 
     async def handle_location(self) -> None:
         """
-        Handles the current location by mounting the associated page and update title of document
+        Handles the current location by mounting the associated page and updating the document title.
         """
         path = window.location.pathname
         matched_route, params = self._match_route(path)
@@ -181,22 +185,22 @@ class App:
             await self.not_found()
             return
         [page, title, middleware, ssr] = self.routes[path]
-        window.history.pushState(path, title, path) # Update browser history
+        window.history.pushState(path, title, path)  # Update browser history
+
         if callable(middleware):
             await middleware()
-        if ssr: # ignore mount step for server side rendering pages.
+        if ssr:  # Ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
             self.history.visit(page)
             document.title = title
             return
-        if not self.history.current.page: # self.history.current is intially Nonde
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, page)
+        if not self.history.current.page:  # self.history.current is initially None
+           pass
         else:
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
+            print("swap", self.history.current.page, page)
+            self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
         self.history.visit(page)
-        await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
-
-
+        await zenaura_dom.mount(page)  # Trigger attached lifecycle for each component within the page.
 
 
     def add_route(self, route : Route) -> None:
