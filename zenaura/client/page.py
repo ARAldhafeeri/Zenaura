@@ -13,10 +13,10 @@ class Page:
     def __init_subclass__(cls, **kwargs):
         cls.count = next(cls._component_count)
         cls.id = UUIDManager.generate_uuid(cls.__name__, cls.count)
-
+        super().__init_subclass__(**kwargs)
+        
     def __init__(self, children : List[Component]):
         self.children = children
-        self.pageId = uuid.uuid4().hex
         if not isinstance(self.children, list):
             raise TypeError("children must be a list")
 
