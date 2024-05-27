@@ -181,7 +181,7 @@ class HydratorRealDomAdapter:
     def hyd_rdom_toggle_pages_visibilty(self, current_page : Page , previous_page : Page):
         p_page = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{previous_page.id}"]')
         if p_page:
-            p_page.setAttribute("hidden", "true")
+            p_page.setAttribute("hidden", True)
         curr_page = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{current_page.id}"]')
         if curr_page:
-            curr_page.setAttribute("hidden", "false") # Update the title
+            curr_page.setAttribute("hidden", False) # Update the title

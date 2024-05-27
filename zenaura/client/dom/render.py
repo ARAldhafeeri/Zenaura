@@ -26,7 +26,7 @@ class Render(
 
             # update steps 1-3: on_mutation -> update -> on_settled
             # update 1: lifecycle method to be called before updating
-            self.on_mutation(comp)
+            await self.on_mutation(comp)
             comp_id = comp.id            
             prev_tree = self.zen_dom_table[comp_id]
             new_tree = comp.render()
@@ -49,7 +49,7 @@ class Render(
             self.hyd_vdom_update(comp)
 
             # update 3  : on_settled method to be called after updating
-            self.on_settled(comp)
+            await self.on_settled(comp)
 
         except Exception as e:
             self.componentDidCatchError(comp, traceback.format_exc())

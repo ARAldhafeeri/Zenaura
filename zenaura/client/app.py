@@ -180,7 +180,8 @@ class App:
         if callable(middleware):
             await middleware()
         if not ssr: # ignore mount step for server side rendering pages.
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, self.history.current.page)
+            if not self.history.current.page: # self.history.current is intially Nonde
+                rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, page)
             await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
         else: # trigger attached lifecycle method for the component.
             await zenaura_dom.mount(page)
