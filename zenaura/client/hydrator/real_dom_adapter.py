@@ -178,10 +178,10 @@ class HydratorRealDomAdapter:
                 break
         
 
-    def hyd_rdom_toggle_pages_visibilty(self, current_page : Page , previous_page : Page):
-        p_page = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{previous_page.id}"]')
+    def hyd_rdom_toggle_pages_visibilty(self, previous_page : Page, current_page : Page ):
+        p_page = document.querySelector(f'[data-zenaura="{previous_page.id}"]')
         if p_page:
-            p_page.setAttribute("hidden", True)
-        curr_page = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{current_page.id}"]')
+            p_page.hidden = True
+        curr_page = document.querySelector(f'[data-zenaura="{current_page.id}"]')
         if curr_page:
-            curr_page.setAttribute("hidden", False) # Update the title
+            curr_page.hidden = False # Update the title

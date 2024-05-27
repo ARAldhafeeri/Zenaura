@@ -74,11 +74,11 @@ class ZenauraServer:
           if ssr: # ignore SSR pages
               continue 
           if path == "/" : # set / route to visible 
-              page_div = lambda comps : f'<div hidden="false" data-zenaura="{page.id}">{comps}</div>'
+              page_div = lambda comps : f'<div data-zenaura="{page.id}">{comps}</div>'
               pages.write(page_div(compiler_adapter.hyd_comp_compile_page(page)))
               continue
           # pages other than / are set to hidden
-          page_div = lambda comps : f'<div hidden="true" data-zenaura="{page.id}">{comps}</div>'
+          page_div = lambda comps : f'<div hidden data-zenaura="{page.id}">{comps}</div>'
           pages.write(page_div(compiler_adapter.hyd_comp_compile_page(page)))
       
 
