@@ -1,26 +1,18 @@
+import uuid 
+import itertools
 from .component import Component, UUIDManager
 from typing import List
-import uuid 
+
 
 class Page:
     """
         a class representing a page in zenaura application
     """
-    def __init_subclass__(cls):
-        """
-        Initialize a new subclass of Page.
+    _page_count = itertools.count(0)
 
-        This method generates a unique id for each subclass using uuid.
-
-        Args:
-        cls: The subclass being initialized.
-
-        Returns:
-        None
-        """
-
-        super().__init_subclass__()
-        UUIDManager.persist_uuid(cls)
+    def __init_subclass__(cls, **kwargs):
+        cls.count = next(cls._component_count)
+        cls.id = UUIDManager.generate_uuid(cls.__name__, cls.count)
 
     def __init__(self, children : List[Component]):
         self.children = children

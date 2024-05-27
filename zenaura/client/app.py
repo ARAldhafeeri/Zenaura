@@ -1,3 +1,4 @@
+import asyncio
 from dataclasses import dataclass
 from typing import List
 from zenaura.client.dom import zenaura_dom
@@ -5,7 +6,10 @@ from zenaura.client.tags import Node
 from zenaura.client.component import Component, Reuseable
 from zenaura.client.page import Page
 from zenaura.client.mocks import MockWindow, MockDocument
-import asyncio
+from zenaura.client.hydrator import HydratorRealDomAdapter
+
+rdom_hyd = HydratorRealDomAdapter() 
+
 event_loop = asyncio.get_event_loop()
 
 # this is really nothing just to be able to mock 
@@ -91,7 +95,6 @@ class Route:
 
 
 # router 
-
 class App:
     """
         Represents a router for managing routes and navigation.
@@ -152,10 +155,15 @@ class App:
 
         [page, title, middleware, ssr] = self.routes[path]
         window.history.pushState(path, title, path) # Update browser history
-        if not ssr: # ignore mount step for ssr
-            await zenaura_dom.mount(page)  # Mount the page on root container
+        if not ssr: # ignore mount step for server side rendering pages.
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, self.history.current.page)
+            await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
+        else: # trigger attached lifecycle method for the component.
+            await zenaura_dom.mount(page)
         self.history.visit(page)
-        document.title = title  # Update the title
+        document.title = title 
+
+
 
     async def handle_location(self) -> None:
         """
@@ -171,8 +179,12 @@ class App:
         window.history.pushState(path, title, path) # Update browser history
         if callable(middleware):
             await middleware()
-        if not ssr: # ignore mount for ssr 
+        if not ssr: # ignore mount step for server side rendering pages.
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, self.history.current.page)
+            await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
+        else: # trigger attached lifecycle method for the component.
             await zenaura_dom.mount(page)
+        # TODO handle ssr in mount. 
         self.history.visit(page)
         document.title = title
 
@@ -192,16 +204,22 @@ class App:
         self.paths.append(route.path)
     
     async def back(self) -> None:
-        page = self.history.back()
-        if self.history.current.page == page:
-            return # do not mount new page
-        await zenaura_dom.mount(page) # else mount new page
+        previous_page = self.history.current.page
+        curr_page = self.history.back()
+        if not curr_page.ssr: # ignore mount step for server side rendering pages.
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(previous_page, curr_page)
+            await zenaura_dom.mount(curr_page)  # trigger attached lifecycle for each component within the page.
+        else: # trigger attached lifecycle method for the component.
+            await zenaura_dom.mount(curr_page)
     
     async def forward(self) -> None:
-        page = self.history.forward()
-        if self.history.current.page == page:
-            return # do not mount new page
-        await zenaura_dom.mount(page) # else mount new page
+        previous_page = self.history.current.page
+        curr_page = self.history.forward()
+        if not curr_page.ssr: # ignore mount step for server side rendering pages.
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(previous_page, curr_page)
+            await zenaura_dom.mount(curr_page)  # trigger attached lifecycle for each component within the page.
+        else: # trigger attached lifecycle method for the component.
+            await zenaura_dom.mount(curr_page)
 
     def get_current_route(self) -> Optional[Tuple[Page, str]]:
             """Get the page and title of the current route, or None if not found."""

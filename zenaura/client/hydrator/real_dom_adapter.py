@@ -1,5 +1,6 @@
 import asyncio 
 from zenaura.client.tags import Node, HTMLElement, Attribute
+from zenaura.client.page import Page 
 from zenaura.client.component import Component
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
 from zenaura.client.mocks import MockDocument, MockWindow
@@ -171,17 +172,16 @@ class HydratorRealDomAdapter:
     async def hyd_rdom_wait_for_dom_content_loaded(self):
         if not in_browser:
             return 
-        future = asyncio.Future()
+        while True:
+            await asyncio.sleep(0.001)
+            if document.readyState=="complete":
+                break
+        
 
-        def on_dom_content_loaded(event):
-            future.set_result(True)
-
-        # Create a proxy for the Python callback function
-        callback_proxy = create_proxy(on_dom_content_loaded)
-        document.addEventListener('DOMContentLoaded', callback_proxy)
-
-        await future
-
-        # Clean up the event listener
-        document.removeEventListener('DOMContentLoaded', callback_proxy)
-        callback_proxy.destroy()
+    def hyd_rdom_toggle_pages_visibilty(self, current_page : Page , previous_page : Page):
+        p_page = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{previous_page.id}"]')
+        if p_page:
+            p_page.setAttribute("hidden", "true")
+        curr_page = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{current_page.id}"]')
+        if curr_page:
+            curr_page.setAttribute("hidden", "false") # Update the title

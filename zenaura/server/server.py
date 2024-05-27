@@ -1,43 +1,92 @@
+import io
 from zenaura.client.page import Page 
 from zenaura.client.hydrator import HydratorCompilerAdapter
+from zenaura.client.app import App 
 
 compiler_adapter = HydratorCompilerAdapter()
-class ZenauraServer:
 
-    @staticmethod
-    def hydrate_page(page : Page):
-        return f"""
+# create pyscript pydido template 
+template = lambda content, meta_description=None, title=None, icon=None, pydide="https://pyscript.net/releases/2024.1.1/core.js"  : f"""
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="{icon}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="title" content="ZenUI Python" />
+    <meta name="title" content="{title}" />
     <meta http-equiv="refresh"  />
     <meta
       name="description"
-      content="Opensource solution for transitioning from traditional development to an API-first approach through mock APIs."
+      content="{meta_description}"
     />
-    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <script type="module" src="{pydide}"></script>
 
  
-  <script type="module" src="./zenaura/canvas.js"></script>
-	<script type="py" src="./zenaura/main.py" config="./zenaura/config.json"></script>
+	<script type="py" src="./public/main.py" config="./public/config.json"></script>
 
-    <link  rel="stylesheet" href="./zenaura/main.css">
+    <link  rel="stylesheet" href="./public/main.css">
 
-    <title>Zenaura</title>
+    <title>{title}</title>
     
   </head>
   <body>
     <div id="root">
-        {compiler_adapter.hyd_comp_compile_page(page)}
+        {content}
     </div>
   
   </body>
 
 </html>
 """
+class ZenauraServer:
+
+    @staticmethod
+    def hydrate_page(page : Page, title="zenaura", meta_description="this app created with zenaura", icon="./public/favicon.ico", pydide="https://pyscript.net/releases/2024.1.1/core.js"):
+        """
+          hyderate zenaura page for server side rendering, 
+          params :
+           page - zenaura page.
+           title - html meta tag for title text
+           meta_description : html meta description for website
+           icon: favorite.ico
+           pydide : is pydide build script url.
+        """
+        return template(compiler_adapter.hyd_comp_compile_page(page),meta_description, title, icon, pydide)
+    
+    @staticmethod
+    def hydrate_app(app :App, title="zenaura", meta_description="this app created with zenaura", icon="./public/favicon.ico", pydide="https://pyscript.net/releases/2024.1.1/core.js"):
+      """
+          render pages on app run, set page with path / to visible, rest to hidden
+          then compile index.html on server run. 
+          params :
+          app - zenaura app.
+          title - html meta tag for title text
+          meta_description : html meta description for website
+          icon: favorite.ico
+          pydide : is pydide build script url.
+      """
+      pages = io.StringIO()
+
+      # render pages 
+      for path, route in app.routes.items():
+          page, _, path, ssr = route 
+          if ssr: # ignore SSR pages
+              continue 
+          if path == "/" : # set / route to visible 
+              page_div = lambda comps : f'<div hidden="false" data-zenaura="{page.id}">{comps}</div>'
+              pages.write(page_div(compiler_adapter.hyd_comp_compile_page(page)))
+              continue
+          # pages other than / are set to hidden
+          page_div = lambda comps : f'<div hidden="true" data-zenaura="{page.id}">{comps}</div>'
+          pages.write(page_div(compiler_adapter.hyd_comp_compile_page(page)))
+      
+
+      pages = pages.getvalue() 
+
+      # overwrite in public dir
+      with open("./public/index.html", "w") as file:
+          print(file)
+          file.write(template(pages,meta_description, title, icon, pydide))
+
         

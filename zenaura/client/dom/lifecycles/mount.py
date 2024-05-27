@@ -4,7 +4,7 @@ class MountLifeCycles(
     HydratorVirtualDomAdapter
 ):
     
-    def attached(self, comp) -> None:
+    async def attached(self, comp) -> None:
         """
         Method called after the component is mounted to the DOM.
 
@@ -15,4 +15,4 @@ class MountLifeCycles(
         None
         """
         if hasattr(comp, 'attached'):
-            comp.attached()
+            await comp.attached()

@@ -11,16 +11,14 @@ class Mount(
     GracefulDegenerationLifeCycleWrapper,
     MountLifeCycles,
     ):
-    async def mount(self, page: Page  ) -> None:
+    async def mount(self, page: Page) -> None:
         """
             Mount only Page instance to the DOM.
             Only one page instance can be mounted at a time.
             Lifecycle:
-            2. in-time compile html for the page components.
-            3. attach compiled html to the DOM.
-            4. trigger attached for page components.
-            5. update state in vdom for each component.
-            6. cleanup vdom from unmounted components.
+                 server on run already hydrate all app pages and overwrite index.html
+                 in App class we toggle hidden visibility 
+                 in Mount we just trigger attached lifecycle. 
             try : 
                 - mount the component.
             except:
@@ -28,25 +26,16 @@ class Mount(
             Parameters:
             - comp: An instance of the Component class.
 
+            params : 
+             page - zenaura page which is list of components with unique ID. 
             Returns:
             None
         """
 
         try :
-            
-            compiled_html = self.hyd_comp_compile_page(page)
-
-            self.hyd_rdom_attach_to_root(compiled_html)
-
-            # clean up perviously mounted components :
-            self.zen_dom_table.clear()
-
-            # wait for DOMContent to be loaded 
-            await rdom_hyd.hyd_rdom_wait_for_dom_content_loaded()
-            # trigger attached for page components
             for comp in page.children:
                 # trigger attached for page components
-                self.attached(comp)
+                await self.attached(comp)
                 # update state in vdom
                 self.hyd_vdom_update(comp)
 

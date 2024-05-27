@@ -1,5 +1,5 @@
 class RenderLifeCycle:
-    def on_mutation(self, comp) -> None:
+    async def on_mutation(self, comp) -> None:
         """
         Method called after the component is updated in the DOM and re-rendered.
 
@@ -11,9 +11,9 @@ class RenderLifeCycle:
         """
         # Perform operations before updating
         if hasattr(comp, 'on_mutation'):
-            comp.on_mutation()
+            await comp.on_mutation()
 
-    def on_settled(self, comp) -> None:
+    async def on_settled(self, comp) -> None:
         """
         Method called after the component is updated in the DOM and re-rendered.
 
@@ -25,4 +25,4 @@ class RenderLifeCycle:
         """
         # Perform operations after updating
         if hasattr(comp, 'on_settled'):
-            comp.on_settled()
+            await comp.on_settled()
