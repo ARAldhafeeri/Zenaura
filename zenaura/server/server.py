@@ -70,7 +70,7 @@ class ZenauraServer:
 
       # render pages 
       for path, route in app.routes.items():
-          page, _, path, ssr = route 
+          page, _, _ , ssr = route 
           if ssr: # ignore SSR pages
               continue 
           if path == "/" : # set / route to visible 
