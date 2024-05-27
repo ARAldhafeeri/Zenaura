@@ -136,7 +136,7 @@ class TestApp(unittest.TestCase):
         self.router.navigate("/parent/child")
         self.window.location.pathname = "/parent/child"
         current_route, info = self.router.get_current_route()
-        self.assertEqual(current_route[0].pageId, child_route.page.pageId)
+        self.assertEqual(current_route[0].id, child_route.page.id)
 
     async def test_router_case_sensitive_paths(self):
         # Test case sensitivity of route paths

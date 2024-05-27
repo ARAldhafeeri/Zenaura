@@ -10,12 +10,9 @@ class Page:
     """
     _page_count = itertools.count(0)
 
-    def __init_subclass__(cls, **kwargs):
-        cls.count = next(cls._component_count)
-        cls.id = UUIDManager.generate_uuid(cls.__name__, cls.count)
-        super().__init_subclass__(**kwargs)
-        
     def __init__(self, children : List[Component]):
+        self.count = next(self._page_count)
+        self.id = UUIDManager.generate_uuid(self.__class__.__name__, self.count)
         self.children = children
         if not isinstance(self.children, list):
             raise TypeError("children must be a list")
