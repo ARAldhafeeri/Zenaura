@@ -197,7 +197,6 @@ class App:
         if not self.history.current.page:  # self.history.current is initially None
            pass
         else:
-            print("swap", self.history.current.page, page)
             self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
         self.history.visit(page)
         await zenaura_dom.mount(page)  # Trigger attached lifecycle for each component within the page.
