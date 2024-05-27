@@ -144,22 +144,28 @@ class App:
             path : str
                 The path to navigate to.
         """
-        if not path in self.paths:
+        matched_route, params = self._match_route(path)
+        if not matched_route:
             await self.not_found()
             return
-        [_, _, middleware, _] = self.routes[path]
-        # run middle ware #TODO test
+        
+        [page, title, middleware, ssr] = self.routes[path]
+
         if callable(middleware):
             await middleware()
         
 
-        [page, title, middleware, ssr] = self.routes[path]
         window.history.pushState(path, title, path) # Update browser history
-        if not ssr: # ignore mount step for server side rendering pages.
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, self.history.current.page)
-            await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
-        else: # trigger attached lifecycle method for the component.
+        if ssr: # ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
+            self.history.visit(page)
+            document.title = title
+            return
+        if not self.history.current.page: # self.history.current is intially Nonde
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, page)
+        else:
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
+        await zenaura_dom.mount(page)
         self.history.visit(page)
         document.title = title 
 
@@ -171,7 +177,6 @@ class App:
         """
         path = window.location.pathname
         matched_route, params = self._match_route(path)
-        print(f"Updated browser history with path: {path}")
         if not matched_route:
             await self.not_found()
             return
@@ -179,15 +184,17 @@ class App:
         window.history.pushState(path, title, path) # Update browser history
         if callable(middleware):
             await middleware()
-        if not ssr: # ignore mount step for server side rendering pages.
-            if not self.history.current.page: # self.history.current is intially Nonde
-                rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, page)
-            await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
-        else: # trigger attached lifecycle method for the component.
+        if ssr: # ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
-        # TODO handle ssr in mount. 
+            self.history.visit(page)
+            document.title = title
+            return
+        if not self.history.current.page: # self.history.current is intially Nonde
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(page, page)
+        else:
+            rdom_hyd.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
         self.history.visit(page)
-        document.title = title
+        await zenaura_dom.mount(page)  # trigger attached lifecycle for each component within the page.
 
 
 
