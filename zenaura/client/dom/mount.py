@@ -34,10 +34,10 @@ class Mount(
 
         try :
             for comp in page.children:
-                # trigger attached for page components
-                await self.attached(comp)
                 # update state in vdom
                 self.hyd_vdom_update(comp)
+                # trigger attached for page components
+                await self.attached(comp)
 
         except Exception as e:
             self.componentDidCatchError(page.children[0], traceback.format_exc())

@@ -6,7 +6,15 @@ from zenaura.client.app import App
 compiler_adapter = HydratorCompilerAdapter()
 
 # create pyscript pydido template 
-template = lambda content, meta_description=None, title=None, icon=None, pydide="https://pyscript.net/releases/2024.1.1/core.js"  : f"""
+def template(content, meta_description=None, title=None, icon=None, pydide="https://pyscript.net/releases/2024.1.1/core.js", scripts=None):
+    if scripts:
+      s = io.StringIO()
+      for script in scripts:
+          s.write(script)
+          s.write("\n")
+      scripts = s 
+        
+    return f"""
 
 <html lang="en">
   <head>
@@ -21,7 +29,7 @@ template = lambda content, meta_description=None, title=None, icon=None, pydide=
       content="{meta_description}"
     />
     <script type="module" src="{pydide}"></script>
-
+    {scripts if scripts else ""}
  
 	<script type="py" src="./public/main.py" config="./public/config.json"></script>
 
@@ -55,7 +63,7 @@ class ZenauraServer:
         return template(compiler_adapter.hyd_comp_compile_page(page),meta_description, title, icon, pydide)
     
     @staticmethod
-    def hydrate_app(app :App, title="zenaura", meta_description="this app created with zenaura", icon="./public/favicon.ico", pydide="https://pyscript.net/releases/2024.1.1/core.js"):
+    def hydrate_app(app :App, title="zenaura", meta_description="this app created with zenaura", icon="./public/favicon.ico", pydide="https://pyscript.net/releases/2024.1.1/core.js", scripts=None):
       """
           render pages on app run, set page with path / to visible, rest to hidden
           then compile index.html on server run. 
