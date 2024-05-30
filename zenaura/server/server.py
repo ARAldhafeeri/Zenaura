@@ -95,6 +95,6 @@ class ZenauraServer:
       # overwrite in public dir
       with open("./public/index.html", "w") as file:
           print(file)
-          file.write(template(pages,meta_description, title, icon, pydide))
+          file.write(template(pages,meta_description, title, icon, pydide, scripts))
 
         
