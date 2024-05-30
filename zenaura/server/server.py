@@ -12,7 +12,7 @@ def template(content, meta_description=None, title=None, icon=None, pydide="http
       for script in scripts:
           s.write(script)
           s.write("\n")
-      scripts = s 
+      scripts = s.getvalue()
         
     return f"""
 
