@@ -27,7 +27,13 @@ class HydratorRealDomAdapter:
 
     def hyd_rdom_create_element(self, virtual_node: Node) -> HTMLElement:
         """
-            DOM operation : creates html element and returns it as HTMLElement
+        DOM operation: creates html element and returns it as HTMLElement
+
+        Args:
+            virtual_node: Node - the virtual node representing the element to be created
+
+        Returns:
+            HTMLElement - the created HTML element
         """
         element = document.createElement(virtual_node.name)
         
@@ -35,9 +41,10 @@ class HydratorRealDomAdapter:
     
     def hyd_rdom_attach_to_root(self, html : str) -> None:
         """
-            atttach page to root
-            args:
-                page: Page
+        DOM operation: attaches compiled_comp to mounted_comp_id
+
+        Args:
+            html: str - the HTML string to be attached to the root element
         """
         document.getElementById("root").innerHTML = html
 
@@ -47,10 +54,11 @@ class HydratorRealDomAdapter:
             html: str
     ):
         """
-            DOM operation : attaches compiled_comp to mounted_comp_id
-            args:
-                mounted_comp_id: str previosuly mounted component id
-                compiled_comp: str compiled html from comp.render()
+        DOM operation: attaches compiled_comp to mounted_comp_id
+
+        Args:
+            mounted_comp_id: str - the ID of the previously mounted component
+            html: str - the HTML string to be attached to the mounted component
         """
         foundNode = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if foundNode:
@@ -84,8 +92,9 @@ class HydratorRealDomAdapter:
     def hyd_rdom_remove_element(self, mounted_comp_id: str) -> None:
         """
         DOM operation: removes an element from the DOM
-        args:
-            mounted_comp_id: str
+
+        Args:
+            mounted_comp_id: str - the ID of the element to be removed
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
@@ -95,6 +104,10 @@ class HydratorRealDomAdapter:
     def hyd_rdom_append_child(self, mounted_comp_id:str, child_html:str) -> None:
         """
         DOM operation: appends a child to an element
+
+        Args:
+            mounted_comp_id: str - the ID of the parent element
+            child_html: str - the HTML string of the child element to be appended
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
@@ -103,6 +116,14 @@ class HydratorRealDomAdapter:
             element.appendChild(child_node.content.firstChild)
 
     def hyd_rdom_append_child_after(self, parent_node_id, child_node_id, child_html) -> None:
+        """
+        DOM operation: appends a child to an element after a specific child
+
+        Args:
+            parent_node_id: str - the ID of the parent element
+            child_node_id: str - the ID of the child element to insert after
+            child_html: str - the HTML string of the child element to be appended
+        """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{parent_node_id}"]')
         if element : # if parent exists
             child_node = document.createElement("template")
@@ -121,6 +142,9 @@ class HydratorRealDomAdapter:
     def hyd_rdom_remove_child(self, child_id:str) -> None:
         """
         DOM operation: removes a child of an element
+
+        Args:
+            child_id: str - the ID of the child element to be removed
         """
         child_node = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{child_id}"]')
         if child_node:
@@ -130,6 +154,10 @@ class HydratorRealDomAdapter:
     def hyd_rdom_add_text_render(self, mounted_comp_id: str, text_content: str) -> None:
         """
         DOM operation: Adds a text node to an element.
+
+        Args:
+            mounted_comp_id: str - the ID of the element to add the text node to
+            text_content: str - the text content of the text node
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
@@ -140,6 +168,10 @@ class HydratorRealDomAdapter:
     def hyd_rdom_replace_inner_text(self, mounted_comp_id: str, new_text: str) -> None:
         """
         DOM operation: Replaces the inner text content of an element.
+
+        Args:
+            mounted_comp_id: str - the ID of the element to replace the text content of
+            new_text: str - the new text content
         """
         element = document.querySelector(f'[{ZENAURA_DOM_ATTRIBUTE}="{mounted_comp_id}"]')
         if element:
@@ -148,28 +180,43 @@ class HydratorRealDomAdapter:
     def hyd_rdom_is_interactive(self) -> bool:
         """
         DOM operation: checks if real dom  is interactive
+
+        Returns:
+            bool - True if the DOM is interactive, False otherwise
         """
         return document.readyState == "interactive"
 
     def hyd_rdom_is_complete(self) -> bool:
         """
         DOM operation: checks if real dom  is complete
+
+        Returns:
+            bool - True if the DOM is complete, False otherwise
         """
         return document.readyState == "complete"
     
     def hyd_rdom_is_loading(self) -> bool:
         """
-        DOM operation: checks if real dom  is loading
+        DOM operation: checks if real dom  is complete
+
+        Returns:
+            bool - True if the DOM is complete, False otherwise
         """
         return document.readyState == "load"
     
     def hyd_rdom_is_content_loaded(self) -> bool:
         """
         DOM operation: checks if real dom  is content loaded
+
+        Returns:
+            bool - True if the DOM is content loaded, False otherwise
         """
         return document.readyState == "DOMContentLoaded"
 
     async def hyd_rdom_wait_for_dom_content_loaded(self):
+        """
+        Waits for the DOM to be content loaded.
+        """
         if not in_browser:
             return 
         while True:
@@ -179,6 +226,13 @@ class HydratorRealDomAdapter:
         
 
     def hyd_rdom_toggle_pages_visibilty(self, previous_page : Page, current_page : Page ):
+        """
+        Toggles the visibility of the previous and current pages.
+
+        Args:
+            previous_page: Page - the previously mounted page
+            current_page: Page - the currently mounted page
+        """
         p_page = document.querySelector(f'[data-zenaura="{previous_page.id}"]')
         if p_page:
             p_page.hidden = True

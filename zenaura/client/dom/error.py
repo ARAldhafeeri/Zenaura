@@ -1,14 +1,24 @@
-
 from zenaura.client.component import Component, Reuseable
-from zenaura.client.tags import Node 
+from zenaura.client.tags import Node
 from zenaura.client.compiler import compiler
 from zenaura.client.hydrator import Hydrator
 
 @Reuseable
 class DefaultDomErrorComponent(Component):
+    """
+    Displays a default error message component.
+
+    Attributes:
+        error_message (str): The error message to display.
+
+    Methods:
+        render(): Returns a Node representing the error message.
+    """
+
     def __init__(self, error_message):
         super().__init__()
         self.error_message = error_message
+
     def render(self):
         return Node("div", children=[Node(text=str(self.error_message))])
 
@@ -16,39 +26,57 @@ class DefaultDomErrorComponent(Component):
 class GracefulDegenerationLifeCycleWrapper(
     Hydrator
 ):
-    
+    """
+    Wraps components to handle errors gracefully.
+
+    This class provides a `componentDidCatchError` method that allows components
+    to handle errors gracefully. If a component throws an error, the
+    `componentDidCatchError` method will be called with the error message. The
+    component can then return a new component to display in place of the original
+    component.
+
+    If the component does not have a `componentDidCatchError` method, a default
+    error message component will be displayed.
+    """
+
     def componentDidCatchError(self, comp, error) -> None:
         """
-            Graceful degradation of component lifecycle methods.
+        Handles errors gracefully.
+
+        This method is called when a component throws an error. It allows the
+        component to handle the error gracefully by returning a new component to
+        display in place of the original component.
+
+        Args:
+            comp (Component): The component that threw the error.
+            error (Exception): The error that was thrown.
         """
-        # cleanup
+
+        # Cleanup the Zen DOM table.
         self.zen_dom_table.clear()
 
         if hasattr(comp, "componentDidCatchError"):
-            # call componentDidCatchError method
-            # mount the error message component 
+            # Call the component's `componentDidCatchError` method.
             error_comp = comp.componentDidCatchError(str(error))
-            compiled_comp =  self.hyd_comp_compile_render(
-                 error_comp
-            )
-            
-            # attach to real dom
+
+            # Compile and render the error component.
+            compiled_comp = self.hyd_comp_compile_render(error_comp)
+
+            # Attach the compiled component to the real DOM.
             self.hyd_rdom_attach_to_root(compiled_comp)
 
-            # update virtual dom
+            # Update the virtual DOM with the new render.
             self.hyd_vdom_update_with_new_render(comp, error_comp.render())
 
         else:
-            # mount the default error message component
-            error_comp  = DefaultDomErrorComponent(error_message=str(error))
-            
-            #compile the comp
-            compiled_comp =  self.hyd_comp_compile_render(
-                 error_comp
-             )
-            
-            # attach to real dom
+            # Create a default error message component.
+            error_comp = DefaultDomErrorComponent(error_message=str(error))
+
+            # Compile and render the default error component.
+            compiled_comp = self.hyd_comp_compile_render(error_comp)
+
+            # Attach the compiled component to the real DOM.
             self.hyd_rdom_attach_to_root(compiled_comp)
 
-            # update virtual dom
+            # Update the virtual DOM with the new render.
             self.hyd_vdom_update_with_new_render(comp, error_comp.render())

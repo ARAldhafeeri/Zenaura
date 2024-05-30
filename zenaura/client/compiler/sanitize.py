@@ -7,30 +7,48 @@ from zenaura.client.config import (
 )
 
 class CompilerSanitizer:
+    """
+    This class provides methods for sanitizing user input to prevent various injection attacks.
+
+    It uses the `bleach` library to remove potentially harmful HTML tags and attributes, 
+    and the `html` library to escape special characters.
+
+    Attributes:
+        None
+    """
+
     def sanitize(
-                self, 
-                user_input, 
-                allowed_tags=allowed_tags, 
-                allowed_attributes=allowed_attributes
-            ):
+        self, 
+        user_input: str, 
+        allowed_tags: list = allowed_tags, 
+        allowed_attributes: dict = allowed_attributes
+    ) -> str:
         """
         Sanitizes user input to prevent various injection attacks.
 
+        This method takes the raw user input as a string and returns a sanitized version of the input.
+
         Args:
             user_input (str): The raw user input to sanitize.
-            allowed_tags (list): A list of allowed HTML tags (e.g., ['p', 'br', 'strong']).
-            allowed_attributes (dict): A dictionary mapping allowed tags to their allowed 
-                                    attributes (e.g., {'img': ['src', 'alt']}).  
+            allowed_tags (list, optional): A list of allowed HTML tags (e.g., ['p', 'br', 'strong']). 
+                Defaults to `allowed_tags` from the `zenaura.client.config` module.
+            allowed_attributes (dict, optional): A dictionary mapping allowed tags to their allowed 
+                attributes (e.g., {'img': ['src', 'alt']}). Defaults to `allowed_attributes` from the 
+                `zenaura.client.config` module.
 
         Returns:
             str: The sanitized input.
         """
+
+        # Convert user input to string for safety
         user_input = str(user_input)
-        
-        safe_html = html.escape(user_input)  # Escape all HTML special characters initially
+
+        # Escape all HTML special characters initially
+        safe_html = html.escape(user_input)
+
+        # Use bleach to remove potentially harmful HTML tags and attributes
         safe_html = bleach.clean(
             safe_html, tags=allowed_tags, attributes=allowed_attributes
-            ) 
-      
+        )
 
-        return safe_html 
+        return safe_html

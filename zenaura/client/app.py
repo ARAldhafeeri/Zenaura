@@ -83,6 +83,10 @@ class Route:
             A page of pageonents.
         handler : Optional[Callable]
             Optional route-specific logic handler.
+        middleware : Optional[Callable]
+            Optional route-specific logic handler.
+        ssr : bool
+            Whether the route is server-side rendered.
         """
         self.title = title
         self.path = path
@@ -97,25 +101,30 @@ class Route:
 # router 
 class App:
     """
-        Represents a router for managing routes and navigation.
+    Represents a router for managing routes and navigation.
 
-        Methods
-        -------
+    This class provides methods for adding routes, navigating between pages, and handling the current location.
+
+    Attributes:
+        routes (dict): A dictionary mapping paths to their associated pages and titles.
+        paths (list): A list of paths registered in the router.
+        history (PageHistory): An object that manages the history of visited pages.
+
+    Methods:
         __init__()
             Initializes the App with empty routes and paths, and sets up the initial route handling.
         navigate(path)
-            Navigates to the specified path by mounting the associated pageonent and updating the document title and browser history.
+            Navigates to the specified path by mounting the associated page and updating the document title and browser history.
         handle_location()
-            Handles the current location by mounting the associated pageonent and updating the document title.
+            Handles the current location by mounting the associated page and updating the document title.
         add_route(route)
             Adds a route to the router's configuration.
-
-        Attributes
-        ----------
-        routes : dict
-            A dictionary mapping paths to their associated pageonents and titles.
-        paths : list
-            A list of paths registered in the router.
+        back()
+            Navigates back to the previous Page in the history stack.
+        forward()
+            Navigates forward to the next Page in the history stack.
+        get_current_route()
+            Get the page and title of the current route, or None if not found.
     """
     def __init__(self):
         """
@@ -215,6 +224,9 @@ class App:
         self.paths.append(route.path)
     
     async def back(self) -> None:
+        """
+        Navigates back to the previous Page in the history stack.
+        """
         previous_page = self.history.current.page
         curr_page = self.history.back()
         if not curr_page.ssr: # ignore mount step for server side rendering pages.
@@ -224,6 +236,9 @@ class App:
             await zenaura_dom.mount(curr_page)
     
     async def forward(self) -> None:
+        """
+        Navigates forward to the next Page in the history stack.
+        """
         previous_page = self.history.current.page
         curr_page = self.history.forward()
         if not curr_page.ssr: # ignore mount step for server side rendering pages.
@@ -233,14 +248,25 @@ class App:
             await zenaura_dom.mount(curr_page)
 
     def get_current_route(self) -> Optional[Tuple[Page, str]]:
-            """Get the page and title of the current route, or None if not found."""
-            path = window.location.pathname
-            matched_route, info = self._match_route(path)
-            return matched_route, info
+        """
+        Get the page and title of the current route, or None if not found.
+        """
+        path = window.location.pathname
+        matched_route, info = self._match_route(path)
+        return matched_route, info
     
     # TODO still needs a lot of work
     def _match_route(self, path: str) -> Tuple[Optional[Tuple[Page, str, Dict[str, Any]]], Dict[str, str]]:
-        """Matches the given path to a registered route and extracts parameters."""
+        """
+        Matches the given path to a registered route and extracts parameters.
+
+        Args:
+            path (str): The path to match.
+
+        Returns:
+            Tuple[Optional[Tuple[Page, str, Dict[str, Any]]], Dict[str, str]]:
+                A tuple containing the matched route information (if any) and extracted parameters.
+        """
         for route_path, (page, title, middleware, ssr) in self.routes.items():
             if "*" in route_path:  # Wildcard route
                 route_parts = route_path.split("*")

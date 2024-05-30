@@ -18,6 +18,18 @@ class UUIDManager:
         return uuid_hash
 
 def Reuseable(cls):
+    """
+    Decorator to mark a component as reusable.
+
+    Reusable components can be instantiated multiple times and will maintain their own state.
+
+    Args:
+        cls (type): The component class to be decorated.
+
+    Returns:
+        type: The decorated component class.
+    """
+
     original_init = cls.__init__
 
     def new_init(self, *args, **kwargs):
@@ -30,6 +42,11 @@ def Reuseable(cls):
     return cls
 
 class SelectiveSingleton(type):
+    """
+    Metaclass to ensure only one instance of a component exists at a time.
+
+    This metaclass is used for components that should only have one instance, even if they are instantiated multiple times.
+    """
     _instances = defaultdict(str)
 
     def __call__(cls, *args, **kwargs):
@@ -47,16 +64,47 @@ class SelectiveSingleton(type):
         return cls._instances[cls]
     
 class Component(metaclass=SelectiveSingleton):
+    """
+    Base class for all Zenaura components.
+
+    Components are the building blocks of Zenaura applications. They represent reusable units of functionality that can be composed to create complex user interfaces.
+
+    Attributes:
+        id (str): A unique identifier for the component.
+        state (dict): The state of the component.
+        _state (dict): The internal state of the component.
+        _track_instances (dict): A dictionary tracking the number of instances created for each component class.
+        _component_count (itertools.count): An iterator that generates unique counts for each component instance.
+
+    Methods:
+        __init_subclass__(cls, **kwargs):
+            Initializes the subclass and sets the initial count for the component class.
+        __init__(self):
+            Initializes the component instance and sets the unique identifier.
+        get_state(self):
+            Returns the state of the component.
+        set_state(self, state):
+            Sets the state of the component.
+        render(self):
+            Abstract method that must be implemented by subclasses to define the behavior of the component.
+    """
+
     _state = defaultdict(str)
     _track_instances = defaultdict(int)
     _component_count = itertools.count(0)
 
     def __init_subclass__(cls, **kwargs):
+        """
+        Initializes the subclass and sets the initial count for the component class.
+        """
         cls.count = next(cls._component_count)
         cls.id = UUIDManager.generate_uuid(cls.__name__, cls.count)
         super().__init_subclass__(**kwargs)
         
     def __init__(self):
+        """
+        Initializes the component instance and sets the unique identifier.
+        """
         cls = self.__class__
         Component._track_instances[cls.__name__] += 1
         if Component._track_instances[cls.__name__] > 1 and not _is_reuseable[cls.__name__]:

@@ -4,25 +4,40 @@ from typing import List
 import io 
 
 sanitizer = CompilerSanitizer()
-class AttributeProccessor(
 
-):
+class AttributeProccessor(
+    ):
+    """
+    This class is responsible for processing a list of `Attribute` objects and converting them into HTML-formatted attributes.
+
+    Attributes:
+        None
+    """
+
     def process_attributes(
                 self, 
                 attrs: List[Attribute]
                 ) -> str:
         """
-            Processes a list of Attributes, converting them to
-            HTML-formatted attributes.
+        Processes a list of `Attribute` objects, converting them to HTML-formatted attributes.
 
-            Args:
-                attrs (List[Attribute]): A list of Zenui Attribute objects.
-                attributes like onclick.
+        Args:
+            attrs (List[Attribute]): A list of `Attribute` objects representing the attributes to be processed.
 
-            Returns:
-                str: A string containing the HTML-formatted attributes,
-                 ready to be included in a tag.
+        Returns:
+            str: A string containing the HTML-formatted attributes, ready to be included in a tag.
+
+        Raises:
+            TypeError: If the input `attrs` is not a list.
+            ValueError: If any element in `attrs` is not an `Attribute` object.
         """
+
+        if not isinstance(attrs, list):
+            raise TypeError("`attrs` must be a list of Attribute objects.")
+
+        for attr in attrs:
+            if not isinstance(attr, Attribute):
+                raise ValueError("Each element in `attrs` must be an Attribute object.")
 
         s = io.StringIO()  # Create a string buffer for building the output
 

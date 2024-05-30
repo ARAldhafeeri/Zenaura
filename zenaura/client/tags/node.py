@@ -45,12 +45,19 @@ class Node:
             text: str = None,
             ):
         """
-        Initializes a Node object with the given name, children, and attributes.
+        Represents an HTML element with attributes, children, and text content.
 
-        Args:
-        name (str): The name of the node.
-        children (list, optional): List of children nodes. Defaults to None.
-        attributes (list, optional): List of attributes. Defaults to None.
+        Attributes:
+            name (str): The tag name of the element.
+            children (list of Node): The child elements of this node.
+            attributes (list of Attribute): The attributes of this node.
+            text (str, optional): The text content of this node.
+            nodeId (str): A unique identifier for this node.
+            is_leaf (bool): Whether this node has no children.
+            is_text_node (bool): Whether this node represents text content.
+            level (int): The depth of this node in the tree.
+            key (int): A unique identifier for this node within its level.
+            path (str): The path from the root to this node.
         """
         self._parent = None
 
@@ -129,6 +136,13 @@ class Node:
         update_root_properties(self)
 
     def append_child(self, child):
+        """
+        Adds a child node to this node.
+
+        Args:
+            child (Node or str): The child node to add. If a string is provided,
+                it will be converted to a text node.
+        """
         if isinstance(child, str):
             child = Node(text=child)
             child.is_text_node = True
@@ -137,7 +151,10 @@ class Node:
     
     def to_dict(self) -> dict:
         """
-            convert a node object into nested dictionary.
+        Converts this node and its children into a nested dictionary representation.
+
+        Returns:
+            dict: A dictionary representing the node and its children.
         """
         return {
             "name": self.name,
@@ -156,7 +173,10 @@ class Node:
     
     def to_html(self) -> str:
         """
-            convert a node object into html string.
+        Converts this node and its children into an HTML string.
+
+        Returns:
+            str: The HTML representation of the node and its children.
         """
         if self.name in self_closing_tags:
             return f"<{self.name}{self.getAttributes(self)}>"
@@ -176,11 +196,13 @@ class Node:
     
     def findChildByName(self, name : str) -> "Node":
         """
-            find a child node by name.
-            args :
-                name - child name
-            returns :
-                None | Node
+        Finds a child node with the given name.
+
+        Args:
+            name (str): The name of the child node to find.
+
+        Returns:
+            Node: The child node with the given name, or None if not found.
         """
         for child in self.children:
             if isinstance(child, Node):
@@ -190,11 +212,13 @@ class Node:
     
     def findAllByName(self, name) -> List["Node"]:
         """
-            find all children by name.
-            args :
-                name - child name
-            returns:
-                List["Node"] | []
+        Finds all child nodes with the given name.
+
+        Args:
+            name (str): The name of the child nodes to find.
+
+        Returns:
+            List[Node]: A list of child nodes with the given name.
         """
         found = []
         for child in self.children:
@@ -206,11 +230,14 @@ class Node:
     
     def findByAttribute(self, key : str, value : str) -> "Node":
         """
-            find a child node by attribute key and value.
-            args :
-                name - child name
-            returns:
-                "Node" | None
+        Finds a child node with the given attribute key and value.
+
+        Args:
+            key (str): The attribute key to search for.
+            value (str): The attribute value to search for.
+
+        Returns:
+            Node: The child node with the given attribute, or None if not found.
         """
         found = None
         for child in self.children:
@@ -222,11 +249,13 @@ class Node:
     
     def findAllChildrenByAttributeKey(self, key : str) -> List["Node"]:
         """
-            find all node children by attribute key.
-            args :
-                name - child name
-            returns:
-                list of nodes or empty list
+        Finds all child nodes with the given attribute key.
+
+        Args:
+            key (str): The attribute key to search for.
+
+        Returns:
+            List[Node]: A list of child nodes with the given attribute key.
         """
         found = []
         for child in self.children:
@@ -239,11 +268,13 @@ class Node:
     
     def findAllChildrenByAttributeValue(self, value : str) -> List["Node"]:
         """
-            find all node children by attribute key.
-            args :
-                name - child name
-            returns:
-                list of nodes or empty list
+        Finds all child nodes with the given attribute value.
+
+        Args:
+            value (str): The attribute value to search for.
+
+        Returns:
+            List[Node]: A list of child nodes with the given attribute value.
         """
         found = []
         for child in self.children:
@@ -256,12 +287,11 @@ class Node:
     
     def replace(self, oldNode : "Node", newNode: "Node") -> None:
         """
-            replace node child with a new node
-            args :
-                name - child name
-                newNew - new node to replace child with
-            returns:
-                None
+        Replaces a child node with a new node.
+
+        Args:
+            oldNode (Node): The node to be replaced.
+            newNode (Node): The new node to replace it with.
         """
         found = self.getChildIndex(oldNode)
         if found:
@@ -269,11 +299,13 @@ class Node:
     
     def getChildIndex(self,node : "Node") -> int :
         """
-            get child index 
-            args :
-                name - child name
-            returns:
-                int
+        Gets the index of a child node.
+
+        Args:
+            node (Node): The child node to find the index of.
+
+        Returns:
+            int: The index of the child node, or -1 if not found.
         """
         for idx, child in enumerate(self.children):
               if isinstance(child, Node):
@@ -282,12 +314,11 @@ class Node:
                 
     def insertAfter(self, node : "Node", newNode : "Node") -> None:
         """
-            insert new child node after a specific child
-            args :
-                name - child name
-                newNode - node instance
-            returns:
-                int
+        Inserts a new node after a specific child node.
+
+        Args:
+            node (Node): The child node to insert after.
+            newNode (Node): The new node to insert.
         """
         foundIdx = self.getChildIndex(node)
         if foundIdx:
@@ -295,31 +326,36 @@ class Node:
     
     def insertBefore(self, node : "Node", newNode : "Node") -> None:
         """
-            insert new child node before a specific child
-            args :
-                name - child name
-            returns:
-                int
+        Inserts a new node before a specific child node.
+
+        Args:
+            node (Node): The child node to insert before.
+            newNode (Node): The new node to insert.
         """
         foundIdx = self.getChildIndex(node)
         if foundIdx:
             self.children.insert(foundIdx, newNode)
 
     def remove(self, node : "Node"):
+        """
+        Removes a child node.
+
+        Args:
+            node (Node): The child node to remove.
+        """
         foundIdx = self.getChildIndex(node)
         if foundIdx:
             del self.children[foundIdx]
 
     def appendAttributeToChild(self, node : "Node", attribute : "Attribute") -> None:
-            """
-                appendAttribute to child
-                args :
-                    name - child name
-                    newNew - new node to replace child with
-                returns:
-                    None
-            """
-            for child in self.children:
-              if isinstance(child, Node):
+        """
+        Appends an attribute to a child node.
+
+        Args:
+            node (Node): The child node to add the attribute to.
+            attribute (Attribute): The attribute to add.
+        """
+        for child in self.children:
+            if isinstance(child, Node):
                 if child.nodeId == node.nodeId:
                     child.attributes.append(attribute)

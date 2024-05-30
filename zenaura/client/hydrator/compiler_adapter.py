@@ -57,6 +57,10 @@ class HydratorCompilerAdapter:
         )
     
     def hyd_comp_compile_page(self, page: Page) -> str:
+        """
+            compiler operation : wraps compiler compile, returns str "HTMLElement"
+            compiles page children
+        """
         html = io.StringIO()
         for comp in page.children:
             html.write(

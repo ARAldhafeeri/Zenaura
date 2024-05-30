@@ -1,4 +1,4 @@
-from zenaura.client.tags import Attribute, Node, Data
+from zenaura.client.tags import Attribute, Node
 from zenaura.client.component import Component
 from dataclasses import dataclass
 from zenaura.client.mutator import mutator

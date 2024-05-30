@@ -1,4 +1,3 @@
-
 from .lifecycles.mount import MountLifeCycles
 from .error import GracefulDegenerationLifeCycleWrapper
 from zenaura.client.page import Page
@@ -11,32 +10,60 @@ class Mount(
     GracefulDegenerationLifeCycleWrapper,
     MountLifeCycles,
     ):
+    """
+    Mounts a single `Page` instance to the DOM.
+
+    This class handles the mounting of a single `Page` instance to the DOM. It ensures that only one page is mounted at a time and provides lifecycle methods for handling the mounting process.
+
+    **Lifecycle:**
+
+    1. **Server-side:**
+        - The server hydrates all app pages and overwrites the `index.html` file.
+        - The `App` class toggles the visibility of the mounted page.
+    2. **Client-side:**
+        - The `Mount` class triggers the `attached` lifecycle method for the page components.
+
+    **Error Handling:**
+
+    - If an error occurs during mounting, the `componentDidCatchError` method is called with the error message.
+    - This method allows components to handle errors gracefully by returning a new component to display in place of the original component.
+    - If the component does not have a `componentDidCatchError` method, a default error message component is displayed.
+
+    **Parameters:**
+
+    - `page`: An instance of the `Page` class.
+
+    **Returns:**
+
+    None
+    """
+
     async def mount(self, page: Page) -> None:
         """
-            Mount only Page instance to the DOM.
-            Only one page instance can be mounted at a time.
-            Lifecycle:
-                 server on run already hydrate all app pages and overwrite index.html
-                 in App class we toggle hidden visibility 
-                 in Mount we just trigger attached lifecycle. 
-            try : 
-                - mount the component.
-            except:
-                - call componentDidCatchError method.
-            Parameters:
-            - comp: An instance of the Component class.
+        Mounts the given `Page` instance to the DOM.
 
-            params : 
-             page - zenaura page which is list of components with unique ID. 
-            Returns:
-            None
+        This method attempts to mount the provided `Page` instance to the DOM. It iterates through the page's children, updating their state in the virtual DOM and triggering the `attached` lifecycle method for each component.
+
+        **Error Handling:**
+
+        - If an error occurs during mounting, the `componentDidCatchError` method is called with the error message.
+        - This method allows components to handle errors gracefully by returning a new component to display in place of the original component.
+        - If the component does not have a `componentDidCatchError` method, a default error message component is displayed.
+
+        **Parameters:**
+
+        - `page`: An instance of the `Page` class.
+
+        **Returns:**
+
+        None
         """
 
-        try :
+        try:
             for comp in page.children:
-                # update state in vdom
+                # Update state in vdom
                 self.hyd_vdom_update(comp)
-                # trigger attached for page components
+                # Trigger attached for page components
                 await self.attached(comp)
 
         except Exception as e:
