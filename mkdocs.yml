@@ -4,6 +4,7 @@ theme:
   repo_url: https://github.com/squidfunk/mkdocs-material
   logo: assets/logo.png
   favicon: assets/favicon.ico
+
   font:
     text: Roboto
     code: Roboto Mono 
@@ -45,23 +46,11 @@ theme:
       toggle:
         icon: material/toggle-switch-off
         name: Switch to system preference
-  nav: 
-    - Quick Start Guide: quick.md
-    - Documentation: docs.md 
-    - Api Reference:
-      - Algorithm:
-          - Algorithm : algorithm.md 
-    - Examples: examples.md
-    - Advanced Guide: advanced.md 
-    - Contributing: contributing.md
-    - License: license.md
-    - Changelog: changelog.md
-    - About: about.md
-    - FAQ: faq.md
  
 plugins:
   - search
   - mkdocstrings
+  - awesome-pages
 
 
 extra:
