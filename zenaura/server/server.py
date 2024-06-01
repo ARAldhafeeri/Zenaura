@@ -172,7 +172,7 @@ class DevServer:
     * Running a file system observer to detect changes in the application files.
     """
 
-    def __init__(self, debug=True, port=5000):
+    def __init__(self, app, debug=True, port=5000):
         """
         Initializes the DevServer class.
 
@@ -183,7 +183,7 @@ class DevServer:
 
         self.debug = debug
         self.port = port
-        self.app = Flask(__name__, static_folder="public", template_folder="public")
+        self.app = app
         self.sock = Sock()
         self.ws_client_list = []
         self.shutdown_event = Event()
@@ -270,9 +270,9 @@ class DevServer:
                 try:
                     logging.info(f"File {event.src_path} has changed.")
                     logging.info("Changes are live...")
-                    self.server.hydrate_and_notify()
+                    DEVSERVER.hydrate_and_notify()
                     logging.info("Reloading browser...")
-                    self.server.send_refresh_signal()
+                    DEVSERVER.send_refresh_signal()
                     logging.info("Browser reloaded.")
                 except Exception as e:
                     logging.info(f"Error in ChangeHandler: {e}")
