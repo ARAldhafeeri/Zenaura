@@ -1,8 +1,19 @@
 import io
+import logging
+import subprocess
+import time
+from threading import Thread, Event
+import asyncio
+import contextlib
 from zenaura.client.page import Page 
 from zenaura.client.hydrator import HydratorCompilerAdapter
 from zenaura.client.app import App 
+from flask import Flask
+from flask_sock import Sock
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
+logging.basicConfig(level=logging.INFO)
 compiler_adapter = HydratorCompilerAdapter()
 
 # create pyscript pydido template 
@@ -128,3 +139,196 @@ class ZenauraServer:
         # Overwrite in public dir
         with open("./public/index.html", "w") as file:
             file.write(template(pages, meta_description, title, icon, pydide, scripts))
+
+
+class PausingObserver(Observer):
+    def dispatch_events(self, *args, **kwargs):
+        if not getattr(self, '_is_paused', False):
+            super(PausingObserver, self).dispatch_events(*args, **kwargs)
+
+    def pause(self):
+        self._is_paused = True
+
+    def resume(self):
+        time.sleep(self.timeout)  # allow interim events to be queued
+        self.event_queue.queue.clear()
+        self._is_paused = False
+
+    @contextlib.contextmanager
+    def ignore_events(self):
+        self.pause()
+        yield
+        self.resume()
+
+class DevServer:
+    """
+    A class for running a development server for Zenaura applications.
+
+    This class provides methods for:
+
+    * Starting a Flask server with WebSocket support.
+    * Sending refresh signals to connected clients when changes are detected.
+    * Hydrating the application and notifying clients when changes are made.
+    * Running a file system observer to detect changes in the application files.
+    """
+
+    def __init__(self, debug=True, port=5000):
+        """
+        Initializes the DevServer class.
+
+        Args:
+            debug (bool, optional): Whether to run the server in debug mode. Defaults to True.
+            port (int, optional): The port on which to run the server. Defaults to 5000.
+        """
+
+        self.debug = debug
+        self.port = port
+        self.app = Flask(__name__, static_folder="public", template_folder="public")
+        self.sock = Sock()
+        self.ws_client_list = []
+        self.shutdown_event = Event()
+        self.observer = PausingObserver()
+        self.sock.init_app(self.app)
+        self.loop = asyncio.new_event_loop()
+
+        self.setup_websocket()
+
+    def setup_websocket(self):
+        """
+        Sets up the WebSocket route for sending refresh signals to clients.
+        """
+
+        @self.sock.route("/refresh")
+        def refresh(ws):
+            """
+            WebSocket handler for sending refresh signals to clients.
+
+            Args:
+                ws (WebSocket): The WebSocket connection.
+            """
+
+            self.ws_client_list.append(ws)
+            while not self.shutdown_event.is_set():
+                try:
+                    ws.receive()
+                    ws.sleep(1)
+                    ws.send("refresh")
+                except Exception as e:
+                    print(f"Error in WebSocket connection: {e}")
+                    break
+
+    def send_refresh_signal(self):
+        """
+        Sends a refresh signal to all connected clients.
+        """
+
+        logging.info("Sending refresh signal...")
+        clients = self.ws_client_list.copy()
+        for client in clients:
+            try:
+                client.send("refresh")
+            except Exception as e:
+                print(f"Error sending refresh: {e}")
+                self.ws_client_list.remove(client)
+
+    def get_change_handler(self):
+        """
+        Returns a ChangeHandler class that handles file system events.
+
+        Returns:
+            ChangeHandler: A class that handles file system events.
+        """
+
+        DEVSERVER = self
+
+        class ChangeHandler(FileSystemEventHandler):
+            """
+            A class that handles file system events.
+
+            This class is used to detect changes in the application files and trigger a refresh of the browser.
+            """
+
+            def __init__(self, server):
+                """
+                Initializes the ChangeHandler class.
+
+                Args:
+                    server (DevServer): The DevServer instance.
+                """
+
+                super().__init__()
+                self.server = server
+
+            def on_any_event(self, event):
+                """
+                Handles file system events.
+
+                Args:
+                    event (FileSystemEvent): The file system event.
+                """
+
+                try:
+                    logging.info(f"File {event.src_path} has changed.")
+                    logging.info("Changes are live...")
+                    self.server.hydrate_and_notify()
+                    logging.info("Reloading browser...")
+                    self.server.send_refresh_signal()
+                    logging.info("Browser reloaded.")
+                except Exception as e:
+                    logging.info(f"Error in ChangeHandler: {e}")
+
+        return ChangeHandler
+
+    def start_server(self):
+        """
+        Starts the Flask server.
+        """
+
+        try:
+            self.app.run(debug=self.debug, port=self.port, use_reloader=False)
+        except Exception as e:
+            logging.info(f"Error starting server: {e}")
+
+    def hydrate_and_notify(self):
+        """
+        Hydrates the application and notifies clients of changes.
+        """
+
+        try:
+            self.observer.pause()
+            logging.info("Hydrating...")
+            logging.info("Pausing the observer...")
+            process = subprocess.Popen("python build.py", shell=True)
+            process.communicate()
+            logging.info("Hydrated done...")
+
+        finally:
+            logging.info("Running the observer...")
+            self.observer.resume()
+
+    def run(self):
+        """
+        Runs the development server.
+
+        This method starts the Flask server, file system observer, and WebSocket server.
+        """
+
+        path = 'public'
+        ChangeHandler = self.get_change_handler()
+        event_handler = ChangeHandler(self)
+        self.observer.schedule(event_handler, path, recursive=True)
+        self.observer.start()
+
+        server_thread = Thread(target=self.start_server, daemon=True)
+        server_thread.start()
+
+        try:
+            while not self.shutdown_event.is_set():
+                time.sleep(0.1)  # Shorter sleep interval
+        except KeyboardInterrupt:
+            logging.info("KeyboardInterrupt received, stopping...")
+        finally:
+            # Faster Shutdown of Observer
+            self.observer.event_queue.queue.clear()
+            self.observer.stop()  
+            self.observer.join()  

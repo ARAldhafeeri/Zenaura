@@ -4,4 +4,5 @@ mkdocs-material==9.5.18
 mkdocs==1.5.3
 mkdocstrings==0.24.3
 flask==2.3.3
-mkdocs-awesome-pages-plugin
+watchdog==4.0.1
+flask-sock==0.7.0
