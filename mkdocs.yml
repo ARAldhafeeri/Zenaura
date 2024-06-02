@@ -47,10 +47,62 @@ theme:
         icon: material/toggle-switch-off
         name: Switch to system preference
  
+
 plugins:
   - search
   - mkdocstrings
-  - awesome-pages
+
+nav:
+  - "Start Here": index.md
+  - Quick Start Guide:
+    - quick/installation.md
+    - quick/first_app.md
+  - The Basics:
+    - Components: basics/components.md
+    - Component State: basics/state.md
+    - Depedency Injection: basics/di.md
+    - User Events: basics/user_events.md
+    - Pages: basics/pages.md
+    - Lifecycle methods: basics/lifecycle.md
+    - Client Router: basics/router.md
+
+  - API Reference:
+    - Client:
+      - Algorithm:
+        - api/client/algorithm/overview.md
+        - api/client/algorithm/operations.md
+        - api/client/algorithm/searcher.md
+        - api/client/algorithm/updater.md
+      - Compiler:
+        - api/client/compiler/compiler.md
+        - api/client/compiler/sanitize.md
+        - api/client/compiler/attribute.md
+      - Virtual DOM:
+        - api/client/dom/dom.md
+        - api/client/dom/lifecycles.md
+        - api/client/dom/mount.md
+        - api/client/dom/render.md
+        - api/client/dom/error.md
+      - Virtual DOM Hydrator:
+        - Overview: api/client/hydrator/hydrator.md
+        - Compiler Adapter: api/client/hydrator/hy_comp.md
+        - Real DOM Adapter: api/client/hydrator/hy_rdom.md
+        - Virtual DOM Adapter: api/client/hydrator/hy_vdom.md
+        - Tasker Adapter: api/client/hydrator/hy_tasker.md
+        - Lookup Table: api/client/hydrator/lookup.md
+      - Signals:
+        - Observer: api/client/observer/observer.md
+        - Subject: api/client/observer/subject.md
+
+      - Tags:
+        - Node: api/client/tags/node.md
+        - Attribute: api/client/tags/attribute.md
+        - Html: api/client/tags/html.md
+        - Builder: api/client/tags/builder.md
+      - Router: api/client/app.md 
+      - mocks: api/client/mocks.md
+      - page: api/client/page.md 
+      - component: api/client/component.md 
 
 
 extra:
@@ -58,3 +110,12 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
