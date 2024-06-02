@@ -1,0 +1,1 @@
+::: zenaura.client.hydrator.virtual_dom_adapter
