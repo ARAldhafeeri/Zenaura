@@ -2,21 +2,14 @@
 
 In this guide, we'll implement a global state management system using the Observer pattern. We'll create four counters, and when Counter 1 reaches 5, all counters will reset. This example will demonstrate how to use subjects and observers to manage global state in a Zenaura application.
 
-## Step 1: Define the Observer and Subject
+## Step 1: Create needed presentational components
 
-First, we need to import our `Observer` abstract base class and our `Subject` class that will manage the observers. Also we will define some presentational components that helps us build the counters. 
-
-### Observer
-
-importing the `Observer`, `Subject`.
-```python
-from zenaura.client.observer import Observer, Subject
-```
-The counter controlled presentational components in `presentational.py`:
-
-```Python
+```Python 
 from zenaura.client.tags.builder import Builder
 from zenaura.client.tags.node import Node, Attribute
+    
+def Header1(text):
+    return Builder('h1').with_text(text).build()
 
 def Paragraph(text, class_name=None):
     builder = Builder('p').with_text(text)
@@ -24,116 +17,175 @@ def Paragraph(text, class_name=None):
         builder = builder.with_attribute('class', class_name)
     return builder.build()
 
-def Header1(text):
-    return Builder('h1').with_text(text).build()
-
 def Div(class_name, children):
     div = Builder('div').with_attribute('class', class_name).build()
     div.children = children
     return div
 
-def CounterPresntaional(increaseBtn, decreaseBtn, headertext, count) -> Node:
+def Button(class_name, text, onclick_handler=None, name=None):
+    builder = Builder('button').with_attribute('class', class_name).with_text(text)
+    if onclick_handler:
+        builder = builder.with_attribute('py-click', onclick_handler)
+    if name:
+        builder = builder.with_attribute("name", name)
+    return builder.build()
 
-    header = Builder('h1') \
-    .with_child(
-        headertext
-    ).build()
-
-    ctrl = Builder("div") \
-        .with_child(
-            increaseBtn
-        ).with_child(
-            decreaseBtn
-        ).build()
-
+def CounterPresntaional(increaseBtn, headertext, count) -> Node:
     return Builder("div") \
         .with_attribute("id", "large-header") \
-        .with_child(
-            header 
-        ).with_child(
-            ctrl
-    ).build()
-
-def Button(class_name, text, onclick_handler=None, name=None):
-    return Builder("button") \
-        .with_attributes(
-            class_=class_name,
-            py_click=onclick_handler,
-            name=name
-        ) \
-        .with_child(
-            text
+        .with_children(
+            headertext,
+            increaseBtn
         ).build()
+```
+
+## Step 2: Observer, Subject, Counter component
+
+First, we need to import our `Observer` abstract base class and our `Subject` class that will manage the observers. Also we will define some presentational components that helps us build the counters. 
+
+importing the `Observer`, `Subject`.
+```python
+from zenaura.client.observer import Observer, Subject
+```
+importing presentational components 
+
+```Python 
+from public.presentational import Div, Header1, CounterPresntaional, Button
 
 ```
 
-## Step 2: Define Concrete Observers
+creating the `Subject` class that will manage the observers.
+and the `CounterObserver` class that will react to state changes.
 
-Next, we define concrete observer classes that will react to state changes. Each counter will be an observer.
+```Python 
 
-### CounterObserver
+# Create the subject
+counter_subject = Subject()
+counter_subject.state = {"counter1": 0, "counter2": 0, "counter3": 0, "counter4": 0}
 
-```python
-from zenaura.client import Component
 
-class CounterObserver(Component, Observer):
+# create counter observer:
+class CounterObserver(Observer):
+    pass
+
+```
+
+now we will create the counter component, where we manage a global state between different instances of it.
+
+```Python
+
+@Reuseable
+class Counter(Component, CounterObserver):
     def __init__(self, subject, counter_name):
         super().__init__()
         self.subject = subject
-        self.counter_name = counter_name
         self.subject.attach(self)
-        self.state = {self.counter_name: 0}
-
-    def increment(self):
-        new_state = self.subject._state
-        new_state[self.counter_name] += 1
-        if new_state["counter1"] == 5:
-            new_state = {k: 0 for k in new_state}  # Reset all counters
-        self.subject.set_state(new_state)
+        self.counter_name = counter_name
+        
+    @mutator
+    async def increment(self, event):
+        self.subject.state[self.counter_name] += 1
+        self.subject.notify()
 
     def update(self, value):
-        self.state = value
-        self.render()
+        if self.subject.state["counter1"] == 5:
+            for k in self.subject.state.keys():
+                self.subject.state[k] = 0
+        asyncio.get_event_loop().run_until_complete(zenaura_dom.render(self))
 
     def render(self):
-        return html.div(
-            html.h3({}, f"{self.counter_name.capitalize()}: {self.state[self.counter_name]}"),
-            html.button({"onclick": self.increment}, "Increment")
-        )
+        return Div("container", [
+            CounterPresntaional(
+                Button("btn", "Increment", f"{self.counter_name}.increment"),
+                Header1(f"count {self.subject.state[self.counter_name]}"),
+                self.subject.state[self.counter_name],
+                
+            )
+        ])
+
+
+```
+In init,
+
+```Python
+class Counter(Component, CounterObserver):
+    def __init__(self, subject, counter_name):
+        super().__init__()
+        self.subject = subject
+        self.subject.attach(self)
+        self.counter_name = counter_name
 ```
 
-## Step 3: Create and Attach Counters to the Subject
+We link every instance of the counter to the global subject, since subject will only call counterInstance.update.
 
-Now, we'll create the counters and attach them to the subject.
+In increment,
+```Python
+@mutator
+async def increment(self, event):
+    self.subject.state[self.counter_name] += 1
+    self.subject.notify()
+```
+
+we decorate with mutator so the component re-renders after increment called which is user event. 
+
+In update, 
+```Python
+  def update(self, value):
+        if self.subject.state["counter1"] == 5:
+            for k in self.subject.state.keys():
+                self.subject.state[k] = 0
+        asyncio.get_event_loop().run_until_complete(zenaura_dom.render(self))
+```
+we implement the functionality of the global state, reseting all the counters when counter 1 reaches 5. Note we are calling asycnio.get_event_loop().run_until_complete(zenaura_dom.render(self)) to render the component.
+
+This is for the fact zenaura_dom will update the real dom asyncrounsly, in non-blocking way, and self refer to an instance of the counter which is counter 1, counter2, counter3 , counter4, this allow when the state of counter 1 reached 5, all the other counters will be reset to 0.
+
+
+
+## Step 3: Create and Attach Counters to the Subject, create the page
+
+Now, we'll create the counters and attach them to the subject. And create the page of the counters
 
 ### Main Application
 
-```python
-from zenaura.client import html, run_app
+in `main.py` :
 
-# Create the subject
-subject = Subject()
+```python
+from zenaura.client.app import App, Route
+from zenaura.client.page import Page
+from public.components import Counter, counter_subject
+import asyncio
 
 # Create counter components
-counter1 = CounterObserver(subject, "counter1")
-counter2 = CounterObserver(subject, "counter2")
-counter3 = CounterObserver(subject, "counter3")
-counter4 = CounterObserver(subject, "counter4")
+counter1 = Counter(counter_subject, "counter1")
+counter2 = Counter(counter_subject, "counter2")
+counter3 = Counter(counter_subject, "counter3")
+counter4 = Counter(counter_subject, "counter4")
 
-# Define the main app component
-class App(Component):
-    def render(self):
-        return html.div(
-            counter1,
-            counter2,
-            counter3,
-            counter4
-        )
+print(counter1.id != counter2.id != counter3.id != counter4.id)
+router = App()
+router.add_route(
+    Route(
+        "Home", 
+        "/",
+        Page(
+            [counter1, counter2, counter3, counter4]
+       ) 
+    )
+)
 
-# Run the app
-run_app(App)
+
+# Run the application
+event_loop = asyncio.get_event_loop()
+event_loop.run_until_complete(router.handle_location())
 ```
+
+This will result in the required behavior, where the four counters are synced to a single global state as shown in the below GIF: 
+
+![](global_state_counters.gif)
 
 ## Conclusion
 
 By implementing the Observer pattern, we can efficiently manage global state and ensure that all parts of the application react to changes. In this example, we created four counters, and when Counter 1 reaches 5, all counters reset. This approach ensures maintainability, flexibility, and separation of concerns in your Zenaura applications.
+
+The source code for the full example is available on GitHub in the examples repository.
