@@ -40,30 +40,8 @@ def Reuseable(cls):
 
     cls.__init__ = new_init
     return cls
-
-class SelectiveSingleton(type):
-    """
-    Metaclass to ensure only one instance of a component exists at a time.
-
-    This metaclass is used for components that should only have one instance, even if they are instantiated multiple times.
-    """
-    _instances = defaultdict(str)
-
-    def __call__(cls, *args, **kwargs):
-        # Check if the class has the _is_reuseable attribute set to True
-        if not _is_reuseable[cls.__name__]:
-            return super().__call__(*args, **kwargs)
-
-        reuseableId = f"{cls.__name__ + str(cls.count)}"   
-        if cls not in cls._instances and reuseableId not in cls._instances and _is_reuseable[cls.__name__]:
-            instance = super().__call__(*args, **kwargs)
-            cls._instances[cls] = instance
-        else:
-            instance = super().__call__(*args, **kwargs)
-            cls._instances[reuseableId] = instance
-        return cls._instances[cls]
     
-class Component(metaclass=SelectiveSingleton):
+class Component:
     """
     Base class for all Zenaura components.
 

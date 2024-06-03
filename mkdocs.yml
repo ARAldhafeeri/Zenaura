@@ -65,6 +65,11 @@ nav:
     - Pages: basics/pages.md
     - Lifecycle methods: basics/lifecycle.md
     - Client Router: basics/router.md
+  - Beyond The Basics:
+    - Global Componets: intermediate/global_comp.md
+    - Global State: intermediate/global_state.md
+    - Handling Forms: intermediate/forms.md
+
 
   - API Reference:
     - Client:
