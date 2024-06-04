@@ -107,11 +107,11 @@ class HydratorTasker:
 
         comp_queue = self.queue_lookup[component_id]
         if not comp_queue:
-            return self.hyd_tsk_do_nothing
+            return asyncio.Queue()
         try:
             task = comp_queue.get_nowait()
             return task
         except asyncio.QueueEmpty:
             # Clean up and return the placeholder function
             del self.queue_lookup[component_id]
-            return self.hyd_tsk_do_nothing
+            return asyncio.Queue()
