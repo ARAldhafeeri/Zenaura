@@ -113,5 +113,5 @@ class HydratorTasker:
             return task
         except asyncio.QueueEmpty:
             # Clean up and return the placeholder function
-            del self.queue_lookup[component_id]
+            self.queue_lookup[component_id] = asyncio.Queue()
             return self.hyd_tsk_do_nothing
