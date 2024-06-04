@@ -80,6 +80,8 @@ class HydratorTasker:
             bool: True if the task was successfully enqueued, False otherwise.
         """
         comp_queue = self.queue_lookup[component_id]
+        if not comp_queue:
+            return False 
         try:
             comp_queue.put_nowait(task)
             return True
