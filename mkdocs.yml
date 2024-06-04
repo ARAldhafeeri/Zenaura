@@ -78,12 +78,15 @@ nav:
   - Examples:
     - Start Here: examples/start_here.md
     - Contributing: examples/contributing.md
+    - Example Template: examples/template.md
     - Basic Examples:
       - A counter app: examples/basic/counter.md
     - Beyond The Basics Examples:
-      - Cory Game of Life: examples/intermediate/game_of_life.md
+      - Restting Counters Global State: examples/intermediate/global_state.md
     - Advanced Examples:
-      - Admin Portal: examples/advanced/admin_portal.md
+      - Game of Life: examples/advanced/game_of_life.md
+      - API endpoint integration: examples/advanced/data_fetching.md
+
 
 
 
