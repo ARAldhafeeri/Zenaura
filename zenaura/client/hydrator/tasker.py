@@ -102,7 +102,10 @@ class HydratorTasker:
         Returns:
             callable: The dequeued task, or `hyd_tsk_do_nothing` if the queue is empty.
         """
+
         comp_queue = self.queue_lookup[component_id]
+        if not comp_queue:
+            return self.hyd_tsk_do_nothing
         try:
             task = comp_queue.get_nowait()
             return task
