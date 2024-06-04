@@ -92,7 +92,7 @@ class HydratorTasker:
         """
         A placeholder function used when a task queue is empty.
         """
-        pass
+        return asyncio.Queue()
 
     def hyd_tsk_dequeue_task(self, component_id):
         """
@@ -107,11 +107,11 @@ class HydratorTasker:
 
         comp_queue = self.queue_lookup[component_id]
         if not comp_queue:
-            return asyncio.Queue()
+            return self.hyd_tsk_do_nothing
         try:
             task = comp_queue.get_nowait()
             return task
         except asyncio.QueueEmpty:
             # Clean up and return the placeholder function
             del self.queue_lookup[component_id]
-            return asyncio.Queue()
+            return self.hyd_tsk_do_nothing
