@@ -69,6 +69,26 @@ nav:
     - Global Componets: intermediate/global_comp.md
     - Global State: intermediate/global_state.md
     - Handling Forms: intermediate/forms.md
+  - Advanced Concepts:
+    - The Zenaura Virtual DOM: advanced/virtual_dom.md
+    - Component Lifecycle: advanced/lifecycle.md
+    - Integrating with APIs: advanced/fetch_data.md
+    - Publishing Your App: advanced/publish_site.md
+    - Server Side Rendering: advanced/ssr.md
+    - Error Handling: advanced/error_handling.md
+    - Testing Your App: advanced/testing.md
+    - Understanding Pyscript: advanced/pyscript.md
+    - Understanding Pydide: advanced/pydide.md
+  - Examples:
+    - Start Here: examples/start_here.md
+    - Contributing: examples/contributing.md
+    - Basic Examples:
+      - A counter app: examples/basic/counter.md
+    - Beyond The Basics Examples:
+      - Cory Game of Life: examples/intermediate/game_of_life.md
+    - Advanced Examples:
+      - Admin Portal: examples/advanced/admin_portal.md
+
 
 
   - API Reference:

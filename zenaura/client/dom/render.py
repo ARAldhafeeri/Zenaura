@@ -37,7 +37,7 @@ class Render(
     - `search(prev_tree, new_tree, comp_id)`: Calculates the differences between the previous and new component trees.
     - `update(patches, comp_id)`: Applies the calculated differences to the DOM.
     - `hyd_vdom_update(comp)`: Updates the virtual DOM with the new component tree.
-    - `componentDidCatchError(comp, error)`: Handles errors gracefully and displays an error message component.
+    - `on_error(comp, error)`: Handles errors gracefully and displays an error message component.
     """
     async def render(self, comp ) -> None:
         """
@@ -54,9 +54,9 @@ class Render(
 
         **Error Handling:**
 
-        - If an error occurs during rendering, the `componentDidCatchError` method is called with the error message.
+        - If an error occurs during rendering, the `on_error` method is called with the error message.
         - This method allows components to handle errors gracefully by returning a new component to display in place of the original component.
-        - If the component does not have a `componentDidCatchError` method, a default error message component is displayed.
+        - If the component does not have a `on_error` method, a default error message component is displayed.
 
         **Parameters:**
 
@@ -96,4 +96,4 @@ class Render(
             await self.on_settled(comp)
 
         except Exception as e:
-            self.componentDidCatchError(comp, traceback.format_exc())
+            self.on_error(comp, traceback.format_exc())

@@ -25,9 +25,9 @@ class Mount(
 
     **Error Handling:**
 
-    - If an error occurs during mounting, the `componentDidCatchError` method is called with the error message.
+    - If an error occurs during mounting, the `on_error` method is called with the error message.
     - This method allows components to handle errors gracefully by returning a new component to display in place of the original component.
-    - If the component does not have a `componentDidCatchError` method, a default error message component is displayed.
+    - If the component does not have a `on_error` method, a default error message component is displayed.
 
     **Parameters:**
 
@@ -46,9 +46,9 @@ class Mount(
 
         **Error Handling:**
 
-        - If an error occurs during mounting, the `componentDidCatchError` method is called with the error message.
+        - If an error occurs during mounting, the `on_error` method is called with the error message.
         - This method allows components to handle errors gracefully by returning a new component to display in place of the original component.
-        - If the component does not have a `componentDidCatchError` method, a default error message component is displayed.
+        - If the component does not have a `on_error` method, a default error message component is displayed.
 
         **Parameters:**
 
@@ -67,4 +67,4 @@ class Mount(
                 await self.attached(comp)
 
         except Exception as e:
-            self.componentDidCatchError(page.children[0], traceback.format_exc())
+            self.on_error(page.children[0], traceback.format_exc())

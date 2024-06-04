@@ -29,17 +29,17 @@ class GracefulDegenerationLifeCycleWrapper(
     """
     Wraps components to handle errors gracefully.
 
-    This class provides a `componentDidCatchError` method that allows components
+    This class provides a `on_error` method that allows components
     to handle errors gracefully. If a component throws an error, the
-    `componentDidCatchError` method will be called with the error message. The
+    `on_error` method will be called with the error message. The
     component can then return a new component to display in place of the original
     component.
 
-    If the component does not have a `componentDidCatchError` method, a default
+    If the component does not have a `on_error` method, a default
     error message component will be displayed.
     """
 
-    def componentDidCatchError(self, comp, error) -> None:
+    def on_error(self, comp, error) -> None:
         """
         Handles errors gracefully.
 
@@ -55,9 +55,9 @@ class GracefulDegenerationLifeCycleWrapper(
         # Cleanup the Zen DOM table.
         self.zen_dom_table.clear()
 
-        if hasattr(comp, "componentDidCatchError"):
-            # Call the component's `componentDidCatchError` method.
-            error_comp = comp.componentDidCatchError(str(error))
+        if hasattr(comp, "on_error"):
+            # Call the component's `on_error` method.
+            error_comp = comp.on_error(str(error))
 
             # Compile and render the error component.
             compiled_comp = self.hyd_comp_compile_render(error_comp)

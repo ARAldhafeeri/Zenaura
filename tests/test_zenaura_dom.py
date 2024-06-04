@@ -72,7 +72,7 @@ class TestDom(unittest.TestCase):
 
 
         
-    def test_componentDidCatchError_with_custom_error_component(self):
+    def test_on_error_with_custom_error_component(self):
         # Arrange
         class CustomErrorComponent(Component):
             def __init__(self, error_message):
@@ -83,22 +83,22 @@ class TestDom(unittest.TestCase):
 
         @Reuseable
         class TestComponent(Component):
-            def componentDidCatchError(self, error):
+            def on_error(self, error):
                 return CustomErrorComponent(error_message=error)
 
         test_component = TestComponent()
 
-        self.zenaura_dom.componentDidCatchError(test_component, "Custom error message")
+        self.zenaura_dom.on_error(test_component, "Custom error message")
 
         self.assertEqual(self.zenaura_dom.zen_dom_table[test_component.id].children[0].children[0].text, "Custom error message")
 
-    def test_componentDidCatchError_with_default_error_component(self):
+    def test_on_error_with_default_error_component(self):
 
         class TestComponent2(Component):
             pass
         
         test = TestComponent2()
-        self.zenaura_dom.componentDidCatchError(test, "Default error message")
+        self.zenaura_dom.on_error(test, "Default error message")
 
         self.assertEqual(self.zenaura_dom.zen_dom_table[test.id].children[0].text, "Default error message")
 
