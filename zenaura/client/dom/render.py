@@ -84,10 +84,8 @@ class Render(
             
             # schedule update with the browser
             while not task_que.empty():
-                await asyncio.sleep(0.001)
-                if self.hyd_rdom_is_complete():
-                    task = self.hyd_tsk_dequeue_task(comp_id)
-                    await task()
+                task = self.hyd_tsk_dequeue_task(comp_id)
+                await task()
 
                 
             self.hyd_vdom_update(comp)
