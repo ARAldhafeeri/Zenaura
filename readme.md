@@ -3,16 +3,17 @@
 <img title="a title" alt="Alt text" src="./assets/logo.png" width="300" height="300" />
 
 Zenaura is a Python library built on top Pydide, PyScript, designed to empower Python developers to create light-weight, performant, stateful, component-based Single Page Applications (SPAs). By leveraging a virtual DOM implementation, Zenaura optimizes the performance, reactivity, responsiveness, and interactivity of web applications. This allows developers to build high-performance, dynamic web applications using familiar Python concepts and syntax.
-
+# Documentation 
+<a href="https://araldhafeeri.github.io/Zenaura/" target="_blank"> Zenaura documentation and API reference</a>
 # Installing zenaura 
 
-prerequisits:
-    - Python 3.12 or above.
-    - pip 
-    - devolopment server requirements:
-        + flask==2.3.3
-        + watchdog==4.0.1
-        + flask-sock==0.7.0
+### prerequisits:
+- Python 3.12 or above.
+- pip 
+- devolopment server requirements:
+    + flask==2.3.3
+    + watchdog==4.0.1
+    + flask-sock==0.7.0
 
 ```bash
 pip install zenaura flask==2.3.3 watchdog==4.0.1 flask-sock==0.7.0
