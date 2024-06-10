@@ -8,6 +8,9 @@ When you visit a page within a zenaura application , the page previous page will
 
 This is simple way to achieve single page application UI/UX. 
 
+If "/" path is defined then the page associated with it will be visible the rest is hidden.
+If "/" path is not defined, then the first path page is set to visible the rest is hidden.
+
 ## Overview
 
 The `App` class manages routes, navigation, and the current location in a Zenaura application. It supports adding routes, navigating between pages, and handling browser history.

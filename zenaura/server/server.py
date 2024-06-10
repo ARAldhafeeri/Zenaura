@@ -120,19 +120,54 @@ class ZenauraServer:
         """
 
         pages = io.StringIO()
+        
+        # First page in the stack is shown
+        routes = app.routes
 
-        # Render pages
-        for path, route in app.routes.items():
-            page, _, _, ssr = route
-            if ssr:  # Ignore SSR pages
+        def page_div(comps, page_id, hidden):
+            """
+                wraps rendered page components with a div, assign hidden attribute
+                if the page is hidden, and add the id
+            """
+            if hidden:
+                return f'<div hidden data-zenaura="{page_id}">{comps}</div>'
+            return f'<div data-zenaura="{page_id}">{comps}</div>'
+        
+        # if / path in routes it's set to shown
+        if "/" in routes:
+            page, _, _, ssr = routes.pop("/")
+            pages.write(
+                page_div(
+                    compiler_adapter.hyd_comp_compile_page(page),
+                    page.id,
+                    False
+                )
+            )
+        else: # first route , in keys stack will be shown, rest hidden
+            keys = routes.keys() 
+            page, _, _, ssr = routes.pop(keys[0])
+            pages.write(
+                page_div(
+                    compiler_adapter.hyd_comp_compile_page(page),
+                    page.id,
+                    False
+                )
+            )
+
+
+        # Render rest of the pages hidden
+        while routes:
+            _ , (page, _, _, ssr) = routes.popitem()
+            if ssr:  # Ignore server side rendered routes and thier pages.
                 continue
-            if path == "/":  # Set / route to visible
-                page_div = lambda comps: f'<div data-zenaura="{page.id}">{comps}</div>'
-                pages.write(page_div(compiler_adapter.hyd_comp_compile_page(page)))
-                continue
-            # Pages other than / are set to hidden
-            page_div = lambda comps: f'<div hidden data-zenaura="{page.id}">{comps}</div>'
-            pages.write(page_div(compiler_adapter.hyd_comp_compile_page(page)))
+            # Pages other than / or first route in stack are set to hidden
+            pages.write(
+                page_div(
+                    compiler_adapter.hyd_comp_compile_page(page),
+                    page.id,
+                    True
+                )
+            )
 
         pages = pages.getvalue()
 
@@ -140,6 +175,7 @@ class ZenauraServer:
         with open("./public/index.html", "w") as file:
             file.write(template(pages, meta_description, title, icon, pydide, scripts))
 
+        return template(pages, meta_description, title, icon, pydide, scripts)
 
 class PausingObserver(Observer):
     def dispatch_events(self, *args, **kwargs):
