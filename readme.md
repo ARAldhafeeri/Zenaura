@@ -5,6 +5,9 @@
 Zenaura is a Python library built on top Pydide, PyScript, designed to empower Python developers to create light-weight, performant, stateful, component-based Single Page Applications (SPAs). By leveraging a virtual DOM implementation, Zenaura optimizes the performance, reactivity, responsiveness, and interactivity of web applications. This allows developers to build high-performance, dynamic web applications using familiar Python concepts and syntax.
 # Documentation 
 <a href="https://araldhafeeri.github.io/Zenaura/" target="_blank"> Zenaura documentation and API reference</a>
+
+note: hot-reloading is still under-development, it works, however working with cli, zenaura build after every change is better.
+
 # Installing zenaura 
 
 ### prerequisits:
