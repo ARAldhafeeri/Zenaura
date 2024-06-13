@@ -13,7 +13,10 @@ class AttributeProccessor(
     Attributes:
         None
     """
-
+    def __init__(self):
+        self.attrKeyWords = {
+            "styles": "class",
+        }
     def process_attributes(
                 self, 
                 attrs: List[Attribute]

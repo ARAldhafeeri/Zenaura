@@ -43,6 +43,11 @@ class TestZenauraServer(unittest.TestCase):
         self.router_without_home = App()
         self.router_without_home.add_route(self.route)
         self.router_without_home.add_route(self.route2)
+        self.page_with_attrs = Page([Counter([])], {"k" : "test"})
+        self.router_page_with_attrs = App()
+        self.router_page_with_attrs.add_route(
+            Route("test", "/test",self.page_with_attrs, self.middleware )
+        )
         
         global compiler_adapter
         compiler_adapter = self.compiler_adapter  # Mocking the global instance
@@ -60,37 +65,63 @@ class TestZenauraServer(unittest.TestCase):
     @patch("builtins.open", new_callable=unittest.mock.mock_open)
     def test_hydrate_app_home_defined(self, mock_open):
         result = ZenauraServer.hydrate_app(self.router)
-        
+        routes = self.router.routes 
+        pages = []
+        for _, route in routes.items():
+            page, _, _, _ = route
+            pages.append(page.id)
         # / path is not hidden
         self.assertIn(
-            '<div data-zenaura="f933743a">',
+            f'<div data-zenaura="{pages[0]}">',
             result, 
         )
         # rest are hidden
         self.assertIn(
-            '<div hidden data-zenaura="f933743a">',
+            f'<div hidden data-zenaura="{pages[1]}">',
             result, 
         )
         self.assertIn(
-            '<div hidden data-zenaura="f933743a">',
+            f'<div hidden data-zenaura="{pages[2]}">',
             result, 
         )
     
     @patch("builtins.open", new_callable=unittest.mock.mock_open)
-    def test_hydrate_app_home_not_defined_first_in_stack_shown(self, mock_open):
-        result = ZenauraServer.hydrate_app(self.router)
+    def test_hydrate_app_home_not_defined_first_in_stack_shown(self, mock_open):        
+        result = ZenauraServer.hydrate_app(self.router_without_home)
         
-        print(result)
+        routes = self.router_without_home.routes 
+
+        pages = []
+        for _, route in routes.items():
+            page, _, _, _ = route
+            pages.append(page.id)
         # / path is not hidden
         self.assertIn(
-            '<div hidden data-zenaura="79627492">',
+            f'<div hidden data-zenaura="{pages[0]}">',
             result, 
         )
         # rest are hidden
         self.assertIn(
-            '<div hidden data-zenaura="79627492">',
+            f'<div hidden data-zenaura="{pages[1]}">',
             result, 
         )
 
+
+    @patch("builtins.open", new_callable=unittest.mock.mock_open)
+    def test_hydrate_app_pages_with_attrs(self, mock_open):        
+        result = ZenauraServer.hydrate_app(self.router_page_with_attrs)
+        
+        routes = self.router_page_with_attrs.routes 
+
+        pages = []
+        for _, route in routes.items():
+            page, _, _, _ = route
+            pages.append(page.id)
+        # / path is not hidden
+        self.assertIn(
+            f'<div k="test" data-zenaura="{pages[0]}">',
+            result, 
+        )
+    
 if __name__ == '__main__':
     unittest.main()

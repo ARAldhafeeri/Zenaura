@@ -12,9 +12,13 @@ from flask import Flask
 from flask_sock import Sock
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from zenaura.client.compiler.attribute import AttributeProccessor
+from zenaura.client.tags.attribute import Attribute
 
 logging.basicConfig(level=logging.INFO)
 compiler_adapter = HydratorCompilerAdapter()
+attrs_processor = AttributeProccessor()
+
 
 # create pyscript pydido template 
 def template(content, meta_description=None, title=None, icon=None, pydide="https://pyscript.net/releases/2024.1.1/core.js", scripts=None):
@@ -122,16 +126,22 @@ class ZenauraServer:
         pages = io.StringIO()
         
         # First page in the stack is shown
-        routes = app.routes
+        routes = app.routes.copy()
 
-        def page_div(comps, page_id, hidden):
+        def page_div(comps, page_id, hidden, attributes=None):
             """
                 wraps rendered page components with a div, assign hidden attribute
                 if the page is hidden, and add the id
             """
+            if attributes:
+                attrs = []
+                for k,v in attributes.items():
+                    attrs.append(Attribute(k,v))
+
+                attrs = attrs_processor.process_attributes(attrs)
             if hidden:
-                return f'<div hidden data-zenaura="{page_id}">{comps}</div>'
-            return f'<div data-zenaura="{page_id}">{comps}</div>'
+                return f'<div hidden{attrs if attributes else ""} data-zenaura="{page_id}">{comps}</div>'
+            return f'<div{attrs if attributes else ""} data-zenaura="{page_id}">{comps}</div>'
         
         # if / path in routes it's set to shown
         if "/" in routes:
@@ -140,17 +150,20 @@ class ZenauraServer:
                 page_div(
                     compiler_adapter.hyd_comp_compile_page(page),
                     page.id,
-                    False
+                    False,
+                    page.attributes
                 )
             )
         else: # first route , in keys stack will be shown, rest hidden
-            keys = routes.keys() 
+            keys = list(routes.keys())
             page, _, _, ssr = routes.pop(keys[0])
             pages.write(
                 page_div(
                     compiler_adapter.hyd_comp_compile_page(page),
                     page.id,
-                    False
+                    False,
+                    page.attributes
+
                 )
             )
 
@@ -165,7 +178,9 @@ class ZenauraServer:
                 page_div(
                     compiler_adapter.hyd_comp_compile_page(page),
                     page.id,
-                    True
+                    True,
+                    page.attributes
+
                 )
             )
 

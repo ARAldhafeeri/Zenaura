@@ -1,6 +1,6 @@
 import itertools
 from .component import Component, UUIDManager
-from typing import List
+from typing import List, Dict
 
 
 class Page:
@@ -21,17 +21,19 @@ class Page:
 
     _page_count = itertools.count(0)
 
-    def __init__(self, children: List[Component]):
+    def __init__(self, children: List[Component], attributes: Dict = None):
         """
         Initializes a new Page instance.
 
         Args:
             children (List[Component]): The list of components to be added to the page.
+            attributes Dict : list of attributes for the page wrapper div
         """
 
         self.count = next(self._page_count)
         self.id = UUIDManager.generate_uuid(self.__class__.__name__, self.count)
         self.children = children
+        self.attributes ={} if not attributes else attributes
 
         if not isinstance(self.children, list):
             raise TypeError("children must be a list")

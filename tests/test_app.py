@@ -29,6 +29,8 @@ class TestApp(unittest.TestCase):
         self.dom_patcher.start()
         self.window_patcher = patch("zenaura.client.app.window", self.window)
         self.window_patcher.start()
+        self.page_with_empty_attrs = Page([Counter([])], {})
+        self.page_with_attrs = Page([Counter([])], {"k" : "test"})
 
 
     def test_history_node_init(self):
@@ -163,3 +165,10 @@ class TestApp(unittest.TestCase):
         self.router.add_route(route_with_middleware)
         await self.router.navigate("/middleware")
         self.assertEqual(middleware_order, [1, 2])
+
+    def test_page_with_attrs(self):
+        # test passing attributes to page
+        self.assertEqual(self.page_with_empty_attrs.attributes, {})
+        self.assertTrue(self.page_with_attrs.attributes["k"])
+
+        
