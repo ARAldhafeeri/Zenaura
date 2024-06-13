@@ -14,6 +14,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from zenaura.client.compiler.attribute import AttributeProccessor
 from zenaura.client.tags.attribute import Attribute
+from zenaura.client.layout import Layout
 
 logging.basicConfig(level=logging.INFO)
 compiler_adapter = HydratorCompilerAdapter()
@@ -192,6 +193,101 @@ class ZenauraServer:
 
         return template(pages, meta_description, title, icon, pydide, scripts)
 
+
+    @staticmethod
+    def hydrate_app_layout(layout: Layout, title="zenaura", meta_description="this app created with zenaura", icon="./public/favicon.ico", pydide="https://pyscript.net/releases/2024.1.1/core.js", scripts=None) -> None:
+        """
+        Hydrates a Zenaura layout for server-side rendering.
+
+        This method renders all top components -> pages -> bottom in the app, sets the page with path "/" to visible, and the rest to hidden. It then compiles the index.html file for server-side rendering.
+
+        Args:
+            layout (App): the layout to be hyderated with top components -> pages -> bottom components wrapped 
+            title (str, optional): The title of the page. Defaults to "zenaura".
+            meta_description (str, optional): The meta description of the page. Defaults to "this app created with zenaura".
+            icon (str, optional): The URL of the favicon. Defaults to "./public/favicon.ico".
+            pydide (str, optional): The URL of the PyScript library. Defaults to "https://pyscript.net/releases/2024.1.1/core.js".
+            scripts (list, optional): An optional list of additional JavaScript scripts and CSS links to include in the page. Defaults to None.
+        """
+
+        pages = io.StringIO()
+        
+        # First page in the stack is shown
+        routes = layout.routes.copy()
+
+        # add top components first children of root div 
+        for comp in layout.top:
+            pages.write(compiler_adapter.hyd_comp_compile_children(comp.render(), comp.id, True))
+        
+        def page_div(comps, page_id, hidden, attributes=None):
+            """
+                wraps rendered page components with a div, assign hidden attribute
+                if the page is hidden, and add the id
+            """
+            if attributes:
+                attrs = []
+                for k,v in attributes.items():
+                    attrs.append(Attribute(k,v))
+
+                attrs = attrs_processor.process_attributes(attrs)
+            if hidden:
+                return f'<div hidden{attrs if attributes else ""} data-zenaura="{page_id}">{comps}</div>'
+            return f'<div{attrs if attributes else ""} data-zenaura="{page_id}">{comps}</div>'
+        
+        # if / path in routes it's set to shown
+        if "/" in routes:
+            page, _, _, ssr = routes.pop("/")
+            pages.write(
+                page_div(
+                    compiler_adapter.hyd_comp_compile_page(page),
+                    page.id,
+                    False,
+                    page.attributes
+                )
+            )
+        else: # first route , in keys stack will be shown, rest hidden
+            keys = list(routes.keys())
+            page, _, _, ssr = routes.pop(keys[0])
+            pages.write(
+                page_div(
+                    compiler_adapter.hyd_comp_compile_page(page),
+                    page.id,
+                    False,
+                    page.attributes
+
+                )
+            )
+
+
+        # Render rest of the pages hidden
+        while routes:
+            _ , (page, _, _, ssr) = routes.popitem()
+            if ssr:  # Ignore server side rendered routes and thier pages.
+                continue
+            # Pages other than / or first route in stack are set to hidden
+            pages.write(
+                page_div(
+                    compiler_adapter.hyd_comp_compile_page(page),
+                    page.id,
+                    True,
+                    page.attributes
+
+                )
+            )
+
+        # add bottom level components
+        for comp in layout.bottom:
+            pages.write(compiler_adapter.hyd_comp_compile_children(comp.render(), comp.id, True))
+
+        pages = pages.getvalue()
+
+        # Overwrite in public dir
+        with open("./public/index.html", "w") as file:
+            file.write(template(pages, meta_description, title, icon, pydide, scripts))
+
+        return template(pages, meta_description, title, icon, pydide, scripts)
+    
+    
 class PausingObserver(Observer):
     def dispatch_events(self, *args, **kwargs):
         if not getattr(self, '_is_paused', False):

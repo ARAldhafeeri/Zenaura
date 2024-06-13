@@ -6,6 +6,7 @@ from zenaura.client.hydrator import HydratorCompilerAdapter
 from zenaura.server.server import ZenauraServer, template
 from zenaura.client.app import App 
 from unittest.mock import MagicMock, patch
+from zenaura.client.layout import Layout
 
 
 class TestZenauraServer(unittest.TestCase):
@@ -122,6 +123,22 @@ class TestZenauraServer(unittest.TestCase):
             f'<div k="test" data-zenaura="{pages[0]}">',
             result, 
         )
+
+    @patch("builtins.open", new_callable=unittest.mock.mock_open)
+    def test_hydrate_app_layout_pages_with_attrs(self, mock_open):
+        layout = Layout([Counter([])], self.router_page_with_attrs.routes,[Counter([]) ] )
+        result = ZenauraServer.hydrate_app_layout(layout)
+        routes = layout.routes
+        pages = []
+        for _, route in routes.items():
+            page, _, _, _ = route
+            pages.append(page.id)
+
+        print(result)
+        # Page with attributes is not hidden
+        self.assertIn(f'<div k="test" data-zenaura="{pages[0]}">', result)
+        self.assertEqual(result.count(f'data-zenaura="{Counter([]).id}"') , 3)
+
     
 if __name__ == '__main__':
     unittest.main()
