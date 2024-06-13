@@ -840,7 +840,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Example: Complete Application">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-attributes-for-page-wrapper-div" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding attributes for page wrapper div
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding attributes for page wrapper div">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1006,6 +1015,27 @@
   
   <span class="md-ellipsis">
     Global State
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intermediate/layout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Layout
   </span>
   
 
@@ -1674,6 +1704,27 @@
   
   <span class="md-ellipsis">
     0.9.122
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/0.11.122/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.11.122
   </span>
   
 
@@ -2813,6 +2864,13 @@
 </span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>    <span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
 </span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>    <span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">router</span><span class="o">.</span><span class="n">handle_location</span><span class="p">())</span>
 </span></code></pre></div>
+<h2 id="adding-attributes-for-page-wrapper-div">Adding attributes for page wrapper div</h2>
+<p>Each page components are wrapped in single div where it's <code>data-zenara</code> is set to <code>page.id</code>, if you need functionality to add attributes to the page such as <code>class="flex"</code> you can do so using optional page attributes. 
+<div class="language-Python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">header</span><span class="p">,</span> <span class="n">main_content</span><span class="p">,</span> <span class="n">footer</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;flex&quot;</span> <span class="p">})</span>
+</span></code></pre></div></p>
+<p>The above page will render as follow :
+<div class="language-HTML highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">data-zenaura</span><span class="o">=</span><span class="s">&quot;72e7e09f&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div></p>
 <h3 id="explanation_3">Explanation</h3>
 <ol>
 <li><strong>Components and Pages</strong>: We define components and create two pages: <code>home_page</code> and <code>navigation_page</code>.</li>

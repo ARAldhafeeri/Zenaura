@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../intermediate/forms/">
+        <link rel="prev" href="../global_state/">
       
       
-        <link rel="next" href="../lifecycle/">
+        <link rel="next" href="../forms/">
       
       
       <link rel="icon" href="../../assets/favicon.ico">
@@ -20,7 +20,7 @@
     
     
       
-        <title>The Zenaura Virtual DOM - Zenaura Documentation</title>
+        <title>Layout - Zenaura Documentation</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#zenaura-virtual-dom-a-conceptual-deep-dive" class="md-skip">
+        <a href="#layouts" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              The Zenaura Virtual DOM
+              Layout
             
           </span>
         </div>
@@ -267,11 +267,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../intermediate/global_comp/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../global_comp/" class="md-tabs__link">
           
   
   Beyond The Basics
@@ -285,13 +287,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../advanced/virtual_dom/" class="md-tabs__link">
           
   
   Advanced Concepts
@@ -754,25 +754,30 @@
       
   
   
+    
   
   
+  
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -783,7 +788,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Beyond The Basics
@@ -797,7 +802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../intermediate/global_comp/" class="md-nav__link">
+      <a href="../global_comp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -818,7 +823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../intermediate/global_state/" class="md-nav__link">
+      <a href="../global_state/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -836,10 +841,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../intermediate/layout/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Layout
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -848,6 +871,90 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layouts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layouts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-creating-a-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example of Creating a Layout
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example of Creating a Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-define-layout-in-mainpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Define Layout in main.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-hydrate-layout-in-buildpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Hydrate Layout in build.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -860,7 +967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../intermediate/forms/" class="md-nav__link">
+      <a href="../forms/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -885,30 +992,25 @@
       
   
   
-    
   
   
-  
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -919,7 +1021,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Advanced Concepts
@@ -930,30 +1032,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    The Zenaura Virtual DOM
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../advanced/virtual_dom/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -962,80 +1044,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-the-power-of-the-virtual-dom" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. The Power of the Virtual DOM
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-how-zenaura-vdom-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. How Zenaura VDOM Works
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-the-role-of-zenaura-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. The Role of Zenaura Components
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-zenaura-vdom-in-action-code-snippet" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Zenaura VDOM in Action: Code Snippet
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#benefits-of-zenaura-vdom" class="md-nav__link">
-    <span class="md-ellipsis">
-      Benefits of Zenaura VDOM
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-takeaways" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Takeaways
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1048,7 +1056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lifecycle/" class="md-nav__link">
+      <a href="../../advanced/lifecycle/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1069,7 +1077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fetch_data/" class="md-nav__link">
+      <a href="../../advanced/fetch_data/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1090,7 +1098,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pyscript/" class="md-nav__link">
+      <a href="../../advanced/pyscript/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1111,7 +1119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pydide/" class="md-nav__link">
+      <a href="../../advanced/pydide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2634,68 +2642,88 @@
                   
 
 
-<h1 id="zenaura-virtual-dom-a-conceptual-deep-dive">Zenaura Virtual DOM: A Conceptual Deep Dive</h1>
-<p><img alt="VDOM" src="../vdom.png" /> 
-Zenaura's Virtual DOM revolutionizes how you build dynamic web interfaces. It introduces a layer of abstraction between your UI components and the browser's actual DOM, enabling faster updates and a smoother user experience.</p>
-<h2 id="1-the-power-of-the-virtual-dom">1. The Power of the Virtual DOM</h2>
-<p><img alt="TREE" src="../tree.png" /></p>
-<ul>
-<li>
-<p><strong>What is it?</strong>  The VDOM is a lightweight in-memory representation of your web page's structure, similar to a JavaScript object. It mirrors the real DOM but is much faster to manipulate.</p>
-</li>
-<li>
-<p><strong>Why use it?</strong> Directly updating the actual DOM can be slow and inefficient. The VDOM allows Zenaura to intelligently determine the minimal set of changes needed and apply them efficiently, resulting in improved performance.</p>
-</li>
-</ul>
-<h2 id="2-how-zenaura-vdom-works">2. How Zenaura VDOM Works</h2>
-<ol>
-<li><strong>Initial Render:</strong> When your Zenaura components render, they create a VDOM tree. This tree represents the initial state of your UI.</li>
-<li><strong>State Changes:</strong> Data within your components are linked to mutators which are user events that when changed (e.g., through user interactions or API calls), the associated components re-render, creating a new VDOM tree.</li>
-<li><strong>Diffing (Reconciliation):</strong> Zenaura compares the old VDOM tree with the new one to identify the differences. This process is called "diffing" or "reconciliation."</li>
-<li><strong>Efficient Updates:</strong> Zenaura applies only the necessary changes to the real DOM, updating elements, attributes, or text content as needed. It gather all the updates, intelligently determine the minimal set of operations, patch and schedule the update to the real DOM in asyncrounous non-blocking way. This insure smooth user experience, and very low latency, and fast app rendering.</li>
-</ol>
-<h2 id="3-the-role-of-zenaura-components">3. The Role of Zenaura Components</h2>
-<ul>
-<li>
-<p><strong>Building Blocks:</strong> Your UI is composed of Zenaura <code>Component</code> classes. Each component defines its structure (<code>render</code> method) and how it reacts to data changes.</p>
-</li>
-<li>
-<p><strong>Data-Driven:</strong> Components are data-driven. They render their structure based on their internal <code>state</code>. When state changes, the <code>render</code> method is called again, generating a new VDOM.</p>
-</li>
-<li>
-<p><strong>Mutators (Optional):</strong> Zenaura provides the <code>@mutator</code> decorator for methods that modify component state. This ensures the VDOM is efficiently re-render the component intentionally, minimizing poor UI/UX resulting from developers re-rendering the component unintentionally.</p>
-</li>
-<li>
-<p><strong>Lifecycle methods:</strong> Components can define lifecycle methods that extend the functionality of the component, you might want to do something before the component renders so you use <code>attached</code> lifecycle method, you might want to do something before the component re-renders so you use <code>on_mutation</code> lifecycle method, you might want to do something after the component re-renders so you use <code>on_seatled</code>, finally you might want to catch errors in the component so you use <code>on_error</code> lifecycle method. There is dedicated guides in advanced concepts section for lifecycle methods and handling errors.</p>
-</li>
-</ul>
-<h2 id="4-zenaura-vdom-in-action-code-snippet">4. Zenaura VDOM in Action: Code Snippet</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@Reuseable</span>  <span class="c1"># Marks the component as potentially having multiple instances</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="c1"># ... (state, mutators)</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="c1"># Create VDOM nodes (div, button, etc.) based on component state</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="c1"># ...</span>
+  <h1>Layout</h1>
+
+<h2 id="layouts">Layouts</h2>
+<p>Layouts in Zenaura allow you to define global components that exist within the root <code>div</code> for every route. Like other Zenaura components, their state is preserved. Layouts are a way to organize your Zenaura application, ensuring consistency and reusability of common UI elements.</p>
+<p>The typical structure is:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Top Components -&gt; App Routes -&gt; Bottom Components
+</span></code></pre></div></p>
+<h3 id="example-structure">Example Structure</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;root&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span> <span class="cm">&lt;!-- Global top-of-page navigation component --&gt;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;page1&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;page2&quot;</span> <span class="na">hidden</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;page3&quot;</span> <span class="na">hidden</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;page4&quot;</span> <span class="na">hidden</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span> <span class="cm">&lt;!-- Global bottom-of-page footer component --&gt;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<p>In this example:</p>
-<ul>
-<li><code>Counter</code> is a reusable component representing a counter widget.</li>
-<li>The <code>render</code> method constructs a VDOM tree describing the component's structure.</li>
-<li>User actions (like clicking buttons) trigger mutators that update the state, causing <code>render</code> to be called again, and the VDOM to be refreshed.</li>
-</ul>
-<h2 id="benefits-of-zenaura-vdom">Benefits of Zenaura VDOM</h2>
-<ul>
-<li><strong>Performance:</strong> Minimizes expensive DOM manipulations, resulting in smoother UI updates.</li>
-<li><strong>Declarative UI:</strong> Focus on describing what your UI should look like, not how to update it step by step.</li>
-<li><strong>Component Reusability:</strong> Build modular components that encapsulate their own logic and state.</li>
-</ul>
-<h2 id="key-takeaways">Key Takeaways</h2>
-<ul>
-<li>Zenaura VDOM is a powerful tool for building high-performance, interactive web applications.</li>
-<li>Understanding the VDOM concept is key to mastering Zenaura development.</li>
-<li>Leverage the VDOM's capabilities to create efficient and maintainable UIs.</li>
-</ul>
+<h2 id="example-of-creating-a-layout">Example of Creating a Layout</h2>
+<h3 id="step-1-define-layout-in-mainpy">Step 1: Define Layout in <code>main.py</code></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.app</span> <span class="kn">import</span> <span class="n">Route</span><span class="p">,</span> <span class="n">App</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.page</span> <span class="kn">import</span> <span class="n">Page</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">zenaura.client.layout</span> <span class="kn">import</span> <span class="n">Layout</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span> <span class="nn">public.routes</span> <span class="kn">import</span> <span class="n">ClientRoutes</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span> <span class="nn">public.components.header</span> <span class="kn">import</span> <span class="n">Header</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">from</span> <span class="nn">public.components.intro</span> <span class="kn">import</span> <span class="n">IntroSection</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kn">from</span> <span class="nn">public.components.footer</span> <span class="kn">import</span> <span class="n">Footer</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kn">from</span> <span class="nn">public.components.examples</span> <span class="kn">import</span> <span class="n">Example</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Instantiate components</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">nav_bar_header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">(</span><span class="n">router</span><span class="p">)</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">intro_section</span> <span class="o">=</span> <span class="n">IntroSection</span><span class="p">()</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">footer</span> <span class="o">=</span> <span class="n">Footer</span><span class="p">()</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">example</span> <span class="o">=</span> <span class="n">Example</span><span class="p">()</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1"># Define pages</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">intro_section</span><span class="p">])</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">example_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">example</span><span class="p">])</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="c1"># Define routes</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="n">router</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Developer-Focused | Zenaura&quot;</span><span class="p">,</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    <span class="n">path</span><span class="o">=</span><span class="n">ClientRoutes</span><span class="o">.</span><span class="n">home</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>    <span class="n">page</span><span class="o">=</span><span class="n">home_page</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="p">))</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="n">router</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Example&quot;</span><span class="p">,</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    <span class="n">path</span><span class="o">=</span><span class="n">ClientRoutes</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="n">page</span><span class="o">=</span><span class="n">example_page</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="p">))</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="c1"># Create the app layout</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="n">my_app_layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>    <span class="n">top</span><span class="o">=</span><span class="p">[</span><span class="n">nav_bar_header</span><span class="p">],</span>    <span class="c1"># Components to appear before the routes</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>    <span class="n">routes</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">routes</span><span class="p">,</span>       <span class="c1"># Application routes (pages)</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>    <span class="n">bottom</span><span class="o">=</span><span class="p">[</span><span class="n">footer</span><span class="p">]</span>          <span class="c1"># Components to appear after the routes</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="step-2-hydrate-layout-in-buildpy">Step 2: Hydrate Layout in <code>build.py</code></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">public.main</span> <span class="kn">import</span> <span class="n">my_app_layout</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.server</span> <span class="kn">import</span> <span class="n">ZenauraServer</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">ZenauraServer</span><span class="o">.</span><span class="n">hydrate_app_layout</span><span class="p">(</span><span class="n">my_app_layout</span><span class="p">,</span> <span class="n">scripts</span><span class="o">=</span><span class="p">[</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s1">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;public/gigavolt.min.css&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="s1">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;public/output.css&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="s1">&#39;&lt;script src=&quot;public/highlight.min.js&quot;&gt;&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="s1">&#39;&lt;script src=&quot;public/python.min.js&quot;&gt;&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="s1">&#39;&lt;script&gt;hljs.highlightAll();&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="sd">    &lt;script&gt;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="sd">        const ws = new WebSocket(&quot;ws://localhost:5000/refresh&quot;);</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="sd">        ws.onmessage = () =&gt; {</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="sd">            console.log(&quot;Reloading...&quot;);</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="sd">            location.reload();</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="sd">        };</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="sd">    &lt;/script&gt;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="p">])</span>
+</span></code></pre></div>
+<p>This setup ensures that the navigation bar (<code>nav_bar_header</code>) and footer (<code>footer</code>) components appear on every page of the application. You can add multiple components to the top or bottom sections as needed for your application layout.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>By using app layout for global component this insure maximum reuseability and yields more onrganized maintained codebase, even though one of the guides encourage the use of higher order components, however this approach is far more optimized. </p>
 
 
 
