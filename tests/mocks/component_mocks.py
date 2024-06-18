@@ -1,4 +1,4 @@
-from zenaura.client.component import Component
+from zenaura.client.component import Component, Reuseable
 
 class Counter(Component):
     pass
@@ -12,3 +12,5 @@ class componentWIthInitState(Component):
         
     def init_(self):
         return self.state
+    
+

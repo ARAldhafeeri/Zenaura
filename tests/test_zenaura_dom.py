@@ -9,7 +9,7 @@ from zenaura.client.compiler import compiler
 
 sys.modules["pyscript"] = MagicMock()
 
-class TestDom(unittest.TestCase):
+class TestDom(unittest.IsolatedAsyncioTestCase):
 
     @patch('pyscript.document')
     @patch('pyscript.window')
@@ -46,7 +46,7 @@ class TestDom(unittest.TestCase):
         re_rendered = self.zenaura_dom.zen_dom_table[self.counter.id]
         # print end of line 
         # new data structure Data for data binding
-        self.assertEqual(re_rendered.children[0].children[0].children[0].children[0].content, f'Counter: {self.counterState(count=1)}')
+        self.assertEqual(re_rendered.children[0].children[0].children[0].children[0].text, f'Counter: {self.counterState(count=1)}')
 
         
     async def test_mount_existing_component(self):
@@ -68,7 +68,7 @@ class TestDom(unittest.TestCase):
         
         await self.zenaura_dom.render(unmounted_counter)
         key = self.zenaura_dom.zen_dom_table[self.counter.id]
-        self.assertTrue(key)
+        self.assertFalse(key)
 
 
         

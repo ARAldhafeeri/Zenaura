@@ -39,8 +39,7 @@ class TestComponent(unittest.TestCase):
         count = self.c.count
         uuid = self.c.id 
         hash = hashlib.md5(f"{self.c.__class__.__name__}{count}".encode()).hexdigest()[:8]
-        self.assertEqual(uuid, hash)
-        
+        self.assertEqual(uuid, hash)        
 
 
 

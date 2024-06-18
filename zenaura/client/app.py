@@ -135,7 +135,15 @@ class App:
         self.routes = defaultdict(str)
         self.paths = []
         self.history = PageHistory()
-        self.laytout = layout
+        self._laytout = layout
+
+    @property
+    def layout(self):
+        return self._layout
+
+    @layout.setter
+    def layout(self, new_layout):
+        self._layout = new_layout 
 
     async def not_found(self):
         document.title = "Page Not Found"
@@ -143,18 +151,16 @@ class App:
         await zenaura_dom.mount(page)
         self.history.visit(page)
 
-    async def mount_layout(self, layout : Layout) -> None:
+    async def mount_layout(self) -> None:
         """
             Trigger mount method for layout components if layout is defined
         """
-        if layout:
-            # mount top components
-            top_comps = Page(layout.top)
-            await zenaura_dom.mount(top_comps)
-            # mount buttom layout components: 
-            bottom_comps = Page(layout.bottom)
-            await zenaura_dom.mount(bottom_comps)
-            
+        if self._layout:
+            # mount  global components 
+            comps = self._layout.top + self._layout.bottom
+            for comp in comps:
+                if hasattr(comp, "attached"):
+                    await comp.attached()
             
 
     async def navigate(self, path) -> None:
@@ -167,7 +173,7 @@ class App:
             The path to navigate to.
         """
         # call mount methods on layout
-        await self.mount_layout(self.laytout)
+        await self.mount_layout()
         
         # handle route
         matched_route, params = self._match_route(path)
@@ -175,10 +181,10 @@ class App:
             await self.not_found()
             return
         
-        [page, title, middleware, ssr] = self.routes[path]
+        [page, title, middleware, ssr] = matched_route
 
         if callable(middleware):
-            await middleware()
+            middleware()
 
         if ssr:  # Ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
@@ -209,8 +215,7 @@ class App:
         Handles the current location by mounting the associated page and updating the document title.
         """
         # trigger layout components mount if layout is defined:
-        if self.laytout:
-            await self.mount_layout(self.layout)
+        await self.mount_layout()
         # handle home route
         path = window.location.pathname
         matched_route, params = self._match_route(path)
@@ -221,7 +226,7 @@ class App:
         window.history.pushState(path, title, path)  # Update browser history
 
         if callable(middleware):
-            await middleware()
+            middleware()
         if ssr:  # Ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
             self.history.visit(page)
@@ -253,11 +258,9 @@ class App:
         """
         previous_page = self.history.current.page
         curr_page = self.history.back()
-        if not curr_page.ssr: # ignore mount step for server side rendering pages.
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(previous_page, curr_page)
-            await zenaura_dom.mount(curr_page)  # trigger attached lifecycle for each component within the page.
-        else: # trigger attached lifecycle method for the component.
-            await zenaura_dom.mount(curr_page)
+        rdom_hyd.hyd_rdom_toggle_pages_visibilty(previous_page, curr_page)
+        await zenaura_dom.mount(curr_page)  # trigger attached lifecycle for each component within the page.
+
     
     async def forward(self) -> None:
         """
@@ -265,11 +268,9 @@ class App:
         """
         previous_page = self.history.current.page
         curr_page = self.history.forward()
-        if not curr_page.ssr: # ignore mount step for server side rendering pages.
-            rdom_hyd.hyd_rdom_toggle_pages_visibilty(previous_page, curr_page)
-            await zenaura_dom.mount(curr_page)  # trigger attached lifecycle for each component within the page.
-        else: # trigger attached lifecycle method for the component.
-            await zenaura_dom.mount(curr_page)
+        rdom_hyd.hyd_rdom_toggle_pages_visibilty(previous_page, curr_page)
+        await zenaura_dom.mount(curr_page)  # trigger attached lifecycle for each component within the page.
+     
 
     def get_current_route(self) -> Optional[Tuple[Page, str]]:
         """

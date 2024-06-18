@@ -134,7 +134,6 @@ class TestZenauraServer(unittest.TestCase):
             page, _, _, _ = route
             pages.append(page.id)
 
-        print(result)
         # Page with attributes is not hidden
         self.assertIn(f'<div k="test" data-zenaura="{pages[0]}">', result)
         self.assertEqual(result.count(f'data-zenaura="{Counter([]).id}"') , 3)

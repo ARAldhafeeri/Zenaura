@@ -203,7 +203,9 @@ class MockDocument:  # Use MagicMock for flexibility
 
         query = query.replace("[", "").replace("]", "").replace('"', "").split("=")
         id = query[-1]
-        return self.elementsById[id]
+        if id in self.elementsById:
+            return self.elementsById[id]
+        return False
 
 
 class MockLocation:
