@@ -155,6 +155,17 @@ if __name__ == "__main__":
     event_loop.run_until_complete(router.handle_location())
 ```
 
+## Adding attributes for page wrapper div
+Each page components are wrapped in single div where it's `data-zenara` is set to `page.id`, if you need functionality to add attributes to the page such as `class="flex"` you can do so using optional page attributes. 
+```Python 
+home_page = Page([header, main_content, footer], {"class": "flex" })
+```
+
+The above page will render as follow :
+```HTML
+<div data-zenaura="72e7e09f" class="flex"></div>
+
+```
 ### Explanation
 
 1. **Components and Pages**: We define components and create two pages: `home_page` and `navigation_page`.

@@ -7,6 +7,7 @@ from zenaura.client.component import Component, Reuseable
 from zenaura.client.page import Page
 from zenaura.client.mocks import MockWindow, MockDocument
 from zenaura.client.hydrator import HydratorRealDomAdapter
+from zenaura.client.layout import Layout
 
 rdom_hyd = HydratorRealDomAdapter() 
 
@@ -126,7 +127,7 @@ class App:
         get_current_route()
             Get the page and title of the current route, or None if not found.
     """
-    def __init__(self):
+    def __init__(self, layout=None):
         """
             Initializes the App with empty routes and paths, and sets up the initial route handling.
         """
@@ -134,12 +135,27 @@ class App:
         self.routes = defaultdict(str)
         self.paths = []
         self.history = PageHistory()
+        self.laytout = layout
 
     async def not_found(self):
         document.title = "Page Not Found"
         page = Page([notFound])
         await zenaura_dom.mount(page)
         self.history.visit(page)
+
+    async def mount_layout(self, layout : Layout) -> None:
+        """
+            Trigger mount method for layout components if layout is defined
+        """
+        if layout:
+            # mount top components
+            top_comps = Page(layout.top)
+            await zenaura_dom.mount(top_comps)
+            # mount buttom layout components: 
+            bottom_comps = Page(layout.bottom)
+            await zenaura_dom.mount(bottom_comps)
+            
+            
 
     async def navigate(self, path) -> None:
         """
@@ -150,6 +166,10 @@ class App:
         path : str
             The path to navigate to.
         """
+        # call mount methods on layout
+        await self.mount_layout(self.laytout)
+        
+        # handle route
         matched_route, params = self._match_route(path)
         if not matched_route:
             await self.not_found()
@@ -188,6 +208,10 @@ class App:
         """
         Handles the current location by mounting the associated page and updating the document title.
         """
+        # trigger layout components mount if layout is defined:
+        if self.laytout:
+            await self.mount_layout(self.layout)
+        # handle home route
         path = window.location.pathname
         matched_route, params = self._match_route(path)
         if not matched_route:

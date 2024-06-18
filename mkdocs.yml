@@ -69,6 +69,7 @@ nav:
   - Beyond The Basics:
     - Global Componets: intermediate/global_comp.md
     - Global State: intermediate/global_state.md
+    - Layout: intermediate/layout.md
     - Handling Forms: intermediate/forms.md
   - Advanced Concepts:
     - The Zenaura Virtual DOM: advanced/virtual_dom.md
@@ -93,6 +94,7 @@ nav:
   - Releases:
     - "0.9.118": releases/0.9.118.md
     - "0.9.122": releases/0.9.122.md
+    - "0.11.122": releases/0.11.122.md
 
 
   - API Reference:

@@ -1,8 +1,6 @@
 from .component import Component
 from .page import Page
-from typing import List, Dict
-from zenaura.client.app import Route
-
+from typing import List, Dict, Any
 
 class Layout:
     """
@@ -13,7 +11,7 @@ class Layout:
     and others.
     """
 
-    def __init__(self, top: List[Component], routes: List[Route], bottom: List[Component]):
+    def __init__(self, top: List[Component], routes: List[Any], bottom: List[Component]):
         """
         Initializes a new Page instance.
 
