@@ -172,9 +172,6 @@ class App:
         path : str
             The path to navigate to.
         """
-        # call mount methods on layout
-        await self.mount_layout()
-        
         # handle route
         matched_route, params = self._match_route(path)
         if not matched_route:
@@ -198,6 +195,12 @@ class App:
             self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
         
         window.history.pushState(path, title, path)  # Update browser history
+
+        # trigger layout components mount if layout is defined, after 
+        # the reason after pushState, middleware
+        # global components may be be coupled to a state of route path or middleware
+        await self.mount_layout()
+        # mount page
         await zenaura_dom.mount(page)
         self.history.visit(page)
         document.title = title
@@ -214,8 +217,6 @@ class App:
         """
         Handles the current location by mounting the associated page and updating the document title.
         """
-        # trigger layout components mount if layout is defined:
-        await self.mount_layout()
         # handle home route
         path = window.location.pathname
         matched_route, params = self._match_route(path)
@@ -227,6 +228,11 @@ class App:
 
         if callable(middleware):
             middleware()
+
+        # trigger layout components mount if layout is defined, after 
+        # the reason after pushState, middleware
+        # global components may be be coupled to a state of route path or middleware
+        await self.mount_layout()
         if ssr:  # Ignore mount step for server side rendering pages.
             await zenaura_dom.mount(page)
             self.history.visit(page)
@@ -236,6 +242,8 @@ class App:
            pass
         else:
             self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
+        
+        # visit page
         self.history.visit(page)
         await zenaura_dom.mount(page)  # Trigger attached lifecycle for each component within the page.
 
