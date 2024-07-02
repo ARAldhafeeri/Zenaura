@@ -139,20 +139,22 @@ nav:
       - page: api/client/page.md 
       - component: api/client/component.md
 
-      - Zenaura-ui:
-        - Badge: api/ui/badge.md
-        - Breadcrumbs: api/ui/breadcrumbs.md
-        - Button: api/ui/button.md
-        - Card: api/ui/card.md
-        - Common: api/ui/common.md
-        - Form: api/ui/form.md
-        - Input: api/ui/input.md
-        - Menu: api/ui/menu.md
-        - Message: api/ui/message.md
-        - Modal: api/ui/modal.md
-        - Popover: api/ui/popover.md
-        - Select: api/ui/select.md
-        - Tabs: api/ui/tabs.md
+    - Zenaura-ui:
+      - Badge: api/ui/badge.md
+      - Breadcrumbs: api/ui/breadcrumbs.md
+      - Button: api/ui/button.md
+      - Card: api/ui/card.md
+      - Common: api/ui/common.md
+      - Form: api/ui/form.md
+      - Input: api/ui/input.md
+      - Menu: api/ui/menu.md
+      - Message: api/ui/message.md
+      - Modal: api/ui/modal.md
+      - Popover: api/ui/popover.md
+      - Select: api/ui/select.md
+      - Tabs: api/ui/tabs.md
+    - Server:
+      - Server: api/server/server.md
 
 
 extra:
