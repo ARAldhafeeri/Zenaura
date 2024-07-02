@@ -153,6 +153,7 @@ nav:
       - Popover: api/ui/popover.md
       - Select: api/ui/select.md
       - Tabs: api/ui/tabs.md
+      - Table: api/ui/table.md
     - Server:
       - Server: api/server/server.md
 
