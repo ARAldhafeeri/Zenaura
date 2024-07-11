@@ -12,7 +12,7 @@
         <link rel="prev" href="../../examples/advanced/data_fetching/">
       
       
-        <link rel="next" href="../../releases/0.9.118/">
+        <link rel="next" href="../charts/">
       
       
       <link rel="icon" href="../../assets/favicon.ico">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installing-zenaura" class="md-skip">
+        <a href="#intro" class="md-skip">
           Skip to content
         </a>
       
@@ -1518,17 +1518,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    installation
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1539,94 +1528,27 @@
 
       </a>
       
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              
+            
+              
+                
   
   
   
-    
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-install-zenaura" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1 : install zenaura
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-configure-tailwind-css-for-use-in-zenaura" class="md-nav__link">
-    <span class="md-ellipsis">
-      step 2 : Configure tailwind css for use in zenaura
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="step 2 : Configure tailwind css for use in zenaura">
-      <ul class="md-nav__list">
+    <li class="md-nav__item">
+      <a href="../charts/" class="md-nav__link">
         
-          <li class="md-nav__item">
-  <a href="#1-install-tailwind-and-init-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Install tailwind and init configuration
-    </span>
-  </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      adding paths
-    </span>
-  </a>
+  <span class="md-ellipsis">
+    charts
+  </span>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-maincss" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configure main.css
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      add components
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-zenaura-with-tailwind-css" class="md-nav__link">
-    <span class="md-ellipsis">
-      run zenaura with tailwind css
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
+
+      </a>
     </li>
   
 
@@ -1775,6 +1697,27 @@
   
   <span class="md-ellipsis">
     0.12.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/0.13.0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.13.0
   </span>
   
 
@@ -2802,6 +2745,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../api/ui/charts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Charts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../api/ui/badge/" class="md-nav__link">
         
   
@@ -3188,6 +3152,8 @@
                   
 
 
+<h1 id="intro">Intro</h1>
+<p>Zenaura/ui is built on top of tailwindcss that provide styled ui components for zenaura developer to increase the development pace.</p>
 <h1 id="installing-zenaura">Installing zenaura</h1>
 <p>prerequisits:
     - Python 3.12 or above.
@@ -3249,7 +3215,7 @@
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ZenauraServer.hydrate_app_layout(my_app_layout, scripts=[
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        # same
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        &#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;public/gigavolt.min.css&quot;&gt;&#39;,
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        &#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;public/output.css&quot;&gt;&#39;,
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        # same
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>])
 </span></code></pre></div>
