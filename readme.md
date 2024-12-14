@@ -1,5 +1,13 @@
 # Zenaura 
 
+> [!WARNING]
+> This library is under development, it's going to change a lot from now on; breaking changes may occur regulary. Version 0.15.0 will focus on making it more beginner-friendly ( basically no more async await allover the source code because of the use of aysncio que, it's going to be replaced with multi-threading library task queue. It introduces a new approach to scheduling vDOM to rDOM updates without asyncio, significantly improving the developer experience. Keep an eye on the release notes!!
+
+
+> [!NOTE]
+> Contribution is open , awesome features in the backlog such as .pyx, yes you heard it right. If you are intrested send me an email.
+
+
 <img title="a title" alt="Alt text" src="./assets/logo.png" width="300" height="300" />
 
 Zenaura is a Python library built on top Pydide, PyScript, designed to empower Python developers to create light-weight, performant, stateful, component-based Single Page Applications (SPAs). By leveraging a virtual DOM implementation, Zenaura optimizes the performance, reactivity, responsiveness, and interactivity of web applications. This allows developers to build high-performance, dynamic web applications using familiar Python concepts and syntax.
