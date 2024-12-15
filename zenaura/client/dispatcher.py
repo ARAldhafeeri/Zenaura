@@ -1,5 +1,6 @@
 import asyncio 
 from zenaura.web.utils import document, window, in_browser, create_proxy
+
 class AsyncDispatcher:
     def __init__(self):
         self.loop = None
@@ -12,7 +13,7 @@ class AsyncDispatcher:
         :param args: Positional arguments for the coroutine.
         :param kwargs: Keyword arguments for the coroutine.
         """
-        # Initialize the event loop if it's not running)
+        # Initialize the event loop for the thread
         if not self.loop or self.loop.is_closed():
             self.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(self.loop)
