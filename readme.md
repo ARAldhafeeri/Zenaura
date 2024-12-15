@@ -1,7 +1,7 @@
 # Zenaura 
 
 > [!WARNING]
-> This library is under development, it's going to change a lot from now on; breaking changes may occur regulary. Version 0.15.0 will focus on making it more beginner-friendly.
+> This library is under development, it's going to change a lot from now on; breaking changes may occur. Please keep an eye on release notes.
 
 
 > [!NOTE]
