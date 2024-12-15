@@ -1,5 +1,4 @@
 from zenaura.client.hydrator import HydratorVirtualDomAdapter
-
 class MountLifeCycles(
     HydratorVirtualDomAdapter
 ):
