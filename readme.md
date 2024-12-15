@@ -1,7 +1,7 @@
 # Zenaura 
 
 > [!WARNING]
-> This library is under development, it's going to change a lot from now on; breaking changes may occur regulary. Version 0.15.0 will focus on making it more beginner-friendly ( basically no more async await allover the source code because of the use of aysncio que, it's going to be replaced with multi-threading library task queue. It introduces a new approach to scheduling vDOM to rDOM updates without asyncio, significantly improving the developer experience. Keep an eye on the release notes!!
+> This library is under development, it's going to change a lot from now on; breaking changes may occur regulary. Version 0.15.0 will focus on making it more beginner-friendly.
 
 
 > [!NOTE]
