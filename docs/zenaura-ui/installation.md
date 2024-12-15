@@ -1,3 +1,7 @@
+# Intro 
+
+Zenaura/ui is built on top of tailwindcss that provide styled ui components for zenaura developer to increase the development pace.
+
 # Installing zenaura 
 
 prerequisits:
@@ -82,7 +86,7 @@ from public.main import my_app_layout
 
 ZenauraServer.hydrate_app_layout(my_app_layout, scripts=[
         # same
-        '<link rel="stylesheet" href="public/gigavolt.min.css">',
+        '<link rel="stylesheet" href="public/output.css">',
         # same
 ])
 ```

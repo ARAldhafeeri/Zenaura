@@ -92,6 +92,7 @@ nav:
       - API endpoint integration: examples/advanced/data_fetching.md
   - Zenaura-ui:
     - installation: zenaura-ui/installation.md
+    - charts: zenaura-ui/charts.md
 
   - Releases:
     - "0.9.118": releases/0.9.118.md
@@ -99,6 +100,8 @@ nav:
     - "0.11.122": releases/0.11.122.md
     - "0.11.125": releases/0.11.125.md
     - "0.12.0": releases/0.12.0.md
+    - "0.13.0": releases/0.13.0.md
+
 
 
   - API Reference:
@@ -140,6 +143,7 @@ nav:
       - component: api/client/component.md
 
     - Zenaura-ui:
+      - Charts: api/ui/charts.md
       - Badge: api/ui/badge.md
       - Breadcrumbs: api/ui/breadcrumbs.md
       - Button: api/ui/button.md
