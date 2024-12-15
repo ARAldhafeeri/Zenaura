@@ -5,7 +5,7 @@
 
 
 > [!NOTE]
-> Contribution is open , awesome features in the backlog such as .pyx, yes you heard it right. If you are intrested send me an email.
+> Contribution is open , awesome features in the backlog so if you are intrested my email is linked to this profile.
 
 
 <img title="a title" alt="Alt text" src="./assets/logo.png" width="300" height="300" />
