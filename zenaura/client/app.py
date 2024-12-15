@@ -9,11 +9,8 @@ from zenaura.client.mocks import MockWindow, MockDocument
 from zenaura.client.hydrator import HydratorRealDomAdapter
 from zenaura.client.layout import Layout
 from zenaura.web.utils import document, window
-
+from zenaura.client.dispatcher import dispatcher
 rdom_hyd = HydratorRealDomAdapter() 
-
-event_loop = asyncio.get_event_loop()
-
 
     
 from typing import Optional, Tuple, Callable, Dict, Any 
@@ -200,6 +197,25 @@ class App:
         await zenaura_dom.mount(page)
         self.history.visit(page)
         document.title = title
+
+    def run(self):
+        """
+            facade interface mounts the app on "/" location
+            e.g. 
+            app = App()
+            app.add_route(
+                Route(
+                    "Home", 
+                    "/",
+                    Page(
+                        [counter1, counter2, counter3, counter4]
+                ) 
+                )
+            )
+            app.run()
+
+        """
+        dispatcher.dispatch(self.handle_location)
 
     def hyd_rdom_toggle_pages_visibilty(self, previous_page: Page, current_page: Page):
         p_page = document.querySelector(f'[data-zenaura="{previous_page.id}"]')
