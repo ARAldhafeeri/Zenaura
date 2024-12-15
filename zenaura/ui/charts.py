@@ -1,4 +1,5 @@
 from zenaura.client.tags.builder import Builder
+from zenaura.web.utils import document, to_js
 def ChartThis(config, chart_id, *args, **kwargs):
   """
     Attaches a chart to canvas.
@@ -9,8 +10,7 @@ def ChartThis(config, chart_id, *args, **kwargs):
     returns:
       Chart
   """
-  from js import document, Chart, Object
-  from pyodide.ffi import create_proxy, to_js
+  from js import Chart, Object
   # clean up chart if chart exists 
   chart_exists = Chart.getChart(chart_id)
   if chart_exists:

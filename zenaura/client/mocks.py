@@ -137,6 +137,7 @@ class MockDocument:  # Use MagicMock for flexibility
         self.body = MockElement("body")  # Create a body element
         self.elementsById = {"root": self.body}  # Store elements by ID
         self.title = ""
+        self.readyStatus = ""
 
     def getElementById(self, element_id):
         """

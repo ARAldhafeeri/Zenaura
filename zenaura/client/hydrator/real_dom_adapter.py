@@ -1,20 +1,9 @@
 import asyncio 
 from zenaura.client.tags import Node, HTMLElement, Attribute
 from zenaura.client.page import Page 
-from zenaura.client.component import Component
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
-from zenaura.client.mocks import MockDocument, MockWindow
-try :
-    from pyscript import document, window
-    from pyodide.ffi import create_proxy
-    in_browser = True
+from zenaura.web.utils import document, in_browser
 
-except ImportError:
-    document = MockDocument() 
-    window = MockWindow() 
-    create_proxy = lambda x : x 
-    in_browser = False
-from typing import Dict
 
 class HydratorRealDomAdapter:
     # for testing 

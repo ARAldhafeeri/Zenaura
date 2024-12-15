@@ -8,17 +8,13 @@ from zenaura.client.page import Page
 from zenaura.client.mocks import MockWindow, MockDocument
 from zenaura.client.hydrator import HydratorRealDomAdapter
 from zenaura.client.layout import Layout
+from zenaura.web.utils import document, window
 
 rdom_hyd = HydratorRealDomAdapter() 
 
 event_loop = asyncio.get_event_loop()
 
-# this is really nothing just to be able to mock 
-try :
-    from pyscript import document, window
-except ImportError:
-    document = MockDocument() 
-    window = MockWindow() 
+
     
 from typing import Optional, Tuple, Callable, Dict, Any 
 from collections import defaultdict
