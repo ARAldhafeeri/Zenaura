@@ -25,7 +25,7 @@ class AsyncDispatcher:
         # Run the coroutine
         self.loop.run_until_complete(coro_func(*args, **kwargs))
 
-    async def wait_for_ready_state(self, target_state="interactive", retries=5, delay=2):
+    async def wait_for_ready_state(self, state="interactive",  delay=0.01):
         """
         Waits for the document's readyState to match the target state.
         Retries with a delay if the state is not yet reached.
@@ -35,8 +35,8 @@ class AsyncDispatcher:
         :param delay: Delay in seconds between retries.
         :return: True if the desired state is reached, False otherwise.
         """
-        while not document.readyState == "interactive":
-            await asyncio.sleep(0.01)
+        while not document.readyState == state:
+            await asyncio.sleep(delay)
         return True
     
     def bind(self, id, event, coroutine):

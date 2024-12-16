@@ -1,44 +1,14 @@
 # Zenaura Router Guide
 
-The Zenaura Router, encapsulated in the `App` class, provides a powerful and flexible way to manage routes and navigation in your application. This guide will walk you through the essential aspects of setting up and using the router.
+The Zenaura Router, encapsulated in the `App` class, provides a powerful and flexible way to manage routes and navigation in your application.
 
-When you build zenaura client app, zenaura will rewrite index.html as the pages wihin your application. Each page will have hidden, except /. Each route by default is set to ssr = False, ssr can be used to allow the client route to ignore the server side rendered components. 
-
-When you visit a page within a zenaura application , the page previous page will be set to hidden, the current page hidden attribute will be removed.
-
-This is simple way to achieve single page application UI/UX. 
-
-If "/" path is defined then the page associated with it will be visible the rest is hidden.
-If "/" path is not defined, then the first path page is set to visible the rest is hidden.
-
-## Overview
-
-The `App` class manages routes, navigation, and the current location in a Zenaura application. It supports adding routes, navigating between pages, and handling browser history.
+Users will not feel they are going through pages in your application, everything will feel as if they were using single app and content appear as they switch pages.
 
 ### Key Features
 
 - **Routing**: Define paths and associate them with components.
 - **Navigation**: Move between different routes programmatically.
 - **History Management**: Keep track of navigation history and handle forward/backward navigation.
-- **SSR Support**: Handle server-side rendered (SSR) pages.
-
-## App Class
-
-### Attributes
-
-- `routes` (dict): Maps paths to their associated pages and titles.
-- `paths` (list): List of registered paths.
-- `history` (PageHistory): Manages the history of visited pages.
-
-### Methods
-
-- `__init__()`
-- `navigate(path)`
-- `handle_location()`
-- `add_route(route)`
-- `back()`
-- `forward()`
-- `get_current_route()`
 
 ## Setting Up the Router
 
@@ -67,6 +37,8 @@ about_page = Page([AboutComponent()])
 # Add routes
 app.add_route(Route(title="Home", path="/", page=home_page))
 app.add_route(Route(title="About", path="/about", page=about_page))
+
+app.run() # this will run the router on page load.
 ```
 
 ### Navigating Between Routes
@@ -75,14 +47,6 @@ Use the `navigate` method to programmatically navigate to a different route.
 
 ```python
 await app.navigate("/about")
-```
-
-### Handling Current Location
-
-The `handle_location` method mounts the page associated with the current location.
-
-```python
-await app.handle_location()
 ```
 
 ### Navigation History
@@ -99,11 +63,12 @@ await app.forward()
 Retrieve the current route's page and title using the `get_current_route` method.
 
 ```python
-current_route = app.get_current_route() 
+current_route = app.get_current_route()
 print(current_route)
 ```
 
-### Handle params and queries 
+### Handle params and queries
+
 Retrieve the current route with it's params and queries
 
 ```python
@@ -118,7 +83,9 @@ print(info["wildcard"]["query"]["k2"]) # 3
 ```
 
 ### Handle wild card client routes
+
 Zenaura router handles wild card routes if they are defined as follow :
+
 ```Python
 
 route = Route("wildcard", "/users/*", Page([]), None)
@@ -132,7 +99,9 @@ print(info["wildcard"]["query"]["k2"]) # 3
 ```
 
 ### Adding middleware that runs before the route is matched
+
 In every route you can define a middleware a specific logic that runs before zenaura match the route and mount the page:
+
 ```Py
 middleware_order = []
 def middleware1():
@@ -150,7 +119,7 @@ def middleware():
 route = Route("middlewareorder", "/middleware", Page([]), middleware)
 router = App()
 router.add_route(route)
-await router.navigate("/middleware") 
+await router.navigate("/middleware")
 # prints [1]
 # prints [1, 2]
 ```
@@ -221,17 +190,5 @@ app.add_route(Route(title="About", path="/about", page=about_page))
 # Set not found page
 app.not_found_page = NotFound()
 
-# Handle initial location
-await app.handle_location()
-
-# Navigate to a different route
-await app.navigate("/about")
-
-# Navigate back and forth
-await app.back()
-await app.forward()
+app.run()
 ```
-
-## Summary
-
-The Zenaura Router (`App` class) provides a robust way to manage routes and navigation within your application. By defining routes, handling navigation, and managing browser history, you can create a seamless user experience. This guide covers the essential methods and setup needed to get started with routing in Zenaura.

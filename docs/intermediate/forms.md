@@ -2,7 +2,7 @@
 
 Handling forms efficiently in Zenaura involves managing form states and handlers in a structured way. This guide will walk you through creating and handling a form using a pattern that mimics dependency injection to keep your code clean and maintainable.
 
-## Step 1: Define Needed presentaional components 
+## Step 1: Define Needed presentaional components
 
 First, create needed presentational components such as `Label`, `Input`, and `Button`, `TextArea`, and `Form`.
 
@@ -19,44 +19,42 @@ def Div(class_name, children):
 def Label(text):
     return Builder('label').with_text(text).build()
 
-def Input(type, name, oninput):
+def Input(type, name):
     return Builder('input').with_attributes(
         type=type,
         name=name,
     ).with_attribute(
-        "py-change", oninput
+        "id", change_event_id
     ).build()
 
-def TextArea(name, oninput):
+def TextArea(name):
     return Builder('textarea').with_attributes(
         name=name,
     ).with_attribute(
-        "py-change", oninput
+        "id", change_event_id
     ).build()
 
-def Button(type, text):
+def Button(text,submit_button_id):
     return Builder('button').with_attributes(
-        type=type
+        id=submit_button_id
     ).with_text(text).build()
 
-def UserForm(onsubmit, handle_input):
-    return Builder('form').with_attribute(
-        "py-submit", onsubmit
-    ).with_children(
+def UserForm(change_event_id, submit_button_id):
+    return Builder('form').with_attribute("id", change_event_id ).with_children(
         Div('form-group', [
             Label("Name:"),
-            Input("text", "name", handle_input),
+            Input("text", "name"),
             Label("Email:"),
-            Input("email", "email", handle_input),
+            Input("email", "email"),
 
             Label("Message:"),
-            TextArea("message", handle_input),
-            Button("submit", "Submit")
+            TextArea("message"),
+            Button("submit", "Submit", submit_button_id)
         ])
     ).build()
 ```
 
-## Step 2: We will create our Form component 
+## Step 2: We will create our Form component
 
 The form component will handle 3 fields, name, email, message, and submit button.
 
@@ -81,12 +79,11 @@ class UserFormComponent(Component):
             }
 
     def update_state(self, field, value):
-
         self.state[field] = value
-        
-    def submit_form(self):
 
+    def submit_form(self):
         print("Form submitted with:", self.state)
+
     def handle_input(self, event):
         field = event.target.name
         value = event.target.value
@@ -99,7 +96,7 @@ class UserFormComponent(Component):
         self.submit_form()
 
     def render(self):
-        return UserForm(f"{self.instance_name}.handle_submit",f"{self.instance_name}.handle_input")
+        return UserForm("form_field_change", "submit_user_form")
 ```
 
 ## Step 3: Link the form to a page
@@ -113,52 +110,28 @@ from zenaura.client.app import Route, App
 from zenaura.client.page import Page
 from public.routes import ClientRoutes
 from public.components import UserFormComponent
-import asyncio
 
-starter = UserFormComponent("starter")
+form = UserFormComponent("starter")
 
+dispatcher.bind("submit_user_form", "click",  form.handle_submit)
+dispatcher.bind("form_field_change", "input",  form.handle_input)
 # App and routing
 router = App()
-home_page = Page([starter])
+home_page = Page([form])
 
 router.add_route(Route(
     title="Developer-Focused | Zenaura",
-    path=ClientRoutes.home.value,
+    path="/",
     page=home_page
 ))
 
 # Run the application
-event_loop = asyncio.get_event_loop()
-event_loop.run_until_complete(router.handle_location())
+app.run()
 
 ```
 
-## Step 4: build and run the application 
+When user enter data in any of the form fields, input event is triggered from the browser, zenaura will dispach the form input change event, and the handler will search for the target name and use it to update the state.
 
-```Python 
-zenaura build
-```
-```Python 
-zenaura run
-```
+Note there is no mutation, if you want to add validation you might want to add @mutator on handle change, so you can display error message.
 
-Note in the console when we type in the input field, the state is updated and printed out, when we submit we get the following message in the console of the browser 
-
-```
-Form submitted with: {'name': 'sdf', 'email': 'sdf@gmail.com', 'message': 'alksdfhe'}
-```
-
-## Summary
-
-In this guide, we've demonstrated how to handle forms in Zenaura using a pattern that mimics dependency injection. By separating the form handling logic into a dedicated `FormHandler` class and passing it as a dependency to the form component, we've achieved a clean and maintainable structure.
-
-### Key Points:
-- **FormHandlers**: Manages form state and submission logic, it can live within the form component or seperated class.
-- **Form Component**: Handles user input and form submission, utilizing the `FormHandler`.
-- **Application Component**: Integrates the form into the application and passes the handler as a dependency.
-- **Main Entry Point**: Renders the application.
-
-This pattern keeps your codebase modular and promotes separation of concerns, making it easier to manage and extend.
-
-
-The example is available in the examples repository under Handling_forms directory.
+Same with click event, the dispacher bind the user click event to from.handle_submit.

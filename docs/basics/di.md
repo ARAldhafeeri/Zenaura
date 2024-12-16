@@ -86,19 +86,11 @@ class ParentComponent(Component):
         child_component = ChildComponent(self.di)
         return Builder("div").with_child(child_component.render()).build()
 
-def ChildComponent(Component):
+def ChildComponent(dependency):
     self.logger.log("Child component rendered")
     return Builder("div").with_text("Child Component").build()
 
 # Instantiate the parent component with dependencies
+dependencies = ["1", "2"]
 parent_component = ParentComponent(dependencies)
 ```
-
-## Summary
-
-- Define your dependencies outside the components.
-- Pass these dependencies to the component's constructor.
-- Use the dependencies inside the component as needed.
-- Pass dependencies to nested components if necessary.
-
-By following these simple steps, you can effectively manage dependencies in your Zenaura components, making your code more modular, testable, and maintainable.

@@ -44,24 +44,20 @@ def Header1(text):
 from zenaura.client.page import Page
 from public.routes import ClientRoutes
 from public.components import ZenauraStarter
-import asyncio
-
 
 starter = ZenauraStarter()
 
 # App and routing
-router = App()
+app = App()
 home_page = Page([starter])
 
-router.add_route(Route(
+app.add_route(Route(
     title="Developer-Focused | Zenaura",
-    path=ClientRoutes.home.value,
+    path="/",
     page=home_page
 ))
 
-# Run the application
-event_loop = asyncio.get_event_loop()
-event_loop.run_until_complete(router.handle_location())
+app.run()
 
 """, 
 
@@ -150,10 +146,6 @@ from zenaura.server import ZenauraServer
 from public.main import router
 
 ZenauraServer.hydrate_app(router, scripts=[
-        '<link rel="stylesheet" href="public/gigavolt.min.css">',
-        '<script src="public/highlight.min.js"></script>',  
-        '<script src="public/python.min.js"></script>',
-        '<script>hljs.highlightAll();</script>',
         """
         <script>
             const ws = new WebSocket("ws://localhost:5000/refresh");

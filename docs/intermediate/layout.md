@@ -3,25 +3,30 @@
 Layouts in Zenaura allow you to define global components that exist within the root `div` for every route. Like other Zenaura components, their state is preserved. Layouts are a way to organize your Zenaura application, ensuring consistency and reusability of common UI elements.
 
 The typical structure is:
+
 ```
 Top Components -> App Routes -> Bottom Components
 ```
 
 ### Example Structure
+
 ```html
 <div id="root">
-    <nav></nav> <!-- Global top-of-page navigation component -->
-    <div id="page1"></div>
-    <div id="page2" hidden></div>
-    <div id="page3" hidden></div>
-    <div id="page4" hidden></div>
-    <footer></footer> <!-- Global bottom-of-page footer component -->
+  <nav></nav>
+  <!-- Global top-of-page navigation component -->
+  <div id="page1"></div>
+  <div id="page2" hidden></div>
+  <div id="page3" hidden></div>
+  <div id="page4" hidden></div>
+  <footer></footer>
+  <!-- Global bottom-of-page footer component -->
 </div>
 ```
 
 ## Example of Creating a Layout
 
 ### Step 1: Define Layout in `main.py`
+
 ```python
 from zenaura.client.app import Route, App
 from zenaura.client.page import Page
@@ -32,8 +37,10 @@ from public.components.intro import IntroSection
 from public.components.footer import Footer
 from public.components.examples import Example
 
+app = App()
+
 # Instantiate components
-nav_bar_header = Header(router)
+nav_bar_header = Header("")
 intro_section = IntroSection()
 footer = Footer()
 example = Example()
@@ -43,13 +50,13 @@ home_page = Page([intro_section])
 example_page = Page([example])
 
 # Define routes
-router.add_route(Route(
+app.add_route(Route(
     title="Developer-Focused | Zenaura",
     path=ClientRoutes.home.value,
     page=home_page
 ))
 
-router.add_route(Route(
+app.add_route(Route(
     title="Example",
     path=ClientRoutes.examples.value,
     page=example_page
@@ -63,10 +70,11 @@ my_app_layout = Layout(
 )
 
 # optional : pass layout to router to trigger global components attached lifecycle method
-router.layout = my_app_layout
+app.layout = my_app_layout
 ```
 
 ### Step 2: Hydrate Layout in `build.py`
+
 ```python
 from public.main import my_app_layout
 from zenaura.client.server import ZenauraServer
@@ -90,8 +98,3 @@ ZenauraServer.hydrate_app_layout(my_app_layout, scripts=[
 ```
 
 This setup ensures that the navigation bar (`nav_bar_header`) and footer (`footer`) components appear on every page of the application. You can add multiple components to the top or bottom sections as needed for your application layout.
-
-
-## Conclusion
-
-By using app layout for global component this insure maximum reuseability and yields more onrganized maintained codebase, even though one of the guides encourage the use of higher order components, however this approach is far more optimized. 

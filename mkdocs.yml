@@ -7,24 +7,24 @@ theme:
 
   font:
     text: Roboto
-    code: Roboto Mono 
+    code: Roboto Mono
   features:
-  - content.code.annotate
-  - content.code.highlight
-  - content.code.prettify
-  - content.code.copy
-  - content.tabs.link
-  - header.autohide
-  - header.search
-  - header.title
-  - navigation.instant
-  - navigation.sections
-  - navigation.tabs
-  - navigation.top
-  - navigation.tracking
-  - search.suggest
-  - search.highlight
-  - toc.integrate
+    - content.code.annotate
+    - content.code.highlight
+    - content.code.prettify
+    - content.code.copy
+    - content.tabs.link
+    - header.autohide
+    - header.search
+    - header.title
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - toc.integrate
 
   language: en
   palette:
@@ -46,7 +46,6 @@ theme:
       toggle:
         icon: material/toggle-switch-off
         name: Switch to system preference
- 
 
 plugins:
   - search
@@ -55,112 +54,109 @@ plugins:
 nav:
   - "Start Here": index.md
   - Quick Start Guide:
-    - quick/installation.md
-    - quick/first_app.md
+      - quick/installation.md
+      - quick/first_app.md
   - The Basics:
-    - Components: basics/components.md
-    - Component State: basics/state.md
-    - Data Binding Model : basics/data_binding.md
-    - Depedency Injection: basics/di.md
-    - User Events: basics/user_events.md
-    - Pages: basics/pages.md
-    - Lifecycle methods: basics/lifecycle.md
-    - Client Router: basics/router.md
+      - Components: basics/components.md
+      - Component State: basics/state.md
+      - Depedency Injection: basics/di.md
+      - User Events: basics/user_events.md
+      - Pages: basics/pages.md
+      - Client Router: basics/router.md
   - Beyond The Basics:
-    - Global Componets: intermediate/global_comp.md
-    - Global State: intermediate/global_state.md
-    - Layout: intermediate/layout.md
-    - Handling Forms: intermediate/forms.md
+      - Global State: intermediate/global_state.md
+      - Layout: intermediate/layout.md
+      - Handling Forms: intermediate/forms.md
   - Advanced Concepts:
-    - The Zenaura Virtual DOM: advanced/virtual_dom.md
-    - Component Lifecycle: advanced/lifecycle.md
-    - Integrating with APIs: advanced/fetch_data.md
-    - Understanding Pyscript: advanced/pyscript.md
-    - Understanding Pydide: advanced/pydide.md
+      - Dispatcher: advanced/data_binding.md
+      - The Zenaura Virtual DOM: advanced/virtual_dom.md
+      - Component Lifecycle: advanced/lifecycle.md
+      - Integrating with APIs: advanced/fetch_data.md
+      - Understanding Pyscript: advanced/pyscript.md
+      - Understanding Pydide: advanced/pydide.md
   - CLI:
-    - Using The Command Line Tool : CLI/cli.md
+      - Using The Command Line Tool: CLI/cli.md
   - Examples:
-    - Start Here: examples/start_here.md
-    - Contributing: examples/contributing.md
-    - Example Template: examples/template.md
-    - Basic Examples:
-      - A counter app: examples/basic/counter.md
-    - Beyond The Basics Examples:
-      - Restting Counters Global State: examples/intermediate/global_state.md
-    - Advanced Examples:
-      - Game of Life: examples/advanced/game_of_life.md
-      - API endpoint integration: examples/advanced/data_fetching.md
+      - Start Here: examples/start_here.md
+      - Contributing: examples/contributing.md
+      - Example Template: examples/template.md
+      - Basic Examples:
+          - A counter app: examples/basic/counter.md
+      - Beyond The Basics Examples:
+          - Restting Counters Global State: examples/intermediate/global_state.md
+      - Advanced Examples:
+          - Game of Life: examples/advanced/game_of_life.md
+          - API endpoint integration: examples/advanced/data_fetching.md
   - Zenaura-ui:
-    - installation: zenaura-ui/installation.md
-    - charts: zenaura-ui/charts.md
+      - installation: zenaura-ui/installation.md
+      - charts: zenaura-ui/charts.md
 
   - Releases:
-    - "0.9.118": releases/0.9.118.md
-    - "0.9.122": releases/0.9.122.md
-    - "0.11.122": releases/0.11.122.md
-    - "0.11.125": releases/0.11.125.md
-    - "0.12.0": releases/0.12.0.md
-    - "0.13.0": releases/0.13.0.md
-
-
+      - "0.9.118": releases/0.9.118.md
+      - "0.9.122": releases/0.9.122.md
+      - "0.11.122": releases/0.11.122.md
+      - "0.11.125": releases/0.11.125.md
+      - "0.12.0": releases/0.12.0.md
+      - "0.13.0": releases/0.13.0.md
 
   - API Reference:
-    - Client:
-      - Algorithm:
-        - api/client/algorithm/overview.md
-        - api/client/algorithm/operations.md
-        - api/client/algorithm/searcher.md
-        - api/client/algorithm/updater.md
-      - Compiler:
-        - api/client/compiler/compiler.md
-        - api/client/compiler/sanitize.md
-        - api/client/compiler/attribute.md
-      - Virtual DOM:
-        - api/client/dom/dom.md
-        - api/client/dom/lifecycles.md
-        - api/client/dom/mount.md
-        - api/client/dom/render.md
-        - api/client/dom/error.md
-      - Virtual DOM Hydrator:
-        - Overview: api/client/hydrator/hydrator.md
-        - Compiler Adapter: api/client/hydrator/hy_comp.md
-        - Real DOM Adapter: api/client/hydrator/hy_rdom.md
-        - Virtual DOM Adapter: api/client/hydrator/hy_vdom.md
-        - Tasker Adapter: api/client/hydrator/hy_tasker.md
-        - Lookup Table: api/client/hydrator/lookup.md
-      - Signals:
-        - Observer: api/client/observer/observer.md
-        - Subject: api/client/observer/subject.md
+      - Client:
+          - Algorithm:
+              - api/client/algorithm/overview.md
+              - api/client/algorithm/operations.md
+              - api/client/algorithm/searcher.md
+              - api/client/algorithm/updater.md
+          - Compiler:
+              - api/client/compiler/compiler.md
+              - api/client/compiler/sanitize.md
+              - api/client/compiler/attribute.md
+          - Virtual DOM:
+              - api/client/dom/dom.md
+              - api/client/dom/lifecycles.md
+              - api/client/dom/mount.md
+              - api/client/dom/render.md
+              - api/client/dom/error.md
+          - Virtual DOM Hydrator:
+              - Overview: api/client/hydrator/hydrator.md
+              - Compiler Adapter: api/client/hydrator/hy_comp.md
+              - Real DOM Adapter: api/client/hydrator/hy_rdom.md
+              - Virtual DOM Adapter: api/client/hydrator/hy_vdom.md
+              - Tasker Adapter: api/client/hydrator/hy_tasker.md
+              - Lookup Table: api/client/hydrator/lookup.md
+          - Signals:
+              - Observer: api/client/observer/observer.md
+              - Subject: api/client/observer/subject.md
+          - Dispacher:
+              - Dispacher: api/client/dispatcher.md
 
-      - Tags:
-        - Node: api/client/tags/node.md
-        - Attribute: api/client/tags/attribute.md
-        - Html: api/client/tags/html.md
-        - Builder: api/client/tags/builder.md
-      - Router: api/client/app.md 
-      - mocks: api/client/mocks.md
-      - page: api/client/page.md 
-      - component: api/client/component.md
+          - Tags:
+              - Node: api/client/tags/node.md
+              - Attribute: api/client/tags/attribute.md
+              - Html: api/client/tags/html.md
+              - Builder: api/client/tags/builder.md
+          - Router: api/client/app.md
+          - mocks: api/client/mocks.md
+          - page: api/client/page.md
+          - component: api/client/component.md
 
-    - Zenaura-ui:
-      - Charts: api/ui/charts.md
-      - Badge: api/ui/badge.md
-      - Breadcrumbs: api/ui/breadcrumbs.md
-      - Button: api/ui/button.md
-      - Card: api/ui/card.md
-      - Common: api/ui/common.md
-      - Form: api/ui/form.md
-      - Input: api/ui/input.md
-      - Menu: api/ui/menu.md
-      - Message: api/ui/message.md
-      - Modal: api/ui/modal.md
-      - Popover: api/ui/popover.md
-      - Select: api/ui/select.md
-      - Tabs: api/ui/tabs.md
-      - Table: api/ui/table.md
-    - Server:
-      - Server: api/server/server.md
-
+      - Zenaura-ui:
+          - Charts: api/ui/charts.md
+          - Badge: api/ui/badge.md
+          - Breadcrumbs: api/ui/breadcrumbs.md
+          - Button: api/ui/button.md
+          - Card: api/ui/card.md
+          - Common: api/ui/common.md
+          - Form: api/ui/form.md
+          - Input: api/ui/input.md
+          - Menu: api/ui/menu.md
+          - Message: api/ui/message.md
+          - Modal: api/ui/modal.md
+          - Popover: api/ui/popover.md
+          - Select: api/ui/select.md
+          - Tabs: api/ui/tabs.md
+          - Table: api/ui/table.md
+      - Server:
+          - Server: api/server/server.md
 
 extra:
   generator: false

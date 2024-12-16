@@ -19,12 +19,12 @@ node = Node(
     "div",
     children=[
         Node(
-            'h1', 
+            'h1',
             children=[
                 Node(text='hello')
             ]
         )
-    ], 
+    ],
     attributes=[
         Attribute("class", "test")
     ]
@@ -35,7 +35,7 @@ This will render the following HTML:
 
 ```html
 <div class="test">
-    <h1>hello</h1>
+  <h1>hello</h1>
 </div>
 ```
 
@@ -58,7 +58,7 @@ This will render the following HTML:
 
 ```html
 <div class="test">
-    <h1>test</h1>
+  <h1>test</h1>
 </div>
 ```
 
@@ -88,7 +88,7 @@ This will render the following HTML:
 
 ```html
 <div class="test">
-    <h1>test</h1>
+  <h1>test</h1>
 </div>
 ```
 
@@ -150,11 +150,12 @@ zen2 = ZenauraStarter()  # No error
 
 ## Nesting Component Logic
 
-In the Zenaura library, there is a specific nesting order that must be followed: 
+In the Zenaura library, there is a specific nesting order that must be followed:
 
 - **Pages**
   - **Class Components**
     - **Functional Components**
+- **Layout** : Layout is advanced topic which we will discuss later in the documentation, it allows you to add global components that appear on every page like navbar, modals, footers and so on.
 
 This order ensures predictable and debuggable source code. Pages render the components as a stack from index 0 to n in the browser. Nested stateful class components can be confusing, so maintain the hierarchy to avoid errors.
 
