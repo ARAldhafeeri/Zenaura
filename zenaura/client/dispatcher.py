@@ -51,7 +51,7 @@ class AsyncDispatcher:
         # if user not in development server and target not found
         # throw an error 
         if not target :
-            if not in_browser:
+            if in_browser:
               raise ValueError(f"Element with id '{id}' not found. Cannot bind '{coroutine.__name__}' to '{event}'.")
 
         # Bind the event listener
