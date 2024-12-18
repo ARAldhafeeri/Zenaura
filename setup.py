@@ -23,8 +23,8 @@ setup(
         'zenaura.cli', 
         'zenaura.ui', 
         "zenaura.web",
-        "zenaura.tests",
-        "zenaura.tests.mocks",
+        "tests",
+        "tests.mocks",
 
         ],
     install_requires=[
