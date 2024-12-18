@@ -1,12 +1,10 @@
-# Zenaura 
+# Zenaura
 
 > [!WARNING]
 > This library is under development, it's going to change a lot from now on; breaking changes may occur. Please keep an eye on release notes.
 
-
 > [!NOTE]
 > Contribution is open , awesome features in the backlog so if you are intrested my email is linked to this profile.
-
 
 <img title="a title" alt="Alt text" src="./assets/logo.png" width="300" height="300" />
 
@@ -22,7 +20,7 @@ note: hot-reloading is still under-development, it works, however working with c
 
 ### prerequisits:
 
-- Python 3.12 or above.
+- Python 3.11 or above.
 - pip
 - devolopment server requirements:
   - flask==2.3.3
