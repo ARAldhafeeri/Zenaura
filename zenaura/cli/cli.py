@@ -143,9 +143,9 @@ class ClientRoutes(Enum):
 
 build_file_init = '''
 from zenaura.server import ZenauraServer
-from public.main import router
+from public.main import app
 
-ZenauraServer.hydrate_app(router, scripts=[
+ZenauraServer.hydrate_app(app, scripts=[
         """
         <script>
             const ws = new WebSocket("ws://localhost:5000/refresh");
