@@ -52,7 +52,7 @@ class AsyncDispatcher:
         try:
             target.addEventListener(event, create_proxy(lambda e: self.dispatch(coroutine, e)))
         except Exception as e:
-            raise RuntimeError(f"Failed to bind '{coroutine.__name__}' to '{event}' on target '{id}': {e}")
+            print(f"WARNING:  ignoring to bind in build '{coroutine.__name__}' to '{event}' on target '{id}'")
 
 
 dispatcher = AsyncDispatcher()
