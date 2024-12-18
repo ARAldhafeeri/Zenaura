@@ -126,7 +126,7 @@ class App:
         self.routes = defaultdict(str)
         self.paths = []
         self.history = PageHistory()
-        self._laytout = layout
+        self._layout = layout
 
     @property
     def layout(self):
