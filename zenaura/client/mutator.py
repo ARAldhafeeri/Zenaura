@@ -42,7 +42,7 @@ def mutator(coroutine):
         Returns:
             None
         """
-        dispatcher.dispatch(coroutine, component, *args, kwargs)
+        dispatcher.dispatch(coroutine, component, *args, **kwargs)
         dispatcher.dispatch(zenaura_dom.render, component)
 
     return wrapper_func
@@ -85,7 +85,6 @@ def mutates(func):
         Returns:
             None
         """
-        func(component, *args, kwargs)
+        func(component, *args, **kwargs)
         dispatcher.dispatch(zenaura_dom.render, component)
-
     return wrapper_func
