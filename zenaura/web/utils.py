@@ -16,16 +16,9 @@ This is used across the source code as well.
 """
 in_browser = False
 
-global document
-global window
-global create_proxy 
-global to_js
-
 try:
-    from pyscript import document as pyscript_doc, window as pyscript_window
+    from pyscript import document, window
     in_browser = True 
-    document = pyscript_doc
-    window = pyscript_window
 except:
     from zenaura.mocks.browser_mocks import MockDocument, MockWindow
     document = MockDocument()
@@ -34,9 +27,7 @@ except:
     
 
 try : 
-    from pyodide.ffi import create_proxy_pyodide, to_js_poyodide
-    create_proxy = create_proxy_pyodide
-    to_js = to_js_poyodide
+    from pyodide.ffi import create_proxy, to_js
     in_browser = True
 
 except:
