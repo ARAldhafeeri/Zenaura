@@ -26,7 +26,6 @@ note: hot-reloading is still under-development, it works, however working with c
   - flask==2.3.3
   - watchdog==4.0.1
   - flask-sock==0.7.0
-  - nest_asyncio==1.6.0
 
 ```bash
 pip install zenaura flask==2.3.3 watchdog==4.0.1 flask-sock==0.7.0

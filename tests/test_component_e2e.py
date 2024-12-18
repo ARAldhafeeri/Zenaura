@@ -5,10 +5,9 @@ from zenaura.client.tags import Attribute, Node
 from zenaura.client.dispatcher import dispatcher
 sys.modules["pyscript"] = MagicMock()
 
-class TestComponent(unittest.TestCase):
+class TestComponent(unittest.IsolatedAsyncioTestCase):
 
-	@patch("zenaura.web.utils.document")
-	def setUp(self, document):  # Run before each test
+	def setUp(self):  # Run before each test
 		from tests.mocks.counter_mocks import Counter, BTN_STYLES, CounterState
 		from zenaura.client.dom import zenaura_dom
 		self.dependencies = {}  # Mock dependencies if needed
@@ -16,17 +15,17 @@ class TestComponent(unittest.TestCase):
 		self.counter = Counter(self.dependencies)
 		self.zenaura_dom = zenaura_dom
 		self.counterState = CounterState
-		document.readyState = "interactive"
 
 	def test_initial_state(self):
 		state = self.counter.get_state()
 		self.assertEqual(state.count, 0)  # Ensure initial count is 0
 	
 
-	def test_increment(self):
-		dispatcher.dispatch(self.counter.increment)
-		state = self.counter.get_state()
-		self.assertEqual(state.count, 1)
+	async def test_increment(self):
+		await self.counter.increment("update")
+		print("self counter state", self.counter.state, self.counter.get_state())
+		await self.zenaura_dom.render(self.counter)
+		self.assertEqual(self.counter.state.count, 1)
 	
 
 	def test_create_button(self):
@@ -40,8 +39,8 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(self.counter.increment, button.attributes[0].value)
 		self.assertEqual(button.children[0].name , "label")
 
-	def test_decrease(self):
-		dispatcher.dispatch(self.counter.decrease)
+	async def test_decrease(self):
+		await self.counter.decrease("event")
 		state = self.counter.get_state()
 		self.assertEqual(state.count, -1)
 	
@@ -99,17 +98,17 @@ class TestComponent(unittest.TestCase):
 		self.assertEqual(self.counter.increment, button.attributes[0].value)
 		self.assertEqual(button.children[0].name, "label")
 
-	def test_increment_multiple_times(self):
+	async def test_increment_multiple_times(self):
 		# Increment the count multiple times
 		for _ in range(5):
-			dispatcher.dispatch(self.counter.increment)
+			await self.counter.increment("event")
 		state = self.counter.get_state()
 		self.assertEqual(state.count, 5)
 
-	def test_decrease_multiple_times(self):
+	async def test_decrease_multiple_times(self):
 		# Decrease the count multiple times
 		for _ in range(3):
-			dispatcher.dispatch(self.counter.decrease)
+			await self.counter.decrease("event")
 		state = self.counter.get_state()
 		self.assertEqual(state.count, -3)
 

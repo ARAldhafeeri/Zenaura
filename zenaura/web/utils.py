@@ -30,13 +30,18 @@ except:
     from zenaura.mocks.browser_mocks import MockDocument, MockWindow
     document = MockDocument()
     window = MockWindow()
+    in_browser = False
     
 
 try : 
-     from pyodide.ffi import create_proxy_pyodide, to_js_poyodide
-     create_proxy = create_proxy_pyodide
-     to_js = to_js_poyodide
+    from pyodide.ffi import create_proxy_pyodide, to_js_poyodide
+    create_proxy = create_proxy_pyodide
+    to_js = to_js_poyodide
+    in_browser = True
+
 except:
     # TODO: need to create mocks
     create_proxy = lambda x: x 
     to_js = lambda x: x 
+    in_browser = False
+

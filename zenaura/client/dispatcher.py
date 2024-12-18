@@ -1,11 +1,8 @@
 import asyncio 
 from zenaura.web.utils import document, window, in_browser, create_proxy
-import nest_asyncio
-nest_asyncio.apply()
-class AsyncDispatcher:
-    def __init__(self):
-        self.loop = None
 
+
+class AsyncDispatcher:
     def dispatch(self, coro_func, *args, **kwargs):
         """
         Wrap asyncio.run to schedule and run the given coroutine.
@@ -13,12 +10,13 @@ class AsyncDispatcher:
         :param coro_func: The coroutine function to execute.
         :param args: Positional arguments for the coroutine.
         :param kwargs: Keyword arguments for the coroutine.
-        """
-        if not self.loop or self.loop.is_closed():
-            self.loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(self.loop)
-            
-        self.loop.run_until_complete(coro_func(*args, **kwargs))
+        """ 
+        # nest_aysncio loops throws this error in browser :
+        # ValueError: Can't patch loop of type <class 'pyodide.webloop.WebLoop'>
+        # use pyodide  pyodide.webloop in browser.        
+        if in_browser:
+            print("in browser , lslksdfkj")
+            asyncio.get_running_loop().run_until_complete(coro_func(*args, **kwargs))
 
     def bind(self, id, event, coroutine):
         """

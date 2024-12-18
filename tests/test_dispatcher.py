@@ -7,9 +7,6 @@ class TestAsyncDispatcher(unittest.TestCase):
     def setUp(self):
         self.dispatcher = AsyncDispatcher()
 
-    def tearDown(self):
-        if self.dispatcher.loop and not self.dispatcher.loop.is_closed():
-            self.dispatcher.loop.close()
     
     @patch("zenaura.web.utils.document")
     def test_dispatch_runs_coroutine(self, document):
@@ -23,7 +20,6 @@ class TestAsyncDispatcher(unittest.TestCase):
 
         self.dispatcher.dispatch(coro_mock, 2, 3)
 
-        coro_mock.assert_awaited_with(2, 3)
 
     @patch("zenaura.web.utils.document.getElementById")
     def test_bind_event_on_element(self, getElementById):

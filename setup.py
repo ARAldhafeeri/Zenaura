@@ -5,7 +5,7 @@ with open("readme.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='zenaura',
-    version='0.15.6',
+    version='0.15.7',
     description="Zenaura is an experimental Python library built upon PyScript, designed to empower Python developers to create stateful, component-based Single Page Applications (SPAs). By leveraging a virtual DOM implementation, Zenaura optimizes the performance, reactivity, responsiveness, and interactivity of web applications. This allows developers to build high-performance, dynamic web applications using familiar Python concepts and syntax.",
     author="Ahmed Rakan",
     author_email="ar.aldhafeeri11@gmail.com",
@@ -27,8 +27,7 @@ setup(
 
         ],
     install_requires=[
-        'bleach==6.1.0', 
-        'nest_asyncio==1.6.0'
+        'bleach==6.1.0'
     ],
     entry_points={
         "console_scripts": [
