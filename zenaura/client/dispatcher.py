@@ -1,6 +1,7 @@
 import asyncio 
 from zenaura.web.utils import document, window, in_browser, create_proxy
-
+import nest_asyncio
+nest_asyncio.apply()
 class AsyncDispatcher:
     def __init__(self):
         self.loop = None
@@ -13,32 +14,12 @@ class AsyncDispatcher:
         :param args: Positional arguments for the coroutine.
         :param kwargs: Keyword arguments for the coroutine.
         """
-        # Initialize the event loop for the thread
         if not self.loop or self.loop.is_closed():
             self.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(self.loop)
-
-
-        # waits for document to be interactive 
-        self.loop.dispatch(dispatcher.wait_for_ready_state)
-
-        # Run the coroutine
+            
         self.loop.run_until_complete(coro_func(*args, **kwargs))
 
-    async def wait_for_ready_state(self, state="interactive",  delay=0.01):
-        """
-        Waits for the document's readyState to match the target state.
-        Retries with a delay if the state is not yet reached.
-
-        :param target_state: The desired readyState (e.g., "interactive").
-        :param retries: Number of retries before giving up.
-        :param delay: Delay in seconds between retries.
-        :return: True if the desired state is reached, False otherwise.
-        """
-        while not document.readyState == state:
-            await asyncio.sleep(delay)
-        return True
-    
     def bind(self, id, event, coroutine):
         """
         Subscribe an event to an element, window, or document and dispatch a sync or async callback.
@@ -61,6 +42,7 @@ class AsyncDispatcher:
         # Determine the target based on id
         if id == "window":
             target = window
+            print("yes window", target)
         elif id == "document":
             target = document
         else:

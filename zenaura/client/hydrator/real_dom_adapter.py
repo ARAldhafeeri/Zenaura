@@ -1,4 +1,3 @@
-import asyncio 
 from zenaura.client.tags import Node, HTMLElement, Attribute
 from zenaura.client.page import Page 
 from zenaura.client.config import ZENAURA_DOM_ATTRIBUTE
@@ -201,17 +200,6 @@ class HydratorRealDomAdapter:
             bool - True if the DOM is content loaded, False otherwise
         """
         return document.readyState == "DOMContentLoaded"
-
-    async def hyd_rdom_wait_for_dom_content_loaded(self):
-        """
-        Waits for the DOM to be content loaded.
-        """
-        if not in_browser:
-            return 
-        while True:
-            await asyncio.sleep(0.001)
-            if document.readyState=="complete":
-                break
         
 
     def hyd_rdom_toggle_pages_visibilty(self, previous_page : Page, current_page : Page ):

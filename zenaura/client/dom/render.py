@@ -3,8 +3,6 @@ from zenaura.client.dom.error import GracefulDegenerationLifeCycleWrapper
 from zenaura.client.hydrator import HydratorTasker
 from .lifecycles.render import RenderLifeCycle
 from zenaura.client.algorithm import DiffingAlgorithm
-import asyncio
-
 
 class Render(
     GracefulDegenerationLifeCycleWrapper,

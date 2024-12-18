@@ -32,11 +32,11 @@ class Counter(Component):
 		self.dependencies = dependencies
 
 	@mutator
-	async def increment(self) -> None:
+	async def increment(self, event) -> None:
 		self.set_state(CounterState(count=self.get_state().count + 1))
 
 	@mutator
-	async def decrease(self) -> None:
+	async def decrease(self, event) -> None:
 		self.set_state(CounterState(count=self.get_state().count - 1))
 
 	def create_button(self, label_text : str, onclick_handler : str) -> Node:

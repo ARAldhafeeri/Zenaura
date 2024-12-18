@@ -1,14 +1,17 @@
+import asyncio
+from unittest.mock import MagicMock
 from collections import defaultdict
-from unittest.mock import MagicMock 
 
 class Content:
     def __init__(self):
         self.firstChild = ""
 
+
 class MockTextNode:
     def __init__(self, text):
         self.nodeValue = text
         self.parentNode = None
+
 
 class MockElement:
     def __init__(self, tag_name=None, innerHTML=""):
@@ -19,7 +22,8 @@ class MockElement:
         self.childNodes = []
         self.parentNode = None
         self.content = Content()
-
+        self.eventListeners = defaultdict(list)  
+    
     def setAttribute(self, name, value):
         self.attributes[name] = value
 
@@ -42,39 +46,52 @@ class MockElement:
 
     def createElement(self, tag_name):
         return MockElement(tag_name)
-    
 
-    def __repr__(self):  # Helpful for debugging
+    def addEventListener(self, event, callback):
+        self.eventListeners[event].append(callback)
+
+    def dispatchEvent(self, event):
+        for callback in self.eventListeners.get(event, []):
+            callback(event)
+
+    def __repr__(self):  
         return f"<MockElement '{self.tagName}'>"
 
-class MockDocument:  # Use MagicMock for flexibility
+class MockDocument:
     def __init__(self):
-        self.body = MockElement("body")  # Create a body element
-        self.elementsById = {"root": self.body}  # Store elements by ID
+        self.body = MockElement("body")
+        self.elementsById = {"root": self.body}
         self.title = ""
+        self.readyState = "loading"  
+        self.eventListeners = defaultdict(list)
 
     def getElementById(self, element_id):
         return self.elementsById.get(element_id)
 
     def createElement(self, tag_name):
         return MockElement(tag_name)
-    
+
+    def createTextNode(self, txt):
+        return MockTextNode(txt)
+
     def setElementById(self, element_id, element):
-        # for mocking purposes
         self.elementsById[element_id] = element
 
-    def createTextNode(self,txt):
-        textNode = MockTextNode(txt)
-        return textNode
+    def addEventListener(self, event, callback):
+        self.eventListeners[event].append(callback)
 
-    def querySelector(self, query:str):
+    def querySelector(self, query: str):
         query = query.replace("[", "").replace("]", "").replace('"', "").split("=")
         id = query[-1]
-        return self.elementsById[id]
+        return self.elementsById.get(id)
+
+    def dispatchEvent(self, event):
+        for callback in self.eventListeners.get(event, []):
+            callback(event)
 
 class MockLocation:
     def __init__(self):
-        self.href = "http://localhost:8000"  # Example
+        self.href = "http://localhost:8000"
         self.pathname = ""
 
 class MockWindowHistory:
@@ -86,7 +103,20 @@ class MockWindowHistory:
 
 class MockWindow:
     def __init__(self):
-        self.innerWidth = 1024 
+        self.innerWidth = 1024
         self.innerHeight = 768
         self.location = MockLocation()
         self.history = MockWindowHistory()
+        self.eventListeners = defaultdict(list)
+
+    def addEventListener(self, event, callback):
+        self.eventListeners[event].append(callback)
+
+    def dispatchEvent(self, event):
+        for callback in self.eventListeners.get(event, []):
+            callback(event)
+
+def create_proxy(callback):
+    def wrapper(event):
+        callback(event)
+    return wrapper

@@ -27,8 +27,9 @@ try:
     document = pyscript_doc
     window = pyscript_window
 except:
-    from zenaura.client.mocks import MockDocument
+    from tests.mocks.browser_mocks import MockDocument, MockWindow
     document = MockDocument()
+    window = MockWindow()
     
 
 try : 

@@ -3,7 +3,6 @@ import logging
 import subprocess
 import time
 from threading import Thread, Event
-import asyncio
 import contextlib
 from zenaura.client.page import Page 
 from zenaura.client.hydrator import HydratorCompilerAdapter
@@ -336,7 +335,6 @@ class DevServer:
         self.shutdown_event = Event()
         self.observer = PausingObserver()
         self.sock.init_app(self.app)
-        self.loop = asyncio.new_event_loop()
 
         self.setup_websocket()
 

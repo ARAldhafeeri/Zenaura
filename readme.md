@@ -1,82 +1,89 @@
-# Zenaura 
+# Zenaura
 
 <img title="a title" alt="Alt text" src="./assets/logo.png" width="300" height="300" />
 
 Zenaura is a Python library built on top Pydide, PyScript, designed to empower Python developers to create light-weight, performant, stateful, component-based Single Page Applications (SPAs). By leveraging a virtual DOM implementation, Zenaura optimizes the performance, reactivity, responsiveness, and interactivity of web applications. This allows developers to build high-performance, dynamic web applications using familiar Python concepts and syntax.
-# Documentation 
+
+# Documentation
+
 <a href="https://araldhafeeri.github.io/Zenaura/" target="_blank"> Zenaura documentation and API reference</a>
 
 note: hot-reloading is still under-development, it works, however working with cli, zenaura build after every change is better.
 
-# Installing zenaura 
+# Installing zenaura
 
 ### prerequisits:
+
 - Python 3.12 or above.
-- pip 
+- pip
 - devolopment server requirements:
-    + flask==2.3.3
-    + watchdog==4.0.1
-    + flask-sock==0.7.0
+  - flask==2.3.3
+  - watchdog==4.0.1
+  - flask-sock==0.7.0
+  - nest_asyncio==1.6.0
 
 ```bash
 pip install zenaura flask==2.3.3 watchdog==4.0.1 flask-sock==0.7.0
 ```
 
-
-This command will install zenaura library, client and server, CLI. 
-
+This command will install zenaura library, client and server, CLI.
 
 # Creating your first zenaura app
 
-In this example we will go over creating your first zenaura application, go over basic concepts as well. 
+In this example we will go over creating your first zenaura application, go over basic concepts as well.
 
 Once you installed the library, the library, it comes with simple CLI tool.
 
 #### CLI Commands:
+
     - init: Will create simple zenaura application
     - build : Will build the application
-    - run : Will run the development server 
-
+    - run : Will run the development server
 
 First let's initials a basic zenaura application:
+
 ```bash
-zenaura init 
+zenaura init
 ```
+
 This command will auto generate basic zenaura application with the needed files auto generated for you, so you can get up to speed with the library.
 
 ### Auto generated files from init command:
+
 - build.py : used for building zenaura application.
 - index.py : simple zenaura server.
 - public/components.py: single zenaura component.
 - public/presentational.py: few zenaura presentational components created using builder interface.
-- public/main.py : main file where we import components, create pages and  configure the client router. 
+- public/main.py : main file where we import components, create pages and configure the client router.
 - public/routes.py : where your client side routes lives.
 - public/main.css : the main css file.
-- public/config.json: pyscript pydide configuration. 
+- public/config.json: pyscript pydide configuration.
 
-### Building zenaura 
+### Building zenaura
 
 ```bash
 zenaura build
 ```
+
 This command will build index.html.
 
-
 ### Running zenaura
+
 ```bash
 zenaura run
 ```
 
-This command will run the development server. Now open browser tab and go to localhost:5000. You will see the following Rendered HTML : 
+This command will run the development server. Now open browser tab and go to localhost:5000. You will see the following Rendered HTML :
 
 <center>![](logo.png)
 <div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
 </center>
 
 Now if we opened components.py, and changed the header text:
-``` py
+
+```py
 from zenaura.client.component import Component
-from public.presentational import * 
+from public.presentational import *
 
 
 class ZenauraStarter(Component):
@@ -93,22 +100,21 @@ class ZenauraStarter(Component):
 
 The development server have hot reloading feature built-in , it will trigger reloading of the page and we will see the changes live. And changes will be applied.
 
-Rendered HTML : 
+Rendered HTML :
 
 <center>![](logo.png)
 <div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For, Hello world !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
 </center>
 
-
 ## Adding new component to the page
 
 Now we will add new component to the page, this component will be simply a header:
 
-in public/components.py: 
+in public/components.py:
 
-``` py
+```py
 from zenaura.client.component import Component
-from public.presentational import * 
+from public.presentational import *
 
 
 class ZenauraStarter(Component):
@@ -126,9 +132,10 @@ class ZenauraStarter2(Component):
         return  Header1("Simple Header !")
 
 ```
+
 In public/main.py
 
-``` py
+```py
 from zenaura.client.app import Route, App
 from zenaura.client.page import Page
 from public.routes import ClientRoutes
@@ -156,21 +163,21 @@ event_loop.run_until_complete(router.handle_location())
 
 
 ```
-Rendered HTML : 
+
+Rendered HTML :
 
 <center>![](logo.png)
 <div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For, Hello world !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
 </center>
 <h1>Simple Header !</h1>
 
+## Adding State to the component
 
-
-## Adding State to the component 
 Now we will add state to the component, the state will be simple keyword rendered within the h1 tag.
 
 ```
 from zenaura.client.component import Component
-from public.presentational import * 
+from public.presentational import *
 
 
 class ZenauraStarter(Component):
@@ -181,10 +188,12 @@ class ZenauraStarter(Component):
 ```
 
 Note if we took a look at public/presentational.py, we will notice a text node
+
 ```py
 def Header1(text):
     return Builder('h1').with_text(text).build()
 ```
+
 with_text, or Node(text=text), is very important this is how you should render user text, the compiler will santize and render the text, to prevent known security issues.
 
 Note this is very simple guide to help you start with zenaura library, in The Basics guide we will go over each building block in zenaura library and explain it, in rich details.

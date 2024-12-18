@@ -26,6 +26,7 @@ setup(
         ],
     install_requires=[
         'bleach==6.1.0', 
+        'nest_asyncio==1.6.0'
     ],
     entry_points={
         "console_scripts": [

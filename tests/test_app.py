@@ -1,6 +1,5 @@
 import sys
 import unittest
-import asyncio
 from unittest.mock import MagicMock, patch
 from zenaura.client.page import Page
 from zenaura.client.layout import Layout

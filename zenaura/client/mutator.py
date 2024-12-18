@@ -73,7 +73,7 @@ def mutates(func):
 
 
     @functools.wraps(func)
-    async def wrapper_func(component, *args, **kwargs):
+    def wrapper_func(component, *args, **kwargs):
         """
         Wrapper function that executes the original function and then renders the DOM.
 
