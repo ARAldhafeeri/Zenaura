@@ -20,8 +20,6 @@ class CompilerSanitizer:
     def sanitize(
         self, 
         user_input: str, 
-        allowed_tags: list = allowed_tags, 
-        allowed_attributes: dict = allowed_attributes
     ) -> str:
         """
         Sanitizes user input to prevent various injection attacks.
@@ -39,16 +37,10 @@ class CompilerSanitizer:
         Returns:
             str: The sanitized input.
         """
-
-        # Convert user input to string for safety
         user_input = str(user_input)
-
-        # Escape all HTML special characters initially
-        safe_html = html.escape(user_input)
-
         # Use bleach to remove potentially harmful HTML tags and attributes
         safe_html = bleach.clean(
-            safe_html, tags=allowed_tags, attributes=allowed_attributes
+            user_input, tags=allowed_tags, attributes=allowed_attributes
         )
 
         return safe_html

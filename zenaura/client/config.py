@@ -1,6 +1,5 @@
 ZENAURA_DOM_ATTRIBUTE = "data-zenaura"
 
-# TODO : add more
 # TODO add more 
 allowed_tags = [
     'p', 'br', 'strong', 'em', 'b', 'i', 'u', 's', 'del', 'ins', 'sub', 'sup', 
@@ -9,7 +8,7 @@ allowed_tags = [
     'a', 'img',
     'table', 'thead', 'tbody', 'tr', 'th', 'td',
     'blockquote', 'q',
-    'pre', 'code'
+    'pre', 'code', 
 ]
 
 # TODO : add more
@@ -21,5 +20,5 @@ allowed_attributes = {
 
 self_closing_tags = [
     'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link',
-     'meta', 'param', 'source', 'track', 'wbr'
+     'meta', 'param', 'source', 'track', 'wbr', 'track',
 ]

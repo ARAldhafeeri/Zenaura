@@ -2,18 +2,13 @@ import sys
 import unittest
 import gc
 import time
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 from zenaura.client.tags import Node, Attribute
 from zenaura.client.compiler import compiler
 
-sys.modules["pyscript"] = MagicMock()
-
 class TestSearchAlgorithm(unittest.TestCase):
 
-    @patch('pyscript.document')
-    @patch('pyscript.window')
-    def setUp(self, document, window):  # Run before each test
-        from tests.mocks.counter_mocks import Counter, BTN_STYLES, CounterState
+    def setUp(self):  # Run before each test
         from zenaura.client.dom import zenaura_dom
         self.zenaura_dom = zenaura_dom
         gc.collect()  # Ensure a clean state before each test

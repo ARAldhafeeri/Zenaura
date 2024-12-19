@@ -56,7 +56,7 @@ class CompilerTests(unittest.TestCase):
     def test_sanitize_html(self):
         input_html = '<script>alert("XSS attack")</script>'
         result = compiler.sanitize(input_html)
-        self.assertEqual(result, '&lt;script&gt;alert(&quot;XSS attack&quot;)&lt;/script&gt;')
+        self.assertEqual(result, '&lt;script&gt;alert("XSS attack")&lt;/script&gt;')
 
 
     def test_process_attributes_with_keywords(self):
@@ -81,7 +81,7 @@ class CompilerTests(unittest.TestCase):
     def test_sanitize_input_with_special_characters(self):
         input_html = '<>&"'
         result = compiler.sanitize(input_html)
-        self.assertEqual(result, '&lt;&gt;&amp;&quot;')
+        self.assertEqual(result, '&lt;&gt;&amp;"')
 
     def test_compile_node_with_no_attributes_or_children(self):
         elm = Node("div")
@@ -113,7 +113,7 @@ class CompilerTests(unittest.TestCase):
         child1.children.extend([grandchild1, grandchild2, grandchild3])
         root.children.extend([child1, child2])
         result = compiler.compile(root, zenaura_dom_mode=False)
-        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link</a><img src="image.jpg" alt="Image"></div><div></div></div>'
+        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link</a><img src="image.jpg" alt="Image" /></div><div></div></div>'
         self.assertEqual(result, expected_output)
 
 
@@ -140,7 +140,7 @@ class CompilerTests(unittest.TestCase):
 
         result = compiler.compile(root, zenaura_dom_mode=False)
         
-        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link<div><div></div><div></div></div></a><img src="image.jpg" alt="Image"></div><div></div></div>'
+        expected_output = '<div><div><span>Hello</span><a href="https://example.com">Link<div><div></div><div></div></div></a><img src="image.jpg" alt="Image" /></div><div></div></div>'
         self.assertEqual(result, expected_output)
 
     def test_compile_with_very_large_structure(self):

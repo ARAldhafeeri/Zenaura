@@ -5,8 +5,7 @@ import io
 
 sanitizer = CompilerSanitizer()
 
-class AttributeProccessor(
-    ):
+class AttributeProccessor():
     """
     This class is responsible for processing a list of `Attribute` objects and converting them into HTML-formatted attributes.
 
@@ -16,6 +15,14 @@ class AttributeProccessor(
     def __init__(self):
         self.attrKeyWords = {
             "styles": "class",
+            "class_": "class",
+            "for_": "for",
+            "name_": "name",
+            "type_": "type"
+        }
+        self.attrValueWords = {
+            "True": "true",
+            "False": "false"
         }
     def process_attributes(
                 self, 
@@ -49,6 +56,8 @@ class AttributeProccessor(
             attrValue = attr.value
             if attrKey in self.attrKeyWords.keys():
                 attrKey = self.attrKeyWords[attrKey]  # Apply keyword mapping
+            if str(attrValue) in self.attrValueWords.keys():
+                attrValue = self.attrValueWords[str(attrValue)]
 
             # Add space only if it's not the first or last attribute
             if i == 0 or i == len(attrs) - 1:

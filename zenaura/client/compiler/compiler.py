@@ -28,17 +28,10 @@ class Compiler(
 
     def __init__(self):
         """
-        Initializes the Compiler instance with the default attribute keyword mapping.
+        Initializes the Compiler instance with sanitizer and attribute processor
 
-        The default mapping includes:
-
-        - `styles`: maps to `class` in HTML.
-
-        You can customize this mapping by modifying the `attrKeyWords` attribute.
         """
-        self.attrKeyWords = {
-            "styles": "class",
-        }
+        AttributeProccessor.__init__(self)
 
     def getKeyedUID(self, id, withAttribut=False, key=None):
         """
@@ -107,7 +100,7 @@ class Compiler(
         attributes = self.process_attributes(elm.attributes)
 
         if tag in self_closing_tags:
-            return f"<{tag}{zenui_id}{attributes}>"
+            return f"<{tag}{zenui_id}{attributes} />"
 
         # Start tag
         html = io.StringIO()
