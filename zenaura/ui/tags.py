@@ -2,11 +2,16 @@ from zenaura.client.tags.builder import Builder
 from zenaura.client.tags.node import Node
 from zenaura.client.tags.attribute import Attribute
 from zenaura.client.config import self_closing_tags
-
+from functools import partial
 from typing import Any, List, Union, Dict
+from zenaura.client.compiler.attribute import AttributeProccessor
 
+attribute_processor = AttributeProccessor() 
+
+attribute_processor.attrKeyWords, 
+attribute_processor.attrValueWords
 def tag(
-    name: str,
+    name__: str,
     text: str = "",
     *children: Union["Node", str],
     **attributes: Any, 
@@ -32,7 +37,7 @@ def tag(
           123 
         </div
   """
-  builder = Builder(name)
+  builder = Builder(name__)
   if children:
       builder.with_children(*children)
   if attributes:
@@ -43,307 +48,239 @@ def tag(
   return builder.build()
 
 
-def self_closing(name: str, **attributes: Any) -> Node:
-    return tag(name, **attributes)
-
-def nestable(name, *children: Union[Node, str], **attributes: Any) -> Node:
-    return tag(name, None, *children, **attributes)
-
-def textable(name: str, text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-  return tag(name, text, *children, **attributes)
-
-def nestable_no_attrs(name: str, *children: Union[Node, str] ) -> Node:
-    return tag(name, None, *children)
- # from https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-
-# Main root elements
-def html(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("html", *children, **attributes)
-
-def main(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("main", *children, **attributes)
-
-# Document meta data elements
-def base(**attributes: Any) -> Node:
-    return self_closing("base", **attributes)
-
-def head(*children: Union[Node, str]) -> Node:
-    return nestable_no_attrs("head", *children)
-
-def link(**attributes: Any) -> Node:
-    return self_closing("link", **attributes)
-
-def meta(**attributes: Any) -> Node:
-    return self_closing("meta", **attributes)
-
-def style(*children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("style", *children, **attributes)
-
-def title(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("title", text, *children, **attributes)
-
-# Section root elements
-def body(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("body", *children, **attributes)
-
-# Content sectioning elements
-def address(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("address", text, *children, **attributes)
-
-def article(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("article", *children, **attributes)
-
-def aside(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("aside", *children, **attributes)
-
-def footer(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("footer", *children, **attributes)
-
-def header(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("header", *children, **attributes)
-
-def h1(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("h1", text, *children, **attributes)
-
-def h2(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("h2", text, *children, **attributes)
-
-def h3(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("h3", text, *children, **attributes)
-
-def h4(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("h4", text, *children, **attributes)
-
-def h5(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("h5", text, *children, **attributes)
-
-def h6(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("h6", text, *children, **attributes)
-
-def hgroup(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("hgroup", *children, **attributes)
-
-def nav(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("nav", *children, **attributes)
-
-def section(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("section", *children, **attributes)
-
-def search(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("search", *children, **attributes)
-
-# Text content elements
-def blockquote(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("blockquote", text, *children, **attributes)
-
-def dd(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("dd", text, *children, **attributes)
-
-def div(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("div", *children, **attributes)
-
-def dl(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("dl", *children, **attributes)
-
-def dt(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("dt", text, *children, **attributes)
-
-def figcaption(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("figcaption", text, *children, **attributes)
-
-def figure(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("figure", *children, **attributes)
-
-def hr(**attributes: Any) -> Node:
-    return self_closing("hr", **attributes)
-
-def li(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("li", text, *children, **attributes)
-
-def menu(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("menu", *children, **attributes)
-
-def ol(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("ol", *children, **attributes)
-
-def p(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("p", text, *children, **attributes)
-
-def pre(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("pre", *children, **attributes)
-
-def ul(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("ul", *children, **attributes)
-
-# Inline text semantic elements
-def a(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("a", *children, **attributes)
-
-def abbr(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("abbr", text, *children, **attributes)
-
-def b(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("b", *children, **attributes)
-
-def bdi(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("bdi", *children, **attributes)
-
-def bdo(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("bdo", *children, **attributes)
-
-def br(**attributes: Any) -> Node:
-    return self_closing("br", **attributes)
-
-def cite(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("cite", text, *children, **attributes)
-
-def code(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("code", *children, **attributes)
-
-def data(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("data", text, *children, **attributes)
-
-def dfn(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("dfn", text, *children, **attributes)
-
-def em(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("em", text, *children, **attributes)
-
-def i(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("i", *children, **attributes)
-
-def kbd(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("kbd", text, *children, **attributes)
-
-def mark(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("mark", text, *children, **attributes)
-
-def q(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("q", text, *children, **attributes)
-
-def rp(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("rp", *children, **attributes)
-
-def rt(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("rt", *children, **attributes)
-
-def ruby(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("ruby", *children, **attributes)
-
-def s(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("s", text, *children, **attributes)
-
-def samp(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("samp", text, *children, **attributes)
-
-def small(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("small", text, *children, **attributes)
-
-def span(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("span", *children, **attributes)
-
-def strong(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("strong", text, *children, **attributes)
-
-def sub(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("sub", text, *children, **attributes)
-
-def sup(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("sup", text, *children, **attributes)
-
-def time(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("time", text, *children, **attributes)
-
-def u(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("u", *children, **attributes)
-
-def var(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("var", text, *children, **attributes)
-
-# Forms
-def form(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("form", *children, **attributes)
-
-def input(**attributes: Any) -> Node:
-    return self_closing("input", **attributes)
-
-def label(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("label", text, *children, **attributes)
-
-def select(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("select", *children, **attributes)
-
-def option(text, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("option",text, *children, **attributes)
-
-def textarea(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("textarea", text, *children, **attributes)
-
-# TODO forms : fieldset, datlalist, meter, optgroup, output, progress
-
-# Scripting elements
-def script(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("script", *children, **attributes)
-
-# Media elements
-def img(**attributes: Any) -> Node:
-    return self_closing("img", **attributes)
+def self_closing(name__: str, **attributes: Any) -> Node:
+    """
+        the following element ins html self closing tag
+        accept only attributes:
+        
+    """
+    return tag(name__, **attributes)
+
+def self_closing(name__: str, **attributes: Any) -> Node:
+    """
+    Creates a self-closing {name} element with the specified tag name and attributes.
+
+    Parameters:
+        **attributes (Any): html element attrbiutes,
+        special attributes keys:
+        {[f"html : {k} -> zenaura : {v}" for k,v in attribute_processor.attrKeyWords.items()]}
+        special attribute values:
+        {[f"html : {k} -> zenaura : {v}" for k,v in attribute_processor.attrValueWords.items()]}
+    Returns:
+        <{name} [attributes] />
+
+    example:
+        {name}(name__="val" hidden=True)
+    """
+    return tag(name__, **attributes)
+
+def nestable(name__: str, *children: Union[Node, str], **attributes: Any) -> Node:
+    """
+    Creates a an html {name} element with the specified tag name and attributes.
+
+    Parameters:
+        **children (Any): element from zenaura.ui.tags or plain text,
+        **attributes (Any): html element attrbiutes,
+        special attributes keys:
+        {attribute_processor.attrKeyWords}
+        special attribute values:
+        {attribute_processor.attrValueWords}
+    Returns:
+        <{name} [attributes]>[children]</{name}>
+
+    example:
+        {name}(name__="val" hidden=True, div())
+    """
+    return tag(name__, None, *children, **attributes)
+
+def textable(name__: str, text: str, *children: Union[Node, str], **attributes: Any) -> Node:
+    """
+    Creates a an html {name} element with the specified tag name and attributes with text.
+
+    Parameters:
+        **children (Any): element from zenaura.ui.tags or plain text,
+        **attributes (Any): html element attrbiutes,
+        special attributes keys:
+        {attribute_processor.attrKeyWords}
+        special attribute values:
+        {attribute_processor.attrValueWords}
+    Returns:
+        <{name} [attributes]>[text]</{name}>
+
+    example:
+        {name}(name__="val" hidden=True, div())
+    """
+    return tag(name__, text, *children, **attributes)
+
+def nestable_no_attrs(name__: str, *children: Union[Node, str]) -> Node:
+    """
+    Creates a an html {name} element with children and no attributes.
+    Parameters:
+        **children (Any): element from zenaura.ui.tags or plain text,
+        **attributes (Any): html element attrbiutes,
+        special attributes keys:
+        {attribute_processor.attrKeyWords}
+        special attribute values:
+        {attribute_processor.attrValueWords}
+    Returns:
+        <{name}>[children]</{name}>
+
+    example:
+        {name}(name__="val" hidden=True, div())
+    """
+    return tag(name__, None, *children)
+
+tag_config = {
+    # root
+    "html": "nestable",
+    "main": "nestable",
+    "body": "nestable",
     
-def audio(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("audio", *children, **attributes)
+    # Document meta Data
+    "base": "self_closing",
+    "head": "nestable_no_attrs",
+    "link": "self_closing",
+    "meta": "self_closing",
+    "style": "textable",
+    "title": "textable",
 
-def video(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("video", *children, **attributes)
+    # Section root elements
+    "address": "textable",
+    "article": "nestable",
+    "aside": "nestable",
+    "footer": "nestable",
+    "header": "nestable",
+    "h1": "textable",
+    "h2": "textable",
+    "h3": "textable",
+    "h4": "textable",
+    "h5": "textable",
+    "h6": "textable",
+    "hgroup": "nestable",
+    "nav": "nestable",
+    "section": "nestable",
+    "search": "nestable",
 
-def source(**attributes: Any) -> Node:
-    return self_closing("source", **attributes)
+    # Text content elements
+    "blockquote": "textable",
+    "dd": "textable",
+    "div": "nestable",
+    "dl": "nestable",
+    "dt": "textable",
+    "figcaption": "textable",
+    "figure": "nestable",
+    "hr": "self_closing",
+    "li": "textable",
+    "menu": "nestable",
+    "ol": "nestable",
+    "p": "textable",
+    "pre": "nestable",
+    "ul": "nestable",
 
-# Table elements
-def caption(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("caption", text, *children, **attributes)
+    # Inline text semantic elements
+    "a": "nestable",
+    "abbr": "textable",
+    "b": "nestable",
+    "bdi": "nestable",
+    "bdo": "nestable",
+    "br": "self_closing",
+    "cite": "textable",
+    "code": "nestable",
+    "data": "textable",
+    "dfn": "textable",
+    "em": "textable",
+    "i": "nestable",
+    "kbd": "textable",
+    "mark": "textable",
+    "q": "textable",
+    "rp": "nestable",
+    "rt": "nestable",
+    "ruby": "nestable",
+    "s": "textable",
+    "samp": "textable",
+    "small": "textable",
+    "span": "nestable",
+    "strong": "textable",
+    "sub": "textable",
+    "sup": "textable",
+    "time": "textable",
+    "u": "nestable",
+    "var": "textable",
 
-def col(**attributes: Any) -> Node:
-    return self_closing("col", **attributes)
+    # Forms
+    "form": "nestable",
+    "input": "self_closing",
+    "label": "textable",
+    "select": "nestable",
+    "option": "textable",
+    "textarea": "textable",
+    "fieldset": "nestable",
+    "datalist": "nestable",
+    "meter": "nestable",
+    "optgroup": "nestable",
+    "output": "textable",
+    "progress": "nestable",
 
-def colgroup(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("colgroup", *children, **attributes)
+    # Scripting elements
+    "script": "nestable",
 
-def table(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("table", *children, **attributes)
+    # Media elements
+    "img": "self_closing",
+    "audio": "nestable",
+    "source": "self_closing",
+    "track": "self_closing",
+    "video": "nestable",
 
-def tbody(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("tbody", *children, **attributes)
+    # Table elements
+    "caption": "nestable",
+    "col": "self_closing",
+    "colgroup": "nestable",
+    "table": "nestable",
+    "tbody": "nestable",
+    "tfoot": "nestable",
+    "th": "textable",
+    "tr": "nestable",
+    "td": "textable",
+    "thead": "nestable",
 
-def td(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("td", text, *children, **attributes)
+    # Embedded content
+    "embed": "self_closing",
+    "fencedframe": "nestable",
+    "iframe": "nestable",
+    "object": "nestable",
+    "picture": "nestable",
+    "portal": "nestable",
 
-def tfoot(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("tfoot", *children, **attributes)
+    # SVG and MathML
+    "svg": "nestable",
+    "math": "nestable",
 
-def th(text: str, *children: Union[Node, str], **attributes: Any) -> Node:
-    return textable("th", text, *children, **attributes)
+    # Canvas
+    "canvas": "nestable",
 
-def thead(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("thead", *children, **attributes)
+    # Noscript
+    "noscript": "nestable",
 
-def tr(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("tr", *children, **attributes)
+    # Miscellaneous content
+    "del_": "self_closing",
+    "ins": "self_closing",
+}
 
-# List elements
-def ol(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("ol", *children, **attributes)
+tags_factory = {
+    "nestable": lambda name__ : f"""
+{name__ }= partial(nestable,"{name__}")
+{name__}.__doc__ = nestable.__doc__
+""",
+    "textable": lambda name__ : f"""
+{name__} = partial(textable, "{name__}")
+""",
+    "self_closing": lambda name__ : f"""
+{name__ }= partial(self_closing, "{name__}")
+""",
+ "nestable_no_attrs": lambda name__ : f"""
+{name__ }= partial(nestable_no_attrs,"{name__}")
+"""
+}
 
-def ul(*children: Union[Node, str], **attributes: Any) -> Node:
-    return nestable("ul", *children, **attributes)
-
-
-# TODO embedded content embed, fencedframe, iframe, object, picture, portal
-
-# TODO svgt and math ml svg, math 
-
-# TODO  canvas, noscript, 
-
-# del, ins
-
-
-
+for k,v in tag_config.items():
+    exec(tags_factory[v](k), globals())

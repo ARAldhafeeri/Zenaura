@@ -7,10 +7,22 @@ sanitizer = CompilerSanitizer()
 
 class AttributeProccessor():
     """
-    This class is responsible for processing a list of `Attribute` objects and converting them into HTML-formatted attributes.
+        Processes a list of `Attribute` objects and converts them into HTML-formatted attributes.
 
-    Attributes:
-        None
+        Attributes:
+            attrKeyWords (dict): Maps Python keywords to HTML attribute names.
+                - "styles": Translates to "class".
+                - "class_": Translates to "class" (avoids conflict with Python's `class` keyword).
+                - "for_": Translates to "for".
+                - "name_": Translates to "name".
+                - "type_": Translates to "type".
+
+            attrValueWords (dict): Maps Python boolean values to HTML-compliant strings.
+                - "True": Translates to "true".
+                - "False": Translates to "false".
+
+        Methods:
+            None
     """
     def __init__(self):
         self.attrKeyWords = {

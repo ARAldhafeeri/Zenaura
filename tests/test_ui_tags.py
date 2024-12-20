@@ -1,6 +1,5 @@
 import unittest
 import unittest
-
 from zenaura.ui.tags import (
     # main root and meta data
     main, base, head, link, meta, style, title, html,
