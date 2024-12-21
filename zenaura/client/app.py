@@ -183,6 +183,8 @@ class App:
         if not self.history.current.page:  # self.history.current is initially None
             pass
         else:
+            # set document.title here
+            document.title = title
             self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
         
         window.history.pushState(path, title, path)  # Update browser history
@@ -194,7 +196,6 @@ class App:
         # mount page
         await zenaura_dom.mount(page)
         self.history.visit(page)
-        document.title = title
 
     def run(self):
         """
@@ -251,6 +252,7 @@ class App:
         if not self.history.current.page:  # self.history.current is initially None
            pass
         else:
+            document.title = title # overwrite document.title 
             self.hyd_rdom_toggle_pages_visibilty(self.history.current.page, page)
         
         # visit page

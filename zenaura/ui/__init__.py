@@ -34,7 +34,7 @@ from .tags import (
 
     # Miscellaneous content 
     noscript, del_, ins 
-)
+) 
 
 
 from .badge import Badge
