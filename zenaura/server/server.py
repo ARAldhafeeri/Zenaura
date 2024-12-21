@@ -1,5 +1,4 @@
 import io
-import logging
 import subprocess
 import time
 from threading import Thread, Event
@@ -14,8 +13,8 @@ from watchdog.events import FileSystemEventHandler
 from zenaura.client.compiler.attribute import AttributeProccessor
 from zenaura.client.tags.attribute import Attribute
 from zenaura.client.layout import Layout
+from zenaura import zenaura_logger
 
-logging.basicConfig(level=logging.INFO)
 compiler_adapter = HydratorCompilerAdapter()
 attrs_processor = AttributeProccessor()
 
@@ -367,7 +366,7 @@ class DevServer:
         Sends a refresh signal to all connected clients.
         """
 
-        logging.info("Sending refresh signal...")
+        zenaura_logger.info("Sending refresh signal...")
         clients = self.ws_client_list.copy()
         for client in clients:
             try:
@@ -413,14 +412,14 @@ class DevServer:
                 """
 
                 try:
-                    logging.info(f"File {event.src_path} has changed.")
-                    logging.info("Changes are live...")
+                    zenaura_logger.info(f"File {event.src_path} has changed.")
+                    zenaura_logger.info("Changes are live...")
                     DEVSERVER.hydrate_and_notify()
-                    logging.info("Reloading browser...")
+                    zenaura_logger.info("Reloading browser...")
                     DEVSERVER.send_refresh_signal()
-                    logging.info("Browser reloaded.")
+                    zenaura_logger.info("Browser reloaded.")
                 except Exception as e:
-                    logging.info(f"Error in ChangeHandler: {e}")
+                    zenaura_logger.info(f"Error in ChangeHandler: {e}")
 
         return ChangeHandler
 
@@ -432,7 +431,7 @@ class DevServer:
         try:
             self.app.run(debug=self.debug, port=self.port, use_reloader=False)
         except Exception as e:
-            logging.info(f"Error starting server: {e}")
+            zenaura_logger.info(f"Error starting server: {e}")
 
     def hydrate_and_notify(self):
         """
@@ -441,14 +440,14 @@ class DevServer:
 
         try:
             self.observer.pause()
-            logging.info("Hydrating...")
-            logging.info("Pausing the observer...")
+            zenaura_logger.info("Hydrating...")
+            zenaura_logger.info("Pausing the observer...")
             process = subprocess.Popen("python build.py", shell=True)
             process.communicate()
-            logging.info("Hydrated done...")
+            zenaura_logger.info("Hydrated done...")
 
         finally:
-            logging.info("Running the observer...")
+            zenaura_logger.info("Running the observer...")
             self.observer.resume()
 
     def run(self):
@@ -471,7 +470,7 @@ class DevServer:
             while not self.shutdown_event.is_set():
                 time.sleep(0.1)  # Shorter sleep interval
         except KeyboardInterrupt:
-            logging.info("KeyboardInterrupt received, stopping...")
+            zenaura_logger.info("KeyboardInterrupt received, stopping...")
         finally:
             # Faster Shutdown of Observer
             self.observer.event_queue.queue.clear()
