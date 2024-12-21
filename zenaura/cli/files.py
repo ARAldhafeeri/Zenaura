@@ -37,7 +37,7 @@ config = {
 
 config["packages"] = [pkg.format(version=version) for pkg in config["packages"]]
 
-config = json.dumps(config)
+config = json.dumps(config, indent=4)
 
 main  = """from zenaura.client.app import Route, App
 from zenaura.client.page import Page

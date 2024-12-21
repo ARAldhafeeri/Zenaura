@@ -44,13 +44,13 @@ def init_project():
 
     # Create build.py and index.py files
 
-    build_file = os.path.join(os.getcwd(), "build.py")
-    index_file = os.path.join(os.getcwd(), "index.py")
-    with open(build_file, "w") as f:
+    build_file_path = os.path.join(os.getcwd(), "build.py")
+    index_file_path = os.path.join(os.getcwd(), "index.py")
+    with open(build_file_path, "w") as f:
         f.write(build_file)
         zenaura_logger.info("created build.py")
         
-    with open(index_file, "w") as f:
+    with open(index_file_path, "w") as f:
         zenaura_logger.info("created index.py")
         f.write(index_file)
 
