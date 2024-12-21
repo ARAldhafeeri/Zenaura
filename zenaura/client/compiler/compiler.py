@@ -32,6 +32,9 @@ class Compiler(
 
         """
         AttributeProccessor.__init__(self)
+        self.special_tags = {
+            "input_": "input"
+        }
 
     def getKeyedUID(self, id, withAttribut=False, key=None):
         """
@@ -99,6 +102,9 @@ class Compiler(
         # Get node attributes
         attributes = self.process_attributes(elm.attributes)
 
+        if tag in self.special_tags.keys():
+            tag = self.special_tags[tag]
+            
         if tag in self_closing_tags:
             return f"<{tag}{zenui_id}{attributes} />"
 

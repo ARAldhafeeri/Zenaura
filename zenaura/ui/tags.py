@@ -209,7 +209,7 @@ tag_config = {
 
     # Forms
     "form": "nestable",
-    "input": "self_closing",
+    "input_": "self_closing",
     "label": "textable",
     "select": "nestable",
     "option": "textable",
@@ -247,17 +247,21 @@ tag_config = {
     "embed": "self_closing",
     "fencedframe": "nestable",
     "iframe": "nestable",
-    "object": "nestable",
+    "object_": "nestable",
     "picture": "nestable",
     "portal": "nestable",
 
     # SVG and MathML
     "svg": "nestable",
     "math": "nestable",
-
-    # Canvas
-    "canvas": "nestable",
-
+    "circle": "nestable",
+    "ellipse": "nestable",
+    "line": "nestable",
+    "polyline": "nestable",
+    "polygon": "nestable",
+    "path": "nestable",
+    "rect": "nestable",
+    "rect": "nestable",
     # Noscript
     "noscript": "nestable",
 

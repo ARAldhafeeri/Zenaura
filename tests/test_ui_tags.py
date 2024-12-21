@@ -1,6 +1,6 @@
 import unittest
 import unittest
-from zenaura.ui.tags import (
+from zenaura.ui import (
     # main root and meta data
     main, base, head, link, meta, style, title, html,
     
@@ -14,7 +14,7 @@ from zenaura.ui.tags import (
     a, abbr, b, bdi, bdo, br, cite, code, data, dfn, em, i, kbd, mark, q, rp, rt, ruby, s, samp, small, span, strong, sub, sup, time, u, var,
     
     # Forms
-    form, input, label, select, textarea, option, 
+    form, input_, label, select, textarea, option, 
 
     # embedded content
     
@@ -28,6 +28,7 @@ from zenaura.ui.tags import (
     # Table elements
     caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
 )
+
 
 
 from zenaura.client.compiler import Compiler
@@ -413,12 +414,12 @@ class TagTests(unittest.TestCase):
       self.assertEqual(result, '<var>Variable name</var>')
 
   def test_form(self):
-      elm = form(input(type_="text"), action="/submit", method="post")
+      elm = form(input_(type_="text"), action="/submit", method="post")
       result = compiler.compile(elm)
       self.assertEqual(result, '<form action="/submit" method="post"><input type="text" /></form>')
 
   def test_input(self):
-      elm = input(type="text", value="Input Value")
+      elm = input_(type="text", value="Input Value")
       result = compiler.compile(elm)
       self.assertEqual(result, '<input type="text" value="Input Value" />')
 
