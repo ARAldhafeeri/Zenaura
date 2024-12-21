@@ -21,7 +21,7 @@ def init_project():
     public_dir = os.path.join(os.getcwd(), "public")
     script_dir = os.path.dirname(__file__)
     os.makedirs(public_dir, exist_ok=True)
-    files = ["__init__.py", "main.py", "main.css", "index.html" "config.json"]
+    files = ["__init__.py", "main.py", "main.css", "index.html", "config.json"]
     static = ["favicon.ico", "logo.png"]
     for file in files:
         with open(os.path.join(public_dir, file), "w") as f:
