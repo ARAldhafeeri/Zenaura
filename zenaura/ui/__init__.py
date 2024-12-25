@@ -35,31 +35,3 @@ from .tags import (
     # Miscellaneous content 
     noscript, del_, ins 
 ) 
-
-
-from .badge import Badge
-from .button import Button
-from .breadcrumbs import BreadCrumbs
-from .card import Card
-from .charts import Canvas, ChartThis
-from .common import (
-  Image,
-  Header2,
-  Header1,
-  Section,
-  HR,
-  OL,
-  LI,
-  A,
-  Dialog,
-  Paragraph,
-  Div,
-  Loader,
-  NavItemText,
-  NavItemTextNameFactory,
-  Link,
-  NavItemIcon,
-  SvgPath,
-  Svg,
-  Span
-)

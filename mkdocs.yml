@@ -57,6 +57,7 @@ nav:
       - quick/installation.md
       - quick/first_app.md
   - The Basics:
+      - HTML Tags: basics/html_tags.md
       - Components: basics/components.md
       - Component State: basics/state.md
       - Depedency Injection: basics/di.md
@@ -135,7 +136,6 @@ nav:
               - Html: api/client/tags/html.md
               - Builder: api/client/tags/builder.md
           - Router: api/client/app.md
-          - mocks: api/client/mocks.md
           - page: api/client/page.md
           - component: api/client/component.md
 

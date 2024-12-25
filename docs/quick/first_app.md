@@ -1,162 +1,154 @@
-# Creating your first zenaura app
+# Creating Your First Zenaura App
 
-In this example we will go over creating your first zenaura application, go over basic concepts as well. 
+In this example, we will walk through creating your first Zenaura application and cover basic concepts.
 
-Once you installed the library, the library, it comes with simple CLI tool.
+The Zenaura library includes a simple CLI tool to streamline development.
 
-#### CLI Commands:
-    - init: Will create simple zenaura application
-    - build : Will build the application
-    - run : Will run the development server 
+---
 
+## **CLI Commands**
 
-First let's initials a basic zenaura application:
+The following commands are available via the CLI:
+
+- `init`: Creates a basic Zenaura application with pre-configured files.
+- `build`: Builds the Zenaura application.
+- `run`: Runs the development server.
+
+---
+
+### **Initializing a Basic Zenaura Application**
+
 ```bash
-zenaura init 
+zenaura init
 ```
-This command will auto generate basic zenaura application with the needed files auto generated for you, so you can get up to speed with the library.
 
-### Auto generated files from init command:
-- build.py : used for building zenaura application.
-- index.py : simple zenaura server.
-- public/components.py: single zenaura component.
-- public/presentational.py: few zenaura presentational components created using builder interface.
-- public/main.py : main file where we import components, create pages and  configure the client router. 
-- public/routes.py : where your client side routes lives.
-- public/main.css : the main css file.
-- public/config.json: pyscript pydide configuration. 
+This command generates a basic Zenaura application with essential files, enabling you to get started quickly.
 
-### Building zenaura 
+### **Auto-Generated Files**
+
+The `init` command creates the following structure:
+
+- `build.py`: Script for building the Zenaura application.
+- `index.py`: Entry point for a simple Zenaura server.
+- `public/main.py`: Main file for importing components, creating pages, and configuring the client router.
+- `public/main.css`: Primary CSS file for styling.
+- `public/config.json`: PyScript Pyodide configuration file.
+- `__init__.py`: Contains code intended to run in the browser.
+
+---
+
+### **Building the Application**
 
 ```bash
 zenaura build
 ```
-This command will build index.html.
 
+This command generates the `index.html` file for your application.
 
-### Running zenaura
+---
+
+### **Running the Development Server**
+
 ```bash
 zenaura run
 ```
 
-This command will run the development server. Now open browser tab and go to localhost:5000. You will see the following Rendered HTML : 
+Runs the server on `localhost:5000`. Open the URL in your browser to see the rendered HTML.
 
-<center>![](logo.png)
-<div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
-</center>
+---
 
-Now if we opened components.py, and changed the header text:
-``` py
+## **Example: Your First Zenaura App**
+
+Below is an example of a basic Zenaura application using the new `zenaura.ui` tags for creating components and pages.
+
+#### **Define the Component**
+
+```python
 from zenaura.client.component import Component
-from public.presentational import * 
-
+from zenaura.ui import div, h1, h2, img
 
 class ZenauraStarter(Component):
     def render(self):
-        return Div("zenaura", [
-           Div("", [
-            Image("./public/logo.png", "zenaura", "255", "255", "starterLogo"),
-            Header1("The Python Library For, Hello world !"), # note here we changed the content
-            Header1("Building Modern Web User Interface")
-           ])
-        ])
-
+        return div(
+            div(
+                img(src="./public/logo.png", width=255, height=255, alt="starterLogo"),
+                h1("The Python Framework For"),
+                h2("Building Modern Web User Interface"),
+            ),
+            class_="zenaura"
+        )
 ```
 
-The development server have hot reloading feature built-in , it will trigger reloading of the page and we will see the changes live. And changes will be applied.
+#### **Configure the App and Routing**
 
-Rendered HTML : 
-
-<center>![](logo.png)
-<div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For, Hello world !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
-</center>
-
-
-## Adding new component to the page
-
-Now we will add new component to the page, this component will be simply a header:
-
-in public/components.py: 
-
-``` py
-from zenaura.client.component import Component
-from public.presentational import * 
-
-
-class ZenauraStarter(Component):
-    def render(self):
-        return Div("zenaura", [
-           Div("", [
-            Image("./public/logo.png", "zenaura", "255", "255", "starterLogo"),
-            Header1("The Python Library For, Hello world !"), # note here we changed the content
-            Header1("Building Modern Web User Interface")
-           ])
-        ])
-
-class ZenauraStarter2(Component):
-    def render(self):
-        return  Header1("Simple Header !")
-
-```
-In public/main.py
-
-``` py
+```python
 from zenaura.client.app import Route, App
 from zenaura.client.page import Page
-from public.routes import ClientRoutes
-from public.components import ZenauraStarter, ZenauraStarter2 # add the new component
-import asyncio
-
 
 starter = ZenauraStarter()
 
-starter2 = ZenauraStarter2() # create instance of the component
 # App and routing
-router = App()
-home_page = Page([starter, starter2]) # add component to the page
+app = App()
+home_page = Page([starter])
 
-router.add_route(Route(
+app.add_route(Route(
     title="Developer-Focused | Zenaura",
-    path=ClientRoutes.home.value,
+    path="/",
     page=home_page
 ))
 
-# Run the application
-event_loop = asyncio.get_event_loop()
-event_loop.run_until_complete(router.handle_location())
-
-
-
+app.run()
 ```
-Rendered HTML : 
 
-<center>![](logo.png)
-<div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For, Hello world !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
-</center>
-<h1>Simple Header !</h1>
+---
 
+### **Rendered HTML Output**
 
-
-## Adding State to the component 
-Now we will add state to the component, the state will be simple keyword rendered within the h1 tag.
-
+```html
+<div class="zenaura">
+  <div>
+    <img src="./public/logo.png" width="255" height="255" alt="starterLogo" />
+    <h1>The Python Framework For</h1>
+    <h2>Building Modern Web User Interface</h2>
+  </div>
+</div>
 ```
+
+The application is live with hot-reloading enabled, ensuring that any code changes automatically refresh the page.
+
+---
+
+### **Adding New Components**
+
+To extend the application, you can define additional components and add them to your pages.
+
+#### **Define a New Component**
+
+```python
 from zenaura.client.component import Component
-from public.presentational import * 
+from zenaura.ui import h1
 
-
-class ZenauraStarter(Component):
-    def __init__(self, state):
-        self.state = state
+class SimpleHeader(Component):
     def render(self):
-        return  Header1(f"{state}")
+        return h1("Welcome to Zenaura!")
 ```
 
-Note if we took a look at public/presentational.py, we will notice a text node
-```py
-def Header1(text):
-    return Builder('h1').with_text(text).build()
-```
-with_text, or Node(text=text), is very important this is how you should render user text, the compiler will santize and render the text, to prevent known security issues.
+#### **Add the Component to the Page**
 
-Note this is very simple guide to help you start with zenaura library, in The Basics guide we will go over each building block in zenaura library and explain it, in rich details.
+```python
+header = SimpleHeader()
+home_page = Page([starter, header])  # Add new component to the page
+```
+
+#### **Rendered HTML Output**
+
+```html
+<div class="zenaura">
+  <div>
+    <img src="./public/logo.png" width="255" height="255" alt="starterLogo" />
+    <h1>The Python Framework For</h1>
+    <h2>Building Modern Web User Interface</h2>
+  </div>
+</div>
+<h1>Welcome to Zenaura!</h1>
+```

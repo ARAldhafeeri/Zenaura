@@ -1,166 +1,134 @@
-# Zenaura Components
+# **Zenaura Components: Functional and Class Components**
 
-Zenaura components allow Python developers to create the building blocks for their applications. These components are categorized into three types:
+Zenaura allows you to build modular UIs by combining **functional components** with **class components**. Understanding when to use each and how to structure them effectively is key to building maintainable applications.
 
-1. **Stateful Limited Class Components (limited, not reusable)**
-2. **Stateful Reusable Class Components (reusable)**
-3. **Stateless Presentational Functional Components**
+**class components** : Are stateful components with business logic in them.
+**functional components**: Are stateless ui elements they get their state via props " function arguments "
 
-## Understanding the Node Data Structure
+---
 
-The `Node` data structure is the fundamental building block in the Zenaura library. It enables the virtual DOM to compare the previous and current state of a component, diff the changes, and update the real DOM efficiently. Every component must return a `Node` data structure via the `render` method in class components or via a return statement in functional components.
+## **Using Functional Components Within Class Components**
 
-Here's an example of creating a `Node`:
+Class components are ideal for managing state and complex logic, while functional components are best for reusable and presentational UI. You can use functional components inside class components to keep your code modular and clean.
 
-```python
-from zenaura.client.tags import Node, Attribute
-
-node = Node(
-    "div",
-    children=[
-        Node(
-            'h1',
-            children=[
-                Node(text='hello')
-            ]
-        )
-    ],
-    attributes=[
-        Attribute("class", "test")
-    ]
-)
-```
-
-This will render the following HTML:
-
-```html
-<div class="test">
-  <h1>hello</h1>
-</div>
-```
-
-While the `Node` data structure is powerful, it can be cumbersome for building UI components, which is where the Builder Interface comes in.
-
-## The Builder Interface
-
-The Builder Interface abstracts away the complexities of the `Node` data structure, allowing developers to write more maintainable, readable, and declarative UI building blocks.
-
-Example using the Builder Interface:
-
-```python
-from zenaura.client.tags.builder import Builder
-
-h1 = Builder('h1').with_text("test").build()
-div = Builder("div").with_child(h1).with_attribute("class", "test").build()
-```
-
-This will render the following HTML:
-
-```html
-<div class="test">
-  <h1>test</h1>
-</div>
-```
-
-The Builder Interface enhances readability and maintainability. To further simplify, you can use functional components.
-
-## Stateless Presentational Functional Components
-
-Stateless presentational components allow you to break down large stateful components into smaller, reusable pieces. They are simple Python functions that return a `Node` data structure.
-
-Example:
-
-```python
-from zenaura.client.tags.builder import Builder
-
-def Div(class_name, children):
-    div = Builder('div').with_attribute('class', class_name).build()
-    div.children = children
-    return div
-
-def Header1(text):
-    return Builder('h1').with_text(text).build()
-
-div = Div('test', [Header1('test')])
-```
-
-This will render the following HTML:
-
-```html
-<div class="test">
-  <h1>test</h1>
-</div>
-```
-
-Using the Builder Interface with functional components helps in building robust and reusable components for any Zenaura project.
-
-## Stateful Limited Class Components (Limited, Not Reusable)
-
-These are the default class components in the Zenaura library. They can maintain state and wrap functional components to create fully-featured UIs. However, they are limited and cannot be reused within the same project unless specified with the `@Reusable` decorator.
-
-Example:
+### Example:
 
 ```python
 from zenaura.client.component import Component
-from public.presentational import *
+from zenaura.ui import div, h1, img
 
+# Functional Component
+def Header(title):
+    return h1(title, class_="header")
+
+# Class Component
 class ZenauraStarter(Component):
-    def __init__(self, di):
-        super().__init__()
-        self.di = di
-        self.state = None
-
     def render(self):
-        return Div("zenaura", [
-           Div("", [
-            Image("./public/logo.png", "zenaura", "255", "255", "starterLogo"),
-            Header1("The Python Library For, Hello world!"),
-            Header1("Building Modern Web User Interfaces")
-           ])
-        ])
-
-zen = ZenauraStarter()  # No error
-zen2 = ZenauraStarter()  # Error: Zenaura components are limited by design
+        return div(
+            div(
+                img(src="./public/logo.png", width=255, height=255, alt="starterLogo"),
+                Header("The Python Framework For"),
+                Header("Building Modern Web User Interfaces"),
+            ),
+            class_="zenaura"
+        )
 ```
 
-## Stateful Reusable Class Components (Reusable)
+### Why Use Functional Components in Class Components?
 
-These components are designed to be reusable across your codebase. They manage their state independently and can be used multiple times within the same project.
+1. **Separation of Concerns**  
+   Functional components handle UI presentation, leaving logic to the class component.
 
-Example:
+2. **Reusability**  
+   Functional components can be reused across multiple class components.
 
+3. **Simplified Code**  
+   Breaking down large class components into smaller functional components makes your code easier to read and maintain.
+
+---
+
+## **Reusable Components vs. Non-Reusable Components**
+
+### **Non-Reusable Class Components**
+By default, Zenaura class components are **limited** and cannot be reused unless explicitly marked as reusable. These components are tied to specific instances and use cases.
+
+#### Example:
+```python
+from zenaura.client.component import Component
+
+class LimitedComponent(Component):
+    def render(self):
+        return div("This is a limited component", class_="limited")
+```
+
+**Usage:**
+```python
+limited1 = LimitedComponent()
+limited2 = LimitedComponent()  # Error: Non-reusable components cannot be instantiated multiple times
+```
+
+### **Reusable Class Components**
+Marking a class component as reusable allows it to be instantiated multiple times within the same project. Use the `@Reuseable` decorator to enable this.
+
+#### Example:
 ```python
 from zenaura.client.component import Component, Reuseable
-from public.presentational import *
 
 @Reuseable
-class ZenauraStarter(Component):
+class ReusableComponent(Component):
     def render(self):
-        return Div("zenaura", [
-           Div("", [
-            Image("./public/logo.png", "zenaura", "255", "255", "starterLogo"),
-            Header1("The Python Library For, Hello world!"),
-            Header1("Building Modern Web User Interfaces")
-           ])
-        ])
-
-zen = ZenauraStarter()  # No error
-zen2 = ZenauraStarter()  # No error
+        return div("This is a reusable component", class_="reusable")
 ```
 
-## Nesting Component Logic
+**Usage:**
+```python
+reusable1 = ReusableComponent()  # No error
+reusable2 = ReusableComponent()  # No error
+```
 
-In the Zenaura library, there is a specific nesting order that must be followed:
+---
 
-- **Pages**
-  - **Class Components**
-    - **Functional Components**
-- **Layout** : Layout is advanced topic which we will discuss later in the documentation, it allows you to add global components that appear on every page like navbar, modals, footers and so on.
+### **When to Use Non-Reusable Components**
+- For components tightly coupled to specific logic or state.
+- For one-off components not meant to be instantiated multiple times.
 
-This order ensures predictable and debuggable source code. Pages render the components as a stack from index 0 to n in the browser. Nested stateful class components can be confusing, so maintain the hierarchy to avoid errors.
+### **When to Use Reusable Components**
+- For UI elements used across different parts of the application (e.g., buttons, cards, modals).
+- When you need consistency across instances with shared logic but independent states.
 
-## Summary
+---
 
-In this guide, we've covered the different types of components in Zenaura and how to use the Node data structure and Builder Interface to create maintainable and reusable UI components. Following these principles will help you build scalable and efficient applications with Zenaura.
+## **Combining Functional and Reusable Components**
 
-In the next guide, we'll dive deep into dependency injection and component state management.
+You can nest reusable and functional components inside a class component to create highly modular and flexible UIs.
+
+#### Example:
+```python
+from zenaura.client.component import Component, Reuseable
+from zenaura.ui import div, h1
+
+# Functional Component
+def Card(content):
+    return div(content, class_="card")
+
+# Reusable Class Component
+@Reuseable
+class ReusableCardList(Component):
+    def render(self):
+        return div(
+            Card("Card 1 Content"),
+            Card("Card 2 Content"),
+            class_="card-list"
+        )
+```
+
+---
+
+## **Best Practices**
+
+1. **Functional Inside Class**: Use functional components within class components for reusable, presentation-focused UI.
+2. **Reusable Components**: Mark components as reusable when they need to be instantiated multiple times.
+3. **Non-Reusable Components**: Use non-reusable components for one-off, tightly scoped logic.
+4. **Modularity**: Break large components into smaller functional components for better maintainability.
+
+By understanding the distinction between reusable and non-reusable components and leveraging functional components effectively, you can build scalable, maintainable, and efficient Zenaura applications. 🚀
