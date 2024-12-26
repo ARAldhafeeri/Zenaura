@@ -4,7 +4,7 @@ from .tags import (
     
     # Section root elements
     address, article, aside, footer, header, header, h1, h2, h3, h4, h5, h6, hgroup, nav, section, search,
-    
+    button,
     # Text content elements
     blockquote, dd, div, dl, dt, figcaption, figure, hr, li, menu, ol, p, pre, ul, img,
     

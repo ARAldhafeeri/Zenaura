@@ -1,16 +1,17 @@
-from zenaura.client.tags.builder import Builder
 
-def Badge(
-    text,
-    attrs, 
-    default_class="p-2 text-xs font-medium me-2 px-2.5 py-0.5 rounded bg-light-green text-light-gray1 dark:text-dark-page1 dark:bg-dark-gray2", 
-    ):
+from .tags import tag 
+
+def Badge(label: str, color: str = "blue", class_: str = "px-2 py-1 rounded text-sm font-semibold") -> Node:
     """
-      Displays a form input field. 
-      args:
-        text : badge text.
-        attrs: span attributes.
-        default_class: default css class names.
-      
+    A reusable badge component.
+
+    Args:
+        label (str): The badge text.
+        color (str): The color of the badge (e.g., blue, green, red).
+        class_ (str): Tailwind classes for styling.
+
+    Returns:
+        Node: The badge element.
     """
-    return Builder("span").with_text(text).with_attribute("class", default_class).with_attributes(**attrs).build()
+    color_classes = f"bg-{color}-100 text-{color}-800"
+    return tag("span", text=label, class_=f"{class_} {color_classes}")

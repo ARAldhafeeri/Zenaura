@@ -206,6 +206,7 @@ tag_config = {
     "time": "textable",
     "u": "nestable",
     "var": "textable",
+    "button": "nestable",
 
     # Forms
     "form": "nestable",
