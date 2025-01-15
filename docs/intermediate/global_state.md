@@ -9,37 +9,31 @@ This may sound complicated, but it actually simplify alot of use-cases for you, 
 ## Step 1: Create needed presentational components
 
 ```Python
-from zenaura.client.tags.builder import Builder
-from zenaura.client.tags.node import Node, Attribute
+from zenaura.ui import h1, p, div, button
 
 def Header1(text):
-    return Builder('h1').with_text(text).build()
+    return h1(text)
 
 def Paragraph(text, class_name=None):
-    builder = Builder('p').with_text(text)
-    if class_name:
-        builder = builder.with_attribute('class', class_name)
-    return builder.build()
+    return p(text, class_=class_name) if class_name else p(text)
 
 def Div(class_name, children):
-    div = Builder('div').with_attribute('class', class_name).build()
-    div.children = children
-    return div
+    return div(*children, class_=class_name)
 
 def Button(class_name, text, id=None, name=None):
-    builder = Builder('button').with_attribute('class', class_name).with_text(text)
-    builder.with_attribute('id', id)
-    if name:
-        builder = builder.with_attribute("name", name)
-    return builder.build()
+    return button(
+        text,
+        class_=class_name,
+        id=id,
+        name_=name
+    )
 
-def CounterPresntaional(increaseBtn, headertext, count) -> Node:
-    return Builder("div") \
-        .with_attribute("id", "large-header") \
-        .with_children(
-            headertext,
-            increaseBtn
-        ).build()
+def CounterPresntaional(increaseBtn, headertext, count):
+    return div(
+        headertext,
+        increaseBtn,
+        id="large-header"
+    )
 ```
 
 ## Step 2: Observer, Subject, Counter component

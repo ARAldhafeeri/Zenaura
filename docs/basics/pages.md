@@ -4,7 +4,11 @@ Pages in Zenaura serve as the top-level structure for organizing and rendering y
 
 ## Overview
 
-A page in Zenaura is essentially a container for components. It defines what components should be displayed and how they are structured. Pages are managed by the router, which handles navigation and rendering based on the application's routes.
+A page in Zenaura is essentially a container for components. It defines what components should be displayed and how they are structured. They are rendered as stack for example the following page : 
+```
+
+```
+Pages are managed by the router, which handles navigation and rendering based on the application's routes.
 
 ### Key Concepts
 
@@ -16,31 +20,7 @@ A page in Zenaura is essentially a container for components. It defines what com
 
 To create a page, you need to define which components it contains. Here’s an example of setting up a simple page with some components:
 
-```python
-from zenaura.client.page import Page
-from zenaura.client.component import Component
-from zenaura.client.tags.builder import Builder
 
-# Define some sample components
-class Header(Component):
-    def render(self):
-        return Builder("h1").with_text("Welcome to Zenaura!").build()
-
-class Footer(Component):
-    def render(self):
-        return Builder("footer").with_text("© 2024 Zenaura Inc.").build()
-
-class MainContent(Component):
-    def render(self):
-        return Builder("div").with_text("This is the main content area.").build()
-
-# Create a page and add components to it
-header = Header()
-footer = Footer()
-main_content = MainContent()
-
-home_page = Page([header, main_content, footer])
-```
 
 ### Explanation
 

@@ -12,9 +12,11 @@ Here's an example of a component managing multiple pieces of state:
 
 ```python
 from zenaura.client.component import Component
-from zenaura.client.tags.builder import Builder
+from zenaura.client.tags import div, h1, h2, input, button
 from zenaura.client.mutator import mutator
+from zenaura.client.dispatcher import dispatcher
 
+# Example Stateful Component
 class UserProfile(Component):
     def __init__(self):
         super().__init__()
@@ -35,16 +37,20 @@ class UserProfile(Component):
 
     def render(self):
         state = self.get_state()
-        return Builder("div").with_children([
-            Builder("h1").with_text(f"Name: {state['name']}").build(),
-            Builder("input").with_attribute("value", state['name']).with_attribute("id", "user_profile_name").build(),
-            Builder("h2").with_text(f"Age: {state['age']}").build(),
-            Builder("button").with_text("Increase Age").with_attribute("id", "user_profile_age").build()
-        ]).build()
+        return div(
+            h1(f"Name: {state['name']}"),
+            input(value=state["name"], id="user_profile_name"),
+            h2(f"Age: {state['age']}"),
+            button("Increase Age", id="user_profile_age")
+        )
 
+# Create the user profile component
 user_profile = UserProfile()
-dispatcher.bind("user_profile_name", "change",  user_profile.update_name)
-dispatcher.bind("user_profile_age", "change",  user_profile.increment_age)
+
+# Bind events using the dispatcher
+dispatcher.bind("user_profile_name", "change", user_profile.update_name)
+dispatcher.bind("user_profile_age", "click", user_profile.increment_age)
+
 ```
 
 The dispacher binds change events to input fields, whenever data changes the state is updated, and @mutator will trigger zenaura vDOM to show updates to the user.

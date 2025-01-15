@@ -1,4 +1,4 @@
-# Handling User Events in Zenaura
+### Handling User Events in Zenaura (Revised)
 
 In Zenaura, handling user events is a key aspect of creating interactive and dynamic applications. This guide will cover how Zenaura processes user events, updates the state, and re-renders components.
 
@@ -13,17 +13,15 @@ The workflow in Zenaura for handling user events follows this sequence:
 
 ### Example of Handling User Events
 
-Let's illustrate this with an example. We will create a simple counter component that increments and decrements a count value based on button clicks.
-
 ```python
 from zenaura.client.component import Component
-from zenaura.client.tags.builder import Builder
+from zenaura.client.tags import div, h1, button
 from zenaura.client.mutator import mutator
-from zenaura.client.tags import Node, Attribute
-from zenaura.client.
+from zenaura.client.dispatcher import dispatcher
+
 class Counter(Component):
-    def __init__(self):
-        super().__init__(instance_name)
+    def __init__(self, instance_name):
+        super().__init__()
         self.set_state({"count": 0})
         self.instance_name = instance_name
 
@@ -37,20 +35,37 @@ class Counter(Component):
 
     def render(self):
         count = self.get_state()["count"]
-        return Builder("div").with_children([
-            Builder("h1").with_text(f"Count: {count}").build(),
-            Builder("button").with_text("+").with_attribute("id", f"{self.instance_name}.increase").build(),
-            Builder("button").with_text("-").with_attribute("id", f"{self.instance_name}.decrease").build()
-        ]).build()
+        return div(
+            h1(f"Count: {count}"),
+            button("+", id=f"{self.instance_name}.increase"),
+            button("-", id=f"{self.instance_name}.decrease"),
+        )
 
+# Create an instance of the Counter component
 counter1 = Counter("counter1")
-# dispatcher.bind("element_id", "event_name",  component.callback)
-dispatcher.bind("counter1.increase", "click",  simple_form.increment)
-dispatcher.bind("counter1.decrease", "click",  simple_form.decrement)
+
+# Bind events using the dispatcher
+dispatcher.bind("counter1.increase", "click", counter1.increment)
+dispatcher.bind("counter1.decrease", "click", counter1.decrement)
 ```
 
-### Explanation
+### Explanation of Changes
 
-1. **User Event**: When the user clicks the "+" or "-" button, a `click` event is triggered.
-2. **Mutate State**: The event handler (`increment` or `decrement` method) is called. These methods are decorated with `@mutator`, indicating that they will change the component's state.
-3. **Re-render Component**: After the state is updated, Zenaura automatically triggers a re-render of the component. The `render` method is called again with the updated state and the updates are shown on the browser.
+1. **Replacing `Builder` with `tags`:**
+
+   - The `tags` library (`div`, `h1`, `button`, etc.) is used for a cleaner and more readable declarative syntax.
+   - Each tag directly represents the HTML structure of the component.
+
+2. **Event Binding with `dispatcher`:**
+
+   - Events (`click` for incrementing and decrementing the counter) are bound to their respective methods (`increment` and `decrement`) using `dispatcher`.
+   - The `dispatcher.bind` ensures that each button is linked to the correct instance and method.
+
+3. **Maintaining the `@mutator` Decorator:**
+
+   - The `@mutator` decorator ensures that Zenaura's state management and virtual DOM diffing work seamlessly to update the UI dynamically.
+
+4. **Using Instance Names:**
+   - The `instance_name` ensures unique IDs for buttons, enabling multiple instances of the `Counter` component to exist independently.
+
+This updated example aligns with the recommended approach and uses the `tags` system for simplicity and clarity while retaining the core functionality.

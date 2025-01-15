@@ -9,49 +9,40 @@ First, create needed presentational components such as `Label`, `Input`, and `Bu
 In `presentational.py`
 
 ```python
-from zenaura.client.tags.builder import Builder
+from zenaura.ui import div, label, input_, textarea, button, form
 
 def Div(class_name, children):
-    div = Builder('div').with_attribute('class', class_name).build()
-    div.children = children
-    return div
+    return div(*children, class_=class_name)
 
 def Label(text):
-    return Builder('label').with_text(text).build()
+    return label(text)
 
-def Input(type, name):
-    return Builder('input').with_attributes(
-        type=type,
-        name=name,
-    ).with_attribute(
-        "id", change_event_id
-    ).build()
+def Input(type_, name):
+    return input_(type_=type_, name_=name, id=change_event_id)
 
 def TextArea(name):
-    return Builder('textarea').with_attributes(
-        name=name,
-    ).with_attribute(
-        "id", change_event_id
-    ).build()
+    return textarea(name_=name, id=change_event_id)
 
-def Button(text,submit_button_id):
-    return Builder('button').with_attributes(
+def Button(text, submit_button_id):
+    return button(
+        text,
         id=submit_button_id
-    ).with_text(text).build()
+    )
 
 def UserForm(change_event_id, submit_button_id):
-    return Builder('form').with_attribute("id", change_event_id ).with_children(
+    return form(
         Div('form-group', [
             Label("Name:"),
             Input("text", "name"),
             Label("Email:"),
             Input("email", "email"),
-
             Label("Message:"),
             TextArea("message"),
-            Button("submit", "Submit", submit_button_id)
-        ])
-    ).build()
+            Button("submit", submit_button_id)
+        ]),
+        id=change_event_id
+    )
+
 ```
 
 ## Step 2: We will create our Form component

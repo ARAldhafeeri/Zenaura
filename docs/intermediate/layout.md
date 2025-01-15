@@ -71,6 +71,8 @@ my_app_layout = Layout(
 
 # optional : pass layout to router to trigger global components attached lifecycle method
 app.layout = my_app_layout
+
+app.run()
 ```
 
 ### Step 2: Hydrate Layout in `build.py`

@@ -1,21 +1,23 @@
 # Fetching Data and Integrating APIs with Zenaura
 
-Zenaura simplifies the process of fetching data from APIs and integrating it into your Python-based web applications. 
+Zenaura simplifies the process of fetching data from APIs and integrating it into your Python-based web applications.
 
 ## Key Concepts
 
-1. **Async/Await:**  Zenaura embraces asynchronous programming for efficient data fetching. `async def` functions allow your application to perform other tasks while waiting for API responses.
+1. **Async/Await:** Zenaura embraces asynchronous programming for efficient data fetching. `async def` functions allow your application to perform other tasks while waiting for API responses.
 
 2. **`mutator`:** The `mutator` decorator is used to mark functions that modify component state. This ensures the component automatically re-renders to reflect the updated data.
 
 **Example Client-Side Component (`DataFetcher`)**
 
-### Create zenaura application 
+### Create zenaura application
+
 ```
 zenaura init
 ```
 
 ### Add requests to config.json
+
 ```
 # stays same
     "packages": [
@@ -24,35 +26,34 @@ zenaura init
     ],
 # stays same
 ```
-### Presentational components 
+
+### Presentational components
 
 ```Python
-from zenaura.client.tags.builder import Builder
+from zenaura.ui import div, img, h1, p
 
 def Div(class_name, children):
-    div = Builder('div').with_attribute('class', class_name).build()
-    div.children = children
-    return div
+    return div(*children, class_=class_name)
 
 def Image(src, alt, width, height, classname=""):
-    return Builder("img").with_attributes(
+    return img(
         src=src,
         alt=alt,
         width=width,
         height=height,
-    ).with_attribute("class", classname).build()
+        class_=classname
+    )
 
 def Header1(text):
-    return Builder('h1').with_text(text).build()
+    return h1(text)
 
 def Paragraph(text):
-    return Builder('p').with_text(text).build()
+    return p(text)
 
 def Spinner(text):
     return Div("spinner-container", [
-            Header1(text),
-        ]
-    )
+        Header1(text),
+    ])
 
 def LoadingComponent():
     """Displays a loading indicator while data is being fetched."""
@@ -68,15 +69,14 @@ def ErrorComponent(error):
         Header1("Error Fetching Data"),
         Paragraph(error)
     ])
-
 ```
 
-### main component 
+### main component
 
 ```python
 from zenaura.client.component import Component
-from zenaura.client.mutator import mutator 
-from public.presentational import * 
+from zenaura.client.mutator import mutator
+from public.presentational import *
 import requests
 def DataDisplayComponent(data):
     return Div("data-dict", [
@@ -112,16 +112,17 @@ class DataFetcher(Component):
         elif self.state["data"]:
             return DataDisplayComponent(data=self.state["data"])
         else:
-            return LoadingComponent()  
+            return LoadingComponent()
 ```
 
-### Build and run zenaura app 
+### Build and run zenaura app
+
 ```Bash
 zenaura build
 zenaura run
 ```
 
-now if we went to http://localhost:5000, and open the console we will see this 
+now if we went to http://localhost:5000, and open the console we will see this
 
 ```JSON
 {
@@ -192,17 +193,18 @@ now if we went to http://localhost:5000, and open the console we will see this
 }
 
 ```
+
 ## Explanation
 
-* **State:** The `state` dictionary holds the fetched data (`data`) and any potential error messages (`error`).
-* **`fetch_data`:** This `async` function handles the API request using `requests`.
-* **`data` & `error`:**  update the state based on the API response or error.
-* **`attached`:** Automatically fetches data when the component is added to the DOM, and re-render the component with the data.
+- **State:** The `state` dictionary holds the fetched data (`data`) and any potential error messages (`error`).
+- **`fetch_data`:** This `async` function handles the API request using `requests`.
+- **`data` & `error`:** update the state based on the API response or error.
+- **`attached`:** Automatically fetches data when the component is added to the DOM, and re-render the component with the data.
 
-In all, this component will set data to data state, error to error if error exists, it uses python requests library to fetch requests, and on success renders an error or data. 
+In all, this component will set data to data state, error to error if error exists, it uses python requests library to fetch requests, and on success renders an error or data.
 
 ## Key Improvements
 
-* Clearer structure and separation of concerns.
-* Error handling mechanism.
-* Flexibility to use different state management approaches.
+- Clearer structure and separation of concerns.
+- Error handling mechanism.
+- Flexibility to use different state management approaches.

@@ -5,10 +5,10 @@ The Zenaura CLI tool simplifies the process of creating, building, and running Z
 ## Installation
 
 Zenaura cli comes out of the box with zenaura framework:
+
 ```
 pip install zenaura
 ```
-
 
 ## CLI Commands
 
@@ -24,14 +24,11 @@ zenaura init
 
 This command creates a `public` directory with initial files and folders, including:
 
-- `components.py`
-- `presentational.py`
-- `main.py`
-- `routes.py`
-- `config.json`
-- `index.html`
-- `main.css`
-- `__init__.py`
+- `public/main.py` : where main project code lives
+- `public/config.json` : configuration for pyscript
+- `public/index.html` : root html.
+- `main.css` : main css.
+- `public/__init__.py` : where you import other components used inside the project in any directory.
 
 It also creates two additional files in the project root:
 
@@ -59,19 +56,21 @@ zenaura run
 Here is an example of a typical workflow using the Zenaura CLI:
 
 1. **Initialize a new project**:
-    ```sh
-    zenaura init
-    ```
+
+   ```sh
+   zenaura init
+   ```
 
 2. **Build the project**:
-    ```sh
-    zenaura build
-    ```
+
+   ```sh
+   zenaura build
+   ```
 
 3. **Run the project**:
-    ```sh
-    zenaura run
-    ```
+   ```sh
+   zenaura run
+   ```
 
 ## Notes
 

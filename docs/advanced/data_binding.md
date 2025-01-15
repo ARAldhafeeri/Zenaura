@@ -17,36 +17,34 @@ Let's create a simple form component to demonstrate how data binding works in Ze
 
 ```python
 from zenaura.client.component import Component
-from zenaura.client.tags.builder import Builder
-from zenaura.client.mutator import mutator
-from zenaura.client.dispacher import dispatcher
+from zenaura.ui import div, input_, p
+from zenaura.client.dispatcher import dispatcher
+
 class SimpleForm(Component):
     def __init__(self):
         super().__init__()
         self.set_state({"inputValue": ""})
 
-    # note here we did not pass re-render
-    # we just want to grap the user input value
+    # Note: We are not triggering re-render; we only capture the user input value
     async def update_input(self, event):
         new_value = event.target.value
         self.set_state({"inputValue": new_value})
 
     def render(self):
         input_value = self.get_state()["inputValue"]
-        return Builder("div").with_children([
-            Builder("input")
-                .with_attribute("value", input_value)
-                .with_attribute("py-change", f"{self.instance_name}.update_input")
-                .with_attribute("id", "my-input")
-                .build(),
-            Builder("p")
-                .with_text(f"Current input: {input_value}")
-                .build()
-        ]).build()
+        return div(
+            input_(
+                value=input_value,
+                py_change=f"{self.instance_name}.update_input",
+                id="my-input"
+            ),
+            p(f"Current input: {input_value}")
+        )
 
 simple_form = SimpleForm()
-# dispatcher.bind("element_id", "event_name",  component.callback)
-dispatcher.bind("my-input", "change",  simple_form.update_input)
+
+# Bind dispatcher
+dispatcher.bind("my-input", "change", simple_form.update_input)
 
 ```
 

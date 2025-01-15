@@ -36,7 +36,7 @@ When creating a component, pass the dependencies to the component's constructor.
 
 ```python
 from zenaura.client.component import Component
-
+from zenaura.ui import div, h1
 class MyComponent(Component):
     def __init__(self, di):
         super().__init__()
@@ -44,7 +44,9 @@ class MyComponent(Component):
         self.logger = di["logger"]
 
     def render(self):
-        return Builder("div").with_text("My Component").build()
+        return div(
+            h1("some text")
+        )
 
 # Instantiate the component with dependencies
 my_component = MyComponent(dependencies)
@@ -66,7 +68,9 @@ class DataFetcherComponent(Component):
         self.logger.log(f"Data: {data}")
 
     def render(self):
-        return Builder("div").with_text("Data Fetcher Component").build()
+        return return div(
+            h1("some text")
+        )
 
 # Instantiate the component with dependencies
 data_fetcher_component = DataFetcherComponent(dependencies)
@@ -74,7 +78,7 @@ data_fetcher_component = DataFetcherComponent(dependencies)
 
 ### Step 4: Injecting Dependencies into Nested Components
 
-If you have nested components, pass the dependencies down to the child components.
+The only type of components you can inject in another component are functional components, fuctional components are stateless receive state via props
 
 ```python
 class ParentComponent(Component):
@@ -83,12 +87,15 @@ class ParentComponent(Component):
         self.di = di
 
     def render(self):
-        child_component = ChildComponent(self.di)
-        return Builder("div").with_child(child_component.render()).build()
+        return div(
+            ChildComponent(di[0])
+            class_="root"
+        )
 
-def ChildComponent(dependency):
-    self.logger.log("Child component rendered")
-    return Builder("div").with_text("Child Component").build()
+def ChildComponent(text):
+    return div(
+        h1(text)
+    )
 
 # Instantiate the parent component with dependencies
 dependencies = ["1", "2"]
