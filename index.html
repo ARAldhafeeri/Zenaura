@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-zenaura-docs" class="md-skip">
+        <a href="#introduction" class="md-skip">
           Skip to content
         </a>
       
@@ -253,7 +253,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="basics/components/" class="md-tabs__link">
+        <a href="basics/html_tags/" class="md-tabs__link">
           
   
   The Basics
@@ -271,7 +271,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="intermediate/global_comp/" class="md-tabs__link">
+        <a href="intermediate/global_state/" class="md-tabs__link">
           
   
   Beyond The Basics
@@ -289,7 +289,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="advanced/virtual_dom/" class="md-tabs__link">
+        <a href="advanced/data_binding/" class="md-tabs__link">
           
   
   Advanced Concepts
@@ -325,7 +325,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="examples/start_here/" class="md-tabs__link">
+        <a href="examples/start_here.md" class="md-tabs__link">
           
   
   Examples
@@ -455,8 +455,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -485,8 +483,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -495,9 +491,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-you-will-learn" class="md-nav__link">
+  <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
-      What you will learn?
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Guidelines
     </span>
   </a>
   
@@ -506,18 +511,282 @@
         <li class="md-nav__item">
   <a href="#why-zenaura" class="md-nav__link">
     <span class="md-ellipsis">
-      Why zenaura ?
+      Why Zenaura
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
+  <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
-      Next Steps
+      Rules
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do's
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Don'ts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#html-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      HTML Tags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dispatcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dispatcher
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beyond-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Beyond Basics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Beyond Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#router" class="md-nav__link">
+    <span class="md-ellipsis">
+      Router
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global State
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forms
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Concepts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtual-dom" class="md-nav__link">
+    <span class="md-ellipsis">
+      Virtual DOM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pyscript-and-pyodide" class="md-nav__link">
+    <span class="md-ellipsis">
+      PyScript and Pyodide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-js-or-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      External JS or CSS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-python-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      External Python Packages
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zenaura-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zenaura CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zenaura-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zenaura UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zenaura-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zenaura Charts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -601,7 +870,7 @@
         
   
   <span class="md-ellipsis">
-    Creating your first zenaura app
+    Creating Your First Zenaura App
   </span>
   
 
@@ -665,6 +934,27 @@
   
   
     <li class="md-nav__item">
+      <a href="basics/html_tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML Tags
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="basics/components/" class="md-nav__link">
         
   
@@ -691,27 +981,6 @@
   
   <span class="md-ellipsis">
     Component State
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="basics/data_binding/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Data Binding Model
   </span>
   
 
@@ -791,27 +1060,6 @@
   
   
     <li class="md-nav__item">
-      <a href="basics/lifecycle/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lifecycle methods
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="basics/router/" class="md-nav__link">
         
   
@@ -872,27 +1120,6 @@
             Beyond The Basics
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="intermediate/global_comp/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Global Componets
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1003,6 +1230,27 @@
             Advanced Concepts
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced/data_binding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dispatcher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1231,7 +1479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/start_here/" class="md-nav__link">
+      <a href="examples/start_here.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1252,7 +1500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/contributing/" class="md-nav__link">
+      <a href="examples/contributing.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1273,7 +1521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/template/" class="md-nav__link">
+      <a href="examples/template.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1334,7 +1582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/basic/counter/" class="md-nav__link">
+      <a href="examples/basic/counter.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1403,7 +1651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/intermediate/global_state/" class="md-nav__link">
+      <a href="examples/intermediate/global_state.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1472,7 +1720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/advanced/game_of_life/" class="md-nav__link">
+      <a href="examples/advanced/game_of_life.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1493,7 +1741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/advanced/data_fetching/" class="md-nav__link">
+      <a href="examples/advanced/data_fetching.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2550,7 +2798,7 @@
             
   
   <span class="md-ellipsis">
-    Tags
+    Dispacher
   </span>
   
 
@@ -2559,6 +2807,75 @@
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_10_1_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_10_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Dispacher
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/client/dispatcher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dispacher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_1_7" id="__nav_10_1_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tags
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_10_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_1_7">
             <span class="md-nav__icon md-icon"></span>
             Tags
           </label>
@@ -2668,27 +2985,6 @@
   
   <span class="md-ellipsis">
     Router
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/client/mocks/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    mocks
   </span>
   
 
@@ -3202,31 +3498,236 @@
                   
 
 
-<h1 id="welcome-to-zenaura-docs">Welcome to Zenaura Docs</h1>
-<p>Zenaura is a cutting-edge Python library that empowers developers to build high-performance, stateful Single Page Applications (SPAs) with ease. Built upon Pydide and PyScript, Zenaura leverages a virtual DOM to optimize the responsiveness and interactivity of your web UIs.</p>
-<h2 id="what-you-will-learn">What you will learn?</h2>
+  <h1>Start Here</h1>
+
+<h3 id="introduction">Introduction</h3>
+<p>Zenaura is a Python-based framework designed for building web applications with simplicity, developer experience, and event-driven design.</p>
+<h3 id="architecture-guidelines">Architecture Guidelines</h3>
 <ul>
-<li>Quick Start: Rapidly create your first modern web application using your existing Python skills.</li>
-<li>Fundamentals: Master the core building blocks of Zenaura: servers, clients, components, pages, state management, and more.</li>
-<li>Beyond the Basics: Delve into Zenaura's virtual DOM, architecture, event handling, forms, and server-side rendering.</li>
-<li>Advanced Techniques: Explore global components, state observers, interactions with the virtual DOM, data fetching, and deployment to GitHub Pages.</li>
-<li>Comprehensive Examples: From simple counters to full-fledged admin portals, learn by building.</li>
-<li>Complete API Reference: Easily search and reference all of Zenaura's capabilities.</li>
+<li>Modular components for scalability.</li>
+<li>Event-driven architecture via <code>dispatcher.bind</code>.</li>
+<li>Python-first approach, enabling PyScript and Pyodide integration.</li>
 </ul>
-<h2 id="why-zenaura">Why zenaura ?</h2>
-<p>Pythonic Development: With Zenaura, you can leverage your existing Python skills to build powerful web applications, eliminating the need to learn new languages or frameworks.</p>
-<p>High Performance: By utilizing a virtual DOM and stateful components, Zenaura ensures that your web applications are highly responsive and performant, even with complex user interfaces.</p>
-<p>Stateful Single Page Applications: Zenaura enables you to create stateful Single Page Applications (SPAs) effortlessly, allowing for seamless navigation and dynamic content updates without page reloads.</p>
-<p>Simplicity and Flexibility: Zenaura's intuitive API and modular architecture make it easy to learn and adapt to your project's specific needs. Whether you're building a simple blog or a complex enterprise application, Zenaura provides the tools you need.</p>
-<p>Comprehensive Documentation and Support: The Zenaura documentation is extensive and user-friendly, offering clear explanations, practical examples, and a comprehensive API reference. Additionally, the Zenaura community is active and supportive, providing assistance and guidance whenever you need it.</p>
-<p>Ecosystem Integration: Zenaura integrates seamlessly with popular Python libraries and frameworks, allowing you to leverage existing tools and infrastructure in your projects.</p>
-<p>Active Development and Updates: Zenaura is actively maintained and regularly updated with new features, improvements, and bug fixes, ensuring that your applications stay modern and secure.</p>
-<h2 id="next-steps">Next Steps</h2>
-<p>Ready to get started with Zenaura? Check out our Quick Start guide to create your first web application in minutes. Or, dive deeper into the Fundamentals to master the core concepts and building blocks of Zenaura.</p>
-<p>If you're already familiar with the basics, explore the Beyond the Basics section to learn advanced techniques and best practices for building robust and scalable web applications.</p>
-<p>For comprehensive examples and practical use cases, visit our Examples page, where you'll find step-by-step tutorials and project templates for various types of applications.</p>
-<p>And whenever you need reference information or detailed explanations of Zenaura's features and APIs, don't forget to consult our API Reference.</p>
-<p>Welcome to the world of Zenaura—where Python meets the web, and development becomes a breeze. Let's build something amazing together!</p>
+<h3 id="why-zenaura">Why Zenaura</h3>
+<ul>
+<li>Simplified async programming.</li>
+<li>Intuitive routing and state management.</li>
+<li>Easy integration with Python and JS packages.</li>
+</ul>
+<h3 id="rules">Rules</h3>
+<h4 id="dos">Do's</h4>
+<ol>
+<li>Use <code>dispatcher.bind</code> and <code>dispatcher.dispatch</code> for event management:
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">dispatcher</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;button-id&quot;</span><span class="p">,</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="n">callback_function</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>Ensure <code>render</code> in components has a single parent and one child level:
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">return</span> <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="n">h1</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">),</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="n">div</span><span class="p">(</span><span class="s2">&quot;Child 1&quot;</span><span class="p">),</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="n">div</span><span class="p">(</span><span class="s2">&quot;Child 2&quot;</span><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="p">)</span>
+</span></code></pre></div>
+   Use functional components for nested children:
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">child1</span><span class="p">(</span><span class="n">prop1</span><span class="p">,</span> <span class="n">prop2</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">return</span> <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="n">p</span><span class="p">(</span><span class="n">prop1</span><span class="p">),</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="n">p</span><span class="p">(</span><span class="n">prop2</span><span class="p">)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="p">)</span>
+</span></code></pre></div></li>
+<li>Follow the hierarchy: <code>HTML tags -&gt; Functional Components -&gt; Class Components -&gt; Pages -&gt; Layout</code>.</li>
+<li>For multiple layouts, use:<ul>
+<li>Microfrontend architecture.</li>
+<li>Conditional rendering (discussed in Layout section).</li>
+</ul>
+</li>
+<li>Use <code>subject</code> and <code>observer</code> for shared states:
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.observer</span> <span class="kn">import</span> <span class="n">subject</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">state</span> <span class="o">=</span> <span class="n">subject</span><span class="p">(</span><span class="n">shared_data</span><span class="p">)</span>
+</span></code></pre></div></li>
+</ol>
+<h4 id="donts">Don'ts</h4>
+<ol>
+<li><strong>Don’t</strong> use inline event handlers like <code>on_click</code>.</li>
+<li><strong>Don’t</strong> deeply nest child elements in <code>render</code>.</li>
+<li><strong>Don’t</strong> use <code>builder</code> calls for UI construction.</li>
+<li><strong>Don’t</strong> hard-code shared states or use global variables.</li>
+</ol>
+<hr />
+<h2 id="quick-overview">Quick Overview</h2>
+<h3 id="basics">Basics</h3>
+<h4 id="html-tags">HTML Tags</h4>
+<p>Simplified tag usage:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">zenaura.ui</span> <span class="kn">import</span> <span class="n">div</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">button</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">class</span> <span class="nc">MyComponent</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>            <span class="n">h1</span><span class="p">(</span><span class="s2">&quot;Welcome to Zenaura&quot;</span><span class="p">),</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>            <span class="n">button</span><span class="p">(</span><span class="s2">&quot;Click Me&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;my-button&quot;</span><span class="p">),</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="p">)</span>
+</span></code></pre></div></p>
+<h4 id="special-attributes">Special Attributes</h4>
+<p>Attributes conflicting with Python keywords use <code>_</code> suffix:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">div</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;greeting&quot;</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">input_</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;my_input&quot;</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h4 id="components">Components</h4>
+<p>Define reusable components:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Reuseable</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nd">@Reuseable</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">class</span> <span class="nc">WelcomeComponent</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span><span class="s2">&quot;Welcome to Zenaura&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;welcome&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+Zenaura prompts for <code>@Reuseable</code> if missing.</p>
+<h4 id="state-management">State Management</h4>
+<p>Integrated event-driven patterns:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></code></pre></div></p>
+<h4 id="dispatcher">Dispatcher</h4>
+<p>Bind events with <code>dispatcher.bind</code>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.dispatcher</span> <span class="kn">import</span> <span class="n">dispatcher</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">dispatcher</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;my-button&quot;</span><span class="p">,</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="n">counter</span><span class="o">.</span><span class="n">increment</span><span class="p">)</span>
+</span></code></pre></div>
+Dispatch events with <code>dispatcher.dispatch</code>.</p>
+<h3 id="beyond-basics">Beyond Basics</h3>
+<h4 id="router">Router</h4>
+<p>Simplified routing:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.app</span> <span class="kn">import</span> <span class="n">App</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.page</span> <span class="kn">import</span> <span class="n">Page</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">WelcomeComponent</span><span class="p">()])</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">app</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">home_page</span><span class="p">)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</span></code></pre></div></p>
+<h4 id="pages">Pages</h4>
+<p>Encapsulate components:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.page</span> <span class="kn">import</span> <span class="n">Page</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">WelcomeComponent</span><span class="p">()])</span>
+</span></code></pre></div></p>
+<h4 id="layout">Layout</h4>
+<p>Define app layout:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.layout</span> <span class="kn">import</span> <span class="n">Layout</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.app</span> <span class="kn">import</span> <span class="n">App</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="n">my_app_layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="n">top</span><span class="o">=</span><span class="p">[</span><span class="n">NavigationAuthNotAuth</span><span class="p">],</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="n">routes</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">routes</span><span class="p">,</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="n">bottom</span><span class="o">=</span><span class="p">[</span><span class="n">FooterAuthNotAuth</span><span class="p">]</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="p">)</span>
+</span></code></pre></div></p>
+<h4 id="global-state">Global State</h4>
+<p>Share state between components:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.observer</span> <span class="kn">import</span> <span class="n">Subject</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">counter_subject</span> <span class="o">=</span> <span class="n">Subject</span><span class="p">()</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">counter_subject</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;counter1&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="k">class</span> <span class="nc">CounterObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="k">pass</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="k">class</span> <span class="nc">Counter1</span><span class="p">(</span><span class="n">Component</span><span class="p">,</span> <span class="n">CounterObserver</span><span class="p">):</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="n">counter_subject</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;counter1&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="n">counter_subject</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        <span class="c1"># Logic for state update</span>
+</span></code></pre></div></p>
+<h4 id="forms">Forms</h4>
+<p>Handle forms:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span> <span class="nf">render_form</span><span class="p">():</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="k">return</span> <span class="n">form</span><span class="p">(</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>        <span class="n">input_</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        <span class="n">button</span><span class="p">(</span><span class="s2">&quot;Submit&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;submit-button&quot;</span><span class="p">)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="advanced-concepts">Advanced Concepts</h3>
+<h4 id="virtual-dom">Virtual DOM</h4>
+<p>Minimizes re-rendering by efficiently patching changes.</p>
+<h4 id="component-lifecycle">Component Lifecycle</h4>
+<ul>
+<li><code>attached</code>: Runs after mounting.</li>
+<li><code>on_mutation</code>: Runs before DOM updates.</li>
+<li><code>on_settled</code>: Runs after DOM updates.</li>
+</ul>
+<h4 id="api-integration">API Integration</h4>
+<p>Fetch data with async handlers:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.mutator</span> <span class="kn">import</span> <span class="n">mutator</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nd">@mutator</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch_data</span><span class="p">():</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch</span><span class="p">(</span><span class="s2">&quot;/api/data&quot;</span><span class="p">)</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    <span class="k">return</span> <span class="n">data</span>
+</span></code></pre></div></p>
+<h4 id="pyscript-and-pyodide">PyScript and Pyodide</h4>
+<ul>
+<li>PyScript: Run Python in the browser.</li>
+<li>Pyodide: Python interpreter in WebAssembly.</li>
+</ul>
+<h4 id="deployment">Deployment</h4>
+<ul>
+<li>Configure <code>config.json</code>.</li>
+<li>Host static files on a CDN/server.</li>
+</ul>
+<h4 id="external-js-or-css">External JS or CSS</h4>
+<p>Add scripts to <code>build.py</code>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">zenaura.server</span> <span class="kn">import</span> <span class="n">ZenauraServer</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">ZenauraServer</span><span class="o">.</span><span class="n">hydrate_app</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">scripts</span><span class="o">=</span><span class="p">[</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="sd">    &lt;script&gt;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="sd">        const ws = new WebSocket(&quot;ws://localhost:5000/refresh&quot;);</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="sd">        ws.onmessage = () =&gt; location.reload();</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="sd">    &lt;/script&gt;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">])</span>
+</span></code></pre></div>
+Import JS dynamically:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span> <span class="nn">zenaura.web.utils</span> <span class="kn">import</span> <span class="n">to_js</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">def</span> <span class="nf">use_js_function</span><span class="p">():</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    <span class="kn">from</span> <span class="nn">js</span> <span class="kn">import</span> <span class="n">my_js_function</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="n">my_js_function</span><span class="p">(</span><span class="n">to_js</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}))</span>
+</span></code></pre></div></p>
+<h4 id="external-python-packages">External Python Packages</h4>
+<p>List dependencies in <code>config.json</code>:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">&quot;packages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;numpy&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;pandas&quot;</span><span class="p">]</span>
+</span></code></pre></div></p>
+<h3 id="zenaura-cli">Zenaura CLI</h3>
+<p>Zenaura cli is a tool to use, to quickly intialize, build, and run application</p>
+<ul>
+<li><code>zenaura init</code> will initialize basic zenaura application.</li>
+<li><code>zenaura build</code> will build the zenaura application, and run everytime you change a file in zenaura public folder.</li>
+<li><code>zenaura run</code> run the application on port 5000, you can change the port from index.py</li>
+</ul>
+<h3 id="zenaura-ui">Zenaura UI</h3>
+<p>Multiple ready to use UI components.</p>
+<div class="language-Python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">zenaura.ui</span> <span class="kn">import</span> <span class="n">Button</span><span class="p">,</span> <span class="n">BreadCrumbs</span>
+</span></code></pre></div>
+<h3 id="zenaura-charts">Zenaura Charts</h3>
+<p>Multiple ready to use charts, built on top of chartjs</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>from zenaura.ui.charts import ChartThis, Canvas
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>config = {} # chartjs config as python dict
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>async def chart_logic(self):
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>   ChartThis(config, self.chart_name)
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>def my_chart():
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>   return Canvas(&quot;bar_chart&quot;)
+</span></code></pre></div>
 
 
 

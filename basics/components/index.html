@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../../quick/first_app/">
+        <link rel="prev" href="../html_tags/">
       
       
         <link rel="next" href="../state/">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#zenaura-components" class="md-skip">
+        <a href="#zenaura-components-functional-and-class-components" class="md-skip">
           Skip to content
         </a>
       
@@ -255,7 +255,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+        <a href="../html_tags/" class="md-tabs__link">
           
   
   The Basics
@@ -273,7 +273,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../intermediate/global_comp/" class="md-tabs__link">
+        <a href="../../intermediate/global_state/" class="md-tabs__link">
           
   
   Beyond The Basics
@@ -291,7 +291,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../advanced/virtual_dom/" class="md-tabs__link">
+        <a href="../../advanced/data_binding/" class="md-tabs__link">
           
   
   Advanced Concepts
@@ -327,7 +327,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../examples/start_here/" class="md-tabs__link">
+        <a href="../../examples/start_here.md" class="md-tabs__link">
           
   
   Examples
@@ -536,7 +536,7 @@
         
   
   <span class="md-ellipsis">
-    Creating your first zenaura app
+    Creating Your First Zenaura App
   </span>
   
 
@@ -602,6 +602,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../html_tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML Tags
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -651,63 +672,147 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#understanding-the-node-data-structure" class="md-nav__link">
+  <a href="#using-functional-components-within-class-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Understanding the Node Data Structure
+      Using Functional Components Within Class Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Functional Components Within Class Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example:
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#the-builder-interface" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-functional-components-in-class-components" class="md-nav__link">
     <span class="md-ellipsis">
-      The Builder Interface
+      Why Use Functional Components in Class Components?
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#stateless-presentational-functional-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      Stateless Presentational Functional Components
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#stateful-limited-class-components-limited-not-reusable" class="md-nav__link">
+  <a href="#reusable-components-vs-non-reusable-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Stateful Limited Class Components (Limited, Not Reusable)
+      Reusable Components vs. Non-Reusable Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusable Components vs. Non-Reusable Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#non-reusable-class-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-Reusable Class Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Non-Reusable Class Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example:
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#stateful-reusable-class-components-reusable" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reusable-class-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Stateful Reusable Class Components (Reusable)
+      Reusable Class Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusable Class Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example:
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#nesting-component-logic" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-non-reusable-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Nesting Component Logic
+      When to Use Non-Reusable Components
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-reusable-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Use Reusable Components
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
+  <a href="#combining-functional-and-reusable-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary
+      Combining Functional and Reusable Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Combining Functional and Reusable Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
     </span>
   </a>
   
@@ -734,27 +839,6 @@
   
   <span class="md-ellipsis">
     Component State
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data_binding/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Data Binding Model
   </span>
   
 
@@ -834,27 +918,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../lifecycle/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lifecycle methods
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../router/" class="md-nav__link">
         
   
@@ -915,27 +978,6 @@
             Beyond The Basics
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../intermediate/global_comp/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Global Componets
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1046,6 +1088,27 @@
             Advanced Concepts
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/data_binding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dispatcher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1274,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/start_here/" class="md-nav__link">
+      <a href="../../examples/start_here.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1295,7 +1358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/contributing/" class="md-nav__link">
+      <a href="../../examples/contributing.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1316,7 +1379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/template/" class="md-nav__link">
+      <a href="../../examples/template.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1377,7 +1440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/basic/counter/" class="md-nav__link">
+      <a href="../../examples/basic/counter.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1446,7 +1509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/intermediate/global_state/" class="md-nav__link">
+      <a href="../../examples/intermediate/global_state.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1515,7 +1578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/advanced/game_of_life/" class="md-nav__link">
+      <a href="../../examples/advanced/game_of_life.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1536,7 +1599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/advanced/data_fetching/" class="md-nav__link">
+      <a href="../../examples/advanced/data_fetching.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2593,7 +2656,7 @@
             
   
   <span class="md-ellipsis">
-    Tags
+    Dispacher
   </span>
   
 
@@ -2602,6 +2665,75 @@
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_10_1_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_10_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Dispacher
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/client/dispatcher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dispacher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_1_7" id="__nav_10_1_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tags
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_10_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_1_7">
             <span class="md-nav__icon md-icon"></span>
             Tags
           </label>
@@ -2711,27 +2843,6 @@
   
   <span class="md-ellipsis">
     Router
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../api/client/mocks/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    mocks
   </span>
   
 
@@ -3245,131 +3356,118 @@
                   
 
 
-<h1 id="zenaura-components">Zenaura Components</h1>
-<p>Zenaura components allow Python developers to create the building blocks for their applications. These components are categorized into three types:</p>
+<h1 id="zenaura-components-functional-and-class-components"><strong>Zenaura Components: Functional and Class Components</strong></h1>
+<p>Zenaura allows you to build modular UIs by combining <strong>functional components</strong> with <strong>class components</strong>. Understanding when to use each and how to structure them effectively is key to building maintainable applications.</p>
+<p><strong>class components</strong> : Are stateful components with business logic in them.
+<strong>functional components</strong>: Are stateless ui elements they get their state via props " function arguments "</p>
+<hr />
+<h2 id="using-functional-components-within-class-components"><strong>Using Functional Components Within Class Components</strong></h2>
+<p>Class components are ideal for managing state and complex logic, while functional components are best for reusable and presentational UI. You can use functional components inside class components to keep your code modular and clean.</p>
+<h3 id="example">Example:</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">zenaura.ui</span> <span class="kn">import</span> <span class="n">div</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">img</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Functional Component</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span> <span class="nf">Header</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">return</span> <span class="n">h1</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;header&quot;</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Class Component</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">class</span> <span class="nc">ZenauraStarter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>            <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                <span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s2">&quot;./public/logo.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s2">&quot;starterLogo&quot;</span><span class="p">),</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                <span class="n">Header</span><span class="p">(</span><span class="s2">&quot;The Python Framework For&quot;</span><span class="p">),</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                <span class="n">Header</span><span class="p">(</span><span class="s2">&quot;Building Modern Web User Interfaces&quot;</span><span class="p">),</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            <span class="p">),</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>            <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;zenaura&quot;</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="p">)</span>
+</span></code></pre></div>
+<h3 id="why-use-functional-components-in-class-components">Why Use Functional Components in Class Components?</h3>
 <ol>
-<li><strong>Stateful Limited Class Components (limited, not reusable)</strong></li>
-<li><strong>Stateful Reusable Class Components (reusable)</strong></li>
-<li><strong>Stateless Presentational Functional Components</strong></li>
-</ol>
-<h2 id="understanding-the-node-data-structure">Understanding the Node Data Structure</h2>
-<p>The <code>Node</code> data structure is the fundamental building block in the Zenaura library. It enables the virtual DOM to compare the previous and current state of a component, diff the changes, and update the real DOM efficiently. Every component must return a <code>Node</code> data structure via the <code>render</code> method in class components or via a return statement in functional components.</p>
-<p>Here's an example of creating a <code>Node</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.tags</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Attribute</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="s2">&quot;div&quot;</span><span class="p">,</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">Node</span><span class="p">(</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>            <span class="s1">&#39;h1&#39;</span><span class="p">,</span> 
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            <span class="n">children</span><span class="o">=</span><span class="p">[</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                <span class="n">Node</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="p">]</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="p">)</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="p">],</span> 
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">attributes</span><span class="o">=</span><span class="p">[</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="n">Attribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="p">]</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">)</span>
-</span></code></pre></div>
-<p>This will render the following HTML:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>hello<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></code></pre></div>
-<p>While the <code>Node</code> data structure is powerful, it can be cumbersome for building UI components, which is where the Builder Interface comes in.</p>
-<h2 id="the-builder-interface">The Builder Interface</h2>
-<p>The Builder Interface abstracts away the complexities of the <code>Node</code> data structure, allowing developers to write more maintainable, readable, and declarative UI building blocks.</p>
-<p>Example using the Builder Interface:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.tags.builder</span> <span class="kn">import</span> <span class="n">Builder</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">h1</span> <span class="o">=</span> <span class="n">Builder</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">with_text</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">div</span> <span class="o">=</span> <span class="n">Builder</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">with_child</span><span class="p">(</span><span class="n">h1</span><span class="p">)</span><span class="o">.</span><span class="n">with_attribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-</span></code></pre></div>
-<p>This will render the following HTML:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>test<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></code></pre></div>
-<p>The Builder Interface enhances readability and maintainability. To further simplify, you can use functional components.</p>
-<h2 id="stateless-presentational-functional-components">Stateless Presentational Functional Components</h2>
-<p>Stateless presentational components allow you to break down large stateful components into smaller, reusable pieces. They are simple Python functions that return a <code>Node</code> data structure.</p>
-<p>Example:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.tags.builder</span> <span class="kn">import</span> <span class="n">Builder</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">def</span> <span class="nf">Div</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">div</span> <span class="o">=</span> <span class="n">Builder</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">with_attribute</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">div</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">children</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">return</span> <span class="n">div</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">def</span> <span class="nf">Header1</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="k">return</span> <span class="n">Builder</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">with_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">div</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Header1</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)])</span>
-</span></code></pre></div>
-<p>This will render the following HTML:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>test<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></code></pre></div>
-<p>Using the Builder Interface with functional components helps in building robust and reusable components for any Zenaura project.</p>
-<h2 id="stateful-limited-class-components-limited-not-reusable">Stateful Limited Class Components (Limited, Not Reusable)</h2>
-<p>These are the default class components in the Zenaura library. They can maintain state and wrap functional components to create fully-featured UIs. However, they are limited and cannot be reused within the same project unless specified with the <code>@Reusable</code> decorator.</p>
-<p>Example:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">public.presentational</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">class</span> <span class="nc">ZenauraStarter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">):</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">di</span> <span class="o">=</span> <span class="n">di</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="k">return</span> <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>           <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>            <span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./public/logo.png&quot;</span><span class="p">,</span> <span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;starterLogo&quot;</span><span class="p">),</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;The Python Library For, Hello world!&quot;</span><span class="p">),</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;Building Modern Web User Interfaces&quot;</span><span class="p">)</span>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>           <span class="p">])</span>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>        <span class="p">])</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">zen</span> <span class="o">=</span> <span class="n">ZenauraStarter</span><span class="p">()</span>  <span class="c1"># No error</span>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="n">zen2</span> <span class="o">=</span> <span class="n">ZenauraStarter</span><span class="p">()</span>  <span class="c1"># Error: Zenaura components are limited by design</span>
-</span></code></pre></div>
-<h2 id="stateful-reusable-class-components-reusable">Stateful Reusable Class Components (Reusable)</h2>
-<p>These components are designed to be reusable across your codebase. They manage their state independently and can be used multiple times within the same project.</p>
-<p>Example:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Reuseable</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">public.presentational</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nd">@Reuseable</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">class</span> <span class="nc">ZenauraStarter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        <span class="k">return</span> <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>           <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>            <span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./public/logo.png&quot;</span><span class="p">,</span> <span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;starterLogo&quot;</span><span class="p">),</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;The Python Library For, Hello world!&quot;</span><span class="p">),</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;Building Modern Web User Interfaces&quot;</span><span class="p">)</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>           <span class="p">])</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="p">])</span>
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">zen</span> <span class="o">=</span> <span class="n">ZenauraStarter</span><span class="p">()</span>  <span class="c1"># No error</span>
-</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">zen2</span> <span class="o">=</span> <span class="n">ZenauraStarter</span><span class="p">()</span>  <span class="c1"># No error</span>
-</span></code></pre></div>
-<h2 id="nesting-component-logic">Nesting Component Logic</h2>
-<p>In the Zenaura library, there is a specific nesting order that must be followed: </p>
-<ul>
-<li><strong>Pages</strong></li>
-<li><strong>Class Components</strong><ul>
-<li><strong>Functional Components</strong></li>
-</ul>
+<li>
+<p><strong>Separation of Concerns</strong><br />
+   Functional components handle UI presentation, leaving logic to the class component.</p>
 </li>
+<li>
+<p><strong>Reusability</strong><br />
+   Functional components can be reused across multiple class components.</p>
+</li>
+<li>
+<p><strong>Simplified Code</strong><br />
+   Breaking down large class components into smaller functional components makes your code easier to read and maintain.</p>
+</li>
+</ol>
+<hr />
+<h2 id="reusable-components-vs-non-reusable-components"><strong>Reusable Components vs. Non-Reusable Components</strong></h2>
+<h3 id="non-reusable-class-components"><strong>Non-Reusable Class Components</strong></h3>
+<p>By default, Zenaura class components are <strong>limited</strong> and cannot be reused unless explicitly marked as reusable. These components are tied to specific instances and use cases.</p>
+<h4 id="example_1">Example:</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">LimitedComponent</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span><span class="s2">&quot;This is a limited component&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;limited&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Usage:</strong>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">limited1</span> <span class="o">=</span> <span class="n">LimitedComponent</span><span class="p">()</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">limited2</span> <span class="o">=</span> <span class="n">LimitedComponent</span><span class="p">()</span>  <span class="c1"># Error: Non-reusable components cannot be instantiated multiple times</span>
+</span></code></pre></div></p>
+<h3 id="reusable-class-components"><strong>Reusable Class Components</strong></h3>
+<p>Marking a class component as reusable allows it to be instantiated multiple times within the same project. Use the <code>@Reuseable</code> decorator to enable this.</p>
+<h4 id="example_2">Example:</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Reuseable</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nd">@Reuseable</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">class</span> <span class="nc">ReusableComponent</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span><span class="s2">&quot;This is a reusable component&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;reusable&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Usage:</strong>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">reusable1</span> <span class="o">=</span> <span class="n">ReusableComponent</span><span class="p">()</span>  <span class="c1"># No error</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">reusable2</span> <span class="o">=</span> <span class="n">ReusableComponent</span><span class="p">()</span>  <span class="c1"># No error</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="when-to-use-non-reusable-components"><strong>When to Use Non-Reusable Components</strong></h3>
+<ul>
+<li>For components tightly coupled to specific logic or state.</li>
+<li>For one-off components not meant to be instantiated multiple times.</li>
 </ul>
-<p>This order ensures predictable and debuggable source code. Pages render the components as a stack from index 0 to n in the browser. Nested stateful class components can be confusing, so maintain the hierarchy to avoid errors.</p>
-<h2 id="summary">Summary</h2>
-<p>In this guide, we've covered the different types of components in Zenaura and how to use the Node data structure and Builder Interface to create maintainable and reusable UI components. Following these principles will help you build scalable and efficient applications with Zenaura.</p>
-<p>In the next guide, we'll dive deep into dependency injection and component state management.</p>
+<h3 id="when-to-use-reusable-components"><strong>When to Use Reusable Components</strong></h3>
+<ul>
+<li>For UI elements used across different parts of the application (e.g., buttons, cards, modals).</li>
+<li>When you need consistency across instances with shared logic but independent states.</li>
+</ul>
+<hr />
+<h2 id="combining-functional-and-reusable-components"><strong>Combining Functional and Reusable Components</strong></h2>
+<p>You can nest reusable and functional components inside a class component to create highly modular and flexible UIs.</p>
+<h4 id="example_3">Example:</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Reuseable</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">zenaura.ui</span> <span class="kn">import</span> <span class="n">div</span><span class="p">,</span> <span class="n">h1</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Functional Component</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">def</span> <span class="nf">Card</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">return</span> <span class="n">div</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;card&quot;</span><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># Reusable Class Component</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nd">@Reuseable</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">class</span> <span class="nc">ReusableCardList</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>            <span class="n">Card</span><span class="p">(</span><span class="s2">&quot;Card 1 Content&quot;</span><span class="p">),</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>            <span class="n">Card</span><span class="p">(</span><span class="s2">&quot;Card 2 Content&quot;</span><span class="p">),</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>            <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;card-list&quot;</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="best-practices"><strong>Best Practices</strong></h2>
+<ol>
+<li><strong>Functional Inside Class</strong>: Use functional components within class components for reusable, presentation-focused UI.</li>
+<li><strong>Reusable Components</strong>: Mark components as reusable when they need to be instantiated multiple times.</li>
+<li><strong>Non-Reusable Components</strong>: Use non-reusable components for one-off, tightly scoped logic.</li>
+<li><strong>Modularity</strong>: Break large components into smaller functional components for better maintainability.</li>
+</ol>
+<p>By understanding the distinction between reusable and non-reusable components and leveraging functional components effectively, you can build scalable, maintainable, and efficient Zenaura applications. 🚀</p>
 
 
 

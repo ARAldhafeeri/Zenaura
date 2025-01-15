@@ -12,7 +12,7 @@
         <link rel="prev" href="../installation/">
       
       
-        <link rel="next" href="../../basics/components/">
+        <link rel="next" href="../../basics/html_tags/">
       
       
       <link rel="icon" href="../../assets/favicon.ico">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Creating your first zenaura app - Zenaura Documentation</title>
+        <title>Creating Your First Zenaura App - Zenaura Documentation</title>
       
     
     
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Creating your first zenaura app
+              Creating Your First Zenaura App
             
           </span>
         </div>
@@ -255,7 +255,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../basics/components/" class="md-tabs__link">
+        <a href="../../basics/html_tags/" class="md-tabs__link">
           
   
   The Basics
@@ -273,7 +273,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../intermediate/global_comp/" class="md-tabs__link">
+        <a href="../../intermediate/global_state/" class="md-tabs__link">
           
   
   Beyond The Basics
@@ -291,7 +291,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../advanced/virtual_dom/" class="md-tabs__link">
+        <a href="../../advanced/data_binding/" class="md-tabs__link">
           
   
   Advanced Concepts
@@ -327,7 +327,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../examples/start_here/" class="md-tabs__link">
+        <a href="../../examples/start_here.md" class="md-tabs__link">
           
   
   Examples
@@ -550,7 +550,7 @@
           
   
   <span class="md-ellipsis">
-    Creating your first zenaura app
+    Creating Your First Zenaura App
   </span>
   
 
@@ -561,7 +561,7 @@
         
   
   <span class="md-ellipsis">
-    Creating your first zenaura app
+    Creating Your First Zenaura App
   </span>
   
 
@@ -585,54 +585,135 @@
         <li class="md-nav__item">
   <a href="#cli-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      CLI Commands:
+      CLI Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initializing-a-basic-zenaura-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initializing a Basic Zenaura Application
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#auto-generated-files-from-init-command" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#auto-generated-files" class="md-nav__link">
     <span class="md-ellipsis">
-      Auto generated files from init command:
+      Auto-Generated Files
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#building-zenaura" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#building-the-application" class="md-nav__link">
     <span class="md-ellipsis">
-      Building zenaura
+      Building the Application
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#running-zenaura" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#running-the-development-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Running zenaura
+      Running the Development Server
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-new-component-to-the-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adding new component to the page
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-state-to-the-component" class="md-nav__link">
+  <a href="#example-your-first-zenaura-app" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding State to the component
+      Example: Your First Zenaura App
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Example: Your First Zenaura App">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-the-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define the Component
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-the-app-and-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure the App and Routing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rendered-html-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rendered HTML Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-new-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding New Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding New Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-a-new-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define a New Component
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-the-component-to-the-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add the Component to the Page
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rendered-html-output_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rendered HTML Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -699,6 +780,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../basics/html_tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML Tags
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../basics/components/" class="md-nav__link">
         
   
@@ -725,27 +827,6 @@
   
   <span class="md-ellipsis">
     Component State
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../basics/data_binding/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Data Binding Model
   </span>
   
 
@@ -825,27 +906,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../basics/lifecycle/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lifecycle methods
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../basics/router/" class="md-nav__link">
         
   
@@ -906,27 +966,6 @@
             Beyond The Basics
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../intermediate/global_comp/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Global Componets
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1037,6 +1076,27 @@
             Advanced Concepts
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/data_binding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dispatcher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1265,7 +1325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/start_here/" class="md-nav__link">
+      <a href="../../examples/start_here.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1286,7 +1346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/contributing/" class="md-nav__link">
+      <a href="../../examples/contributing.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1307,7 +1367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/template/" class="md-nav__link">
+      <a href="../../examples/template.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1368,7 +1428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/basic/counter/" class="md-nav__link">
+      <a href="../../examples/basic/counter.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1437,7 +1497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/intermediate/global_state/" class="md-nav__link">
+      <a href="../../examples/intermediate/global_state.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1506,7 +1566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/advanced/game_of_life/" class="md-nav__link">
+      <a href="../../examples/advanced/game_of_life.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1527,7 +1587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/advanced/data_fetching/" class="md-nav__link">
+      <a href="../../examples/advanced/data_fetching.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2584,7 +2644,7 @@
             
   
   <span class="md-ellipsis">
-    Tags
+    Dispacher
   </span>
   
 
@@ -2593,6 +2653,75 @@
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_10_1_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_10_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Dispacher
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/client/dispatcher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dispacher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_1_7" id="__nav_10_1_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tags
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_10_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_1_7">
             <span class="md-nav__icon md-icon"></span>
             Tags
           </label>
@@ -2702,27 +2831,6 @@
   
   <span class="md-ellipsis">
     Router
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../api/client/mocks/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    mocks
   </span>
   
 
@@ -3236,130 +3344,114 @@
                   
 
 
-<h1 id="creating-your-first-zenaura-app">Creating your first zenaura app</h1>
-<p>In this example we will go over creating your first zenaura application, go over basic concepts as well. </p>
-<p>Once you installed the library, the library, it comes with simple CLI tool.</p>
-<h4 id="cli-commands">CLI Commands:</h4>
-<div class="language-text highlight"><pre><span></span><code>- init: Will create simple zenaura application
-- build : Will build the application
-- run : Will run the development server
-</code></pre></div>
-<p>First let's initials a basic zenaura application:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>zenaura<span class="w"> </span>init<span class="w"> </span>
-</span></code></pre></div>
-This command will auto generate basic zenaura application with the needed files auto generated for you, so you can get up to speed with the library.</p>
-<h3 id="auto-generated-files-from-init-command">Auto generated files from init command:</h3>
+<h1 id="creating-your-first-zenaura-app">Creating Your First Zenaura App</h1>
+<p>In this example, we will walk through creating your first Zenaura application and cover basic concepts.</p>
+<p>The Zenaura library includes a simple CLI tool to streamline development.</p>
+<hr />
+<h2 id="cli-commands"><strong>CLI Commands</strong></h2>
+<p>The following commands are available via the CLI:</p>
 <ul>
-<li>build.py : used for building zenaura application.</li>
-<li>index.py : simple zenaura server.</li>
-<li>public/components.py: single zenaura component.</li>
-<li>public/presentational.py: few zenaura presentational components created using builder interface.</li>
-<li>public/main.py : main file where we import components, create pages and  configure the client router. </li>
-<li>public/routes.py : where your client side routes lives.</li>
-<li>public/main.css : the main css file.</li>
-<li>public/config.json: pyscript pydide configuration. </li>
+<li><code>init</code>: Creates a basic Zenaura application with pre-configured files.</li>
+<li><code>build</code>: Builds the Zenaura application.</li>
+<li><code>run</code>: Runs the development server.</li>
 </ul>
-<h3 id="building-zenaura">Building zenaura</h3>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>zenaura<span class="w"> </span>build
+<hr />
+<h3 id="initializing-a-basic-zenaura-application"><strong>Initializing a Basic Zenaura Application</strong></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>zenaura<span class="w"> </span>init
 </span></code></pre></div>
-This command will build index.html.</p>
-<h3 id="running-zenaura">Running zenaura</h3>
+<p>This command generates a basic Zenaura application with essential files, enabling you to get started quickly.</p>
+<h3 id="auto-generated-files"><strong>Auto-Generated Files</strong></h3>
+<p>The <code>init</code> command creates the following structure:</p>
+<ul>
+<li><code>build.py</code>: Script for building the Zenaura application.</li>
+<li><code>index.py</code>: Entry point for a simple Zenaura server.</li>
+<li><code>public/main.py</code>: Main file for importing components, creating pages, and configuring the client router.</li>
+<li><code>public/main.css</code>: Primary CSS file for styling.</li>
+<li><code>public/config.json</code>: PyScript Pyodide configuration file.</li>
+<li><code>__init__.py</code>: Contains code intended to run in the browser.</li>
+</ul>
+<hr />
+<h3 id="building-the-application"><strong>Building the Application</strong></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>zenaura<span class="w"> </span>build
+</span></code></pre></div>
+<p>This command generates the <code>index.html</code> file for your application.</p>
+<hr />
+<h3 id="running-the-development-server"><strong>Running the Development Server</strong></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>zenaura<span class="w"> </span>run
 </span></code></pre></div>
-<p>This command will run the development server. Now open browser tab and go to localhost:5000. You will see the following Rendered HTML : </p>
-<p><center><img alt="" src="../logo.png" /></p>
-<div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
-<p></center></p>
-<p>Now if we opened components.py, and changed the header text:
-<div class="language-py highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">public.presentational</span> <span class="kn">import</span> <span class="o">*</span> 
+<p>Runs the server on <code>localhost:5000</code>. Open the URL in your browser to see the rendered HTML.</p>
+<hr />
+<h2 id="example-your-first-zenaura-app"><strong>Example: Your First Zenaura App</strong></h2>
+<p>Below is an example of a basic Zenaura application using the new <code>zenaura.ui</code> tags for creating components and pages.</p>
+<h4 id="define-the-component"><strong>Define the Component</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">zenaura.ui</span> <span class="kn">import</span> <span class="n">div</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">,</span> <span class="n">img</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">class</span> <span class="nc">ZenauraStarter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="k">return</span> <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>           <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>            <span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./public/logo.png&quot;</span><span class="p">,</span> <span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;starterLogo&quot;</span><span class="p">),</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;The Python Library For, Hello world !&quot;</span><span class="p">),</span> <span class="c1"># note here we changed the content</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;Building Modern Web User Interface&quot;</span><span class="p">)</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>           <span class="p">])</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="p">])</span>
-</span></code></pre></div></p>
-<p>The development server have hot reloading feature built-in , it will trigger reloading of the page and we will see the changes live. And changes will be applied.</p>
-<p>Rendered HTML : </p>
-<p><center><img alt="" src="../logo.png" /></p>
-<div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For, Hello world !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
-<p></center></p>
-<h2 id="adding-new-component-to-the-page">Adding new component to the page</h2>
-<p>Now we will add new component to the page, this component will be simply a header:</p>
-<p>in public/components.py: </p>
-<p><div class="language-py highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">public.presentational</span> <span class="kn">import</span> <span class="o">*</span> 
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">class</span> <span class="nc">ZenauraStarter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="k">return</span> <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>            <span class="n">div</span><span class="p">(</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                <span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s2">&quot;./public/logo.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s2">&quot;starterLogo&quot;</span><span class="p">),</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                <span class="n">h1</span><span class="p">(</span><span class="s2">&quot;The Python Framework For&quot;</span><span class="p">),</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>                <span class="n">h2</span><span class="p">(</span><span class="s2">&quot;Building Modern Web User Interface&quot;</span><span class="p">),</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>            <span class="p">),</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>            <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;zenaura&quot;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="p">)</span>
+</span></code></pre></div>
+<h4 id="configure-the-app-and-routing"><strong>Configure the App and Routing</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.app</span> <span class="kn">import</span> <span class="n">Route</span><span class="p">,</span> <span class="n">App</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.page</span> <span class="kn">import</span> <span class="n">Page</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">class</span> <span class="nc">ZenauraStarter</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="k">return</span> <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>           <span class="n">Div</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>            <span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./public/logo.png&quot;</span><span class="p">,</span> <span class="s2">&quot;zenaura&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;255&quot;</span><span class="p">,</span> <span class="s2">&quot;starterLogo&quot;</span><span class="p">),</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;The Python Library For, Hello world !&quot;</span><span class="p">),</span> <span class="c1"># note here we changed the content</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>            <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;Building Modern Web User Interface&quot;</span><span class="p">)</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>           <span class="p">])</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="p">])</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">class</span> <span class="nc">ZenauraStarter2</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="k">return</span>  <span class="n">Header1</span><span class="p">(</span><span class="s2">&quot;Simple Header !&quot;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">starter</span> <span class="o">=</span> <span class="n">ZenauraStarter</span><span class="p">()</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># App and routing</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">starter</span><span class="p">])</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">app</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Developer-Focused | Zenaura&quot;</span><span class="p">,</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">page</span><span class="o">=</span><span class="n">home_page</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="p">))</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </span></code></pre></div>
-In public/main.py</p>
-<p><div class="language-py highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.app</span> <span class="kn">import</span> <span class="n">Route</span><span class="p">,</span> <span class="n">App</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">zenaura.client.page</span> <span class="kn">import</span> <span class="n">Page</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span> <span class="nn">public.routes</span> <span class="kn">import</span> <span class="n">ClientRoutes</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">from</span> <span class="nn">public.components</span> <span class="kn">import</span> <span class="n">ZenauraStarter</span><span class="p">,</span> <span class="n">ZenauraStarter2</span> <span class="c1"># add the new component</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kn">import</span> <span class="nn">asyncio</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">starter</span> <span class="o">=</span> <span class="n">ZenauraStarter</span><span class="p">()</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">starter2</span> <span class="o">=</span> <span class="n">ZenauraStarter2</span><span class="p">()</span> <span class="c1"># create instance of the component</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># App and routing</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">router</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">starter</span><span class="p">,</span> <span class="n">starter2</span><span class="p">])</span> <span class="c1"># add component to the page</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">router</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Developer-Focused | Zenaura&quot;</span><span class="p">,</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="n">path</span><span class="o">=</span><span class="n">ClientRoutes</span><span class="o">.</span><span class="n">home</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="n">page</span><span class="o">=</span><span class="n">home_page</span>
-</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="p">))</span>
-</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
-</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="c1"># Run the application</span>
-</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="n">event_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
-</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="n">event_loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">router</span><span class="o">.</span><span class="n">handle_location</span><span class="p">())</span>
+<hr />
+<h3 id="rendered-html-output"><strong>Rendered HTML Output</strong></h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;zenaura&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;./public/logo.png&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;255&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;255&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;starterLogo&quot;</span> <span class="p">/&gt;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>The Python Framework For<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Building Modern Web User Interface<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
-Rendered HTML : </p>
-<p><center><img alt="" src="../logo.png" /></p>
-<div data-zenaura="938070c700" class=""><h1 data-zenaura="938070c70011">The Python Library For, Hello world !</h1><h1 data-zenaura="938070c70012">Building Modern Web User Interface</h1></div>
-<p></center></p>
-<h1>Simple Header !</h1>
-
-<h2 id="adding-state-to-the-component">Adding State to the component</h2>
-<p>Now we will add state to the component, the state will be simple keyword rendered within the h1 tag.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>from zenaura.client.component import Component
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>from public.presentational import * 
+<p>The application is live with hot-reloading enabled, ensuring that any code changes automatically refresh the page.</p>
+<hr />
+<h3 id="adding-new-components"><strong>Adding New Components</strong></h3>
+<p>To extend the application, you can define additional components and add them to your pages.</p>
+<h4 id="define-a-new-component"><strong>Define a New Component</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">zenaura.client.component</span> <span class="kn">import</span> <span class="n">Component</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">zenaura.ui</span> <span class="kn">import</span> <span class="n">h1</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>class ZenauraStarter(Component):
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    def __init__(self, state):
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        self.state = state
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    def render(self):
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        return  Header1(f&quot;{state}&quot;)
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">class</span> <span class="nc">SimpleHeader</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="k">return</span> <span class="n">h1</span><span class="p">(</span><span class="s2">&quot;Welcome to Zenaura!&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Note if we took a look at public/presentational.py, we will notice a text node
-<div class="language-py highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span> <span class="nf">Header1</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">return</span> <span class="n">Builder</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">with_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<h4 id="add-the-component-to-the-page"><strong>Add the Component to the Page</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">header</span> <span class="o">=</span> <span class="n">SimpleHeader</span><span class="p">()</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">home_page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">([</span><span class="n">starter</span><span class="p">,</span> <span class="n">header</span><span class="p">])</span>  <span class="c1"># Add new component to the page</span>
 </span></code></pre></div>
-with_text, or Node(text=text), is very important this is how you should render user text, the compiler will santize and render the text, to prevent known security issues.</p>
-<p>Note this is very simple guide to help you start with zenaura library, in The Basics guide we will go over each building block in zenaura library and explain it, in rich details.</p>
+<h4 id="rendered-html-output_1"><strong>Rendered HTML Output</strong></h4>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;zenaura&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;./public/logo.png&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;255&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;255&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;starterLogo&quot;</span> <span class="p">/&gt;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>The Python Framework For<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Building Modern Web User Interface<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to Zenaura!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></code></pre></div>
 
 
 
