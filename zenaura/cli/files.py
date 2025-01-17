@@ -132,8 +132,8 @@ app = Flask(__name__, static_folder="public", template_folder="public")
 
 DEVSERVER = DevServer(app, port=5000, debug=True)
 
-@DEVSERVER.app.route("/")
-def root():
+@DEVSERVER.app.route("/<string:path>")
+def root(path):
     try:
         return render_template("index.html")
     except Exception as e:
