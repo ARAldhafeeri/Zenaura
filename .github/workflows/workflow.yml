@@ -61,14 +61,14 @@ jobs:
 
       - name: deploy mkdocs
         id: cache-mkdocs
-        
-        run: | 
-        # setup identity 
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
 
-        # Ensure the repository is up to date
-        git pull 
-        mkdocs gh-deploy
+        run: |
+          # setup identity 
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          # Ensure the repository is up to date
+          git pull 
+          mkdocs gh-deploy
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
