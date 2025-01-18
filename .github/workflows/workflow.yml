@@ -12,8 +12,6 @@ on:
     types: [closed]
 
 jobs:
-  permissions:
-    contents: write
   deploy:
     runs-on: ubuntu-latest
 
