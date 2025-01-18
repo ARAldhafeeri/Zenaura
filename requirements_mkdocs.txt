@@ -1,5 +1,5 @@
 # mkdocs and its dependencies
-mkdocs==1.5.3
+mkdocs==1.6.0 
 click==8.1.7
 colorama==0.4.6
 ghp-import==2.1.0
@@ -17,5 +17,5 @@ pyyaml_env_tag==0.1
 watchdog==4.0.1
 
 # Additional packages for CI/CD pipeline
-mkdocs-material==9.5.25  # Example version, update as needed
-mkdocstrings==0.24.0     # Example version, update as needed
+mkdocs-material==9.5.25  
+mkdocstrings==0.24.0     
