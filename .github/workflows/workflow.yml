@@ -64,6 +64,6 @@ jobs:
             mkdocs-material-
 
       - name: Deploy Docs
-        run: mkdocs gh-deploy --force
+        run: mkdocs gh-deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
