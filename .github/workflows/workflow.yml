@@ -54,9 +54,6 @@ jobs:
 
       - name: deploy mkdocs
         id: cache-mkdocs
-        uses: actions/cache@v4
-            run: mkdocs gh-deploy
+        run: mkdocs gh-deploy
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-
-   
