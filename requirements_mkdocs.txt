@@ -1,3 +1,4 @@
 mkdocs-material==9.5.18
 mkdocs==1.5.3
 mkdocstrings[python]==0.24.3
+griffe==0.45.2
