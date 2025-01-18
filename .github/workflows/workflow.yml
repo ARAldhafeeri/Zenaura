@@ -38,14 +38,29 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
-      - name: Checkout main
-        uses: actions/checkout@v2
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+      - name: Set up Python for Docs
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Cache MkDocs Material
+        id: cache-mkdocs
+        uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - name: Install MkDocs Material
+        run: pip install mkdocs-material
+
+      - name: Deploy Docs
+        run: mkdocs gh-deploy --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONFIG_FILE: ./mkdocs.yml
-          EXTRA_PACKAGES: build-base
-          # GITHUB_DOMAIN: github.myenterprise.com
-          REQUIREMENTS: ./requirements.txt
