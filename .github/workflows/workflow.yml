@@ -1,17 +1,5 @@
-name: Upload Python Package
-
-on:
-  release:
-    types: [published]
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-    types: [closed]
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deploy:
@@ -28,7 +16,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install build
           pip install -r requirements.txt
           pip install -r requirements_mkdocs.txt
 
@@ -44,26 +31,12 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
-      - name: Configure Git Credentials
+      - name: Configure Git
         run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-
-      - name: Set up Python for Docs
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.x
-
-      - name: Cache MkDocs Material
-        id: cache-mkdocs
-        uses: actions/cache@v4
-        with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy Docs
-        run: mkdocs gh-deploy
+        run: mkdocs gh-deploy --force
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
