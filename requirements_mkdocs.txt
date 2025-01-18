@@ -3,7 +3,8 @@ mkdocs==1.6.0
 click==8.1.7
 colorama==0.4.6
 ghp-import==2.1.0
-python-dateutil==2.9.0.post0
+python-dateutil==2.9.0.post
+
 six==1.16.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
@@ -18,4 +19,4 @@ watchdog==4.0.1
 
 # Additional packages for CI/CD pipeline
 mkdocs-material==9.5.25  
-mkdocstrings==0.24.0     
+mkdocstrings[python]==0.24.0     
