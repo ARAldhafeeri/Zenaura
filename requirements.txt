@@ -2,8 +2,7 @@ bleach===6.1.0
 coverage===7.5.1
 mkdocs-material==9.5.18
 mkdocs==1.5.3
-mkdocstrings==0.24.3
+mkdocstrings[python]==0.24.3
 flask==2.3.3
 watchdog==4.0.1
 flask-sock==0.7.0
-mkdocstrings_handlers==1.13.0
