@@ -52,7 +52,7 @@ jobs:
         with:
           python-version: 3.x
 
-  - name: Checkout ArgoCD repository
+      - name: Checkout ArgoCD repository
         uses: actions/checkout@v4
         with:
           repository: ARAldhafeeri/zenaura
