@@ -2,4 +2,4 @@ import logging
 
 zenaura_logger = logging.getLogger(__name__)
 
-version = "0.15.30"
+version = "0.15.31"

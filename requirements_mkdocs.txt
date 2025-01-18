@@ -1,0 +1,21 @@
+# mkdocs and its dependencies
+mkdocs==1.5.3
+click==8.1.7
+colorama==0.4.6
+ghp-import==2.1.0
+python-dateutil==2.9.0.post0
+six==1.16.0
+Jinja2==3.1.4
+MarkupSafe==2.1.5
+Markdown==3.7
+mergedeep==1.3.4
+packaging==24.2
+pathspec==0.12.1
+platformdirs==4.2.2
+PyYAML==6.0.1
+pyyaml_env_tag==0.1
+watchdog==4.0.1
+
+# Additional packages for CI/CD pipeline
+mkdocs-material==9.5.25  # Example version, update as needed
+mkdocstrings==0.24.0     # Example version, update as needed
