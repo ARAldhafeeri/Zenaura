@@ -12,6 +12,8 @@ on:
     types: [closed]
 
 jobs:
+  permissions:
+    contents: write
   deploy:
     runs-on: ubuntu-latest
 
@@ -70,5 +72,3 @@ jobs:
           # Ensure the repository is up to date
           git pull 
           mkdocs gh-deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
