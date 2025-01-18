@@ -52,8 +52,23 @@ jobs:
         with:
           python-version: 3.x
 
+  - name: Checkout ArgoCD repository
+        uses: actions/checkout@v4
+        with:
+          repository: ARAldhafeeri/zenaura
+          path: main
+          token: ${{ secrets.REPO_TOKEN }}
+
       - name: deploy mkdocs
         id: cache-mkdocs
-        run: mkdocs gh-deploy
+        
+        run: | 
+        # setup identity 
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+
+        # Ensure the repository is up to date
+        git pull 
+        mkdocs gh-deploy
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
