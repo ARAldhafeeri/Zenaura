@@ -3262,9 +3262,9 @@
 
 
 <a id="zenaura.client.dom.render"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
 
@@ -3280,17 +3280,17 @@
 
 
 <h2 id="zenaura.client.dom.render.Render" class="doc doc-heading">
-          <code>Render</code>
+            <code>Render</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="zenaura.client.dom.error.GracefulDegenerationLifeCycleWrapper" href="../error/#zenaura.client.dom.error.GracefulDegenerationLifeCycleWrapper">GracefulDegenerationLifeCycleWrapper</a></code>, <code><a class="autorefs autorefs-internal" title="zenaura.client.dom.lifecycles.render.RenderLifeCycle" href="../lifecycles/#zenaura.client.dom.lifecycles.render.RenderLifeCycle">RenderLifeCycle</a></code>, <code><a class="autorefs autorefs-internal" title="zenaura.client.algorithm.DiffingAlgorithm" href="../../../../algorithm/#zenaura.client.algorithm.algorithm.DiffingAlgorithm">DiffingAlgorithm</a></code>, <code><a class="autorefs autorefs-internal" title="zenaura.client.hydrator.HydratorTasker" href="../../hydrator/hy_tasker/#zenaura.client.hydrator.tasker.HydratorTasker">HydratorTasker</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="zenaura.client.dom.error.GracefulDegenerationLifeCycleWrapper" href="../error/#zenaura.client.dom.error.GracefulDegenerationLifeCycleWrapper">GracefulDegenerationLifeCycleWrapper</a></code>, <code><a class="autorefs autorefs-internal" title="zenaura.client.dom.lifecycles.render.RenderLifeCycle" href="../lifecycles/#zenaura.client.dom.lifecycles.render.RenderLifeCycle">RenderLifeCycle</a></code>, <code><a class="autorefs autorefs-internal" title="zenaura.client.algorithm.DiffingAlgorithm" href="../../../../algorithm/#zenaura.client.algorithm.algorithm.DiffingAlgorithm">DiffingAlgorithm</a></code>, <code><a class="autorefs autorefs-internal" title="zenaura.client.hydrator.HydratorTasker" href="../../hydrator/hy_tasker/#zenaura.client.hydrator.tasker.HydratorTasker">HydratorTasker</a></code></p>
 
-  
+
       <p>Renders components by updating the DOM based on the differences between the previous and new component trees.</p>
 <p>This class provides methods for:</p>
 <ul>
@@ -3317,9 +3317,9 @@
 <li><code>on_error(comp, error)</code>: Handles errors gracefully and displays an error message component.</li>
 </ul>
 
-            <details class="quote">
-              <summary>Source code in <code>zenaura\client\dom\render.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+              <details class="quote">
+                <summary>Source code in <code>zenaura/client/dom/render.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-0-10">10</a></span>
@@ -3407,7 +3407,7 @@
 <span class="normal"><a href="#__codelineno-0-92">92</a></span>
 <span class="normal"><a href="#__codelineno-0-93">93</a></span>
 <span class="normal"><a href="#__codelineno-0-94">94</a></span>
-<span class="normal"><a href="#__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">class</span> <span class="nc">Render</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">Render</span><span class="p">(</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">GracefulDegenerationLifeCycleWrapper</span><span class="p">,</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="n">RenderLifeCycle</span><span class="p">,</span> 
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="n">DiffingAlgorithm</span><span class="p">,</span>
@@ -3440,7 +3440,7 @@
 </span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="sd">    - `hyd_vdom_update(comp)`: Updates the virtual DOM with the new component tree.</span>
 </span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="sd">    - `on_error(comp, error)`: Handles errors gracefully and displays an error message component.</span>
 </span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="sd">        Renders the component by updating the DOM based on the differences between the previous and new component trees.</span>
 </span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>
@@ -3497,12 +3497,11 @@
 </span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">on_error</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -3515,10 +3514,9 @@
 <div class="doc doc-object doc-function">
 
 
-
 <h3 id="zenaura.client.dom.render.Render.render" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">render</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span></code>
-  
+            <code class="highlight language-python"><span class="n">render</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span></code>
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
@@ -3526,8 +3524,8 @@
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Renders the component by updating the DOM based on the differences between the previous and new component trees.</p>
 <p>This method performs the following steps:</p>
 <ol>
@@ -3551,9 +3549,9 @@
 <p><strong>Returns:</strong></p>
 <p>None</p>
 
-          <details class="quote">
-            <summary>Source code in <code>zenaura\client\dom\render.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-40">40</a></span>
+            <details class="quote">
+              <summary>Source code in <code>zenaura/client/dom/render.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-40">40</a></span>
 <span class="normal"><a href="#__codelineno-0-41">41</a></span>
 <span class="normal"><a href="#__codelineno-0-42">42</a></span>
 <span class="normal"><a href="#__codelineno-0-43">43</a></span>
@@ -3608,7 +3606,7 @@
 <span class="normal"><a href="#__codelineno-0-92">92</a></span>
 <span class="normal"><a href="#__codelineno-0-93">93</a></span>
 <span class="normal"><a href="#__codelineno-0-94">94</a></span>
-<span class="normal"><a href="#__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal"><a href="#__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="sd">    Renders the component by updating the DOM based on the differences between the previous and new component trees.</span>
 </span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>
@@ -3665,8 +3663,8 @@
 </span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">on_error</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3674,8 +3672,7 @@
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -3684,7 +3681,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 

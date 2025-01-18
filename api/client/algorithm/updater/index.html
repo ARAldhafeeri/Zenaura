@@ -3262,9 +3262,9 @@
 
 
 <a id="zenaura.client.algorithm.updater"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
 
@@ -3280,23 +3280,23 @@
 
 
 <h2 id="zenaura.client.algorithm.updater.Updater" class="doc doc-heading">
-          <code>Updater</code>
+            <code>Updater</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="zenaura.client.hydrator.Hydrator" href="../../hydrator/hydrator/#zenaura.client.hydrator.hydrator.Hydrator">Hydrator</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="zenaura.client.hydrator.Hydrator" href="../../hydrator/hydrator/#zenaura.client.hydrator.hydrator.Hydrator">Hydrator</a></code></p>
 
-  
+
       <p>This class is responsible for updating the real DOM based on the differences identified by the Searcher.</p>
 <p>It receives a list of patches from the Searcher and creates corresponding tasks for each patch. These tasks are then enqueued for execution by the Hydrator's tasker.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>zenaura\client\algorithm\updater.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-6">  6</a></span>
+              <details class="quote">
+                <summary>Source code in <code>zenaura/client/algorithm/updater.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-6">  6</a></span>
 <span class="normal"><a href="#__codelineno-0-7">  7</a></span>
 <span class="normal"><a href="#__codelineno-0-8">  8</a></span>
 <span class="normal"><a href="#__codelineno-0-9">  9</a></span>
@@ -3397,7 +3397,7 @@
 <span class="normal"><a href="#__codelineno-0-104">104</a></span>
 <span class="normal"><a href="#__codelineno-0-105">105</a></span>
 <span class="normal"><a href="#__codelineno-0-106">106</a></span>
-<span class="normal"><a href="#__codelineno-0-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="k">class</span> <span class="nc">Updater</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">Updater</span><span class="p">(</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">Hydrator</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="p">):</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -3409,7 +3409,7 @@
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="sd">        None</span>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17"></a>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patches</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patches</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="sd">        Updates the real DOM based on the provided patches.</span>
 </span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a>
@@ -3423,7 +3423,7 @@
 </span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>            <span class="c1"># print(&quot;operation&quot;, op, prev_node_id)</span>
 </span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>
 </span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>            <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ADD_NODE</span><span class="p">:</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>                <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="n">dn</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="nb">id</span><span class="p">):</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="n">dn</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="nb">id</span><span class="p">):</span>
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="sd">                    Adds a new node to the real DOM.</span>
 </span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>
@@ -3438,7 +3438,7 @@
 </span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45"></a>
 </span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46"></a>            <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">REMOVE_NODE</span><span class="p">:</span>
-</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>                <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">):</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">):</span>
 </span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="sd">                    Removes a node from the real DOM.</span>
 </span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50"></a>
@@ -3453,7 +3453,7 @@
 </span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a>
 </span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a>            <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">NODE_INNER_TEXT</span><span class="p">:</span>
 </span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a>                <span class="c1"># avoid late binding</span>
-</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>                <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]):</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]):</span>
 </span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="sd">                    Updates the inner text of a node in the real DOM.</span>
 </span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a>
@@ -3465,7 +3465,7 @@
 </span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a>
 </span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a>            <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ADD_ATTRIBUTE</span><span class="p">:</span>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>                <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">Attribute</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">],</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_value&quot;</span><span class="p">])):</span>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">Attribute</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">],</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_value&quot;</span><span class="p">])):</span>
 </span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75"></a><span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76"></a><span class="sd">                    Adds an attribute to a node in the real DOM.</span>
 </span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a>
@@ -3477,7 +3477,7 @@
 </span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a>
 </span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a>            <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">REMOVE_ATTRIBUTE</span><span class="p">:</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>                <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
 </span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="sd">                    Removes an attribute from a node in the real DOM.</span>
 </span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a>
@@ -3489,7 +3489,7 @@
 </span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96"></a>
 </span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97"></a>            <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">REPLACE_ATTRIBUTE</span><span class="p">:</span>
-</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a>                <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a>                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
 </span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99"></a><span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100"></a><span class="sd">                    Replaces an attribute on a node in the real DOM.</span>
 </span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101"></a>
@@ -3500,12 +3500,11 @@
 </span><span id="__span-0-106"><a id="__codelineno-0-106" name="__codelineno-0-106"></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">hyd_rdom_remove_attribute</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">op1</span><span class="p">)</span>
 </span><span id="__span-0-107"><a id="__codelineno-0-107" name="__codelineno-0-107"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -3518,10 +3517,9 @@
 <div class="doc doc-object doc-function">
 
 
-
 <h3 id="zenaura.client.algorithm.updater.Updater.update" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">update</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span></code>
-  
+            <code class="highlight language-python"><span class="n">update</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span></code>
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
@@ -3529,57 +3527,56 @@
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Updates the real DOM based on the provided patches.</p>
 
 
-
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>patches</code></td>
-          <td>
-                <code><span title="typing.List">List</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>A list of patches containing the operation name, the new child node, the path of the child, and the context for the updater.</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
         </tr>
-        <tr class="doc-section-item">
-          <td><code>id</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>The ID of the component to be updated.</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>patches</code></td>
+            <td>
+                  <code><span title="typing.List">List</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A list of patches containing the operation name, the new child node, the path of the child, and the context for the updater.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>id</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ID of the component to be updated.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-          <details class="quote">
-            <summary>Source code in <code>zenaura\client\algorithm\updater.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-18"> 18</a></span>
+            <details class="quote">
+              <summary>Source code in <code>zenaura/client/algorithm/updater.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-18"> 18</a></span>
 <span class="normal"><a href="#__codelineno-0-19"> 19</a></span>
 <span class="normal"><a href="#__codelineno-0-20"> 20</a></span>
 <span class="normal"><a href="#__codelineno-0-21"> 21</a></span>
@@ -3668,7 +3665,7 @@
 <span class="normal"><a href="#__codelineno-0-104">104</a></span>
 <span class="normal"><a href="#__codelineno-0-105">105</a></span>
 <span class="normal"><a href="#__codelineno-0-106">106</a></span>
-<span class="normal"><a href="#__codelineno-0-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patches</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal"><a href="#__codelineno-0-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patches</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="sd">    Updates the real DOM based on the provided patches.</span>
 </span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a>
@@ -3682,7 +3679,7 @@
 </span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="c1"># print(&quot;operation&quot;, op, prev_node_id)</span>
 </span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>
 </span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>        <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ADD_NODE</span><span class="p">:</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>            <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="n">dn</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="nb">id</span><span class="p">):</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="n">dn</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="nb">id</span><span class="p">):</span>
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="sd">                Adds a new node to the real DOM.</span>
 </span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>
@@ -3697,7 +3694,7 @@
 </span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45"></a>
 </span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46"></a>        <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">REMOVE_NODE</span><span class="p">:</span>
-</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>            <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">):</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">diffed_node</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">):</span>
 </span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="sd">                Removes a node from the real DOM.</span>
 </span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50"></a>
@@ -3712,7 +3709,7 @@
 </span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a>
 </span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a>        <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">NODE_INNER_TEXT</span><span class="p">:</span>
 </span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a>            <span class="c1"># avoid late binding</span>
-</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>            <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]):</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]):</span>
 </span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="sd">                Updates the inner text of a node in the real DOM.</span>
 </span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a>
@@ -3724,7 +3721,7 @@
 </span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a>
 </span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a>        <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ADD_ATTRIBUTE</span><span class="p">:</span>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>            <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">Attribute</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">],</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_value&quot;</span><span class="p">])):</span>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">Attribute</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">],</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_value&quot;</span><span class="p">])):</span>
 </span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75"></a><span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76"></a><span class="sd">                Adds an attribute to a node in the real DOM.</span>
 </span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a>
@@ -3736,7 +3733,7 @@
 </span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a>
 </span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a>        <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">REMOVE_ATTRIBUTE</span><span class="p">:</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>            <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
 </span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="sd">                Removes an attribute from a node in the real DOM.</span>
 </span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a>
@@ -3748,7 +3745,7 @@
 </span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96"></a>
 </span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97"></a>        <span class="k">if</span> <span class="n">op</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">REPLACE_ATTRIBUTE</span><span class="p">:</span>
-</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a>            <span class="k">async</span> <span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">task</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">prev_node_id</span><span class="p">,</span> <span class="n">op1</span><span class="o">=</span><span class="n">op</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;attr_name&quot;</span><span class="p">]):</span>
 </span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99"></a><span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100"></a><span class="sd">                Replaces an attribute on a node in the real DOM.</span>
 </span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101"></a>
@@ -3759,8 +3756,8 @@
 </span><span id="__span-0-106"><a id="__codelineno-0-106" name="__codelineno-0-106"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">hyd_rdom_remove_attribute</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">op1</span><span class="p">)</span>
 </span><span id="__span-0-107"><a id="__codelineno-0-107" name="__codelineno-0-107"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">hyd_tsk_enqueue_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3768,8 +3765,7 @@
 
   </div>
 
-  </div>
-
+    </div>
 
 </div>
 
@@ -3778,7 +3774,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 

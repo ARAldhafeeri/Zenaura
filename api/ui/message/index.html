@@ -3245,12 +3245,11 @@
 
 
 <a id="zenaura.ui.message"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -3263,88 +3262,86 @@
 <div class="doc doc-object doc-function">
 
 
-
 <h2 id="zenaura.ui.message.Message" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">Message</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="s1">&#39;fixed top-0 px-4 py-4 right-0 mt-2  shadow z-40 rounded bg-light-white dark:bg-dark-black&#39;</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">Message</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="s1">&#39;fixed top-0 px-4 py-4 right-0 mt-2  shadow z-40 rounded bg-light-white dark:bg-dark-black&#39;</span><span class="p">)</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Creates a closeable message notification</p>
 
 
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>text</code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>content of message</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>close</code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>close handler</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>class_names</code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Default class names</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;fixed top-0 px-4 py-4 right-0 mt-2  shadow z-40 rounded bg-light-white dark:bg-dark-black&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>show</code></td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>boolean show or hide message</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>text</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>content of message</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>close</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>close handler</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>class_names</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Default class names</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;fixed top-0 px-4 py-4 right-0 mt-2  shadow z-40 rounded bg-light-white dark:bg-dark-black&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>show</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>boolean show or hide message</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>zenaura\ui\message.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+            <details class="quote">
+              <summary>Source code in <code>zenaura/ui/message.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
 <span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
 <span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
@@ -3364,7 +3361,7 @@
 <span class="normal"><a href="#__codelineno-0-20">20</a></span>
 <span class="normal"><a href="#__codelineno-0-21">21</a></span>
 <span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">def</span> <span class="nf">Message</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="s2">&quot;fixed top-0 px-4 py-4 right-0 mt-2  shadow z-40 rounded bg-light-white dark:bg-dark-black&quot;</span><span class="p">):</span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">Message</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="s2">&quot;fixed top-0 px-4 py-4 right-0 mt-2  shadow z-40 rounded bg-light-white dark:bg-dark-black&quot;</span><span class="p">):</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="sd">	Creates a closeable message notification</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>
@@ -3386,8 +3383,8 @@
 </span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22"></a>		<span class="p">])</span>
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a>	<span class="p">])</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3395,7 +3392,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 

@@ -3245,12 +3245,11 @@
 
 
 <a id="zenaura.ui.breadcrumbs"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -3263,16 +3262,16 @@
 <div class="doc doc-object doc-function">
 
 
-
 <h2 id="zenaura.ui.breadcrumbs.BreadCrumbs" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">BreadCrumbs</span><span class="p">(</span><span class="n">breadcrumbs</span><span class="p">,</span> <span class="n">seprator</span><span class="o">=</span><span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="n">span_class</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">a_tag_class</span><span class="o">=</span><span class="s1">&#39;opacity-60&#39;</span><span class="p">,</span> <span class="n">li_class</span><span class="o">=</span><span class="s1">&#39;flex cursor-pointer items-center font-sans text-sm font-normal leading-normal antialiased transition-colors duration-300 text-light-gray1 hover:text-light-green dark:text-dark-page1 dark:hover:text-dark-gray2 &#39;</span><span class="p">,</span> <span class="n">ol_class</span><span class="o">=</span><span class="s1">&#39;flex w-full flex-wrap items-center rounded-md py-2 px-4&#39;</span><span class="p">,</span> <span class="n">sep_class</span><span class="o">=</span><span class="s1">&#39;pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased&#39;</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">BreadCrumbs</span><span class="p">(</span><span class="n">breadcrumbs</span><span class="p">,</span> <span class="n">seprator</span><span class="o">=</span><span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="n">span_class</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">a_tag_class</span><span class="o">=</span><span class="s1">&#39;opacity-60&#39;</span><span class="p">,</span> <span class="n">li_class</span><span class="o">=</span><span class="s1">&#39;flex cursor-pointer items-center font-sans text-sm font-normal leading-normal antialiased transition-colors duration-300 text-light-gray1 hover:text-light-green dark:text-dark-page1 dark:hover:text-dark-gray2 &#39;</span><span class="p">,</span> <span class="n">ol_class</span><span class="o">=</span><span class="s1">&#39;flex w-full flex-wrap items-center rounded-md py-2 px-4&#39;</span><span class="p">,</span> <span class="n">sep_class</span><span class="o">=</span><span class="s1">&#39;pointer-events-none mx-2 select-none font-sans text-sm font-normal leading-normal antialiased&#39;</span><span class="p">)</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Display the path to the current resources as hierarchy of links</p>
+
 
 <details class="args-" open>
   <summary>args</summary>
@@ -3286,9 +3285,9 @@ li_class - breadcrumb li tag css classes
 ol_class - bread crumb ol tag css classes
 sep_class - breadcrumb seprator css classes</p>
 </details>
-          <details class="quote">
-            <summary>Source code in <code>zenaura\ui\breadcrumbs.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+            <details class="quote">
+              <summary>Source code in <code>zenaura/ui/breadcrumbs.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
 <span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
 <span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
@@ -3326,7 +3325,7 @@ sep_class - breadcrumb seprator css classes</p>
 <span class="normal"><a href="#__codelineno-0-40">40</a></span>
 <span class="normal"><a href="#__codelineno-0-41">41</a></span>
 <span class="normal"><a href="#__codelineno-0-42">42</a></span>
-<span class="normal"><a href="#__codelineno-0-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">def</span> <span class="nf">BreadCrumbs</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">BreadCrumbs</span><span class="p">(</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">breadcrumbs</span><span class="p">,</span> 
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">seprator</span><span class="o">=</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> 
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">span_class</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> 
@@ -3366,8 +3365,8 @@ sep_class - breadcrumb seprator css classes</p>
 </span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a>      <span class="n">crumbs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
 </span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>  <span class="k">return</span> <span class="n">OL</span><span class="p">(</span><span class="n">crumbs</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span> <span class="p">:</span> <span class="n">ol_class</span><span class="p">})</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3375,7 +3374,7 @@ sep_class - breadcrumb seprator css classes</p>
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 

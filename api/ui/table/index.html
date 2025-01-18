@@ -3245,12 +3245,11 @@
 
 
 <a id="zenaura.ui.table"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -3263,15 +3262,14 @@
 <div class="doc doc-object doc-function">
 
 
-
 <h2 id="zenaura.ui.table.Table" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">Table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{},</span> <span class="n">class_names</span><span class="o">=</span><span class="s1">&#39;min-w-full bg-white shadow-md rounded-xl&#39;</span><span class="p">,</span> <span class="n">td_class_names</span><span class="o">=</span><span class="s1">&#39;py-3 px-4 text-left&#39;</span><span class="p">,</span> <span class="n">th_class_names</span><span class="o">=</span><span class="s1">&#39;py-3 px-4&#39;</span><span class="p">,</span> <span class="n">tr_class_names</span><span class="o">=</span><span class="s1">&#39;border-b border-light-gray dark:border-dark-page1&#39;</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">Table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{},</span> <span class="n">class_names</span><span class="o">=</span><span class="s1">&#39;min-w-full bg-white shadow-md rounded-xl&#39;</span><span class="p">,</span> <span class="n">td_class_names</span><span class="o">=</span><span class="s1">&#39;py-3 px-4 text-left&#39;</span><span class="p">,</span> <span class="n">th_class_names</span><span class="o">=</span><span class="s1">&#39;py-3 px-4&#39;</span><span class="p">,</span> <span class="n">tr_class_names</span><span class="o">=</span><span class="s1">&#39;border-b border-light-gray dark:border-dark-page1&#39;</span><span class="p">)</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Creates a table component with given data, columns.
 args:
                 data - list of dictionaries of data e.g. [{"key" : 1, "name": "Mike"}]
@@ -3281,9 +3279,9 @@ args:
                 class_names - default class name
                 attrs table tag attributes dictionary</p>
 
-          <details class="quote">
-            <summary>Source code in <code>zenaura\ui\table.py</code></summary>
-            <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+            <details class="quote">
+              <summary>Source code in <code>zenaura/ui/table.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
 <span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
 <span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
 <span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
@@ -3312,7 +3310,7 @@ args:
 <span class="normal"><a href="#__codelineno-0-30">30</a></span>
 <span class="normal"><a href="#__codelineno-0-31">31</a></span>
 <span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="k">def</span> <span class="nf">Table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{},</span> <span class="n">class_names</span><span class="o">=</span><span class="s2">&quot;min-w-full bg-white shadow-md rounded-xl&quot;</span><span class="p">,</span> <span class="n">td_class_names</span><span class="o">=</span><span class="s2">&quot;py-3 px-4 text-left&quot;</span><span class="p">,</span> <span class="n">th_class_names</span><span class="o">=</span><span class="s2">&quot;py-3 px-4&quot;</span><span class="p">,</span> <span class="n">tr_class_names</span><span class="o">=</span><span class="s2">&quot;border-b border-light-gray dark:border-dark-page1&quot;</span><span class="p">):</span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">Table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{},</span> <span class="n">class_names</span><span class="o">=</span><span class="s2">&quot;min-w-full bg-white shadow-md rounded-xl&quot;</span><span class="p">,</span> <span class="n">td_class_names</span><span class="o">=</span><span class="s2">&quot;py-3 px-4 text-left&quot;</span><span class="p">,</span> <span class="n">th_class_names</span><span class="o">=</span><span class="s2">&quot;py-3 px-4&quot;</span><span class="p">,</span> <span class="n">tr_class_names</span><span class="o">=</span><span class="s2">&quot;border-b border-light-gray dark:border-dark-page1&quot;</span><span class="p">):</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="sd">	Creates a table component with given data, columns.</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="sd">	args:</span>
@@ -3343,8 +3341,8 @@ args:
 </span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>			<span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>	<span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 </span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -3352,7 +3350,7 @@ args:
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
